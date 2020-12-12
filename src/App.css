@@ -1,3 +1,5 @@
+@import '~antd/dist/antd.css';
+
 .App {
   text-align: center;
 }
@@ -23,6 +25,16 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.home-content-wrapper{
+  padding: 16px 50px;
+  min-height: 800px;
+}
+
+.foot-wrapper{
+  text-align: center;
+}
+
 
 .App-link {
   color: #61dafb;
