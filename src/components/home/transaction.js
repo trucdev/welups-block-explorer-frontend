@@ -2,10 +2,15 @@ import React from 'react';
 import { List } from 'antd';
 import { BlockOutlined } from '@ant-design/icons';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import './transaction.css';
 import { connect } from 'react-redux';
 import { loadRecentTrans } from '../../actions/home';
-const BLOCKLIST_HEADER = 'Recent Transactions';
+import {RecentListTitleFrame,
+	RecentListTitle,
+	RecentListContentFrame,
+	RecentItem,
+	RecentItemTitle,
+	RecentItemRow,
+	RecentItemData,} from './recent-list';
 class TransactionList extends React.Component {
 
 	componentDidMount() {
@@ -13,18 +18,18 @@ class TransactionList extends React.Component {
 	}
 	tranItem = (tran) => {
 		return <List.Item key={tran.hash}>
-			<div className="tran">
-				<div className="tran-row tran-row-title">
-					<span>Transaction:<span className="tran-row-data">{tran.hash.substring(0, 16) + "..." }</span></span>
-				</div>
-				<div className="blockRow">
+			<RecentItem>
+				<RecentItemTitle>
+					<span>Transaction:<RecentItemData>{tran.hash.substring(0, 16) + "..." }</RecentItemData></span>
+				</RecentItemTitle>
+				<RecentItemRow>
 					<br></br>
-				</div>
-				<div className="blockRow">
-					<span>Type:<span className="tran-row-data">{tran.type}</span></span>
-					<span>at: <span className="tran-row-data">{new Date(tran.timestamp).toString()}</span></span>
-				</div>
-			</div>
+				</RecentItemRow>
+				<RecentItemRow>
+					<span>Type:<RecentItemData>{tran.type}</RecentItemData></span>
+					<span>at: <RecentItemData>{new Date(tran.timestamp).toString()}</RecentItemData></span>
+				</RecentItemRow>
+			</RecentItem>
 		</List.Item>;
 	}
 	render() {
@@ -32,11 +37,11 @@ class TransactionList extends React.Component {
 		trans.sort(function (a, b) { return b.timestamp - a.timestamp });
 		return (
 			<div>
-				<div className='tran-group'>
+				<RecentListTitleFrame>
 					<BlockOutlined />
-					<span className='tran-group-title'>{BLOCKLIST_HEADER}</span>
-				</div>
-				<div className='tran-group-content'>
+					<RecentListTitle>Recent Transactions</RecentListTitle>
+				</RecentListTitleFrame>
+				<RecentListContentFrame>
 					<PerfectScrollbar>
 						<List
 							dataSource={trans}
@@ -45,7 +50,7 @@ class TransactionList extends React.Component {
 							)}
 						/>
 					</PerfectScrollbar>
-				</div>
+				</RecentListContentFrame>
 			</div>
 		);
 	}

@@ -4,17 +4,34 @@ import TransactionList from './transaction';
 import Search from './search'
 import Summary from './summary';
 import { connect } from 'react-redux';
-import './home.css';
+import styled from 'styled-components';
+
+const MarginWrapper = styled.div`
+	margin: 5px;
+`;
+const RecentMainFrameWrapper = styled.div`
+	display: flex;
+	justify-content: space-between;
+	margin: 5px;
+`;
+const RecentFrameWrapper = styled.div`
+	width: 50%;
+	& + & {
+		margin-left: 5px;
+	  }	
+`;
+
+
 class Home extends Component{
 	render(){
 		return (
 			<div>
-				<div className='search-wrapper' ><Search/></div>
-				<div className='summary-wrapper' ><Summary/></div>
-				<div className='recent-items-wrapper' >
-					<div className='recent-block' > <BlockList></BlockList></div>
-					<div className='recent-trans' > <TransactionList></TransactionList></div>
-				</div>
+				<MarginWrapper><Search/></MarginWrapper>
+				<MarginWrapper><Summary/></MarginWrapper>
+				<RecentMainFrameWrapper>
+					<RecentFrameWrapper> <BlockList></BlockList></RecentFrameWrapper>
+					<RecentFrameWrapper> <TransactionList></TransactionList></RecentFrameWrapper>
+				</RecentMainFrameWrapper>
 			</div>
 			
 			
