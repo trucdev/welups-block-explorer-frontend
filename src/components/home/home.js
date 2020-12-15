@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import BlockList from './block';
 import TransactionList from './transaction';
-import Search from './search'
+// import Search from '../search'
 import Summary from './summary';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -26,7 +26,7 @@ class Home extends Component{
 	render(){
 		return (
 			<div>
-				<MarginWrapper><Search/></MarginWrapper>
+				{/* <MarginWrapper><Search/></MarginWrapper> */}
 				<MarginWrapper><Summary/></MarginWrapper>
 				<RecentMainFrameWrapper>
 					<RecentFrameWrapper> <BlockList></BlockList></RecentFrameWrapper>

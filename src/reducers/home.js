@@ -1,4 +1,13 @@
-import {RECENT_BLOCK_UPDATE,RECENT_BLOCK_INIT, RECENT_TRAN_INIT, RECENT_TRAN_UPDATE, SYSTEM_STATE_INIT, SYSTEM_STATE_UPDATE} from  '../actions/home';
+import {
+	RECENT_BLOCK_UPDATE,
+	RECENT_BLOCK_INIT, 
+	RECENT_TRAN_INIT, 
+	RECENT_TRAN_UPDATE, 
+	SYSTEM_STATE_INIT, 
+	SYSTEM_STATE_UPDATE,
+	SEARCH_REQUESTING,
+	SEARCH_SUCCESS,
+} from  '../actions/home';
 
 export function homeBlockReducer(state={blocks:[]}, action){
 	switch(action.type){
@@ -32,11 +41,21 @@ const initSystemState ={
 export function homeSystemStateReducer(state = {systemState: initSystemState} , action){
 	switch (action.type) {
 		case SYSTEM_STATE_UPDATE:
-			state = {...state, systemState: action.payload};
-			break;
+			return {...state, systemState: action.payload};
 		case SYSTEM_STATE_INIT:
-			state = {...state, systemState: initSystemState};
-			break;
+			return {...state, systemState: initSystemState};
+		default:
+			return state;
 	}
-	return state;
+}
+
+export function searchReducer(state = {state:'', type:0, key:""},action){
+	switch (action.type) {
+		case SEARCH_REQUESTING:
+			return {state:SEARCH_REQUESTING, type:1,key:""};
+		case SEARCH_SUCCESS:
+			return {state:SEARCH_SUCCESS, type:action.payload.type, key: action.payload.key};
+		default:
+			return state;
+	}
 }

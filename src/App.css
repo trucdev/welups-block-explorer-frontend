@@ -35,6 +35,9 @@
   text-align: center;
 }
 
+.search-wrapper{
+  margin: 5px;
+}
 
 .App-link {
   color: #61dafb;
