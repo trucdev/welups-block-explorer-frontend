@@ -39,13 +39,13 @@ class SummaryBar extends Component {
 					<SummaryCardValue>{this.props.systemState.block_height}</SummaryCardValue>
 				</SummaryCard>
 				<SummaryCard>
-					<SummaryCardTitle>Total Blocks</SummaryCardTitle>
-					<SummaryCardValue>{this.props.systemState.block_num}</SummaryCardValue>
+					<SummaryCardTitle>TRC10 Tokens</SummaryCardTitle>
+					<SummaryCardValue>{this.props.systemState.asset_num}</SummaryCardValue>
 				</SummaryCard>
-				<SummaryCard>
+				{/* <SummaryCard>
 					<SummaryCardTitle>Transaction Nums</SummaryCardTitle>
 					<SummaryCardValue>{this.props.systemState.transaction_num}</SummaryCardValue>
-				</SummaryCard>
+				</SummaryCard> */}
 				<SummaryCard>
 					<SummaryCardTitle>Total Nodes</SummaryCardTitle>
 					<SummaryCardValue>{this.props.systemState.total_nodes}</SummaryCardValue>
