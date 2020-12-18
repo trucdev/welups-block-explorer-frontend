@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 
-import { API_ADDR } from '../config/config';
+import { API_ADDR,WS_ADDR } from '../config/config';
 export const RECENT_BLOCK_UPDATE = 'RECENT_BLOCK_UPDATE';
 export const RECENT_BLOCK_INIT = 'RECENT_BLOCK_INIT';
 
@@ -29,11 +29,11 @@ export function loadRecentBlocks() {
 		}).then(res => res.json()).then((res) => {
 			dispatch(updateRecentBlock(res));
 		}).then(() => {
-			let es = new EventSource(`${API_ADDR}/events/blocks`);
-			es.onmessage = (e) => {
+			let ws = new WebSocket(`ws://${WS_ADDR}/ws/block/recent`);
+			ws.onmessage = (e)=>{
 				let blocks = JSON.parse(e.data);
 				dispatch(updateRecentBlock(blocks));
-			};
+			}
 		}).catch(err => {
 			console.log(err);
 		})
@@ -69,11 +69,11 @@ export function loadRecentTrans() {
 		}).then(res => res.json()).then((res) => {
 			dispatch(updateRecentTrans(res));
 		}).then(() => {
-			let es = new EventSource(`${API_ADDR}/events/trans`);
-			es.onmessage = (e) => {
+			let ws = new WebSocket(`ws://${WS_ADDR}/ws/transactions/recent`);
+			ws.onmessage = (e)=>{
 				let trans = JSON.parse(e.data);
 				dispatch(updateRecentTrans(trans));
-			};
+			}
 		}).catch(err => {
 			console.log(err);
 		})
@@ -110,11 +110,11 @@ export function loadSystemState() {
 		}).then(res => res.json()).then((res) => {
 			dispatch(updateSystemState(res));
 		}).then(() => {
-			let es = new EventSource(`${API_ADDR}/events/system`);
-			es.onmessage = (e) => {
+			let ws = new WebSocket(`ws://${WS_ADDR}/ws/system/state`);
+			ws.onmessage = (e)=>{
 				let systemState = JSON.parse(e.data);
 				dispatch(updateSystemState(systemState));
-			};
+			}
 		}).catch(err => {
 			console.log(err);
 		})
@@ -153,14 +153,6 @@ export function search(key, onsuccess) {
 		}).then(res => res.json()).then((res) => {
 			dispatch(updateSearchResult(res.type, key));
 			onsuccess();
-			// switch (res.type) {
-			// 	case 2:
-			// 		browserHistory.push(`/block/${key}`);
-			// 		break;
-			// 	case 1:
-			// 		browserHistory.push(`/transaction/${key}`);
-			// 		break;
-			// }
 		}).catch(err => {
 			dispatch(updateSearchResult({type:0}, key));
 			console.log(err);
