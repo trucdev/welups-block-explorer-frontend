@@ -4,13 +4,18 @@ import { BlockOutlined } from '@ant-design/icons';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { connect } from 'react-redux';
 import { loadRecentTrans } from '../../actions/home';
-import {RecentListTitleFrame,
+import {
+	Link
+} from "react-router-dom";
+import {
+	RecentListTitleFrame,
 	RecentListTitle,
 	RecentListContentFrame,
 	RecentItem,
 	RecentItemTitle,
 	RecentItemRow,
-	RecentItemData,} from './recent-list';
+	RecentItemData, StyledLink
+} from './recent-list';
 class TransactionList extends React.Component {
 
 	componentDidMount() {
@@ -20,7 +25,11 @@ class TransactionList extends React.Component {
 		return <List.Item key={tran.hash}>
 			<RecentItem>
 				<RecentItemTitle>
-					<span>Transaction:<RecentItemData>{tran.hash.substring(0, 16) + "..." }</RecentItemData></span>
+					<span>Transaction:
+						<RecentItemData>
+							<StyledLink to={`/transaction/${tran.hash}`}>{tran.hash.substring(0, 16) + "..."}</StyledLink>
+						</RecentItemData>
+					</span>
 				</RecentItemTitle>
 				<RecentItemRow>
 					<br></br>

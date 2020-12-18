@@ -58,7 +58,7 @@ class App extends Component {
                 <Route
                   exact
                   path="/"
-                  render={(routeProps) => <Redirect to="/Home" />}
+                  render={(routeProps) => <Redirect to="/home" />}
                 />
               </Switch>
             </div>

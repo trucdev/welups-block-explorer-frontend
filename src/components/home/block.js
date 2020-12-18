@@ -4,13 +4,15 @@ import { BlockOutlined } from '@ant-design/icons';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { connect } from 'react-redux';
 import { loadRecentBlocks } from '../../actions/home';
+import {
+	Link  } from "react-router-dom";
 import {RecentListTitleFrame,
 	RecentListTitle,
 	RecentListContentFrame,
 	RecentItem,
 	RecentItemTitle,
 	RecentItemRow,
-	RecentItemData,} from './recent-list';
+	RecentItemData,StyledLink,} from './recent-list';
 
 class BlockList extends React.Component {
 	componentDidMount() {
@@ -20,8 +22,8 @@ class BlockList extends React.Component {
 		return <List.Item key={block.num}>
 			<RecentItem>
 				<RecentItemTitle>
-					<span>Block:<RecentItemData>{block.num}</RecentItemData></span>
-					<span>Producer:<RecentItemData >{block.producer}</RecentItemData></span>
+					<span>Block:<RecentItemData><StyledLink to={`/block/${block.num}`}>{block.num}</StyledLink></RecentItemData></span>
+					<span>Producer:<RecentItemData ><StyledLink to={`/account/${block.producer}`}>{block.producer}</StyledLink></RecentItemData></span>
 				</RecentItemTitle>
 				<RecentItemRow>
 					<span>Include: <RecentItemData>{block.transactions}</RecentItemData> transactions</span>
