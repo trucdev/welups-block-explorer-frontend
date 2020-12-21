@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Menu, Layout } from 'antd';
 import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
-import Home from './components/home/home';
+import Home from './components/home';
 import Witness from './components/witness';
 import BlockDetail from './components/witness';
-import TransactionDetail from './components/witness';
 import NotFound from './components/not-found';
 import Search from './components/search';
+import TransactionDetails from './components/transaction';
+import AccountDetails from './components/account';
 import {
   BrowserRouter as Router,
   Route, Link, Redirect, Switch
@@ -48,10 +49,6 @@ class App extends Component {
                   render={(routeProps) => <BlockDetail />}
                 />
                 <Route
-                  path="/transaction/:id"
-                  render={(routeProps) => <TransactionDetail />}
-                />
-                 <Route
                   path="/notfound"
                   render={(routeProps) => <NotFound />}
                 />
@@ -59,6 +56,14 @@ class App extends Component {
                   exact
                   path="/"
                   render={(routeProps) => <Redirect to="/home" />}
+                />
+                <Route
+                  path="/transaction/:id"
+                  render={(routeProps) => <TransactionDetails {...routeProps} />}
+                />
+              <Route
+                  path="/account/:id"
+                  render={(routeProps) => <AccountDetails {...routeProps} />}
                 />
               </Switch>
             </div>

@@ -39,7 +39,7 @@ class Home extends Component{
 	}
 }
 
-// export default Home;
+ 
 const mapStateToProps = (state) => {
 	return {
 		
