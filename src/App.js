@@ -8,6 +8,7 @@ import NotFound from './components/not-found';
 import Search from './components/search';
 import TransactionDetails from './components/transaction';
 import AccountDetails from './components/account';
+import WitnessTable from './components/witnesses';
 import {
   BrowserRouter as Router,
   Route, Link, Redirect, Switch
@@ -29,6 +30,9 @@ class App extends Component {
             <Menu.Item key="witness" icon={<AppstoreOutlined />}>
               <Link to="/witness">Witnesses</Link>
             </Menu.Item>
+            <Menu.Item key="blocks" icon={<AppstoreOutlined />}>
+              <Link to="/blocks">Blocks</Link>
+            </Menu.Item>
           </Menu>
           <Content className='home-content-wrapper' >
             <div className="site-layout-content">
@@ -42,7 +46,7 @@ class App extends Component {
                 <Route
                   exact
                   path="/witness"
-                  render={(routeProps) => <Witness />}
+                  render={(routeProps) => <WitnessTable />}
                 />
                 <Route
                   path="/block/:id"
@@ -61,9 +65,13 @@ class App extends Component {
                   path="/transaction/:id"
                   render={(routeProps) => <TransactionDetails {...routeProps} />}
                 />
-              <Route
+                <Route
                   path="/account/:id"
                   render={(routeProps) => <AccountDetails {...routeProps} />}
+                />
+                <Route
+                  path="/blocks"
+                  render={(routeProps) => <WitnessTable {...routeProps} />}
                 />
               </Switch>
             </div>
