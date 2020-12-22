@@ -3,11 +3,12 @@ import { Menu, Layout } from 'antd';
 import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
 import Home from './components/home';
 import Witness from './components/witness';
-import BlockDetail from './components/witness';
+import BlockDetail from './components/blocks/block';
 import NotFound from './components/not-found';
 import Search from './components/search';
 import TransactionDetails from './components/transaction';
 import AccountDetails from './components/account';
+import ContractDetails from './components/account';
 import WitnessTable from './components/witnesses';
 import {
   BrowserRouter as Router,
@@ -50,7 +51,7 @@ class App extends Component {
                 />
                 <Route
                   path="/block/:id"
-                  render={(routeProps) => <BlockDetail />}
+                  render={(routeProps) => <BlockDetail {...routeProps}/>}
                 />
                 <Route
                   path="/notfound"
@@ -66,9 +67,13 @@ class App extends Component {
                   render={(routeProps) => <TransactionDetails {...routeProps} />}
                 />
                 <Route
-                  path="/account/:id"
-                  render={(routeProps) => <AccountDetails {...routeProps} />}
-                />
+                    path="/account/:id"
+                    render={(routeProps) => <AccountDetails {...routeProps} />}
+                  />
+                <Route
+                    path="/contract/:id"
+                    render={(routeProps) => <ContractDetails {...routeProps} />}
+                  />
                 <Route
                   path="/blocks"
                   render={(routeProps) => <WitnessTable {...routeProps} />}
