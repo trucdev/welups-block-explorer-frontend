@@ -16,7 +16,7 @@ class BlockParentHash extends Component{
 				</Th>
 				<td>
 					<div>
-						<Link to={"/account/"+parent_hash} target="_blank">{parent_hash}</Link><CopyToClipboard text={parent_hash}><CopyOutlined/></CopyToClipboard>
+						<Link to={"/block/"+parent_hash} target="_blank">{parent_hash}</Link><CopyToClipboard text={parent_hash}><CopyOutlined/></CopyToClipboard>
 					</div>
 				</td>
 			</TableRow>				
