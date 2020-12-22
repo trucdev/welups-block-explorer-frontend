@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import styled from 'styled-components';
 import { CopyOutlined } from '@ant-design/icons';
 import { loadAccountDetails } from '../../actions/account';
+import ReactJson from 'react-json-view';
+import { Skeleton} from 'antd';
 const Wrap = styled.div`
     display: flex;
     flex-direction: column;
@@ -59,15 +61,6 @@ const RowTitleUpper = styled.div`
 const HightLight= styled.span`
   color: '#E50915';
 `;
-// address: "",
-//     totalBalance: 0,
-//     trxBalance: 0,
-// 	createdTime: 0,
-// 	freezeBalance: 0,
-// 	bandwidthLimit: 0,
-// 	usedBandwidth: 0,
-// 	energy:0,
-
 
 class Card extends Component {
   componentDidMount(){
@@ -76,27 +69,38 @@ class Card extends Component {
   render() {
     const acc= this.props.account;
     const content = [
+      { title: 'Name', value:<HightLight>{ acc.name} TRX</HightLight> },
       { title: 'Total Balance', value:<HightLight>{ acc.totalBalance} TRX</HightLight> },
-      { title: 'Trx Balance', value:<HightLight>{ acc.trxBalance} TRX</HightLight> },
-      { title: 'Created Time',  value: new Date(acc.createdTime).toString()},
-      { title: 'Freeze Balance',  value: acc.freezeBalance},
-      { title: 'Bandwidth Limit',  value: acc.bandwidthLimit},
-      { title: 'Used Bandwidth',  value: acc.usedBandwidth},
-      { title: 'Energy',  value: acc.energy},
+      { title: 'TRX Balance',  value: acc.trxBalance},
+      { title: 'Transactions',  value: acc.transactions},
+      { title: 'Transferred',  value: acc.transferred},
+      { title: 'Available Balance',  value: acc.availableBalance},
+      { title: 'Net Usage',  value: acc.netUsage},
+      { title: 'Bandwidth  Used',  value: acc.bandwidthUsed},
+      { title: 'BandWidth Total',  value: acc.bandwidthTotal},
+      { title: 'Create Time',  value: acc.createTime},
+      { title: 'Frozen Balance',  value: acc.frozenBalance},
+      { title: 'Energy Total',  value: acc.energyTotal},
+      { title: 'Energy Used',  value: acc.energyUsed},
+      { title: 'Assets', value: <ReactJson src={ acc.asset} />},
     ];
     return (
       <Wrap>
+        <Skeleton  loading={acc.address===""}>
         <Content>
           <CardContent>
             <CardHeader>Address: <span>{acc.address} <CopyOutlined /> </span></CardHeader>
           </CardContent>
           {content.map((item,index) => {
-            return (<CardContent key ={index}>
-              <RowTitle >{item.title}:</RowTitle>
-              <RowValue>{item.value}</RowValue>
-            </CardContent>)
+            return (
+              <CardContent key ={index}>
+                <RowTitle >{item.title}:</RowTitle>
+                <RowValue>{item.value}</RowValue>
+              </CardContent>
+            )
           })}
         </Content>
+        </Skeleton>
       </Wrap>
     );
   }

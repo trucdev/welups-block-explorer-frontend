@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { CopyOutlined } from '@ant-design/icons';
 import { loadTransactionDetails } from '../../actions/transaction';
 import ReactJson from 'react-json-view';
+import { Skeleton} from 'antd';
 const Wrap = styled.div`
     display: flex;
     flex-direction: column;
@@ -94,18 +95,23 @@ class Card extends Component {
     ];
     return (
       <Wrap>
+         <Skeleton loading={hash===""}>
         <Content>
           <CardContent>
             <CardHeader>Hash: <span>{hash} <CopyOutlined /> </span></CardHeader>
           </CardContent>
           {content.map((item,index) => {
-            return (<CardContent key ={index}>
+            return (
+            <CardContent key ={index} >
               <RowTitle >{item.title}:</RowTitle>
               <RowValue>{item.value}</RowValue>
-            </CardContent>)
+            </CardContent>
+            )
           })}
         </Content>
+        </Skeleton>
       </Wrap>
+      
     );
   }
 }
