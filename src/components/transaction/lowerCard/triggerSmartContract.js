@@ -3,18 +3,10 @@ import { connect } from "react-redux";
 import { loadTransactionDetails } from '../../../actions/transaction';
 import { FaExchangeAlt } from "react-icons/fa";
 import styled from 'styled-components';
-import { ArrowRightOutlined, RightOutlined, CaretRightOutlined } from '@ant-design/icons';
 
 
-const From = 'TFi3v5PtYRnVdC43qSvPR3upZhgreiURga';
-const FromLenght = From.length;
-const To = 'TL6K6iaEkn8kdnJ79a8Be3S4RFf4pFkGE8';
-const ToLenght = To.length;
 
-const Righticon = styled.span`
-    color: #939393;
-    font-size: 12px;
-`;
+
 const RedText = styled.span`
     color: #E50915;
     `;
@@ -67,20 +59,7 @@ const ContentLine = styled.div`
     display: inline-block;
     padding-bottom: 7px;
 `;
-const Arrow = styled.span`
-    color: #939393;
-    font-size: 12px;
-`;
-const ConsumeLeft = styled.div`
-    width: 20%;
-`;
-const ConsumeRight = styled.div`
-    width: 80%;
-    
-`;
-const MakeItaRow = styled.div`
-    display: flex;
-`;
+
 class Trigger extends Component {
 
   render() {
@@ -265,11 +244,7 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = dispatch => {
-	return {
-		loadTransactionDetails: (txHash) => {
-			dispatch(loadTransactionDetails(txHash));
-		},
-	};
+	return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(
   Trigger
