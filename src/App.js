@@ -7,7 +7,7 @@ import NotFound from './components/not-found';
 import Search from './components/search';
 import TransactionDetails from './components/transaction';
 import AccountDetails from './components/account';
-import ContractDetails from './components/account';
+import ContractDetails from './components/contract/contract';
 import WitnessTable from './components/witnesses';
 import { Row, Col } from 'antd';
 import {

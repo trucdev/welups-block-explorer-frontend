@@ -11,6 +11,7 @@ import {
 } from './home';
 import { transactionReducer } from "./transaction";
 import { accountReducer } from "./account";
+import {contractReducer} from "./contract";
 import { witnessesReducer } from "./witnesses";
 
 export default combineReducers({
@@ -22,5 +23,6 @@ export default combineReducers({
 	blockTransaction:blockTransactionReducer,
 	transaction: transactionReducer,
 	account: accountReducer,
+	contract: contractReducer,
 	witnesses:witnessesReducer,
 });
