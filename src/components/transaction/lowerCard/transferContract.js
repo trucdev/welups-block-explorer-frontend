@@ -82,12 +82,10 @@ const MakeItaRow = styled.div`
     display: flex;
 `;
 class TransferContract extends Component {
-    componentDidMount(){
-        this.props.loadTransactionDetails(this.props.txHash);
-      }
-  render() {
+
+  render() {    
+    
     const { hash, result, status, blockNum, timestamp, numOfBlocks, contract}= this.props.transaction;
-    const Sender = contract.parameter.raw;
     return (
       <Details>
         <Top>
@@ -101,7 +99,7 @@ class TransferContract extends Component {
               <span >From</span>:
             </TitleContainer>
             <FillContainer>
-              <RedText ></RedText>
+            <RedText>{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText>
             </FillContainer>
           </Row>
           <Row>
@@ -109,7 +107,7 @@ class TransferContract extends Component {
               <span >To</span>:
             </TitleContainer>
             <FillContainer>
-            <ReactJson src={contract.parameter.raw} />
+            <RedText>{this.props.transaction.contract.parameter.raw.ToAddress}</RedText>
             </FillContainer>
           </Row>
           <Row>
@@ -117,17 +115,17 @@ class TransferContract extends Component {
               <span >Amount</span>:
             </TitleContainer>
             <FillContainer>
-              <span >{contract.parameter.value}</span>
+            <span>{this.props.transaction.contract.parameter.raw.Amount}</span>
             </FillContainer>
           </Row>
-          <Row>
+          {/* <Row>
             <TitleContainer>
               <span >Note</span>:
             </TitleContainer>
             <FillContainer>
               <span >Bad and Boujee</span>
             </FillContainer>
-          </Row>
+          </Row> */}
           {/* CONSUMER BANDWIDTH */}
           {/* <Row>
             <TitleContainer>
@@ -169,6 +167,7 @@ class TransferContract extends Component {
 
 
 const mapStateToProps = (state) => {
+  
   return {
     transaction: state.transaction,
   };

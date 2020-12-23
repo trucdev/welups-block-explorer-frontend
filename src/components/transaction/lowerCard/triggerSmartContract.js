@@ -46,7 +46,7 @@ const Row = styled.div`
     border-bottom: 1px solid #EEEEEE;
 `;;
 const TitleContainer = styled.div`
-height: 40px;
+    height: 40px;
     align-items: flex-start;
     display: flex;
     font-size: 14px;
@@ -82,11 +82,8 @@ const MakeItaRow = styled.div`
     display: flex;
 `;
 class Trigger extends Component {
-  componentDidMount() {
-    this.props.loadTransactionDetails(this.props.txHash);
-  }
+
   render() {
-    const { hash, result, status, blockNum, timestamp, numOfBlocks, contract } = this.props.transaction;
     
     return (
       <Details>
@@ -101,7 +98,7 @@ class Trigger extends Component {
               <span >Owner address</span>:
             </TitleContainer>
             <FillContainer>
-              <span >TGruUgN33EdG7PQky2oRboKaAQ7GmLxkHA</span>
+            <RedText >{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText>
             </FillContainer>
           </Row>
           <Row>
@@ -110,7 +107,7 @@ class Trigger extends Component {
             </TitleContainer>
             <FillContainer>
               <ContentLine>
-                <span >TFi3v5PtYRnVdC43qSvPR3upZhgreiURga</span>
+              <RedText >{this.props.transaction.contract.parameter.raw.ContractAddress}</RedText>
               </ContentLine>
               {/* <ContentLine>
                 <Righticon><RightOutlined /></Righticon>

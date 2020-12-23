@@ -82,6 +82,7 @@ const MakeItaRow = styled.div`
     display: flex;
 `;
 class TransferAssetContract extends Component {
+
   render() {
     const { hash, result, status, blockNum, timestamp, numOfBlocks, contract}= this.props.transaction;
     
@@ -98,7 +99,7 @@ class TransferAssetContract extends Component {
               <span >From</span>:
             </TitleContainer>
             <FillContainer>
-              <RedText >{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText>
+            <RedText>{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText>
             </FillContainer>
           </Row>
           <Row>
@@ -106,7 +107,7 @@ class TransferAssetContract extends Component {
               <span >To</span>:
             </TitleContainer>
             <FillContainer>
-              <RedText >{this.props.transaction.contract.parameter.raw.ToAddress}</RedText>
+            <RedText>{this.props.transaction.contract.parameter.raw.ToAddress}</RedText>
             </FillContainer>
           </Row>
           <Row>
@@ -133,17 +134,18 @@ class TransferAssetContract extends Component {
 
 
 const mapStateToProps = (state) => {
-    return {
-      transaction: state.transaction,
-    };
+  
+  return {
+    transaction: state.transaction,
   };
-  const mapDispatchToProps = dispatch => {
-      return {
-          loadTransactionDetails: (txHash) => {
-              dispatch(loadTransactionDetails(txHash));
-          },
-      };
-  };
-  export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		loadTransactionDetails: (txHash) => {
+			dispatch(loadTransactionDetails(txHash));
+		},
+	};
+};
+export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(
   TransferAssetContract
 );

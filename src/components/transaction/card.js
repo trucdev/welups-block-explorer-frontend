@@ -91,7 +91,7 @@ class Card extends Component {
       { title: 'Contract', value: contract.type},
       { title: 'Type URL', value: contract.parameter.type_url },
       { title: 'Value', value: <RowValueExt>{contract.parameter.value}</RowValueExt> },
-      { title: 'Extracted Raw', value: <ReactJson src={contract.parameter.raw} />},
+      // { title: 'Extracted Raw', value: <ReactJson src={contract.parameter.raw} />},
     ];
     return (
       <Wrap>

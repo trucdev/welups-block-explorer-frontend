@@ -82,9 +82,7 @@ const MakeItaRow = styled.div`
     display: flex;
 `;
 class CreateSmartContract extends Component {
-  componentDidMount(){
-    this.props.loadTransactionDetails(this.props.txHash);
-  }
+
   render() {
     const { hash, result, status, blockNum, timestamp, numOfBlocks, contract}= this.props.transaction;
     
@@ -92,7 +90,7 @@ class CreateSmartContract extends Component {
       <Details>
         <Top>
           <DetailTop>
-            <FaExchangeAlt /> Transfer Contract
+            <FaExchangeAlt /> Create Smart Contract
           </DetailTop>
         </Top>
         <Content>
@@ -101,33 +99,17 @@ class CreateSmartContract extends Component {
               <span >From</span>:
             </TitleContainer>
             <FillContainer>
-              <RedText >TEcgpmHodJzEhGsDkhh6Qa5Pmh43hoKDqd</RedText>
+              <RedText >{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText>
             </FillContainer>
           </Row>
           <Row>
             <TitleContainer>
-              <span >To</span>:
+              <span >Contract Address</span>:
             </TitleContainer>
             <FillContainer>
-              <RedText >TELCwpF5LiRTRUceYJVctvuNhzxigaDcEF</RedText>
+              <RedText >{this.props.transaction.contract.parameter.raw.ContractAddress}</RedText>
             </FillContainer>
           </Row>
-          <Row>
-            <TitleContainer>
-              <span >Amount</span>:
-            </TitleContainer>
-            <FillContainer>
-              <span >0 TRX</span>
-            </FillContainer>
-          </Row>
-          <Row>
-            <TitleContainer>
-              <span >AssetName</span>:
-            </TitleContainer>
-            <FillContainer>
-              <span >213213</span>
-            </FillContainer>
-            </Row>
         </Content>
       </Details>
     );
