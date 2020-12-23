@@ -36,7 +36,8 @@ const initSystemState ={
 	block_height: 0,
 	total_nodes: 0,
 	block_num: 0,
-	transaction_num: 0
+	transaction_num: 0,
+	asset_num: 0,
 };
 export function homeSystemStateReducer(state = {systemState: initSystemState} , action){
 	switch (action.type) {

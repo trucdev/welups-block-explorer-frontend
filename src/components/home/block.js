@@ -4,15 +4,17 @@ import { BlockOutlined } from '@ant-design/icons';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { connect } from 'react-redux';
 import { loadRecentBlocks } from '../../actions/home';
+import { Row, Col } from 'antd';
 import {
-	Link  } from "react-router-dom";
-import {RecentListTitleFrame,
+	RecentListTitleFrame,
 	RecentListTitle,
 	RecentListContentFrame,
 	RecentItem,
-	RecentItemTitle,
-	RecentItemRow,
-	RecentItemData,StyledLink,} from './recent-list';
+	RecentItemData, StyledLink,
+	RecentRightCol,
+} from './recent-list';
+
+
 
 class BlockList extends React.Component {
 	componentDidMount() {
@@ -21,17 +23,27 @@ class BlockList extends React.Component {
 	blockItem = (block) => {
 		return <List.Item key={block.num}>
 			<RecentItem>
-				<RecentItemTitle>
-					<span>Block:<RecentItemData><StyledLink to={`/block/${block.num}`}>{block.num}</StyledLink></RecentItemData></span>
-					<span>Producer:<RecentItemData ><StyledLink to={`/account/${block.producer}`}>{block.producer}</StyledLink></RecentItemData></span>
-				</RecentItemTitle>
-				<RecentItemRow>
-					<span>Include: <RecentItemData>{block.transactions}</RecentItemData> transactions</span>
-				</RecentItemRow>
-				<RecentItemRow>
-					<span>Block reward:<RecentItemData>{16}</RecentItemData></span>
-					<span>at: <RecentItemData>{new Date(block.timestamp).toString()}</RecentItemData></span>
-				</RecentItemRow>
+				<Row >
+				<Col xs={24} sm={24} md={12}>
+						<span>Block:<RecentItemData><StyledLink to={`/block/${block.num}`}>{block.num}</StyledLink></RecentItemData></span>
+					</Col>
+					<RecentRightCol xs={24}  sm={24} md={12} >
+						<span>Producer:<RecentItemData ><StyledLink to={`/account/${block.producer}`}>{block.producer}</StyledLink></RecentItemData></span>
+					</RecentRightCol>
+				</Row>
+				<Row >
+					<Col span={24}>
+						<span>Include: <RecentItemData>{block.transactions}</RecentItemData> transactions</span>
+					</Col>
+				</Row>
+				<Row >
+					<Col xs={24}  sm={24} md={12}>
+						<span>Block reward:<RecentItemData>{16}</RecentItemData></span>
+					</Col>
+					<RecentRightCol xs={24}  sm={24} md={12}>
+						<span>at: <RecentItemData>{new Date(block.timestamp).toLocaleString()}</RecentItemData></span>
+					</RecentRightCol>
+				</Row>
 			</RecentItem>
 		</List.Item>;
 	}

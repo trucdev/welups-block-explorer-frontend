@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Card from './card';
-import Detail from './lowerCard/detail';
 import styled from 'styled-components';
 
 

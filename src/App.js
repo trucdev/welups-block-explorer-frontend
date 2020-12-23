@@ -2,28 +2,38 @@ import React, { Component } from 'react';
 import { Menu, Layout } from 'antd';
 import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
 import Home from './components/home';
-import Witness from './components/witness';
-import BlockDetail from './components/blocks/block';
+import BlockDetail from './components/block/block';
 import NotFound from './components/not-found';
 import Search from './components/search';
 import TransactionDetails from './components/transaction';
 import AccountDetails from './components/account';
 import ContractDetails from './components/account';
 import WitnessTable from './components/witnesses';
+import { Row, Col } from 'antd';
 import {
   BrowserRouter as Router,
   Route, Link, Redirect, Switch
 } from "react-router-dom";
-import './App.css';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
-const { Content, Footer } = Layout;
+const { Footer } = Layout;
 
-
+const AppWrapper = styled.div`
+  text-align: center;
+  flex: 1 0 auto;
+`;
+const ContentRowWrapper = styled(Row)`
+  padding-top:40px;
+`;
+const FooterWrapper = styled(Footer)`
+  text-align: center;
+  flex-shrink: 0;
+`;
 class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <AppWrapper>
           <Menu mode="horizontal">
             <Menu.Item key="home" icon={<MailOutlined />}>
               <Link to="/home">Home</Link>
@@ -35,55 +45,58 @@ class App extends Component {
               <Link to="/blocks">Blocks</Link>
             </Menu.Item>
           </Menu>
-          <Content className='home-content-wrapper' >
-            <div className="site-layout-content">
-              <div className='search-wrapper'><Search></Search></div>
+          <ContentRowWrapper justify='center' gutter={[5, 5]}>
+            <Col xs={20} sm={20} md={20} lg={19} xl={18}>
+              <Row gutter={[5, 5]}>
+                <Col span={24} ><Search /></Col>
+              </Row>
               <Switch>
                 <Route
                   exact
                   path="/home"
-                  render={(routeProps) => <Home />}
+                  render={() => <Home />}
                 />
                 <Route
                   exact
                   path="/witness"
-                  render={(routeProps) => <WitnessTable />}
+                  render={() => <WitnessTable />}
                 />
                 <Route
                   path="/block/:id"
-                  render={(routeProps) => <BlockDetail {...routeProps}/>}
+                  render={(routeProps) => <BlockDetail {...routeProps} />}
                 />
                 <Route
                   path="/notfound"
-                  render={(routeProps) => <NotFound />}
+                  render={() => <NotFound />}
                 />
                 <Route
                   exact
                   path="/"
-                  render={(routeProps) => <Redirect to="/home" />}
+                  render={() => <Redirect to="/home" />}
                 />
                 <Route
                   path="/transaction/:id"
                   render={(routeProps) => <TransactionDetails {...routeProps} />}
                 />
                 <Route
-                    path="/account/:id"
-                    render={(routeProps) => <AccountDetails {...routeProps} />}
-                  />
+                  path="/account/:id"
+                  render={(routeProps) => <AccountDetails {...routeProps} />}
+                />
                 <Route
-                    path="/contract/:id"
-                    render={(routeProps) => <ContractDetails {...routeProps} />}
-                  />
+                  path="/contract/:id"
+                  render={(routeProps) => <ContractDetails {...routeProps} />}
+                />
                 <Route
                   path="/blocks"
                   render={(routeProps) => <WitnessTable {...routeProps} />}
                 />
               </Switch>
-            </div>
-          </Content>
-          <Footer className='foot-wrapper'>Designed by ACGroup</Footer>
-        </div>
+            </Col>
+          </ContentRowWrapper>
+        </AppWrapper>
+        <FooterWrapper>Designed by ACGroup</FooterWrapper>
       </Router>
+
     );
   }
 }

@@ -38,26 +38,7 @@ const RowValue = styled.div`
   text-align: left;
   overflow: auto;
 `;
-const RowValueExt = styled.div`
-  height: auto; 
-  max-height: 100px;
-`;
-const StatusContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-`;
-const StatusConfirm = styled.div`
-    background-color: #E1F3E0;
-    padding-left: 5px;
-    padding-right: 5px;
-    margin-right: 15px;
-`;
 
-const RowTitleUpper = styled.div`
-  min-width: 100px;
-  text-align: left;
-  text-transform: uppercase;
-`;
 const HightLight= styled.span`
   color: '#E50915';
 `;

@@ -2,7 +2,10 @@ import styled from 'styled-components';
 import {
 	Link
 } from "react-router-dom";
+import { device } from '../../config/device';
+import { Col } from 'antd';
 export const StyledLink = styled(Link)`
+	font-weight: bold;
 	color: #c53027;
 `
 export const RecentListTitleFrame = styled.div`
@@ -21,13 +24,13 @@ export const RecentListContentFrame = styled.div`
 	border: 1px solid #d9d9d9;
 `;
 export const RecentItem = styled.div`
-	display: flex;
-	flex-direction: column;
+
 	width: 100%;
 	padding-left: 10px;
 	padding-right: 10px;
 	font-size: 12px;
 	color:#999 ;
+	text-align: left;
 `;
 export const RecentItemTitle = styled.div`
 	display: flex;
@@ -46,8 +49,19 @@ export const RecentItemRow = styled.div`
 export const RecentItemData = styled.span`
 	color: #c53027;
 `;
-
-export const RecentList = {
+export const RecentRightCol = styled(Col)`
+	@media ${device.sm} { 
+		text-align: left;
+	}
+	@media ${device.md} { 
+		text-align: right;
+	  }
+	  
+`;
+export const RecentItemFrag = styled(({ active, ...rest }) => <Col {...rest} sm={24} md={12} />)`
+	
+`;
+export  const RecentList = {
 	RecentListTitleFrame,
 	RecentListTitle,
 	RecentListContentFrame,
@@ -55,4 +69,6 @@ export const RecentList = {
 	RecentItemTitle,
 	RecentItemRow,
 	RecentItemData,
+	RecentRightCol,
+	RecentItemFrag,
 }

@@ -28,6 +28,8 @@ const columns = [
 		title: 'No.',
 		key: 'no',
 		render: (value, item, index) => (index + 1),
+		fixed: 'left',
+		width: 70,
 	},
 	{
 		title: 'Address',
@@ -71,7 +73,14 @@ const columns = [
 		title: 'Running',
 		key: 'is_jobs',
 		dataIndex: 'is_jobs',
-		render: text => <Tag color={text ? 'green' : 'red'}>{text ? "RUNNING" : "NOT RUNNING"}</Tag>
+		render: text => <Tag color={text ? 'green' : 'red'}>{text ? "RUNNING" : "NOT RUNNING"}</Tag>,
+		fixed: 'right',
+		defaultSortOrder: 'descend',
+		sorter: (a, b) => {
+			const isRunA = a.is_jobs ? 1 : 0;
+			const isRunB = b.is_jobs ? 1 : 0;
+			return isRunA - isRunB;
+		},
 	},
 ];
 
@@ -87,6 +96,7 @@ class WitnessTable extends React.Component {
 				<Table columns={columns}
 					dataSource={witnesses}
 					rowKey="address"
+					scroll={{ x: 1500 }} sticky
 				/>
 			</Wrapper>
 

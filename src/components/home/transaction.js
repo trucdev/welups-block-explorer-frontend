@@ -4,18 +4,16 @@ import { BlockOutlined } from '@ant-design/icons';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { connect } from 'react-redux';
 import { loadRecentTrans } from '../../actions/home';
-import {
-	Link
-} from "react-router-dom";
+import { Row, Col } from 'antd';
 import {
 	RecentListTitleFrame,
 	RecentListTitle,
 	RecentListContentFrame,
 	RecentItem,
-	RecentItemTitle,
-	RecentItemRow,
-	RecentItemData, StyledLink
+	RecentItemData, StyledLink,
+	RecentRightCol,
 } from './recent-list';
+
 class TransactionList extends React.Component {
 
 	componentDidMount() {
@@ -24,20 +22,27 @@ class TransactionList extends React.Component {
 	tranItem = (tran) => {
 		return <List.Item key={tran.hash}>
 			<RecentItem>
-				<RecentItemTitle>
-					<span>Transaction:
-						<RecentItemData>
-							<StyledLink to={`/transaction/${tran.hash}`}>{tran.hash.substring(0, 16) + "..."}</StyledLink>
-						</RecentItemData>
-					</span>
-				</RecentItemTitle>
-				<RecentItemRow>
-					<br></br>
-				</RecentItemRow>
-				<RecentItemRow>
-					<span>Type:<RecentItemData>{tran.type}</RecentItemData></span>
-					<span>at: <RecentItemData>{new Date(tran.timestamp).toString()}</RecentItemData></span>
-				</RecentItemRow>
+				<Row >
+					<Col xs={24} sm={24} md={12} >
+						<span>Transaction:<RecentItemData>
+							<StyledLink to={`/transaction/${tran.hash}`}>{tran.hash.substring(0, 24) + "..."}</StyledLink>
+						</RecentItemData></span>
+					</Col>
+				</Row>
+				<Row >
+					<Col xs={0} sm={0} md={24}>
+						<br></br>
+					</Col>
+				</Row>
+
+				<Row >
+					<Col xs={24} sm={24} md={12}>
+						<span>Type:<RecentItemData>{tran.type}</RecentItemData></span>
+					</Col>
+					<RecentRightCol xs={24} sm={24} md={12} >
+						<span>at: <RecentItemData>{new Date(tran.timestamp).toLocaleString()}</RecentItemData></span>
+					</RecentRightCol>
+				</Row>
 			</RecentItem>
 		</List.Item>;
 	}

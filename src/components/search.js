@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input,message } from 'antd';
+import { Input, message } from 'antd';
 import { connect } from 'react-redux';
 import { search, SEARCH_REQUESTING, SEARCH_SUCCESS } from '../actions/home';
 import { Redirect } from 'react-router-dom';
@@ -9,7 +9,7 @@ const PALCEHOLDER = 'Block Num/ Block Hash/ Transaction Hash';
 const SEARCHTITLE = 'Search';
 
 
-class BlockList extends React.Component {
+class SearchBox extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -37,16 +37,14 @@ class BlockList extends React.Component {
 			}
 		}
 		return (
-			<div>
-				<Search
-					placeholder={PALCEHOLDER}
-					enterButton={SEARCHTITLE}
-					size="large"
-					onSearch={this.onSearch}
-					loading={SEARCH_REQUESTING === this.props.state}
-					ref={this.searchBoxRef}
-				/>
-			</div>
+			<Search
+				placeholder={PALCEHOLDER}
+				enterButton={SEARCHTITLE}
+				onSearch={this.onSearch}
+				loading={SEARCH_REQUESTING === this.props.state}
+				ref={this.searchBoxRef}
+			/>
+
 		);
 	}
 }
@@ -65,4 +63,4 @@ const mapDispatchToProps = dispatch => {
 		},
 	}
 };
-export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(BlockList);
+export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(SearchBox);

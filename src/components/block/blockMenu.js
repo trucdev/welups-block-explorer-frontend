@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route, Link, Switch
-} from "react-router-dom";
 import {Menu} from 'antd';
 import Transaction from './transaction';
 

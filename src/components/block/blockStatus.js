@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {TableRow, Flex, QuestionMark, StatusTag, BadgeGreen, BadgeRed, Th} from './style';
-import {Badge} from 'antd';
 
 class BlockStatus extends Component{
 	render(){
-		var {block_num, block_height, confirm} = this.props;
+		var {confirm} = this.props;
 
 		return (
 			<TableRow>

@@ -9,7 +9,6 @@ import styled from 'styled-components';
 const SummaryGroup = styled.div`
 	display: flex;
 	justify-content: space-evenly;
-	border-radius: 5px;
 	border: 1px solid #d9d9d9; 
 `;
 const SummaryCard = styled.div`
@@ -42,10 +41,6 @@ class SummaryBar extends Component {
 					<SummaryCardTitle>TRC10 Tokens</SummaryCardTitle>
 					<SummaryCardValue>{this.props.systemState.asset_num}</SummaryCardValue>
 				</SummaryCard>
-				{/* <SummaryCard>
-					<SummaryCardTitle>Transaction Nums</SummaryCardTitle>
-					<SummaryCardValue>{this.props.systemState.transaction_num}</SummaryCardValue>
-				</SummaryCard> */}
 				<SummaryCard>
 					<SummaryCardTitle>Total Nodes</SummaryCardTitle>
 					<SummaryCardValue>{this.props.systemState.total_nodes}</SummaryCardValue>

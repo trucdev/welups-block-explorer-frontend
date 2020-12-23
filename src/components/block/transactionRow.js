@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {TableRow, BadgeGreen, BadgeRed, Td} from './style';
-import {Badge} from 'antd';
 import {Link} from "react-router-dom";
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
@@ -34,7 +33,7 @@ class TransactionRow extends Component{
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
 	return {
 	};
 };
