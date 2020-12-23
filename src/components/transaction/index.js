@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Card from './card';
+import { loadTransactionDetails } from '../../actions/transaction';
+import Trigger from './lowerCard/triggerSmartContract';
+import TransferContract from './lowerCard/transferContract';
+import TransferAssetContract from './lowerCard/transferAssetContract';
+import CreateSmartContract from './lowerCard/createSmartContract';
 import styled from 'styled-components';
 
 
@@ -13,7 +18,15 @@ const CardTitle = styled.div`
 	text-align: left;
 	`;
 class TransactionDetails extends Component {
+	test=() =>{
+		return <TransferContract />;
+	}
+	componentDidMount(){
+		this.props.loadTransactionDetails(this.props.txHash);
+	  }
 	render() {
+		let {transaction} = this.props;
+		console.log( transaction.contract.type);
 		return (
 			<Container>
 				<CardTitle>
@@ -23,6 +36,8 @@ class TransactionDetails extends Component {
 				{/* TODO: NEED TO CHECK TYPE OF TRANSACTION AND SWITCH DETAILS */}
 				{/* <Detail /> */}
 				
+				<TransferContract />
+				{this.test()}
 			</Container>
 
 
@@ -31,9 +46,21 @@ class TransactionDetails extends Component {
 }
 
 
-const mapStateToProps = (state) => {
-	return {
 
+const mapStateToProps = (state) => {
+  
+	return {
+	  transaction: state.transaction,
 	};
-};
-export default connect(mapStateToProps, null, null, { forwardRef: true })(TransactionDetails);
+  };
+  const mapDispatchToProps = dispatch => {
+	  return {
+		  loadTransactionDetails: (txHash) => {
+			  dispatch(loadTransactionDetails(txHash));
+		  },
+	  };
+  };
+  export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(
+	TransactionDetails
+  );
+  
