@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 const { Footer } = Layout;
 
 const AppWrapper = styled.div`
+  min-height: 800px;
   text-align: center;
   flex: 1 0 auto;
 `;
