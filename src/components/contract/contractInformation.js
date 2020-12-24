@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {TableRow, Th, QuestionMark, Flex} from './style';
+import {TableRow, Th, QuestionMark, Flex, contentRatio, contentAsset} from './style';
 import {Link} from "react-router-dom";
+import {Popover } from 'antd';
 
 class ContractInformation extends Component{
 	render(){
@@ -40,7 +41,11 @@ class ContractInformation extends Component{
 				</TableRow>
 				<TableRow>
 					<Th>
-						<Flex>Energy Consumption Ratio&nbsp;<QuestionMark>?</QuestionMark>&nbsp;:</Flex>
+						<Flex>Energy Consumption Ratio&nbsp;
+							<Popover content={contentRatio} title="">
+								<QuestionMark>?</QuestionMark>
+							</Popover>&nbsp;:
+						</Flex>
 					</Th>
 					<td>
 						<span>Contracts{contract.energy_ratio_contract}%&nbsp;&nbsp;Users{contract.energy_ratio_user}%</span>
@@ -48,7 +53,11 @@ class ContractInformation extends Component{
 				</TableRow>
 				<TableRow>
 					<Th>
-						<Flex>Initial Asset&nbsp;<QuestionMark>?</QuestionMark>&nbsp;:</Flex>
+						<Flex>Initial Asset&nbsp;
+							<Popover content={contentAsset} title="">
+								<QuestionMark>?</QuestionMark>
+							</Popover>&nbsp;:
+						</Flex>
 					</Th>
 					<td>
 						<span>{contract.initial_asset}&nbsp;TRX</span>

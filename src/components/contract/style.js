@@ -52,3 +52,17 @@ export const QuestionMark = styled.span`
     align-items: center;
     cursor: pointer;
 `;
+export const HoverContent = styled.div`
+    font-family: PingFangSC-Regular;
+    width: 130px;
+`;
+export const contentRatio = (
+  <HoverContent>
+    <p>The energy consumed by calling the smart contract is borne by the contract and the user in proportion.</p>
+  </HoverContent>
+);
+export const contentAsset = (
+  <HoverContent>
+    <p>Contract creator transfers funds to contract address while deploying contract.</p>
+  </HoverContent>
+);

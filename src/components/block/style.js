@@ -78,4 +78,12 @@ export const BadgeRed = styled(Badge)`
         color: black
     }  
 `;
-
+export const HoverContent = styled.div`
+    font-family: PingFangSC-Regular;
+    width: 130px;
+`;
+export const contentStatus = (
+  <HoverContent>
+    <p>Transaction confirmed by 19 or more SRs will be marked "confirmed", or is "unconfirmed".</p>
+  </HoverContent>
+);

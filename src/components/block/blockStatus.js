@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {TableRow, Flex, QuestionMark, StatusTag, BadgeGreen, BadgeRed, Th} from './style';
+import {TableRow, Flex, QuestionMark, StatusTag, BadgeGreen, BadgeRed, Th, contentStatus} from './style';
+import {Popover } from 'antd';
 
 class BlockStatus extends Component{
 	render(){
@@ -12,7 +13,9 @@ class BlockStatus extends Component{
 					 
 					<Flex>
 						Status&nbsp;
-						<QuestionMark>?</QuestionMark>
+						<Popover content={contentStatus} title="">
+							<QuestionMark>?</QuestionMark>
+						</Popover>
 						:
 					</Flex>
 				</Th>
