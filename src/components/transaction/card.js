@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import styled from 'styled-components';
 import { CopyOutlined } from '@ant-design/icons';
 import { loadTransactionDetails } from '../../actions/transaction';
-import ReactJson from 'react-json-view';
 import { Skeleton} from 'antd';
 const Wrap = styled.div`
     display: flex;
@@ -91,7 +90,7 @@ class Card extends Component {
       { title: 'Contract', value: contract.type},
       { title: 'Type URL', value: contract.parameter.type_url },
       { title: 'Value', value: <RowValueExt>{contract.parameter.value}</RowValueExt> },
-      { title: 'Extracted Raw', value: <ReactJson src={contract.parameter.raw} />},
+      // { title: 'Extracted Raw', value: <ReactJson src={contract.parameter.raw} />},
     ];
     return (
       <Wrap>
