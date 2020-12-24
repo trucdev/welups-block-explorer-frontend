@@ -91,7 +91,9 @@ class App extends Component {
                   path="/blocks"
                   render={(routeProps) => <WitnessTable {...routeProps} />}
                 />
-                <Redirect to="/notfound" />
+                <Route
+                   render={() => <NotFound />}
+                />
               </Switch>
             </Col>
           </ContentRowWrapper>
