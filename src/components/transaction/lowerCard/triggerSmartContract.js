@@ -63,7 +63,7 @@ const ContentLine = styled.div`
 class Trigger extends Component {
 
   render() {
-    
+    const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
     return (
       <Details>
         <Top>
@@ -77,7 +77,7 @@ class Trigger extends Component {
               <span >From</span>:
             </TitleContainer>
             <FillContainer>
-            <Link to="/account"><RedText >{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText></Link>
+              <Link to={"/account/"+FROM}><RedText >{FROM}</RedText></Link>
             </FillContainer>
           </Row>
           <Row>
@@ -86,7 +86,7 @@ class Trigger extends Component {
             </TitleContainer>
             <FillContainer>
               <ContentLine>
-              <RedText >{this.props.transaction.contract.parameter.raw.ContractAddress}</RedText>
+                <RedText >{this.props.transaction.contract.parameter.raw.ContractAddress}</RedText>
               </ContentLine>
               {/* <ContentLine>
                 <Righticon><RightOutlined /></Righticon>
@@ -244,7 +244,7 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = dispatch => {
-	return {};
+  return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(
   Trigger

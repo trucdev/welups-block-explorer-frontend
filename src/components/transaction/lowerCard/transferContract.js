@@ -57,8 +57,9 @@ const FillContainer = styled.div`
 
 class TransferContract extends Component {
 
-  render() {    
-
+  render() {
+const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
+const TO = this.props.transaction.contract.parameter.raw.ToAddress;
     return (
       <Details>
         <Top>
@@ -72,7 +73,7 @@ class TransferContract extends Component {
               <span >From</span>:
             </TitleContainer>
             <FillContainer>
-            <Link to="/account"><RedText>{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText></Link>
+            <Link to={"/account/"+FROM}><RedText>{FROM}</RedText></Link>
             </FillContainer>
           </Row>
           <Row>
@@ -80,7 +81,7 @@ class TransferContract extends Component {
               <span >To</span>:
             </TitleContainer>
             <FillContainer>
-            <Link to="/account"><RedText>{this.props.transaction.contract.parameter.raw.ToAddress}</RedText></Link>
+            <Link to={"/account/"+TO}><RedText>{TO}</RedText></Link>
             </FillContainer>
           </Row>
           <Row>
@@ -102,6 +103,7 @@ const mapStateToProps = (state) => {
   
   return {
     transaction: state.transaction,
+    account: state.account,
   };
 };
 const mapDispatchToProps = dispatch => {

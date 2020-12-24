@@ -57,7 +57,8 @@ const FillContainer = styled.div`
 class CreateSmartContract extends Component {
 
   render() {
-    
+    const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
+const TO = this.props.transaction.contract.parameter.raw.ToAddress;
     return (
       <Details>
         <Top>
@@ -71,7 +72,7 @@ class CreateSmartContract extends Component {
               <span >From</span>:
             </TitleContainer>
             <FillContainer>
-            <Link to="/account"><RedText >{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText></Link>
+            <Link to={"/account/"+FROM}><RedText >{FROM}</RedText></Link>
             </FillContainer>
           </Row>
           <Row>

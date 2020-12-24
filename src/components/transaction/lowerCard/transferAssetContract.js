@@ -56,7 +56,8 @@ const FillContainer = styled.div`
 class TransferAssetContract extends Component {
 
   render() {
-
+    const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
+    const TO = this.props.transaction.contract.parameter.raw.ToAddress;
     
     return (
       <Details>
@@ -71,7 +72,7 @@ class TransferAssetContract extends Component {
               <span >From</span>:
             </TitleContainer>
             <FillContainer>
-            <Link to="/account"><RedText>{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText></Link>
+            <Link to={"/account/"+FROM}><RedText>{FROM}</RedText></Link>
             </FillContainer>
           </Row>
           <Row>
@@ -79,7 +80,7 @@ class TransferAssetContract extends Component {
               <span >To</span>:
             </TitleContainer>
             <FillContainer>
-            <Link to="/account"><RedText>{this.props.transaction.contract.parameter.raw.ToAddress}</RedText></Link>
+            <Link to={"/account/"+TO}><RedText>{TO}</RedText></Link>
             </FillContainer>
           </Row>
           <Row>
