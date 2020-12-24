@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from 'styled-components';
 import { CopyOutlined } from '@ant-design/icons';
-import { loadTransactionDetails } from '../../actions/transaction';
 import { Skeleton} from 'antd';
 const Wrap = styled.div`
     display: flex;
@@ -77,9 +76,6 @@ color: '#E50915';
 
 
 class Card extends Component {
-  componentDidMount(){
-    this.props.loadTransactionDetails(this.props.txHash);
-  }
   render() {
     const { hash, result, status, blockNum, timestamp, numOfBlocks, contract}= this.props.transaction;
     const content = [
@@ -123,9 +119,6 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = dispatch => {
 	return {
-		loadTransactionDetails: (txHash) => {
-			dispatch(loadTransactionDetails(txHash));
-		},
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(Card);

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loadTransactionDetails } from '../../../actions/transaction';
 import { FaExchangeAlt } from "react-icons/fa";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";

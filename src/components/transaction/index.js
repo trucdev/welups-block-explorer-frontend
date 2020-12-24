@@ -7,7 +7,8 @@ import TransferAssetContract from './lowerCard/transferAssetContract';
 import CreateSmartContract from './lowerCard/createSmartContract';
 import styled from 'styled-components';
 import { loadTransactionDetails } from '../../actions/transaction';
-
+import ReactJson from 'react-json-view';
+import { Skeleton} from 'antd';
 
 const Container = styled.div`
 	margin: 5px;
@@ -21,31 +22,33 @@ const CardTitle = styled.div`
 
 
 class TransactionDetails extends Component {
-	test=(type)=>{
+	contractDetails=(type, raw)=>{
+
 		switch(type){
 			case "TriggerSmartContract": return <Trigger/>;
 			case "TransferContract": return <TransferContract/>;
 			case "TransferAssetContract": return <TransferAssetContract/>;
 			case "CreateSmartContract": return <CreateSmartContract/>;
-			default: return "";
+			case "": return <Skeleton loading></Skeleton>
+			default: return      <ReactJson src={raw} />;
 		};
 	}
 
 	componentDidMount(){
-		this.props.loadTransactionDetails(this.props.txHash);
+		this.props.loadTransactionDetails(this.props.match.params.id);
 	}
 	render() {
 		const TransactionType = this.props.transaction.contract.type;
-		
+		const jsonContract = this.props.transaction.contract.parameter.raw;
 		return (
 			<Container>
 				<CardTitle>
 					<h3 >TRANSACTION DETAILS</h3>
 				</CardTitle>
-				<Card txHash = {this.props.match.params.id}/>
+				<Card/>
 				{/* TODO: NEED TO CHECK TYPE OF TRANSACTION AND SWITCH DETAILS */}
 				{/* <Detail /> */}
-				{this.test(TransactionType)}
+				{this.contractDetails(TransactionType,jsonContract)}
 			</Container>
 
 
