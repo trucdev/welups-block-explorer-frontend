@@ -85,7 +85,9 @@ class Trigger extends Component {
             </TitleContainer>
             <FillContainer>
               <ContentLine>
+              <Link to={`/contract/${this.props.transaction.contract.parameter.raw.ContractAddress}`}>
                 <RedText >{this.props.transaction.contract.parameter.raw.ContractAddress}</RedText>
+                </Link>
               </ContentLine>
               {/* <ContentLine>
                 <Righticon><RightOutlined /></Righticon>
