@@ -103,7 +103,6 @@ const mapStateToProps = (state) => {
   
   return {
     transaction: state.transaction,
-    account: state.account,
   };
 };
 const mapDispatchToProps = dispatch => {
