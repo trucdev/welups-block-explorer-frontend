@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { loadTransactionDetails } from '../../../actions/transaction';
 import { FaExchangeAlt } from "react-icons/fa";
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
+
 
 
 const RedText = styled.span`
@@ -70,7 +72,7 @@ class TransferContract extends Component {
               <span >From</span>:
             </TitleContainer>
             <FillContainer>
-            <RedText>{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText>
+            <Link to="/account"><RedText>{this.props.transaction.contract.parameter.raw.OwnerAddress}</RedText></Link>
             </FillContainer>
           </Row>
           <Row>
@@ -78,7 +80,7 @@ class TransferContract extends Component {
               <span >To</span>:
             </TitleContainer>
             <FillContainer>
-            <RedText>{this.props.transaction.contract.parameter.raw.ToAddress}</RedText>
+            <Link to="/account"><RedText>{this.props.transaction.contract.parameter.raw.ToAddress}</RedText></Link>
             </FillContainer>
           </Row>
           <Row>
