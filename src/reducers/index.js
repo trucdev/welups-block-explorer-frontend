@@ -13,6 +13,7 @@ import { transactionReducer } from "./transaction";
 import { accountReducer } from "./account";
 import {contractReducer} from "./contract";
 import { witnessesReducer } from "./witnesses";
+import { nodesReducer } from "./nodes";
 
 export default combineReducers({
 	search: searchReducer,
@@ -25,4 +26,5 @@ export default combineReducers({
 	account: accountReducer,
 	contract: contractReducer,
 	witnesses:witnessesReducer,
+	nodes:nodesReducer
 });

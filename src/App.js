@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Layout } from 'antd';
-import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
+import { MailOutlined, AppstoreOutlined, NodeIndexOutlined, BlockOutlined } from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
 import NotFound from './components/not-found';
@@ -9,6 +9,7 @@ import TransactionDetails from './components/transaction';
 import AccountDetails from './components/account';
 import ContractDetails from './components/contract/contract';
 import WitnessTable from './components/witnesses';
+import NodeTable from './components/nodes/index';
 import { Row, Col } from 'antd';
 import {
   BrowserRouter as Router,
@@ -42,8 +43,11 @@ class App extends Component {
             <Menu.Item key="witness" icon={<AppstoreOutlined />}>
               <Link to="/witness">Witnesses</Link>
             </Menu.Item>
-            <Menu.Item key="blocks" icon={<AppstoreOutlined />}>
+            <Menu.Item key="blocks" icon={<BlockOutlined />}>
               <Link to="/blocks">Blocks</Link>
+            </Menu.Item>
+            <Menu.Item key="nodes" icon={<NodeIndexOutlined />}>
+              <Link to="/nodes">Nodes</Link>
             </Menu.Item>
           </Menu>
           <ContentRowWrapper justify='center' gutter={[5, 5]}>
@@ -92,8 +96,10 @@ class App extends Component {
                   render={(routeProps) => <WitnessTable {...routeProps} />}
                 />
                 <Route
-                   render={() => <NotFound />}
+                  path="/nodes"
+                  render={(routeProps) => <NodeTable />}
                 />
+                <Redirect to="/notfound" />
               </Switch>
             </Col>
           </ContentRowWrapper>
