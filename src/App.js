@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Layout } from 'antd';
-import { MailOutlined, AppstoreOutlined, NodeIndexOutlined, BlockOutlined } from '@ant-design/icons';
+import { MailOutlined, AppstoreOutlined, NodeIndexOutlined, BlockOutlined, TransactionOutlined } from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
 import NotFound from './components/not-found';

@@ -48,6 +48,7 @@ class Card extends Component {
     this.props.loadAccountDetails(this.props.addr);
   }
   render() {
+    
     const acc= this.props.account;
     const content = [
       { title: 'Name', value:<HightLight>{ acc.name} TRX</HightLight> },
@@ -63,7 +64,7 @@ class Card extends Component {
       { title: 'Frozen Balance',  value: acc.frozenBalance},
       { title: 'Energy Total',  value: acc.energyTotal},
       { title: 'Energy Used',  value: acc.energyUsed},
-      { title: 'Assets', value: <ReactJson src={ acc.asset} />},
+      // { title: 'Assets', value: <ReactJson src={ acc.asset} />},
     ];
     return (
       <Wrap>

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Card from './card';
 import styled from 'styled-components';
-
+import AssetsCard from './assetsCard';
+import { loadAccountDetails } from '../../actions/account';
 
 const Container = styled.div`
 	margin: 5px;
@@ -20,9 +21,7 @@ class AccountDetails extends Component {
 					<h3 >ACCOUNT DETAILS</h3>
 				</CardTitle>
 				<Card addr = {this.props.match.params.id}/>
-				{/* TODO: NEED TO CHECK TYPE OF TRANSACTION AND SWITCH DETAILS */}
-				{/* <Detail /> */}
-				
+				<AssetsCard/>
 			</Container>
 
 
@@ -33,7 +32,11 @@ class AccountDetails extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-
+	  account: state.account,
 	};
-};
-export default connect(mapStateToProps, null, null, { forwardRef: true })(AccountDetails);
+  };
+  const mapDispatchToProps = dispatch => {
+	  return {
+	  };
+  };
+  export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(AccountDetails);
