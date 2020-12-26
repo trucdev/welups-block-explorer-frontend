@@ -1,5 +1,6 @@
 import  styled  from  'styled-components';
 import {Badge} from 'antd';
+import { Link } from 'react-router-dom';
 
 export const Table = styled.table`
 	width : 100%;
@@ -20,7 +21,7 @@ export const Td = styled.td`
 `;
 
 export const BorderRed = styled.div`
-	border-top: 2px solid red;
+	border-top: 5px solid #C23631;
 `;
 
 export const FontFamily = styled.div`
@@ -87,3 +88,8 @@ export const contentStatus = (
     <p>Transaction confirmed by 19 or more SRs will be marked "confirmed", or is "unconfirmed".</p>
   </HoverContent>
 );
+export const StyledLink = styled(Link)`
+    &:link, &:visited {
+        color: #c23631;
+    }
+`;

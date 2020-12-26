@@ -9,7 +9,7 @@ class BlockMenu extends Component{
 			<div>
 				<Menu mode="horizontal">
 		            <Menu.Item key="blockTransaction">
-		            	Transaction
+		            	TRANSACTION
 		            </Menu.Item>
 		        </Menu>
 		        <Transaction/>
