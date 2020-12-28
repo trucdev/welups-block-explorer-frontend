@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Layout } from 'antd';
-import { MailOutlined, AppstoreOutlined, NodeIndexOutlined, BlockOutlined, TransactionOutlined } from '@ant-design/icons';
+import { MailOutlined, AppstoreOutlined, NodeIndexOutlined, BlockOutlined, TransactionOutlined, DollarCircleOutlined } from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
 import NotFound from './components/not-found';
@@ -9,6 +9,7 @@ import TransactionDetails from './components/transaction';
 import AccountDetails from './components/account';
 import ContractDetails from './components/contract/contract';
 import WitnessTable from './components/witnesses';
+import TokenTable from './components/tokens/index';
 import NodeTable from './components/nodes/index';
 import { Row, Col } from 'antd';
 import {
@@ -48,6 +49,9 @@ class App extends Component {
             </Menu.Item>
             <Menu.Item key="nodes" icon={<NodeIndexOutlined />}>
               <Link to="/nodes">Nodes</Link>
+            </Menu.Item>
+            <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
+              <Link to="/tokens">Tokens</Link>
             </Menu.Item>
           </Menu>
           <ContentRowWrapper justify='center' gutter={[5, 5]}>
@@ -94,6 +98,10 @@ class App extends Component {
                 <Route
                   path="/blocks"
                   render={(routeProps) => <WitnessTable {...routeProps} />}
+                />
+                <Route
+                  path="/tokens"
+                  render={(routeProps) => <TokenTable />}
                 />
                 <Route
                   path="/nodes"
