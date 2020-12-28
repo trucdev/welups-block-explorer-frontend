@@ -15,6 +15,13 @@ const confirm = 19;
 
 const columns = [
 	{
+		title: 'No.',
+		key: 'no',
+		render: (value, item, index) => (index + 1),
+		fixed: 'left',
+		width: 70,
+	},
+	{
 		title: 'Hash',
 		dataIndex: 'hash',
 		key: 'hash',
