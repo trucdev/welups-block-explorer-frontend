@@ -5,11 +5,9 @@ import { Table, Tag } from 'antd';
 import {Link} from "react-router-dom";
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-import ru from 'javascript-time-ago/locale/ru';
 import ReactTimeAgo from 'react-time-ago';
 
-TimeAgo.addDefaultLocale(en)
-TimeAgo.addLocale(ru)
+TimeAgo.addLocale(en)
 
 const confirm = 19;
 
@@ -35,7 +33,10 @@ const columns = [
 	{
 		title: 'Age',
 		key: 'age',
-		render: record => <ReactTimeAgo date={record.timestamp?record.timestamp:0} locale="en-US"/>
+		render: record => {
+			var time = record.timestamp&&record.timestamp<Date.now()?<ReactTimeAgo date={record.timestamp} locale="en-US"/>:"unknown";
+			return time;
+		}
 	},
 	{
 		title: 'Contract Type',

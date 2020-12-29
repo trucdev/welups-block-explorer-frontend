@@ -13,8 +13,11 @@ import {
 	RecentItemData, StyledLink,
 	RecentRightCol,
 } from './recent-list';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+import ReactTimeAgo from 'react-time-ago';
 
-
+TimeAgo.addLocale(en)
 
 class BlockList extends React.Component {
 	componentDidMount() {
@@ -41,7 +44,7 @@ class BlockList extends React.Component {
 						<span>Block reward:<RecentItemData>{16}</RecentItemData></span>
 					</Col>
 					<RecentRightCol xs={24}  sm={24} md={12}>
-						<span>at: <RecentItemData>{new Date(block.timestamp).toLocaleString()}</RecentItemData></span>
+						<span><RecentItemData>{block.timestamp&&block.timestamp<Date.now()?<ReactTimeAgo date={block.timestamp} locale="en-US"/>:"unknown"}</RecentItemData></span>
 					</RecentRightCol>
 				</Row>
 			</RecentItem>
