@@ -1,4 +1,4 @@
-name: Deploy
+name: Dev Deploy
 
 on:
   push:
@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Build image
         run: |
+          mv .env.dev .env.prod
           docker build . --file Dockerfile --tag ${{secrets.IMAGE_TAG}}
           docker save ${{secrets.IMAGE_TAG}} > ${{secrets.IMAGE_TAG}}.tar
       - name: Init folder on server

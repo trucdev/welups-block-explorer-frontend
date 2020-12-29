@@ -29,7 +29,7 @@ export function loadRecentBlocks() {
 		}).then(res => res.json()).then((res) => {
 			dispatch(updateRecentBlock(res));
 		}).then(() => {
-			let ws = new WebSocket(`ws://${WS_ADDR}/ws/block/recent`);
+			let ws = new WebSocket(`${WS_ADDR}/ws/block/recent`);
 			ws.onmessage = (e)=>{
 				let blocks = JSON.parse(e.data);
 				dispatch(updateRecentBlock(blocks));
@@ -69,7 +69,7 @@ export function loadRecentTrans() {
 		}).then(res => res.json()).then((res) => {
 			dispatch(updateRecentTrans(res));
 		}).then(() => {
-			let ws = new WebSocket(`ws://${WS_ADDR}/ws/transactions/recent`);
+			let ws = new WebSocket(`${WS_ADDR}/ws/transactions/recent`);
 			ws.onmessage = (e)=>{
 				let trans = JSON.parse(e.data);
 				dispatch(updateRecentTrans(trans));
@@ -110,7 +110,7 @@ export function loadSystemState() {
 		}).then(res => res.json()).then((res) => {
 			dispatch(updateSystemState(res));
 		}).then(() => {
-			let ws = new WebSocket(`ws://${WS_ADDR}/ws/system/state`);
+			let ws = new WebSocket(`${WS_ADDR}/ws/system/state`);
 			ws.onmessage = (e)=>{
 				let systemState = JSON.parse(e.data);
 				dispatch(updateSystemState(systemState));
