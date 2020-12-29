@@ -25,7 +25,9 @@ var dataContract = {
 	available_energy:0,
 	energy_ratio_contract:0,
 	energy_ratio_user:0,
-	initial_asset:0
+	initial_asset:0,
+	abi:null,
+	bytecode:null
 };
 
 const defaultContractState = dataContract;

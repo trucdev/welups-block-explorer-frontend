@@ -40,7 +40,9 @@ export function loadContractApi(addr) {
 				available_energy:res.origin_energy_limit,
 				energy_ratio_contract:res.consume_contract_resource_percent,
 				energy_ratio_user:100-res.consume_contract_resource_percent,
-				initial_asset:0
+				initial_asset:0,
+				abi:res.abi.entrys,
+				bytecode:res.bytecode
 			};
 			dispatch(loadContract(_res));
 		}).catch(err => {

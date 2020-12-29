@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import ContractAddress from './contractAddress';
 import ContractOverview from './contractOverview';
 import ContractInformation from './contractInformation';
+import ContractMenu from './contractMenu';
 
 class Contract extends Component{
 	componentDidMount(){
@@ -55,6 +56,9 @@ class Contract extends Component{
 								</Table>
 							</Col>
 						</Row>
+						<BorderRed>
+							<ContractMenu/>
+						</BorderRed>
 					</FontFamily>
 				</BorderRed>	
 			</div>	

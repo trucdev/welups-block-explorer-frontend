@@ -1,4 +1,5 @@
 import  styled  from  'styled-components';
+import {Input} from 'antd';
 
 export const Table = styled.table`
 	width : 100%;
@@ -15,7 +16,7 @@ export const Th = styled.th`
 `;
 
 export const BorderRed = styled.div`
-	border-top: 2px solid red;
+	border-top: 5px solid #C23631;
 `;
 
 export const FontFamily = styled.div`
@@ -43,7 +44,7 @@ export const RedSpan = styled.span`
 `;
 
 export const QuestionMark = styled.span`
-	width: 1rem;
+	  width: 1rem;
     height: 1rem;
     border-radius: 50%;
     background-color: #d8d8d8;
@@ -66,3 +67,17 @@ export const contentAsset = (
     <p>Contract creator transfers funds to contract address while deploying contract.</p>
   </HoverContent>
 );
+export const Wrapper = styled.div`
+  padding: 0 2%;
+`;
+export const Item = styled.div`
+  padding: 0 20px 0 20px;
+`;
+export const Right = styled.div`
+  text-align: right;
+`;
+const { TextArea } = Input;
+
+export const TextBox = styled(TextArea)`
+  color: #333!important;
+`;
