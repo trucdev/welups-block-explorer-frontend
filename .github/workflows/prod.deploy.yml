@@ -1,0 +1,54 @@
+name: Prod Deploy
+
+on:
+  push:
+    branches:
+    - 'releases/**'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+      - name: Build image
+        run: |
+          docker build . --file Dockerfile --tag ${{secrets.IMAGE_TAG}}
+          docker save ${{secrets.IMAGE_TAG}} > ${{secrets.IMAGE_TAG}}.tar
+      - name: Init folder on server
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{secrets.REMOTE_HOST_PROD}}
+          username: ${{secrets.REMOTE_USER}}
+          key: ${{secrets.SSH_KEY}}
+          script: mkdir -p ${{secrets.REMOTE_DIR}}
+
+      - name: Send docker image
+        uses: easingthemes/ssh-deploy@v2.1.5
+        with:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_KEY}}
+          REMOTE_HOST: ${{secrets.REMOTE_HOST_PROD}}
+          REMOTE_USER: ${{secrets.REMOTE_USER}}
+          SOURCE: ${{secrets.IMAGE_TAG}}.tar
+          TARGET: ${{secrets.REMOTE_DIR}}
+      - name: Send docker-compose
+        uses: easingthemes/ssh-deploy@v2.1.5
+        with:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_KEY}}
+          REMOTE_HOST: ${{secrets.REMOTE_HOST_PROD}}
+          REMOTE_USER: ${{secrets.REMOTE_USER}}
+          SOURCE: ${{secrets.DOCKERCOMPOSE}}
+          TARGET: ${{secrets.REMOTE_DIR}}
+      - name: Deploy image and run
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{secrets.REMOTE_HOST_PROD}}
+          username: ${{secrets.REMOTE_USER}}
+          key: ${{secrets.SSH_KEY}}
+          script: |
+            cd ${{secrets.REMOTE_DIR}}
+            docker-compose down
+            docker image rm -f ${{secrets.IMAGE_TAG}}
+            docker load --input ${{secrets.IMAGE_TAG}}.tar
+            docker-compose up -d
