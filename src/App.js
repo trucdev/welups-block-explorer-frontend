@@ -18,12 +18,17 @@ import {
 } from "react-router-dom";
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import ACLogo from './assets/images/ACLogo.png';
 const { Footer } = Layout;
 
 const AppWrapper = styled.div`
   min-height: 800px;
   text-align: center;
   flex: 1 0 auto;
+`;
+const Logo = styled.img`
+    height: 36px;
+    width: 30px;
 `;
 const ContentRowWrapper = styled(Row)`
   padding-top:40px;
@@ -38,6 +43,9 @@ class App extends Component {
       <Router>
         <AppWrapper>
           <Menu mode="horizontal">
+            <Menu.Item disabled={true}>
+              <Logo src={ACLogo} />
+            </Menu.Item>
             <Menu.Item key="home" icon={<MailOutlined />}>
               <Link to="/home">Home</Link>
             </Menu.Item>
@@ -53,7 +61,7 @@ class App extends Component {
             <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
               <Link to="/tokens">Tokens</Link>
             </Menu.Item>
-          </Menu>
+            </Menu>
           <ContentRowWrapper justify='center' gutter={[5, 5]}>
             <Col xs={20} sm={20} md={20} lg={19} xl={18}>
               <Row gutter={[5, 5]}>
