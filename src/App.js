@@ -11,6 +11,7 @@ import ContractDetails from './components/contract/contract';
 import WitnessTable from './components/witnesses';
 import TokenTable from './components/tokens/index';
 import NodeTable from './components/nodes/index';
+import BlockTable from './components/blocks/index';
 import { Row, Col } from 'antd';
 import {
   BrowserRouter as Router,
@@ -105,7 +106,7 @@ class App extends Component {
                 />
                 <Route
                   path="/blocks"
-                  render={(routeProps) => <WitnessTable {...routeProps} />}
+                  render={(routeProps) => <BlockTable {...routeProps} />}
                 />
                 <Route
                   path="/tokens"

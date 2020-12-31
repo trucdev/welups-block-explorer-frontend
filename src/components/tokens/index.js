@@ -2,7 +2,6 @@ import React from 'react';
 import { Table, Tag, Button, Popover, Pagination } from 'antd';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { loadWitnesses } from '../../actions/witnesses';
 import { loadTokens,  updatePageTokens, updatePageTokensLimit } from '../../actions/tokens';
 import styled from 'styled-components';
 const StyleOutLink = styled.a`
@@ -189,7 +188,7 @@ class TokenTable extends React.Component {
 	onChange=(pageNumber, pageLimit) =>{
 	    this.props.updatePageTokens(pageNumber);
 	    var {pageTokens} = this.props;
-	    if(pageLimit!=pageTokens.page_limit){
+	    if(pageLimit!==pageTokens.page_limit){
 	    	this.props.updatePageTokensLimit(pageLimit);
 	    }
 	    this.props.loadTokens(pageTokens.start_item, pageTokens.page_limit);
