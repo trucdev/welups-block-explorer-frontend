@@ -21,7 +21,7 @@ class ContractOverview extends Component{
 						<span>Balance:</span>
 					</Th>
 					<td>
-						<span>{contract.balance}</span>
+						<span>{contract.balance.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} TRX</span>
 					</td>
 				</TableRow>
 				<TableRow>
@@ -30,14 +30,6 @@ class ContractOverview extends Component{
 					</Th>
 					<td>
 						<span>{contract.transactions}</span>
-					</td>
-				</TableRow>
-				<TableRow>
-					<Th>
-						<span>Token Tracker:</span>
-					</Th>
-					<td>
-						<Link to="/" target="_blank" value={contract.token_tracker_address}>{contract.token_tracker_name}</Link>
 					</td>
 				</TableRow>
 			</tbody>

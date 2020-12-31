@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {TableRow, Th, QuestionMark, Flex, contentRatio, contentAsset} from './style';
-import {Link} from "react-router-dom";
+import {TableRow, Th, QuestionMark, Flex, contentRatio, StyledLink} from './style';
 import {Popover } from 'antd';
 
 class ContractInformation extends Component{
@@ -14,23 +13,11 @@ class ContractInformation extends Component{
 						<span>Creator:</span>
 					</Th>
 					<td>
-						<Link to={"/account/"+contract.creator_address} target="_blank">
+						<StyledLink to={"/account/"+contract.creator_address} target="_blank">
 							{contract.creator_address?contract.creator_address.substring(0,5)+"..."+contract.creator_address.substring(contract.creator_address.length-4,contract.creator_address.length-1):"0"}
-						</Link>&nbsp;
-						<span>At txn</span>&nbsp;
-						<Link to={"/transaction/"+contract.creation_transaction_address} target="_blank">
-							{contract.creation_transaction_address?contract.creation_transaction_address.substring(0,5)+"..."+contract.creation_transaction_address.substring(contract.creation_transaction_address.length-4,contract.creation_transaction_address.length-1):"0"}
-						</Link>
+						</StyledLink>
 					</td>
 				</TableRow>	
-				<TableRow>
-					<Th>
-						<span>Creation Time:</span>
-					</Th>
-					<td>
-						<span>{contract.creation_time}</span>
-					</td>
-				</TableRow>
 				<TableRow>
 					<Th>
 						<span>Available Energy:</span>
@@ -49,18 +36,6 @@ class ContractInformation extends Component{
 					</Th>
 					<td>
 						<span>Contracts{contract.energy_ratio_contract}%&nbsp;&nbsp;Users{contract.energy_ratio_user}%</span>
-					</td>
-				</TableRow>
-				<TableRow>
-					<Th>
-						<Flex>Initial Asset&nbsp;
-							<Popover content={contentAsset} title="">
-								<QuestionMark>?</QuestionMark>
-							</Popover>&nbsp;:
-						</Flex>
-					</Th>
-					<td>
-						<span>{contract.initial_asset}&nbsp;TRX</span>
 					</td>
 				</TableRow>
 			</tbody>

@@ -1,5 +1,6 @@
 import  styled  from  'styled-components';
 import {Input} from 'antd';
+import { Link } from 'react-router-dom';
 
 export const Table = styled.table`
 	width : 100%;
@@ -80,4 +81,9 @@ const { TextArea } = Input;
 
 export const TextBox = styled(TextArea)`
   color: #333!important;
+`;
+export const StyledLink = styled(Link)`
+  &:link, &:visited {
+    color: #c23631;
+  }
 `;

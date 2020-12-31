@@ -1,4 +1,4 @@
-import {CONTRACT_LOAD, CONTRACT_DEFAULT} from  '../actions/contract';
+import {CONTRACT_LOAD, CONTRACT_DEFAULT, CONTRACT_DEFAULT_MENU, CONTRACT_MENU_UPDATE} from  '../actions/contract';
 
 export function contractReducer(state=defaultContractState, action){
 	switch(action.type){
@@ -27,7 +27,24 @@ var dataContract = {
 	energy_ratio_user:0,
 	initial_asset:0,
 	abi:null,
-	bytecode:null
+	bytecode:null,
+	assets:null
 };
 
 const defaultContractState = dataContract;
+
+export function contractMenuReducer(state=defaultMenuState, action){
+	switch(action.type){
+		case CONTRACT_DEFAULT_MENU:
+			state = defaultMenuState;
+			break;
+		case CONTRACT_MENU_UPDATE:
+			state = action.menuItem;
+			break;
+	}
+	return state;
+}
+
+var dataMenuContract = "contractCode";
+
+const defaultMenuState = dataMenuContract;

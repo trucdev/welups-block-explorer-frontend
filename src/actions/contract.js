@@ -30,7 +30,7 @@ export function loadContractApi(addr) {
 			var _res = {
 				contract_address:res.contract_address,
 				name:res.name,
-				balance:0,
+				balance:res.balance?res.balance:0,
 				transactions:0,
 				token_tracker_name:null,
 				token_tracker_address:0x0000000000000000000000000000000000000000,
@@ -42,11 +42,28 @@ export function loadContractApi(addr) {
 				energy_ratio_user:100-res.consume_contract_resource_percent,
 				initial_asset:0,
 				abi:res.abi.entrys,
-				bytecode:res.bytecode
+				bytecode:res.bytecode,
+				assets:res.assets
 			};
 			dispatch(loadContract(_res));
 		}).catch(err => {
 			console.log(err);
 		})
+	}
+}
+
+export const CONTRACT_DEFAULT_MENU = 'CONTRACT_DEFAULT_MENU';
+export const CONTRACT_MENU_UPDATE = 'CONTRACT_MENU_UPDATE';
+
+export function defaultContractMenu() {
+	return {
+		type: CONTRACT_DEFAULT_MENU,
+	}
+}
+
+export function updateContractMenu(menuItem) {
+	return {
+		type: CONTRACT_MENU_UPDATE,
+		menuItem:menuItem
 	}
 }
