@@ -51,16 +51,16 @@ class Card extends Component {
     
     const acc= this.props.account;
     const content = [
-      { title: 'Name', value:<HightLight>{ acc.name} TRX</HightLight> },
-      { title: 'Total Balance', value:<HightLight>{ acc.totalBalance} TRX</HightLight> },
-      { title: 'TRX Balance',  value: acc.trxBalance},
+      { title: 'Name', value:<HightLight>{ acc.name} </HightLight> },
+      { title: 'Total Balance', value:<HightLight>{ acc.totalBalance} </HightLight> },
+      { title: 'TRX Balance',  value: <HightLight>{acc.trxBalance } TRX</HightLight>},
       { title: 'Transactions',  value: acc.transactions},
       { title: 'Transferred',  value: acc.transferred},
       { title: 'Available Balance',  value: acc.availableBalance},
       { title: 'Net Usage',  value: acc.netUsage},
       { title: 'Bandwidth  Used',  value: acc.bandwidthUsed},
       { title: 'BandWidth Total',  value: acc.bandwidthTotal},
-      { title: 'Create Time',  value: acc.createTime},
+      { title: 'Create Time',  value: Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(acc.createTime)},
       { title: 'Frozen Balance',  value: acc.frozenBalance},
       { title: 'Energy Total',  value: acc.energyTotal},
       { title: 'Energy Used',  value: acc.energyUsed},
