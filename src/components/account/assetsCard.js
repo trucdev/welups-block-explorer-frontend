@@ -24,9 +24,6 @@ class AssetsCard extends Component {
 		let i = 1
 		const data = [];
 		for( let key in this.props.account.asset ) {
-			console.log(key)
-			console.log(this.props.account.asset[key])
-			
 			data.push({
 				key: i,
 				num: i,
@@ -45,7 +42,8 @@ class AssetsCard extends Component {
 			},
 			{
 				title: "Value",
-				dataIndex: "value"
+				dataIndex: "value",
+				render: record => {return record.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");}
 			}
 		];
 		return (

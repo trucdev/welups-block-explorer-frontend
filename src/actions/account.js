@@ -20,7 +20,6 @@ export function updateAccountDetails(acc) {
 export function loadAccountDetails(addr) {
 	return (dispatch) => {
 		dispatch(initAccountDetail());
-		console.log(addr);
 		fetch(`${API_ADDR}/account/${addr}`, {
 			method: 'GET',
 			headers: {
