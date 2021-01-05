@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {CopyOutlined} from '@ant-design/icons';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {TableRow, Th} from './style';
-import {Link} from "react-router-dom";
+import {StyledLink} from './style';
 
 class BlockParentHash extends Component{
 	render(){
@@ -16,7 +16,7 @@ class BlockParentHash extends Component{
 				</Th>
 				<td>
 					<div>
-						<Link to={"/block/"+parent_hash} target="_blank">{parent_hash}</Link><CopyToClipboard text={parent_hash}><CopyOutlined/></CopyToClipboard>
+						<StyledLink to={"/block/"+parent_hash} target="_blank">{parent_hash}</StyledLink><CopyToClipboard text={parent_hash}><CopyOutlined/></CopyToClipboard>
 					</div>
 				</td>
 			</TableRow>				

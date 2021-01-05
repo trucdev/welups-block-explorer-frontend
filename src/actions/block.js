@@ -35,7 +35,7 @@ export function loadBlockApi(id) {
 				producer_name:res.producer.name,
 				parent_hash:res.parent_hash,
 				time:Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(res.timestamp),
-				confirm:19,
+				confirm:res.status,
 				size:0
 			};
 			dispatch(loadBlock(_res));

@@ -1,15 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {BadgeGreen, BadgeRed, StyledLink} from './style';
-import { Table, Tag } from 'antd';
-import {Link} from "react-router-dom";
+import { Table } from 'antd';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import ReactTimeAgo from 'react-time-ago';
 
 TimeAgo.addLocale(en)
-
-const confirm = 19;
 
 const columns = [
 	{
@@ -27,8 +24,9 @@ const columns = [
 	},
 	{
 		title: 'Status',
+		dataIndex: 'status',
 		key: 'status',
-		render: () => confirm>=19?<BadgeGreen count="CONFIRMED"/>:<BadgeRed count="UNCOMFIRMED"/>
+		render: record => record==="confirmed"?<BadgeGreen count="CONFIRMED"/>:<BadgeRed count="UNCOMFIRMED"/>
 	},
 	{
 		title: 'Age',
@@ -49,7 +47,11 @@ class TransactionTable extends React.Component {
 	componentDidMount() {
 	}
 	render() {
-		const {transactionList} = this.props;
+		var {transactionList, confirm} = this.props;
+		transactionList.map((item)=>{
+			item.status = confirm;
+			return null;
+		});
 		return (
 			<Table columns={columns}
 				dataSource={transactionList}
@@ -64,6 +66,7 @@ class TransactionTable extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		transactionList:state.blockTransaction,
+		confirm:state.block.confirm
 	};
 };
 const mapDispatchToProps = dispatch => {

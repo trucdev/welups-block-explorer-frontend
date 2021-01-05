@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {CopyOutlined} from '@ant-design/icons';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {TableRow, Th} from './style';
-import {Link} from "react-router-dom";
+import {StyledLink} from './style';
 
 class BlockProducer extends Component{
 	render(){
@@ -17,7 +17,7 @@ class BlockProducer extends Component{
 				</Th>
 				<td>
 					<div>
-						<Link to={"/account/"+producer_hash} target="_blank">{producer_name}</Link><CopyToClipboard text={producer_hash}><CopyOutlined/></CopyToClipboard>
+						<StyledLink to={"/account/"+producer_hash} target="_blank">{producer_name}</StyledLink><CopyToClipboard text={producer_hash}><CopyOutlined/></CopyToClipboard>
 					</div>
 				</td>
 			</TableRow>				

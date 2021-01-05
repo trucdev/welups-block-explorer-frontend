@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {TableRow, Flex, QuestionMark, StatusTag, BadgeGreen, BadgeRed, Th, contentStatus} from './style';
+import {TableRow, Flex, QuestionMark, BadgeGreen, BadgeRed, Th, contentStatus} from './style';
 import {Popover } from 'antd';
 
 class BlockStatus extends Component{
@@ -20,8 +20,7 @@ class BlockStatus extends Component{
 					</Flex>
 				</Th>
 				<td>
-					{confirm>=19?<BadgeGreen count="CONFIRMED"/>:<BadgeRed count="UNCOMFIRMED"/>}
-					<StatusTag>{confirm>=200?"Confirmed by over 200 blocks":"Confirmed by "+confirm+" blocks"}</StatusTag>
+					{confirm==="confirmed"?<BadgeGreen count="CONFIRMED"/>:<BadgeRed count="UNCOMFIRMED"/>}
 				</td>
 			</TableRow>				
 		);
