@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loadTokens,  updatePageTokens, updatePageTokensLimit } from '../../actions/tokens';
 import styled from 'styled-components';
-const StyleOutLink = styled.a`
-	&:link, &:visited {
-		color: #c23631;
-	}
-`;
+
 const LeftHeader = styled.div`
 	text-align: left;
 	border-bottom: 5px solid #C23631;
@@ -151,18 +147,17 @@ const columns = [
 		render: (value, item, index) => (index + 1),
 		fixed: 'left',
 		width: 70,
-	},	
+	},
 	{
 		title: 'ID',
-		dataIndex: 'id',
 		key: 'id',
-		render: text => <StyledLink key={text} to={`/token/${text}`} target="_blank">{text}</StyledLink>,
+		render: record => <StyledLink key={record.id} to={`/token/${record.id}`}>{record.id}</StyledLink>,
 		width: 160,
 	},
 	{
 		title: 'Name',
 		key: 'name',
-		render: record => <StyleOutLink key={record.name} href={record.url} target="_blank">{record.name}</StyleOutLink>,
+		render: record => <StyledLink key={record.name} to={`/token/${record.id}`}>{record.name}</StyledLink>,
 	},
 	{
 		title: 'Abbreviation',

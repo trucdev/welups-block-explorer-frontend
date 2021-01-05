@@ -14,6 +14,7 @@ import { accountReducer } from "./account";
 import {contractReducer, contractMenuReducer} from "./contract";
 import { witnessesReducer } from "./witnesses";
 import { tokensReducer } from "./tokens";
+import { tokenReducer } from "./token";
 import { pageTokensReducer } from "./tokens";
 import { blocksReducer } from "./blocks";
 import { pageBlocksReducer } from "./blocks";
@@ -35,5 +36,6 @@ export default combineReducers({
 	pageTokens:pageTokensReducer,
 	contractMenu:contractMenuReducer,
 	blocks:blocksReducer,
-	pageBlocks:pageBlocksReducer
+	pageBlocks:pageBlocksReducer,
+	token:tokenReducer,
 });

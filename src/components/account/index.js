@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Card from './card';
 import styled from 'styled-components';
 import AssetsCard from './assetsCard';
-import { loadAccountDetails } from '../../actions/account';
 
 const Container = styled.div`
 	margin: 5px;
