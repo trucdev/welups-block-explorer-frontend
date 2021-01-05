@@ -151,6 +151,13 @@ const columns = [
 		render: (value, item, index) => (index + 1),
 		fixed: 'left',
 		width: 70,
+	},	
+	{
+		title: 'ID',
+		dataIndex: 'id',
+		key: 'id',
+		render: text => <StyledLink key={text} to={`/token/${text}`} target="_blank">{text}</StyledLink>,
+		width: 160,
 	},
 	{
 		title: 'Name',
@@ -161,12 +168,6 @@ const columns = [
 		title: 'Abbreviation',
 		dataIndex: 'abbr',
 		key: 'abbr',
-	},
-	{
-		title: 'ID',
-		dataIndex: 'id',
-		key: 'id',
-		render: text => <StyledLink key={text} to={`/token/${text}`} target="_blank">{text}</StyledLink>,
 	},
 	{
 		title: 'Total Supply',
