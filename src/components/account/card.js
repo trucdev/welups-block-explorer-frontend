@@ -51,15 +51,11 @@ class Card extends Component {
     
     const acc= this.props.account;
     const content = [
-      { title: 'Name', value:<HightLight>{ acc.name} TRX</HightLight> },
-      { title: 'Total Balance', value:<HightLight>{ acc.totalBalance} TRX</HightLight> },
-      { title: 'TRX Balance',  value: acc.trxBalance},
       { title: 'Name', value:<HightLight>{ acc.name} </HightLight> },
       { title: 'Total Balance', value:<HightLight>{ acc.totalBalance.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} </HightLight> },
       { title: 'TRX Balance',  value: <HightLight>{(acc.trxBalance/Math.pow(10,6)).toFixed(4).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") } TRX</HightLight>},
       { title: 'Transactions',  value: acc.transactions},
       { title: 'Transferred',  value: acc.transferred},
-      { title: 'Available Balance',  value: acc.availableBalance},
       { title: 'Available Balance',  value: acc.availableBalance.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")},
       { title: 'Net Usage',  value: acc.netUsage},
       { title: 'Bandwidth  Used',  value: acc.bandwidthUsed},

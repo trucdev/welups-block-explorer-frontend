@@ -6,6 +6,7 @@ import BlockDetail from './components/block/block';
 import NotFound from './components/not-found';
 import Search from './components/search';
 import TransactionDetails from './components/transaction';
+import TransactionsList from './components/list/transactionsList';
 import AccountDetails from './components/account';
 import ContractDetails from './components/contract/contract';
 import WitnessTable from './components/witnesses';
@@ -60,6 +61,9 @@ class App extends Component {
             <Menu.Item key="nodes" icon={<NodeIndexOutlined />}>
               <Link to="/nodes">Nodes</Link>
             </Menu.Item>
+            <Menu.Item key="transactions" icon={<TransactionOutlined />}>
+              <Link to="/transactions">Transactions</Link>
+            </Menu.Item>
             <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
               <Link to="/tokens">Tokens</Link>
             </Menu.Item>
@@ -108,6 +112,10 @@ class App extends Component {
                 <Route
                   path="/contract/:id"
                   render={(routeProps) => <ContractDetails {...routeProps} />}
+                />
+                <Route
+                  path="/transactions"
+                  render={(routeProps) => <TransactionsList {...routeProps} />}
                 />
                 <Route
                   path="/blocks"

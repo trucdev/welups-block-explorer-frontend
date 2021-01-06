@@ -87,7 +87,7 @@ class TransferAssetContract extends Component {
               <span >Amount</span>:
             </TitleContainer>
             <FillContainer>
-              <span >{this.props.transaction.contract.parameter.raw.Amount}</span>
+              <span >{this.props.transaction.contract.parameter.raw.Amount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}</span>
             </FillContainer>
           </Row>
           <Row>
