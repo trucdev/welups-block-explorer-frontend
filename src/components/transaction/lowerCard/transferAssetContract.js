@@ -57,7 +57,7 @@ class TransferAssetContract extends Component {
   render() {
     const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
     const TO = this.props.transaction.contract.parameter.raw.ToAddress;
-    
+
     return (
       <Details>
         <Top>
@@ -71,7 +71,7 @@ class TransferAssetContract extends Component {
               <span >From</span>:
             </TitleContainer>
             <FillContainer>
-            <Link to={"/account/"+FROM}><RedText>{FROM}</RedText></Link>
+              <Link to={"/account/" + FROM}><RedText>{FROM}</RedText></Link>
             </FillContainer>
           </Row>
           <Row>
@@ -79,7 +79,7 @@ class TransferAssetContract extends Component {
               <span >To</span>:
             </TitleContainer>
             <FillContainer>
-            <Link to={"/account/"+TO}><RedText>{TO}</RedText></Link>
+              <Link to={"/account/" + TO}><RedText>{TO}</RedText></Link>
             </FillContainer>
           </Row>
           <Row>
@@ -95,9 +95,11 @@ class TransferAssetContract extends Component {
               <span >AssetName</span>:
             </TitleContainer>
             <FillContainer>
-              <span >{this.props.transaction.contract.parameter.raw.AssetName}</span>
+              <Link to={"/token/" + this.props.transaction.contract.parameter.raw.AssetID}>
+                <RedText >{this.props.transaction.contract.parameter.raw.AssetName}</RedText>
+              </Link>
             </FillContainer>
-            </Row>
+          </Row>
         </Content>
       </Details>
     );
@@ -106,13 +108,13 @@ class TransferAssetContract extends Component {
 
 
 const mapStateToProps = (state) => {
-  
+
   return {
     transaction: state.transaction,
   };
 };
 const mapDispatchToProps = dispatch => {
-	return {};
+  return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(
   TransferAssetContract
