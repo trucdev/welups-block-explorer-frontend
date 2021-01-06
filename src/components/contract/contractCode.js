@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {Menu, Row, Col, Input} from 'antd';
+import { Row, Col} from 'antd';
 import {Div, Right, TextBox} from './style';
 import { SettingOutlined, CopyOutlined, FileOutlined } from '@ant-design/icons';
 import {CopyToClipboard} from 'react-copy-to-clipboard';

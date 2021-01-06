@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import styled from 'styled-components';
 import { CopyOutlined } from '@ant-design/icons';
 import { loadAccountDetails } from '../../actions/account';
-import ReactJson from 'react-json-view';
 import { Skeleton} from 'antd';
 const Wrap = styled.div`
     display: flex;

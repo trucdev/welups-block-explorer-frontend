@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Tag, Button, Popover, Pagination } from 'antd';
+import { Table, Pagination } from 'antd';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loadTokens,  updatePageTokens, updatePageTokensLimit } from '../../actions/tokens';

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {Menu} from 'antd';
 import ContractCode from './contractCode';
-import {Wrapper, BorderRed, Div, Item} from './style';
+import {Wrapper, Div, Item} from './style';
 
 class ContractCodeMenu extends Component{
 	render(){

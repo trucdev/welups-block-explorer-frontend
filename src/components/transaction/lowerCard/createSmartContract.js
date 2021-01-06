@@ -57,7 +57,6 @@ class CreateSmartContract extends Component {
 
   render() {
     const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
-const TO = this.props.transaction.contract.parameter.raw.ToAddress;
     return (
       <Details>
         <Top>

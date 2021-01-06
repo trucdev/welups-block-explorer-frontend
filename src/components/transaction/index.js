@@ -46,8 +46,6 @@ class TransactionDetails extends Component {
 					<h3 >TRANSACTION DETAILS</h3>
 				</CardTitle>
 				<Card/>
-				{/* TODO: NEED TO CHECK TYPE OF TRANSACTION AND SWITCH DETAILS */}
-				{/* <Detail /> */}
 				{this.contractDetails(TransactionType,jsonContract)}
 			</Container>
 

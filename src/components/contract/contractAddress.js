@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {Div, RedSpan} from './style';
-import {Link} from "react-router-dom";
 import {CopyOutlined, SwapOutlined, QrcodeOutlined} from '@ant-design/icons';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
