@@ -24,18 +24,49 @@ class TransactionList extends React.Component {
 		this.props.loadRecentTrans();
 	}
 	tranItem = (tran) => {
+		var amount = null;
+		switch(tran.type){
+			default: amount= null;break;
+			case "TransferContract": amount = (tran.contract.parameter.raw.Amount/Math.pow(10,6)).toFixed(4) + " TRX";break;
+			case "TransferAssetContract": amount = tran.contract.parameter.raw.Amount;break;
+		}
 		return <List.Item key={tran.hash}>
 			<RecentItem>
 				<Row >
 					<Col xs={24} sm={24} md={12} >
 						<span>Transaction:<RecentItemData>
-							<StyledLink to={`/transaction/${tran.hash}`}>{tran.hash.substring(0, 24) + "..."}</StyledLink>
+							<StyledLink to={`/transaction/${tran.hash}`} target="_blank">{tran.hash.substring(0, 24) + "..."}</StyledLink>
 						</RecentItemData></span>
 					</Col>
+					<RecentRightCol xs={24} sm={24} md={12} >
+						<span>
+							<RecentItemData>
+								{amount}&nbsp;
+								{	tran.type==="TransferAssetContract"?
+									<StyledLink to={`/token/${tran.contract.parameter.raw.AssetID}`} target="_blank">
+										{tran.contract.parameter.raw.AssetName}
+									</StyledLink>
+									:null}
+							</RecentItemData>
+						</span>
+					</RecentRightCol>
 				</Row>
 				<Row >
 					<Col xs={0} sm={0} md={24}>
-						<br></br>
+						{tran.type==="TransferAssetContract"||tran.type==="TransferContract"?
+						<div>
+							<span>From </span>
+							<StyledLink to={"/account/"+tran.contract.parameter.raw.OwnerAddress} target="_blank">
+								{tran.contract.parameter.raw.OwnerAddress.substring(0,7)+
+									"..."+tran.contract.parameter.raw.OwnerAddress.substring(tran.contract.parameter.raw.OwnerAddress.length-4,tran.contract.parameter.raw.OwnerAddress.length-1)}
+							</StyledLink>
+							<span> To </span>
+							<StyledLink to={"/account/"+tran.contract.parameter.raw.ToAddress} target="_blank">
+								{tran.contract.parameter.raw.ToAddress.substring(0,7)+
+									"..."+tran.contract.parameter.raw.ToAddress.substring(tran.contract.parameter.raw.ToAddress.length-4,tran.contract.parameter.raw.ToAddress.length-1)}
+							</StyledLink>
+						</div> 
+						:<br></br>}
 					</Col>
 				</Row>
 

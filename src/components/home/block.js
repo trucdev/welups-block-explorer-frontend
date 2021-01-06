@@ -31,7 +31,7 @@ class BlockList extends React.Component {
 						<span>Block:<RecentItemData><StyledLink to={`/block/${block.num}`}>{block.num}</StyledLink></RecentItemData></span>
 					</Col>
 					<RecentRightCol xs={24}  sm={24} md={12} >
-						<span>Producer:<RecentItemData ><StyledLink to={`/account/${block.producer}`}>{block.producer}</StyledLink></RecentItemData></span>
+						<span>Producer:<RecentItemData ><StyledLink to={`/account/${block.producer}`}>{block.nameProducer?block.nameProducer:block.producer}</StyledLink></RecentItemData></span>
 					</RecentRightCol>
 				</Row>
 				<Row >
