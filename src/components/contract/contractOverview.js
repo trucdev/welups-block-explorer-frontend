@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {TableRow, Th} from './style';
-import {Link} from "react-router-dom";
 
 class ContractOverview extends Component{
 	render(){
@@ -21,7 +20,7 @@ class ContractOverview extends Component{
 						<span>Balance:</span>
 					</Th>
 					<td>
-						<span>{contract.balance.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} TRX</span>
+						<span>{(contract.balance/Math.pow(10,6)).toFixed(4).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} TRX</span>
 					</td>
 				</TableRow>
 				<TableRow>
