@@ -6,6 +6,7 @@ TimeAgo.addLocale(en)
 
 
 export function toDateTime(timestamp){
+	timestamp = timestamp<=Date.now()?timestamp:timestamp/Math.pow(10,6);
 	return Intl.DateTimeFormat('en-US', {
 		year: 'numeric', 
 		month: '2-digit',

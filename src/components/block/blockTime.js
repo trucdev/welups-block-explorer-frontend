@@ -14,7 +14,7 @@ class BlockTime extends Component{
 				</Th>
 				<td>
 					<div>
-						<span>{toDateTime(time)}</span>
+						<span>{time?toDateTime(time):"unknown"}</span>
 					</div>
 				</td>
 			</TableRow>				
