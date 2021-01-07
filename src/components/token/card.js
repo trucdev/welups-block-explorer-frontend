@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import {currencyFormat, toDateTime} from '../../utils/utils';
+
 const Wrap = styled.div`
     display: flex;
     flex-direction: column;
@@ -51,11 +53,11 @@ class Card extends Component {
     const content = [
         { title: 'Id',  value: this.props.token.id},
         { title: 'Issuer',  value: <StyledLink to={`/account/${this.props.token.owner_address}`}>{this.props.token.owner_address}</StyledLink>},,
-        { title: 'Total supply',  value: <RedText>{this.props.token.total_supply.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}</RedText>},
-        { title: 'Total asset',  value: <RedText>{this.props.token.total_assets.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}</RedText>},
+        { title: 'Total supply',  value: <RedText>{currencyFormat(this.props.token.total_supply)}</RedText>},
+        { title: 'Total asset',  value: <RedText>{currencyFormat(this.props.token.total_assets)}</RedText>},
         { title: 'Price',  value: <span> {this.props.token.trx_num/this.props.token.num/1000000} TRX</span> },
-        { title: 'Start time',  value: new Date(this.props.token.start_time).toString()},
-        { title: 'End time',  value:   new Date(this.props.token.end_time).toString()},
+        { title: 'Start time',  value: toDateTime(this.props.token.start_time)},
+        { title: 'End time',  value:   toDateTime(this.props.token.end_time)},
         { title: 'Offical Website',  value: <LinkA href={this.props.token.url} target="_blank">{this.props.token.url}</LinkA>},
     ];
     return (

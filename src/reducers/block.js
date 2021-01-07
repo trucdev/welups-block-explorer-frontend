@@ -19,7 +19,7 @@ var dataBlock = {
 	producer_hash:0x0000000000000000000000000000000000000000,
 	producer_name:null,
 	parent_hash:0x0000000000000000000000000000000000000000,
-	time:Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(0),
+	time:0,
 	confirm:"",
 	size:0
 };

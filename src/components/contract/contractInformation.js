@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {TableRow, Th, QuestionMark, Flex, contentRatio, StyledLink} from './style';
 import {Popover } from 'antd';
+import {currencyFormat} from '../../utils/utils';
 
 class ContractInformation extends Component{
 	render(){
@@ -23,7 +24,7 @@ class ContractInformation extends Component{
 						<span>Available Energy:</span>
 					</Th>
 					<td>
-						<span>{contract.available_energy?contract.available_energy.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","):0}&nbsp;ENERGY</span>
+						<span>{contract.available_energy?currencyFormat(contract.available_energy):0}&nbsp;ENERGY</span>
 					</td>
 				</TableRow>
 				<TableRow>

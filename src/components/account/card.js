@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { CopyOutlined } from '@ant-design/icons';
 import { loadAccountDetails } from '../../actions/account';
 import { Skeleton} from 'antd';
+import { toDateTime, currencyFormat, decimalFormat } from '../../utils/utils';
 const Wrap = styled.div`
     display: flex;
     flex-direction: column;
@@ -51,16 +52,16 @@ class Card extends Component {
     const acc= this.props.account;
     const content = [
       { title: 'Name', value:<HightLight>{ acc.name} </HightLight> },
-      { title: 'Total Balance', value:<HightLight>{ acc.totalBalance.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} </HightLight> },
-      { title: 'TRX Balance',  value: <HightLight>{(acc.trxBalance/Math.pow(10,6)).toFixed(4).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") } TRX</HightLight>},
+      { title: 'Total Balance', value:<HightLight>{ currencyFormat(acc.totalBalance)} </HightLight> },
+      { title: 'TRX Balance',  value: <HightLight>{currencyFormat(decimalFormat(acc.trxBalance/Math.pow(10,6)))} TRX</HightLight>},
       { title: 'Transactions',  value: acc.transactions},
       { title: 'Transferred',  value: acc.transferred},
-      { title: 'Available Balance',  value: acc.availableBalance.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")},
+      { title: 'Available Balance',  value: currencyFormat(acc.availableBalance)},
       { title: 'Net Usage',  value: acc.netUsage},
       { title: 'Bandwidth  Used',  value: acc.bandwidthUsed},
       { title: 'BandWidth Total',  value: acc.bandwidthTotal},
-      { title: 'Create Time',  value: acc.createTime},
-      { title: 'Frozen Balance',  value: acc.frozenBalance},
+      { title: 'Create Time',  value: toDateTime(acc.createTime)},
+      { title: 'Frozen Balance',  value: currencyFormat(acc.frozenBalance)},
       { title: 'Energy Total',  value: acc.energyTotal},
       { title: 'Energy Used',  value: acc.energyUsed},
       // { title: 'Assets', value: <ReactJson src={ acc.asset} />},

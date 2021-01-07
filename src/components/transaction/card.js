@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import styled from 'styled-components';
 import { CopyOutlined } from '@ant-design/icons';
 import { Skeleton} from 'antd';
+import {toDateTime} from '../../utils/utils';
+
 const Wrap = styled.div`
     display: flex;
     flex-direction: column;
@@ -82,7 +84,7 @@ class Card extends Component {
       { title: 'Result', value:result },
       { title: 'Status', value: Status(status,numOfBlocks)},
       { title: 'Block', value: <HightLight>{blockNum}</HightLight> },
-      { title: 'Time', value: new Date(timestamp).toString() },
+      { title: 'Time', value: toDateTime(timestamp) },
       { title: 'Contract', value: contract.type},
       { title: 'Type URL', value: contract.parameter.type_url },
       { title: 'Value', value: <RowValueExt>{contract.parameter.value}</RowValueExt> },

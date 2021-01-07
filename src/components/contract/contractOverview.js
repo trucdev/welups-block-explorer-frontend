@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {TableRow, Th} from './style';
+import {decimalFormat, currencyFormat} from '../../utils/utils';
 
 class ContractOverview extends Component{
 	render(){
@@ -20,7 +21,7 @@ class ContractOverview extends Component{
 						<span>Balance:</span>
 					</Th>
 					<td>
-						<span>{(contract.balance/Math.pow(10,6)).toFixed(4).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} TRX</span>
+						<span>{currencyFormat(decimalFormat(contract.balance/Math.pow(10,6)))} TRX</span>
 					</td>
 				</TableRow>
 				<TableRow>

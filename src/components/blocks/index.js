@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loadBlocks,  updatePageBlocks, updatePageBlocksLimit } from '../../actions/blocks';
 import styled from 'styled-components';
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
-import ReactTimeAgo from 'react-time-ago';
-
-TimeAgo.addLocale(en)
+import {toTimeAgo} from '../../utils/utils';
 
 const LeftHeader = styled.div`
 	text-align: left;
@@ -61,7 +57,7 @@ const columns = [
 		title: 'Age',
 		key: 'age',
 		render: record => {
-			var time = record.timestamp&&record.timestamp<Date.now()?<ReactTimeAgo date={record.timestamp} locale="en-US"/>:"unknown";
+			var time = record.timestamp?toTimeAgo(record.timestamp):"unknown";
 			return time;
 		}
 	},

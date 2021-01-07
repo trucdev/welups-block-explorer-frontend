@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {TableRow, Th} from './style';
+import {toDateTime} from '../../utils/utils';
 
 class BlockTime extends Component{
 	render(){
@@ -13,7 +14,7 @@ class BlockTime extends Component{
 				</Th>
 				<td>
 					<div>
-						<span>{time}(Local)</span>
+						<span>{toDateTime(time)}</span>
 					</div>
 				</td>
 			</TableRow>				

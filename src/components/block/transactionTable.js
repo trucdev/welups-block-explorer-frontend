@@ -2,11 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {BadgeGreen, BadgeRed, StyledLink} from './style';
 import { Table } from 'antd';
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
-import ReactTimeAgo from 'react-time-ago';
-
-TimeAgo.addLocale(en)
+import {toTimeAgo} from '../../utils/utils';
 
 const columns = [
 	{
@@ -32,7 +28,7 @@ const columns = [
 		title: 'Age',
 		key: 'age',
 		render: record => {
-			var time = record.timestamp&&record.timestamp<Date.now()?<ReactTimeAgo date={record.timestamp} locale="en-US"/>:"unknown";
+			var time = record.timestamp?toTimeAgo(record.timestamp):"unknown";
 			return time;
 		}
 	},

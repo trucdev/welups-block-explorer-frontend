@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { loadTransactions, updatePageTransactions, updatePageTransactionsLimit, } from '../../actions/transactions';
 import { Table, Pagination } from 'antd';
 import { Link } from "react-router-dom";
-import ReactTimeAgo from 'react-time-ago';
+import {toTimeAgo, decimalFormat, currencyFormat} from '../../utils/utils';
 
 const Container = styled.div`
 	margin: 5px;
@@ -86,9 +86,9 @@ const columns = [
 		key: 'amount',
 		render: record =>{
 			if (record.type === "TransferAssetContract"  ) {
-				return <span>{(record.contract.parameter.raw.Amount/1000000).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}</span>
+				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.Amount/1000000))}</span>
 			}else if (record.type === "TransferContract" ) {
-				return <span>{(record.contract.parameter.raw.Amount/1000000).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} TRX</span>
+				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.Amount/1000000))} TRX</span>
 			}
 			else{ 
 				return <span>&nbsp; &nbsp; &nbsp; -</span>
@@ -113,7 +113,7 @@ const columns = [
 		width: '20%',
 		key: 'timestamp',
 		render: record => {
-			var time = record.timestamp && record.timestamp < Date.now() ? <ReactTimeAgo date={record.timestamp} locale="en-US" /> : "unknown";
+			var time = record.timestamp?toTimeAgo(record.timestamp) : "unknown";
 			return time;
 		}
 	},

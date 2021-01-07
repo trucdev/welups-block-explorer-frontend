@@ -13,10 +13,7 @@ import {
 	RecentItemData, StyledLink,
 	RecentRightCol,
 } from './recent-list';
-import TimeAgo from 'javascript-time-ago';
-import ReactTimeAgo from 'react-time-ago';
-import en from 'javascript-time-ago/locale/en';
-TimeAgo.addLocale(en)
+import {toTimeAgo} from '../../utils/utils';
 
 class TransactionList extends React.Component {
 
@@ -75,7 +72,7 @@ class TransactionList extends React.Component {
 						<span>Type:<RecentItemData>{tran.type}</RecentItemData></span>
 					</Col>
 					<RecentRightCol xs={24} sm={24} md={12} >
-						<span><RecentItemData>{tran.timestamp&&tran.timestamp<Date.now()?<ReactTimeAgo date={tran.timestamp} locale="en-US"/>:"unknown"}</RecentItemData></span>
+						<span><RecentItemData>{tran.timestamp?toTimeAgo(tran.timestamp):"unknown"}</RecentItemData></span>
 					</RecentRightCol>
 				</Row>
 			</RecentItem>

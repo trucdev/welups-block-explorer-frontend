@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loadTokens,  updatePageTokens, updatePageTokensLimit } from '../../actions/tokens';
 import styled from 'styled-components';
+import {currencyFormat} from '../../utils/utils';
 
 const LeftHeader = styled.div`
 	text-align: left;
@@ -168,7 +169,7 @@ const columns = [
 		title: 'Total Supply',
 		dataIndex: 'total_supply',
 		key: 'total_supply',
-		render: record => { var text = record?record.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","):null;
+		render: record => { var text = record?currencyFormat(record):null;
 							return text;
 						}
 	},

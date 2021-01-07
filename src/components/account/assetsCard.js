@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Table } from "antd";
+import { currencyFormat} from '../../utils/utils';
 
 const TitleAssetTable = styled.div`
 	margin-top: 20px;
@@ -43,7 +44,7 @@ class AssetsCard extends Component {
 			{
 				title: "Value",
 				dataIndex: "value",
-				render: record => {return record.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");}
+				render: record => {return currencyFormat(record);}
 			}
 		];
 		return (
