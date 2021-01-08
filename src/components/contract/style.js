@@ -22,7 +22,6 @@ export const BorderRed = styled.div`
 
 export const FontFamily = styled.div`
 	padding: 0 2%;
-	font-family: PingFangSC-Regular;
 	text-align: left;
 `;
 
@@ -55,7 +54,6 @@ export const QuestionMark = styled.span`
     cursor: pointer;
 `;
 export const HoverContent = styled.div`
-    font-family: PingFangSC-Regular;
     width: 130px;
 `;
 export const contentRatio = (

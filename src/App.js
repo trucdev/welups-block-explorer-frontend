@@ -6,7 +6,7 @@ import BlockDetail from './components/block/block';
 import NotFound from './components/not-found';
 import Search from './components/search';
 import TransactionDetails from './components/transaction';
-import TransactionsList from './components/list/transactionsList';
+import TransactionsList from './components/transactions/transactionsList';
 import AccountDetails from './components/account';
 import ContractDetails from './components/contract/contract';
 import WitnessTable from './components/witnesses';

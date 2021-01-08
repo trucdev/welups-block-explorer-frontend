@@ -26,7 +26,6 @@ export const BorderRed = styled.div`
 
 export const FontFamily = styled.div`
 	padding: 0 2%;
-	font-family: PingFangSC-Regular;
 	text-align: left;
 `;
 
@@ -58,7 +57,6 @@ export const StatusTag = styled.span`
 	display: inline-block;
     margin-left: 20px;
     padding: 3px 9px 3px 20px;
-    font-family: PingFangSC-Regular;
     font-size: 12px;
     color: #666;
     text-align: center;
@@ -80,7 +78,6 @@ export const BadgeRed = styled(Badge)`
     }  
 `;
 export const HoverContent = styled.div`
-    font-family: PingFangSC-Regular;
     width: 130px;
 `;
 export const contentStatus = (

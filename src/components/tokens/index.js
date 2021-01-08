@@ -52,7 +52,6 @@ const Pagin = styled.div`
 //     margin-bottom:5px;  
 // `;
 // const HoverContent = styled.div`
-//     font-family: PingFangSC-Regular;
 //     width: 130px;
 // `;
 // const contentChange = (
