@@ -86,7 +86,7 @@ const columns = [
 		key: 'amount',
 		render: record =>{
 			if (record.type === "TransferAssetContract"  ) {
-				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.Amount))}</span>
+				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.Amount/1000000))}</span>
 			}else if (record.type === "TransferContract" ) {
 				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.Amount/1000000))} TRX</span>
 			}
