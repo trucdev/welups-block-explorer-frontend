@@ -13,7 +13,7 @@ import {
 	RecentItemData, StyledLink,
 	RecentRightCol,
 } from './recent-list';
-import {toTimeAgo} from '../../utils/utils';
+import {toTimeAgo,currencyFormat, decimalFormat} from '../../utils/utils';
 
 class TransactionList extends React.Component {
 
@@ -24,7 +24,7 @@ class TransactionList extends React.Component {
 		var amount = null;
 		switch(tran.type){
 			default: amount= null;break;
-			case "TransferContract": amount = (tran.contract.parameter.raw.Amount/Math.pow(10,6)).toFixed(4) + " ACG";break;
+			case "TransferContract": amount = currencyFormat(decimalFormat(tran.contract.parameter.raw.Amount/1000000)) + " ACG";break;
 			case "TransferAssetContract": amount = tran.contract.parameter.raw.Amount;break;
 		}
 		return <List.Item key={tran.hash}>
