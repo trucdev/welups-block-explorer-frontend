@@ -21,7 +21,7 @@ class ContractOverview extends Component{
 						<span>Balance:</span>
 					</Th>
 					<td>
-						<span>{currencyFormat(decimalFormat(contract.balance/Math.pow(10,6)))} TRX</span>
+						<span>{currencyFormat(decimalFormat(contract.balance/Math.pow(10,6)))} ACG</span>
 					</td>
 				</TableRow>
 				<TableRow>

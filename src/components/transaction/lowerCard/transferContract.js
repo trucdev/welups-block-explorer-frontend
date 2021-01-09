@@ -88,7 +88,7 @@ const TO = this.props.transaction.contract.parameter.raw.ToAddress;
               <span >Amount</span>:
             </TitleContainer>
             <FillContainer>
-            <span>{(this.props.transaction.contract.parameter.raw.Amount/1000000).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} TRX</span>
+            <span>{(this.props.transaction.contract.parameter.raw.Amount/1000000).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} ACG</span>
             </FillContainer>
           </Row>
         </Content>

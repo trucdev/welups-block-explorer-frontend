@@ -53,7 +53,7 @@ class Card extends Component {
     const content = [
       { title: 'Name', value:<HightLight>{ acc.name} </HightLight> },
       { title: 'Total Balance', value:<HightLight>{ currencyFormat(acc.totalBalance)} </HightLight> },
-      { title: 'TRX Balance',  value: <HightLight>{currencyFormat(decimalFormat(acc.trxBalance/Math.pow(10,6)))} TRX</HightLight>},
+      { title: 'ACG Balance',  value: <HightLight>{currencyFormat(decimalFormat(acc.trxBalance/Math.pow(10,6)))} ACG</HightLight>},
       { title: 'Transactions',  value: acc.transactions},
       { title: 'Transferred',  value: acc.transferred},
       { title: 'Available Balance',  value: currencyFormat(acc.availableBalance)},

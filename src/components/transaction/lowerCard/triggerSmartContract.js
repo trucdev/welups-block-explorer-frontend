@@ -99,7 +99,7 @@ class Trigger extends Component {
                 <RedText >{To.slice(0, 14)}</RedText>...
                 <RedText >{To.slice(ToLenght - 5, ToLenght)} </RedText>
                 <span>  0 </span>
-                <span>TRX</span>
+                <span>ACG</span>
               </ContentLine>
               <ContentLine>
                 <Righticon><RightOutlined /></Righticon>
@@ -111,7 +111,7 @@ class Trigger extends Component {
                 <RedText >{To.slice(0, 14)}</RedText>...
                 <RedText >{To.slice(ToLenght - 5, ToLenght)} </RedText>
                 <span>  0 </span>
-                <span>TRX</span>
+                <span>ACG</span>
               </ContentLine> */}
             </FillContainer>
           </Row>
@@ -120,7 +120,7 @@ class Trigger extends Component {
               <span >Value</span>:
             </TitleContainer>
             <FillContainer>
-              <span >0 TRX</span>
+              <span >0 ACG</span>
             </FillContainer>
           </Row>
           <Row>
@@ -164,7 +164,7 @@ class Trigger extends Component {
                 <MakeItaRow>
                   <ConsumeLeft>
                     <Righticon><RightOutlined /></Righticon>
-                    <span>Burn 0.014 TRX for bandwidth:</span>
+                    <span>Burn 0.014 ACG for bandwidth:</span>
                   </ConsumeLeft>
                   <ConsumeRight>
                     <span>0 Bandwidth</span>
@@ -196,7 +196,7 @@ class Trigger extends Component {
                 <MakeItaRow>
                   <ConsumeLeft>
                     <Righticon><RightOutlined /></Righticon>
-                    <span>Burn 0 TRX for energy:</span>
+                    <span>Burn 0 ACG for energy:</span>
                   </ConsumeLeft>
                   <ConsumeRight>
                     <span>65,621 Energy</span>
@@ -221,7 +221,7 @@ class Trigger extends Component {
               <span >Fee limit</span>:
             </TitleContainer>
             <FillContainer>
-              <span >1000 TRX</span>
+              <span >1000 ACG</span>
             </FillContainer>
           </Row>
           <Row>

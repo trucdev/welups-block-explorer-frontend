@@ -56,12 +56,12 @@ const Pagin = styled.div`
 // `;
 // const contentChange = (
 //   <HoverContent>
-//     <p>24H change compare with TRX</p>
+//     <p>24H change compare with ACG</p>
 //   </HoverContent>
 // );
 // const contentMarket = (
 //   <HoverContent>
-//     <p>Calculated by multiplying total circulating supply by current price of each token. Tokens with 24H trading volume lower than 10000 TRX are excluded.</p>
+//     <p>Calculated by multiplying total circulating supply by current price of each token. Tokens with 24H trading volume lower than 10000 ACG are excluded.</p>
 //   </HoverContent>
 // );
 // const columns = [
@@ -82,7 +82,7 @@ const Pagin = styled.div`
 // 		key: 'price',
 // 		render: record => <div>
 // 							<div>{record.price_USD.toFixed(6)}&nbsp;USD</div>
-// 							<Gray>{record.price_TRX.toFixed(6)}&nbsp;TRX</Gray>
+// 							<Gray>{record.price_TRX.toFixed(6)}&nbsp;ACG</Gray>
 // 						</div>,
 // 		defaultSortOrder: 'descend',
 // 		sorter: (a, b) => a.price_USD-b.price_USD,
@@ -106,7 +106,7 @@ const Pagin = styled.div`
 // 		key: 'volume',
 // 		render: record => <div>
 // 							<div>{record.volume_USD.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}&nbsp;USD</div>
-// 							<Gray>{record.volume_TRX.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}&nbsp;TRX</Gray>
+// 							<Gray>{record.volume_TRX.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}&nbsp;ACG</Gray>
 // 						</div>,
 // 		defaultSortOrder: 'descend',
 // 		sorter: (a, b) => a.volume_USD-b.volume_USD,
@@ -120,7 +120,7 @@ const Pagin = styled.div`
 // 		key: 'market_cap',
 // 		render: record => <div>
 // 							<div>{record.market_cap_USD.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}&nbsp;USD</div>
-// 							<Gray>{record.market_cap_TRX.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}&nbsp;TRX</Gray>
+// 							<Gray>{record.market_cap_TRX.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}&nbsp;ACG</Gray>
 // 						</div>,
 // 		defaultSortOrder: 'descend',
 // 		sorter: (a, b) => a.market_cap_USD-b.market_cap_USD,

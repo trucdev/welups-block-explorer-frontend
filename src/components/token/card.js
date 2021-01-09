@@ -56,7 +56,7 @@ class Card extends Component {
         { title: 'Issuer',  value: <StyledLink to={`/account/${this.props.token.owner_address}`}>{this.props.token.owner_address}</StyledLink>},,
         { title: 'Total supply',  value: <RedText>{currencyFormat(this.props.token.total_supply)}</RedText>},
         { title: 'Total asset',  value: <RedText>{currencyFormat(this.props.token.total_assets)}</RedText>},
-        { title: 'Price',  value: <span> {currencyFormat(this.props.token.num)} {this.props.token.abbr} <ArrowRightOutlined/> {currencyFormat(this.props.token.trx_num/1000000)} TRX</span> },
+        { title: 'Price',  value: <span> {currencyFormat(this.props.token.num)} {this.props.token.abbr} <ArrowRightOutlined/> {currencyFormat(this.props.token.trx_num/1000000)} ACG</span> },
         { title: 'Start time',  value: toDateTime(this.props.token.start_time)},
         { title: 'End time',  value:   toDateTime(this.props.token.end_time)},
         { title: 'Offical Website',  value: <LinkA href={this.props.token.url} target="_blank">{this.props.token.url}</LinkA>},
