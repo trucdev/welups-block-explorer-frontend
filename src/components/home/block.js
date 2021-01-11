@@ -59,6 +59,8 @@ class BlockList extends React.Component {
 					<PerfectScrollbar>
 						<List
 							dataSource={blocks}
+							loading={blocks.length === 0 ? true:false}
+							locale={{ emptyText: 'Loading' }}
 							renderItem={block => (
 								this.blockItem(block)
 							)}

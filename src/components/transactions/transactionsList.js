@@ -144,6 +144,8 @@ class TransactionsList extends React.Component {
 					rowKey="hash"
 					pagination={false}
 					scroll={{ x: 1500 }} sticky
+					loading={transactions.length === 0 ? true:false}
+					locale={{ emptyText: 'Loading' }}
 				/>
 				<PagiContainer>
 					<Pagination

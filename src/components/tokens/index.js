@@ -200,6 +200,8 @@ class TokenTable extends React.Component {
 					rowKey="id"
 					scroll={{ x: 1300 }} sticky
 					pagination={false}
+					loading={tokens.length === 0 ? true:false}
+					locale={{ emptyText: 'Loading' }}
 				/>
 				<Pagin>
 					<Pagination 

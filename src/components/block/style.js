@@ -34,7 +34,7 @@ export const Div = styled.div`
 `;
 
 export const Title = styled.div`
-	font-weight: bold;
+	font-weight: 500;
 	font-size: 20px;
 `;
 
@@ -73,7 +73,7 @@ export const BadgeGreen = styled(Badge)`
 
 export const BadgeRed = styled(Badge)`
     .ant-badge-count {
-        background-color: #ff0000;
+        background-color: #f58078;
         color: black
     }  
 `;

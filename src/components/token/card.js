@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {currencyFormat, toDateTime} from '../../utils/utils';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import { Skeleton} from 'antd';
 
 const Wrap = styled.div`
     display: flex;
@@ -63,6 +64,7 @@ class Card extends Component {
     ];
     return (
       <Wrap>
+        <Skeleton loading={this.props.token.id===""}>
         <Content>
           {content.map((item,index) => {
             return (
@@ -73,6 +75,7 @@ class Card extends Component {
             )
           })}
         </Content>
+        </Skeleton>
       </Wrap>
     );
   }

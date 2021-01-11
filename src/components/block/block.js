@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import BlockNum from './blockNum';
 import BlockStatus from './blockStatus';
@@ -12,63 +12,67 @@ import BlockSize from './blockSize';
 import BlockMenu from './blockMenu';
 import * as action from '../../actions/block';
 import { Row, Col } from 'antd';
-import {Table, BorderRed, Div, FontFamily} from './style';
+import { Table, BorderRed, Div, FontFamily } from './style';
+import { Skeleton } from 'antd';
 
-class Block extends Component{
-	componentDidMount(){
+class Block extends Component {
+	componentDidMount() {
 		var id = this.props.match.params.id;
 		this.props.loadBlock(id);
 		this.props.loadBlockTransaction(id);
 	}
 
-	render(){
+	render() {
+		console.log(this.props.producer_hash)
 		return (
 			<div>
-				<Row>
-					<Col>
-						<h2>
-							<span>BLOCK</span>
-						</h2>
-					</Col>	
-				</Row>
-				<BorderRed>
-					<FontFamily>
-						<Row>
-							<Col span={24}>
-								<Div>
-									<BlockNum/>
-									<Table>
-										<tbody>
-											<BlockStatus/>
-											<BlockHash/>
-											<BlockHeight/>
-											<BlockTime/>
-											<BlockTransaction/>
-											<BlockParentHash/>
-											<BlockProducer/>
-											<BlockSize/>
-										</tbody>
-									</Table>
-								</Div>
-								<BorderRed>
-									<BlockMenu/>
-								</BorderRed>
-							</Col>
-						</Row>
-					</FontFamily>
-				</BorderRed>	
-			</div>	
+				<Skeleton loading={this.props.producer_hash === 0}>
+					<Row>
+						<Col>
+							<h2>
+								<span>BLOCK</span>
+							</h2>
+						</Col>
+					</Row>
+					<BorderRed>
+						<FontFamily>
+							<Row>
+								<Col span={24}>
+									<Div>
+										<BlockNum />
+										<Table>
+											<tbody>
+												<BlockStatus />
+												<BlockHash />
+												<BlockHeight />
+												<BlockTime />
+												<BlockTransaction />
+												<BlockParentHash />
+												<BlockProducer />
+												<BlockSize />
+											</tbody>
+										</Table>
+									</Div>
+									<BorderRed>
+										<BlockMenu />
+									</BorderRed>
+								</Col>
+							</Row>
+						</FontFamily>
+					</BorderRed>
+				</Skeleton>
+			</div>
 		);
 	}
 }
 
 const mapStateToProps = (state) => {
 	return {
-		
+		producer_hash: state.block.producer_hash,
 	};
 };
 
-const mapDispatchToProps = (dispatch,props) => {
+const mapDispatchToProps = (dispatch, props) => {
 	return {
 		loadBlockTransaction: (id) => {
 			dispatch(action.loadBlockTransactionApi(id));

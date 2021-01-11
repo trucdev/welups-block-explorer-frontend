@@ -8,7 +8,7 @@ class BlockNum extends Component{
 		let {block_num} = this.props;
 		return (
 			<Title>
-					<BorderOutlined/>&nbsp;Block&nbsp;#{block_num}
+					#{block_num}
 			</Title>					
 		);
 	}

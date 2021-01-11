@@ -97,6 +97,8 @@ class WitnessTable extends React.Component {
 					dataSource={witnesses}
 					rowKey="address"
 					scroll={{ x: 1500 }} sticky
+					loading={witnesses.length === 0 ? true:false}
+					locale={{ emptyText: 'Loading' }}
 				/>
 			</Wrapper>
 

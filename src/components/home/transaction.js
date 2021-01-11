@@ -94,6 +94,8 @@ class TransactionList extends React.Component {
 							renderItem={tran => (
 								this.tranItem(tran)
 							)}
+							loading={trans.length === 0 ? true:false}
+							locale={{ emptyText: 'Loading' }}
 						/>
 					</PerfectScrollbar>
 				</RecentListContentFrame>

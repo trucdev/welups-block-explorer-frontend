@@ -51,7 +51,7 @@ const columns = [
 		title: 'Height',
 		dataIndex: 'num',
 		key: 'height',
-		render: text => <StyledLink key={text} to={"/block/"+text} target="_blank">{text}</StyledLink>,
+		render: text => <StyledLink key={text} to={"/block/"+text} >{text}</StyledLink>,
 	},
 	{
 		title: 'Age',
@@ -75,7 +75,7 @@ const columns = [
 		title: 'Producer',
 		dataIndex: 'producer',
 		key: 'producer',
-		render: record => <StyledLink key={record.hash} to={`/account/${record.hash}`} target="_blank">{record.name?record.name:record.hash}</StyledLink>,
+		render: record => <StyledLink key={record.hash} to={`/account/${record.hash}`} >{record.name?record.name:record.hash}</StyledLink>,
 	}
 ];
 
@@ -105,6 +105,8 @@ class BlockTable extends React.Component {
 					rowKey="num"
 					scroll={{ x: 1300 }} sticky
 					pagination={false}
+					loading={blocks.length === 0 ? true:false}
+					locale={{ emptyText: 'Loading' }}
 				/>
 				<Pagin>
 					<Pagination 
