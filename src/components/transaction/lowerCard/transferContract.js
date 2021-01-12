@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { FaExchangeAlt } from "react-icons/fa";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
-
+import {currencyFormat, decimalFormat} from '../../../utils/utils';
 
 
 const RedText = styled.span`
@@ -88,7 +88,7 @@ const TO = this.props.transaction.contract.parameter.raw.ToAddress;
               <span >Amount</span>:
             </TitleContainer>
             <FillContainer>
-            <span>{(this.props.transaction.contract.parameter.raw.Amount/1000000).toString()} ACG</span>
+            <span>{currencyFormat(decimalFormat(this.props.transaction.contract.parameter.raw.Amount/1000000))} ACG</span>
             </FillContainer>
           </Row>
         </Content>

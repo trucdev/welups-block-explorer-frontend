@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { FaExchangeAlt } from "react-icons/fa";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
+import {currencyFormat} from '../../../utils/utils';
 
 const RedText = styled.span`
     color: #E50915;
@@ -87,7 +88,7 @@ class TransferAssetContract extends Component {
               <span >Amount</span>:
             </TitleContainer>
             <FillContainer>
-              <span >{this.props.transaction.contract.parameter.raw.Amount.toString()}</span>
+              <span >{currencyFormat(this.props.transaction.contract.parameter.raw.Amount)}</span>
             </FillContainer>
           </Row>
           <Row>

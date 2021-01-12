@@ -23,10 +23,10 @@ export function toTimeAgo(timestamp){
 }
 
 export function decimalFormat(value, precision=4){
-	return parseFloat(value.toFixed(precision));
+	return value;
 }
 
 export function currencyFormat(value){
 	// return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-	return value;
+	return Intl.NumberFormat().format(value);
 }
