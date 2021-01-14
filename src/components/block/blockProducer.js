@@ -17,7 +17,7 @@ class BlockProducer extends Component{
 				</Th>
 				<td>
 					<div>
-						<StyledLink to={"/account/"+producer_hash} target="_blank">{producer_name}</StyledLink><CopyToClipboard text={producer_hash}><CopyOutlined/></CopyToClipboard>
+						<StyledLink to={"/account/"+producer_hash} target="_blank">{producer_name ? producer_name : producer_hash}</StyledLink><CopyToClipboard text={producer_name ? producer_name : producer_hash}><CopyOutlined/></CopyToClipboard>
 					</div>
 				</td>
 			</TableRow>				
