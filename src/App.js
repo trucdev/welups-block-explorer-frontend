@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Menu, Layout } from 'antd';
-import { MailOutlined, AppstoreOutlined, NodeIndexOutlined, BlockOutlined, TransactionOutlined, DollarCircleOutlined } from '@ant-design/icons';
+import { Menu, Layout, Avatar } from 'antd';
+import { MailOutlined, AppstoreOutlined, NodeIndexOutlined, BlockOutlined, TransactionOutlined, DollarCircleOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
 import NotFound from './components/not-found';
@@ -14,6 +14,8 @@ import TokenTable from './components/tokens/index';
 import NodeTable from './components/nodes/index';
 import BlockTable from './components/blocks/index';
 import TokenDetails from './components/token/index';
+import Login from './components/login/index';
+import AssetManagement from './components/assetManagement/index';
 import { Row, Col } from 'antd';
 import {
   BrowserRouter as Router,
@@ -40,8 +42,21 @@ const FooterWrapper = styled(Footer)`
   text-align: center;
   flex-shrink: 0;
 `;
+const LoginItem = styled(Menu.Item)`
+  float:right;
+  @media(max-width: 852px) {
+    float:none;
+  }
+`;
+const SubItemRight = styled(Menu.SubMenu)`
+  float:right;
+  @media(max-width: 852px) {
+    float:none;
+  }
+`;
 class App extends Component {
   render() {
+    var {login} = this.props;
     return (
       <Router>
         <AppWrapper>
@@ -67,6 +82,17 @@ class App extends Component {
             <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
               <Link to="/tokens">Tokens</Link>
             </Menu.Item>
+            {
+              login?
+              <SubItemRight key="user" title={<Avatar size="large" icon={<UserOutlined />} />}>
+                <Menu.Item key="1">
+                  <Link to="/user">Asset Management</Link>
+                </Menu.Item>
+              </SubItemRight>
+              :<LoginItem key="login" icon={<LoginOutlined />}>
+                <Link to="/login">Log in</Link>
+              </LoginItem>
+            }
             </Menu>
           <ContentRowWrapper justify='center' gutter={[5, 5]}>
             <Col xs={20} sm={20} md={20} lg={19} xl={18}>
@@ -129,6 +155,14 @@ class App extends Component {
                   path="/nodes"
                   render={(routeProps) => <NodeTable />}
                 />
+                <Route
+                  path="/login"
+                  render={(routeProps) => <Login />}
+                />
+                <Route
+                  path="/user"
+                  render={(routeProps) => <AssetManagement />}
+                />
                 <Redirect to="/notfound" />
               </Switch>
             </Col>
@@ -140,4 +174,11 @@ class App extends Component {
     );
   }
 }
-export default connect(null, null, null, { forwardRef: true })(App);
+
+const mapStateToProps = (state) => {
+  return {
+    login: state.login,
+  };
+};
+
+export default connect(mapStateToProps, null, null, { forwardRef: true })(App);

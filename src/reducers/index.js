@@ -21,6 +21,8 @@ import { pageTransactionsReducer } from "./transactions";
 import { blocksReducer } from "./blocks";
 import { pageBlocksReducer } from "./blocks";
 import { nodesReducer } from "./nodes";
+import { loginReducer } from "./login";
+import { assetManagementReducer } from "./assetManagement";
 
 export default combineReducers({
 	search: searchReducer,
@@ -42,4 +44,6 @@ export default combineReducers({
 	blocks:blocksReducer,
 	pageBlocks:pageBlocksReducer,
 	token:tokenReducer,
+	login:loginReducer,
+	assetManagement:assetManagementReducer
 });
