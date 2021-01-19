@@ -7,7 +7,7 @@ import {Row, Col} from 'antd';
 
 
 class Home extends Component {
-	render() {
+	render() {	
 		return (
 			<div>
 				<Row gutter={[5, 5]}><Col span={24} ><Summary /></Col></Row>
