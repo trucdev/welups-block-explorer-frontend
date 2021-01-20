@@ -88,15 +88,23 @@ class App extends Component {
               </Menu.Item>
             </StyledMenuRight>
             <StyledMenuLeft mode="horizontal">
-              <StyledSubMenu title="ACCOUNT">
+              <StyledSubMenu title="WALLET">
                 <Menu.Item key="User" icon={<SendOutlined />}>
                   <Link to="/transferasset">Send</Link>
                 </Menu.Item>
                 <Menu.Item key="Log" icon={<QrcodeOutlined />}>Recevice</Menu.Item>
               </StyledSubMenu>
-              <Menu.Item key="login" >
-                <Link to="/login">REGISTER / LOG IN</Link>
-              </Menu.Item>
+              {
+                login ?
+                  <StyledSubMenu title="ACCOUNT">
+                    <Menu.Item key="User" >
+                      <Link to="/user">ASSET MANAGEMENT</Link>
+                    </Menu.Item>
+                  </StyledSubMenu>
+                  : <Menu.Item key="login" >
+                    <Link to="/login">REGISTER / LOG IN</Link>
+                  </Menu.Item>
+              }
             </StyledMenuLeft>
           </MenuContainer>
           <ContentRowWrapper justify='center' gutter={[5, 5]}>
