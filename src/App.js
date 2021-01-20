@@ -8,12 +8,14 @@ import Search from './components/search';
 import TransactionDetails from './components/transaction';
 import TransactionsList from './components/transactions/transactionsList';
 import AccountDetails from './components/account';
+
 import ContractDetails from './components/contract/contract';
 import WitnessTable from './components/witnesses';
 import TokenTable from './components/tokens/index';
 import NodeTable from './components/nodes/index';
 import BlockTable from './components/blocks/index';
 import TokenDetails from './components/token/index';
+import TransferAsset from './components/transferasset/transferasset';
 import SignUp from './components/signup/signup';
 import Login from './components/login/index';
 import AssetManagement from './components/assetManagement/index';
@@ -145,6 +147,10 @@ class App extends Component {
                   render={(routeProps) => <TransactionDetails {...routeProps} />}
                 />
                 <Route
+                  path="/transferasset"
+                  render={(routeProps) => <TransferAsset {...routeProps} />}
+                />
+                <Route
                   path="/account/:id"
                   render={(routeProps) => <AccountDetails {...routeProps} />}
                 />
@@ -172,14 +178,6 @@ class App extends Component {
                   path="/nodes"
                   render={(routeProps) => <NodeTable />}
                 />
-                <Route
-                  path="/login"
-                  render={(routeProps) => <Login />}
-                />
-                <Route
-                  path="/user"
-                  render={(routeProps) => <AssetManagement />}
-                />
                 <Redirect to="/notfound" />
               </Switch>
             </Col>
@@ -191,11 +189,4 @@ class App extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    login: state.login,
-  };
-};
-
-export default connect(mapStateToProps, null, null, { forwardRef: true })(App);
+export default connect(null, null, null, { forwardRef: true })(App);
