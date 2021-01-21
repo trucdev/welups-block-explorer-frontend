@@ -15,6 +15,7 @@ import TokenTable from './components/tokens/index';
 import NodeTable from './components/nodes/index';
 import BlockTable from './components/blocks/index';
 import TokenDetails from './components/token/index';
+import IssueTokenTRC10 from './components/issueTokenTRC10/index';
 import TransferAsset from './components/transferasset/transferasset';
 import SignUp from './components/signup/signup';
 import Login from './components/login/index';
@@ -177,6 +178,18 @@ class App extends Component {
                 <Route
                   path="/nodes"
                   render={(routeProps) => <NodeTable />}
+                />
+                <Route
+                  path="/issue-token-trc10"
+                  render={(routeProps) => <IssueTokenTRC10 />}
+                />
+                <Route
+                  path="/login"
+                  render={(routeProps) => <Login />}
+                />
+                <Route
+                  path="/user"
+                  render={(routeProps) => <AssetManagement />}
                 />
                 <Redirect to="/notfound" />
               </Switch>
