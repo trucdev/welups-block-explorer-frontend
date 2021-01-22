@@ -94,8 +94,8 @@ class Login extends React.Component {
 				        </ButtonSubmit>
 				    </SmallItem>
 				    <Form.Item >
-				        <StyledLinkLeft to={"/account/"} target="_blank">Forgot password?</StyledLinkLeft>
-				        <StyledLinkRight to={"/signup"} target="_blank">Sign up</StyledLinkRight>
+				        <StyledLinkLeft to={"/account/"} >Forgot password?</StyledLinkLeft>
+				        <StyledLinkRight to={"/signup"} >Sign up</StyledLinkRight>
 				    </Form.Item>
 			    </Form>
 			</Wrapper>

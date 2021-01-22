@@ -8,7 +8,6 @@ import Search from './components/search';
 import TransactionDetails from './components/transaction';
 import TransactionsList from './components/transactions/transactionsList';
 import AccountDetails from './components/account';
-
 import ContractDetails from './components/contract/contract';
 import WitnessTable from './components/witnesses';
 import TokenTable from './components/tokens/index';
@@ -179,7 +178,7 @@ class App extends Component {
                   path="/nodes"
                   render={(routeProps) => <NodeTable />}
                 />
-                <Route
+                <routeProps
                   path="/issue-token-trc10"
                   render={(routeProps) => <IssueTokenTRC10 />}
                 />
@@ -202,4 +201,10 @@ class App extends Component {
     );
   }
 }
-export default connect(null, null, null, { forwardRef: true })(App);
+const mapStateToProps = (state) => {
+  return {
+    login: state.login,
+  };
+};
+
+export default connect(mapStateToProps, null, null, { forwardRef: true })(App);
