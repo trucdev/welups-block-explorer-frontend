@@ -23,9 +23,9 @@ export default class Asset {
 			if (!res.ok)
 				return { tranID: '', result: false };
 			const result = await res.json();
-			const signature = bytes.byteArray2hexStr(new Uint8Array(crypto.signBytes(privateKey, code.hexStr2byteArray(result.tran_raw_hex))));
-			const status = await transaction.broadcast(result.tran_hex, result.tran_raw_hex, signature);
-			return { tranID: result.tran_id, result: status }
+			const signature = bytes.byteArray2hexStr(new Uint8Array(crypto.signBytes(privateKey, code.hexStr2byteArray(result.data.tran_raw_hex))));
+			const status = await transaction.broadcast(result.data.tran_hex, result.data.tran_raw_hex, signature);
+			return { tranID: result.data.tran_id, result: status }
 		} catch (e) {
 			console.log(e);
 			return { tranID: '', result: false };
