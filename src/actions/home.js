@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch';
-
+import { notification} from 'antd';
 import { API_ADDR,WS_ADDR } from '../config/config';
 export const RECENT_BLOCK_UPDATE = 'RECENT_BLOCK_UPDATE';
 export const RECENT_BLOCK_INIT = 'RECENT_BLOCK_INIT';
@@ -30,6 +30,20 @@ export function loadRecentBlocks() {
 			dispatch(updateRecentBlock(res));
 		}).then(() => {
 			let ws = new WebSocket(`${WS_ADDR}/ws/block/recent`);
+			ws.onerror = function(err) {
+	            notification.error({
+				    message: `Notification`,
+				    description:
+				      'Poor connection!',
+				});
+	        };
+	        ws.onclose = function (event) {
+			    notification.error({
+				    message: `Notification`,
+				    description:
+				      'Disconnected!',
+				});
+			};
 			ws.onmessage = (e)=>{
 				let blocks = JSON.parse(e.data);
 				dispatch(updateRecentBlock(blocks));
@@ -70,6 +84,20 @@ export function loadRecentTrans() {
 			dispatch(updateRecentTrans(res));
 		}).then(() => {
 			let ws = new WebSocket(`${WS_ADDR}/ws/transactions/recent`);
+			ws.onerror = function(err) {
+	            notification.error({
+				    message: `Notification`,
+				    description:
+				      'Poor connection!',
+				});
+	        };
+	        ws.onclose = function (event) {
+			    notification.error({
+				    message: `Notification`,
+				    description:
+				      'Disconnected!',
+				});
+			};
 			ws.onmessage = (e)=>{
 				let trans = JSON.parse(e.data);
 				dispatch(updateRecentTrans(trans));
@@ -111,6 +139,20 @@ export function loadSystemState() {
 			dispatch(updateSystemState(res));
 		}).then(() => {
 			let ws = new WebSocket(`${WS_ADDR}/ws/system/state`);
+			ws.onerror = function(err) {
+	            notification.error({
+				    message: `Notification`,
+				    description:
+				      'Poor connection!',
+				});
+	        };
+	        ws.onclose = function (event) {
+			    notification.error({
+				    message: `Notification`,
+				    description:
+				      'Disconnected!',
+				});
+			};
 			ws.onmessage = (e)=>{
 				let systemState = JSON.parse(e.data);
 				dispatch(updateSystemState(systemState));
