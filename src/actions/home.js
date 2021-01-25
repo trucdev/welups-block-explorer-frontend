@@ -27,9 +27,9 @@ export function loadRecentBlocks() {
 			},
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(updateRecentBlock(res));
+			dispatch(updateRecentBlock(res.data));
 		}).then(() => {
-			let ws = new WebSocket(`${WS_ADDR}/ws/block/recent`);
+			let ws = new WebSocket(`${WS_ADDR}/ws/blocks/recent`);
 			ws.onerror = function(err) {
 	            notification.error({
 				    message: `Notification`,
@@ -81,7 +81,7 @@ export function loadRecentTrans() {
 			},
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(updateRecentTrans(res));
+			dispatch(updateRecentTrans(res.data));
 		}).then(() => {
 			let ws = new WebSocket(`${WS_ADDR}/ws/transactions/recent`);
 			ws.onerror = function(err) {
@@ -136,7 +136,7 @@ export function loadSystemState() {
 			},
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(updateSystemState(res));
+			dispatch(updateSystemState(res.data));
 		}).then(() => {
 			let ws = new WebSocket(`${WS_ADDR}/ws/system/state`);
 			ws.onerror = function(err) {
@@ -193,7 +193,7 @@ export function search(key, onsuccess) {
 			},
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(updateSearchResult(res.type, key));
+			dispatch(updateSearchResult(res.data.type, key));
 			onsuccess();
 		}).catch(err => {
 			dispatch(updateSearchResult({type:0}, key));

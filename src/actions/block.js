@@ -20,7 +20,7 @@ export function loadBlock(block) {
 export function loadBlockApi(id) {
 	return (dispatch)=> {
 		dispatch(defaultBlock());
-		fetch(`${API_ADDR}/block/common/${id}`, {
+		fetch(`${API_ADDR}/blocks/${id}/common`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -28,14 +28,14 @@ export function loadBlockApi(id) {
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
 			var _res = {
-				block_num:res.num,
-				transaction_num:res.transactions,
-				block_hash:res.hash,
-				producer_hash:res.producer.hash,
-				producer_name:res.producer.name,
-				parent_hash:res.parent_hash,
-				time:res.timestamp,
-				confirm:res.status,
+				block_num:res.data.num,
+				transaction_num:res.data.transactions,
+				block_hash:res.data.hash,
+				producer_hash:res.data.producer.hash,
+				producer_name:res.data.producer.name,
+				parent_hash:res.data.parent_hash,
+				time:res.data.timestamp,
+				confirm:res.data.status,
 				size:0
 			};
 			dispatch(loadBlock(_res));
@@ -72,7 +72,7 @@ export function loadBlockTransactionApi(id) {
 			},
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(loadBlockTransaction(res));
+			dispatch(loadBlockTransaction(res.data));
 		}).catch(err => {
 			console.log(err);
 		})

@@ -24,7 +24,7 @@ export function loadNodes() {
 			method: 'GET',
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(updateNodes(res));
+			dispatch(updateNodes(res.data));
 		}).catch(err => {
 			console.log(err);
 		})

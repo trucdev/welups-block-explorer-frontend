@@ -26,7 +26,7 @@ export function loadTokenDetail(id) {
             },
             mode: 'cors',
         }).then(res => res.json()).then((res) => {
-			dispatch(updateTokenDetail(res));
+			dispatch(updateTokenDetail(res.data));
 		}).catch(err => {
 			console.log(err);
 		})

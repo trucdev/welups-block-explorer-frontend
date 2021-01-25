@@ -27,7 +27,7 @@ export function loadTransactionDetails(txHash) {
 			},
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(updateTransactionDetails(res));
+			dispatch(updateTransactionDetails(res.data));
 		}).catch(err => {
 			console.log(err);
 		})

@@ -24,9 +24,9 @@ export function loadTransactions(offset, limit) {
 			method: 'GET',
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(updateTransactions(res));
+			dispatch(updateTransactions(res.data));
 			if(offset===-1){
-				dispatch(initPageTransactionsBlock(res[0]?res[0].blockNumber:0));
+				dispatch(initPageTransactionsBlock(res.data[0]?res.data[0].blockNumber:0));
 			}
 		}).catch(err => {
 			console.log(err);

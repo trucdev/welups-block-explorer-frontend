@@ -24,7 +24,7 @@ export function loadWitnesses() {
 			method: 'GET',
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(updateWitnesses(res));
+			dispatch(updateWitnesses(res.data));
 		}).catch(err => {
 			console.log(err);
 		})

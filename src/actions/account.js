@@ -20,14 +20,14 @@ export function updateAccountDetails(acc) {
 export function loadAccountDetails(addr) {
 	return (dispatch) => {
 		dispatch(initAccountDetail());
-		fetch(`${API_ADDR}/account/${addr}`, {
+		fetch(`${API_ADDR}/accounts/${addr}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(updateAccountDetails(res));
+			dispatch(updateAccountDetails(res.data));
 		}).catch(err => {
 			console.log(err);
 		})
