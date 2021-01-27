@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { List, Row, Col, Modal, Input, Button } from 'antd';
-import {currencyFormat} from '../../utils/utils';
-import {AppstoreAddOutlined} from '@ant-design/icons';
-import { Skeleton } from 'antd';
-import jwt_decode from "jwt-decode";
-import  { Redirect } from 'react-router-dom';
-import { loadAssetApi } from '../../actions/assetManagement';
+import { currencyFormat } from '../../utils/utils';
+import { AppstoreAddOutlined } from '@ant-design/icons';
+import { Redirect } from 'react-router-dom';
+import { loadAssetApi, addAddrFromPrvkey } from '../../actions/assetManagement';
 import { loadAccountDetails } from '../../actions/account';
 
 const StyledLink = styled(Link)`
@@ -46,80 +44,110 @@ const AddIcon = styled.div`
 
 class AssetManagement extends React.Component {
 	listAccount = (acc) => {
+		if (acc.address === '') return;
 		const assets = Object.entries(acc.asset);
 		return <List.Item key={acc.address}>
-		        <StyleItem>
-		        	<div>
-	        			<StyledLink to={"/account/"+acc.address}><Header>{acc.address}</Header></StyledLink>
-					</div>
-					<div>
-						<List
-							itemLayout="horizontal"
-							dataSource={assets}
-							renderItem={([key, value]) => (
-								this.listItem(key, value)
-							)}
-						/>
-					</div>
-		        </StyleItem>
+			<StyleItem>
+				<div>
+					<StyledLink to={"/account/" + acc.address}><Header>{acc.address}</Header></StyledLink>
+				</div>
+				<div>
+					<List
+						itemLayout="horizontal"
+						dataSource={assets}
+						renderItem={([key, value]) => (
+							this.listItem(key, value)
+						)}
+					/>
+				</div>
+			</StyleItem>
 		</List.Item>;
 	}
 
 	listItem = (key, value) => {
 		return <List.Item key={key}>
-				<StyleItem>
-					<StyleRow >
-						<ColHead span={2}>
-							Asset name:
+			<StyleItem>
+				<StyleRow >
+					<ColHead span={2}>
+						Asset name:
 						</ColHead>
-						<Col span={22}>
-							<StyledLink to={"/token/"+key}>{key}</StyledLink>
-						</Col>
-					</StyleRow>
-					<StyleRow >
-						<ColHead span={2}>
-							Asset balance:
+					<Col span={22}>
+						<StyledLink to={"/token/" + key}>{key}</StyledLink>
+					</Col>
+				</StyleRow>
+				<StyleRow >
+					<ColHead span={2}>
+						Asset balance:
 						</ColHead>
-						<Col span={22}>
-							{currencyFormat(value)}
-						</Col>
-					</StyleRow>
-				</StyleItem>
+					<Col span={22}>
+						{currencyFormat(value)}
+					</Col>
+				</StyleRow>
+			</StyleItem>
 		</List.Item>;
 	}
 
 	state = {
-    	loading: false,
-    	visible: false,
-  	};
+		loading: false,
+		visible: false,
+		newPrivatekey: "",
+	};
+	constructor(props) {
+		super(props);
+		this.handleNewPrivatekey = this.handleNewPrivatekey.bind(this);
+		this.newPrivateKeyRef = React.createRef();
+	}
+	handleNewPrivatekey(event) {
+		this.setState((prevState, props) => ({
+			...prevState,
+			newPrivatekey: event.target.value
+		}));
+	}
+	showModal = () => {
+		this.setState({
+			visible: true,
+		});
+	};
 
-    showModal = () => {
-	    this.setState({
-	      visible: true,
-	    });
-    };
+	handleOk = () => {
+		this.setState((prevState, props) => ({
+			...prevState,
+			loading: true
+		}));
+		setTimeout(() => {
+			this.setState((prevState, props) => ({
+				...prevState,
+				loading: false, visible: false
+			}));
+		}, 3000);
+		//extract address from private key
+		this.props.addAddrFromPrvkey(this.props.login.id,
+			this.props.login.token,
+			this.state.newPrivatekey);
+	};
 
-    handleOk = () => {
-	    this.setState({ loading: true });
-	    setTimeout(() => {
-	        this.setState({ loading: false, visible: false });
-	    }, 3000);
-    };
+	handleCancel = () => {
+		this.setState({ visible: false });
+	};
 
-    handleCancel = () => {
-    	this.setState({ visible: false });
-    };
+	componentDidMount() {
+		let { login } = this.props;
+		if (login.token !== "") {
+			this.props.loadAssetApi(login.id, login.token);
+		}
+	}
 
-    componentDidMount(){
-    	let {login} = this.props;
-    	if(login.token!=""){
-    		this.props.loadAssetApi(login.id, login.token);
-    	}
-    }
-	
 	render() {
-		let {assetManagement, login} = this.props;
-		if(login.token == ""){
+		let { assetManagement, login } = this.props;
+		let addresses = [];
+		if (Object.keys(assetManagement.addresses).length === 0 && assetManagement.addresses.constructor === Object) {
+			
+		}else{
+			addresses = Object.entries(assetManagement.addresses);
+		}
+
+
+		if (login.token === "") {
 			return <Redirect to="/login" />
 		}
 		const { visible, loading } = this.state;
@@ -128,27 +156,27 @@ class AssetManagement extends React.Component {
 				<Header>
 					<Row >
 						<Col span={6}>
-							{login.token !=""?login.email:null}
+							{login.token !== "" ? login.email : null}
 						</Col>
 						<Col span={18}>
 							<AddIcon>
-							    <AppstoreAddOutlined onClick={this.showModal}/>
-							    <Modal
-						            visible={visible}
-						            title="Enter private key to add:"
-						            onOk={this.handleOk}
-						            onCancel={this.handleCancel}
-						            footer={[
-							            <Button key="back" onClick={this.handleCancel}>
-							                Cancel
+								<AppstoreAddOutlined onClick={this.showModal} />
+								<Modal
+									visible={visible}
+									title="Enter private key to add:"
+									onOk={this.handleOk}
+									onCancel={this.handleCancel}
+									footer={[
+										<Button key="back" onClick={this.handleCancel}>
+											Cancel
 							            </Button>,
-							            <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
-							                Add
+										<Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
+											Add
 							            </Button>,
-						            ]}
-						        >
-						            <Input/>
-						        </Modal>
+									]}
+								>
+									<Input ref={this.newPrivateKeyRef} value={this.state.newPrivatekey} onChange={this.handleNewPrivatekey} />
+								</Modal>
 							</AddIcon>
 						</Col>
 					</Row>
@@ -157,9 +185,9 @@ class AssetManagement extends React.Component {
 					<div>
 						<List
 							itemLayout="horizontal"
-							dataSource={assetManagement.addresses}
-							renderItem={item => (
-								this.listAccount(item)
+							dataSource={addresses}
+							renderItem={([key, value]) => (
+								this.listAccount(value)
 							)}
 						/>
 					</div>
@@ -172,8 +200,8 @@ class AssetManagement extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		assetManagement: state.assetManagement,
-		login:state.login,
-		account:state.account
+		login: state.login,
+		account: state.account
 	};
 };
 const mapDispatchToProps = dispatch => {
@@ -183,6 +211,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		loadAccountDetails: (addr) => {
 			dispatch(loadAccountDetails(addr));
+		},
+		addAddrFromPrvkey: (id, token, privkey) => {
+			dispatch(addAddrFromPrvkey(id, token, privkey));
 		},
 	};
 };

@@ -28,8 +28,14 @@ export function checkAccountApi(acc) {
 				"password": acc.password
 			})
 		});
-		if (!res.ok) return;
 		const result = await res.json();
+		if (!res.ok) {
+			notification.error({
+				message: 'Log in failed!',
+				description: result.message,
+			});
+		};
+
 		switch (result.status) {
 			case "success":
 				let decoded = jwt_decode(result.data.token);
@@ -41,11 +47,12 @@ export function checkAccountApi(acc) {
 			case "error":
 				notification.error({
 					message: 'Log in failed!',
-					description: res.message,
+					description: result.message,
 				});
 				break;
 			default:
 				break;
 		}
+
 	}
 }
