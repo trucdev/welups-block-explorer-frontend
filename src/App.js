@@ -97,7 +97,7 @@ class App extends Component {
                 <Menu.Item key="Log" icon={<QrcodeOutlined />}>Recevice</Menu.Item>
               </StyledSubMenu>
               {
-                login ?
+                login.token != "" ?
                   <StyledSubMenu title="ACCOUNT">
                     <Menu.Item key="User" >
                       <Link to="/user">ASSET MANAGEMENT</Link>

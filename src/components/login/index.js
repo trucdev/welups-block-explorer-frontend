@@ -3,11 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { checkAccountApi } from '../../actions/login';
 import styled from 'styled-components';
-import { Form, Input, Button, Checkbox } from 'antd';
-import {
-  BrowserRouter as Router,
-  Route, Redirect, Switch
-} from "react-router-dom";
+import { Form, Input, Button } from 'antd';
+import  { Redirect } from 'react-router-dom';
 
 const StyledLinkLeft = styled(Link)`
 	&:link, &:visited {
@@ -38,7 +35,7 @@ const Wrapper = styled.div`
 class Login extends React.Component {
 
 	onFinish = (allValues) =>{
-		var test = this.props.checkAccountApi({
+		this.props.checkAccountApi({
 			email:allValues.email,
 			password:allValues.password
 		});
@@ -46,7 +43,7 @@ class Login extends React.Component {
 
 	render() {
 		var {login} = this.props;
-		if(login){
+		if(login.status){
 			return <Redirect to="/user" />
 		}
 		return (
@@ -88,11 +85,11 @@ class Login extends React.Component {
 				    >
 				        <Input.Password placeholder="Password"/>
 				    </Item>
-				    <SmallItem  name="remember" valuePropName="checked">
+				    {/* <SmallItem  name="remember" valuePropName="checked"> */}
 				    	<ButtonSubmit type="primary" htmlType="submit">
 				            Log in
 				        </ButtonSubmit>
-				    </SmallItem>
+				    {/* </SmallItem> */}
 				    <Form.Item >
 				        <StyledLinkLeft to={"/account/"} >Forgot password?</StyledLinkLeft>
 				        <StyledLinkRight to={"/signup"} >Sign up</StyledLinkRight>

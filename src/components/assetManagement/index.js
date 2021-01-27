@@ -5,6 +5,11 @@ import styled from 'styled-components';
 import { List, Row, Col, Modal, Input, Button } from 'antd';
 import {currencyFormat} from '../../utils/utils';
 import {AppstoreAddOutlined} from '@ant-design/icons';
+import { Skeleton } from 'antd';
+import jwt_decode from "jwt-decode";
+import  { Redirect } from 'react-router-dom';
+import { loadAssetApi } from '../../actions/assetManagement';
+import { loadAccountDetails } from '../../actions/account';
 
 const StyledLink = styled(Link)`
 	&:link, &:visited {
@@ -41,17 +46,18 @@ const AddIcon = styled.div`
 
 class AssetManagement extends React.Component {
 	listAccount = (acc) => {
+		const assets = Object.entries(acc.asset);
 		return <List.Item key={acc.address}>
 		        <StyleItem>
 		        	<div>
-	        			<StyledLink to={"/account/"+acc.address} target="_blank"><Header>{acc.address}</Header></StyledLink>
+	        			<StyledLink to={"/account/"+acc.address}><Header>{acc.address}</Header></StyledLink>
 					</div>
 					<div>
 						<List
 							itemLayout="horizontal"
-							dataSource={acc.assets}
-							renderItem={item => (
-								this.listItem(item)
+							dataSource={assets}
+							renderItem={([key, value]) => (
+								this.listItem(key, value)
 							)}
 						/>
 					</div>
@@ -59,15 +65,15 @@ class AssetManagement extends React.Component {
 		</List.Item>;
 	}
 
-	listItem = (item) => {
-		return <List.Item key={item.id}>
+	listItem = (key, value) => {
+		return <List.Item key={key}>
 				<StyleItem>
 					<StyleRow >
 						<ColHead span={2}>
 							Asset name:
 						</ColHead>
 						<Col span={22}>
-							<StyledLink to={"/token/"+item.id} target="_blank">{item.name}</StyledLink>
+							<StyledLink to={"/token/"+key}>{key}</StyledLink>
 						</Col>
 					</StyleRow>
 					<StyleRow >
@@ -75,7 +81,7 @@ class AssetManagement extends React.Component {
 							Asset balance:
 						</ColHead>
 						<Col span={22}>
-							{currencyFormat(item.balance)}
+							{currencyFormat(value)}
 						</Col>
 					</StyleRow>
 				</StyleItem>
@@ -103,16 +109,26 @@ class AssetManagement extends React.Component {
     handleCancel = () => {
     	this.setState({ visible: false });
     };
+
+    componentDidMount(){
+    	let {login} = this.props;
+    	if(login.token!=""){
+    		this.props.loadAssetApi(login.id, login.token);
+    	}
+    }
 	
 	render() {
-		let {assetManagement} = this.props;
+		let {assetManagement, login} = this.props;
+		if(login.token == ""){
+			return <Redirect to="/login" />
+		}
 		const { visible, loading } = this.state;
 		return (
 			<Wrapper>
 				<Header>
 					<Row >
 						<Col span={6}>
-							{assetManagement.name}
+							{login.token !=""?login.email:null}
 						</Col>
 						<Col span={18}>
 							<AddIcon>
@@ -156,11 +172,18 @@ class AssetManagement extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		assetManagement: state.assetManagement,
+		login:state.login,
+		account:state.account
 	};
 };
 const mapDispatchToProps = dispatch => {
 	return {
-		
+		loadAssetApi: (id, token) => {
+			dispatch(loadAssetApi(id, token));
+		},
+		loadAccountDetails: (addr) => {
+			dispatch(loadAccountDetails(addr));
+		},
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(AssetManagement);
