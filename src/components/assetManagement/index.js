@@ -124,6 +124,10 @@ class AssetManagement extends React.Component {
 		this.props.addAddrFromPrvkey(this.props.login.id,
 			this.props.login.token,
 			this.state.newPrivatekey);
+		this.setState((prevState, props) => ({
+			...prevState,
+			newPrivatekey: ""
+		}));
 	};
 
 	handleCancel = () => {
@@ -141,8 +145,8 @@ class AssetManagement extends React.Component {
 		let { assetManagement, login } = this.props;
 		let addresses = [];
 		if (Object.keys(assetManagement.addresses).length === 0 && assetManagement.addresses.constructor === Object) {
-			
-		}else{
+
+		} else {
 			addresses = Object.entries(assetManagement.addresses);
 		}
 
