@@ -5,6 +5,7 @@ import { Form, Input, Button, Select, Modal, Spin, Alert } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import {
     transferAsset,
+    reset,
     TRANSFER_NONE,
     TRANSFER_REQUESTING,
     TRANSFER_SUCCESS,
@@ -87,7 +88,9 @@ class TransferAsset extends React.Component {
         assetName: "ACG",
         amount: ""
     };
-
+    componentDidMount(){
+        this.props.resetTransferAsset();
+    }
     showModal = () => {
         //TODO: invalidate before do transfer
         this.props.transferAsset(this.state.privateKey,
@@ -302,6 +305,9 @@ const mapDispatchToProps = (dispatch) => {
         transferAsset: (fromPrivkey, to, amount, assetName) => {
             dispatch(transferAsset(fromPrivkey, to, amount, assetName));
         },
+        resetTransferAsset: ()=>{
+            dispatch(reset());
+        }
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(TransferAsset);
