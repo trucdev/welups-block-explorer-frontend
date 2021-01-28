@@ -70,6 +70,8 @@ const ModalContent = styled.div`
     flex-direction: column;
     align-items: center;
 `;
+
+
 const { Option } = Select;
 
 class TransferAsset extends React.Component {
@@ -141,21 +143,25 @@ class TransferAsset extends React.Component {
         return (
             <Wrapper>
                 <Spin indicator={antIcon} tip="Processing..." spinning={transferInfo.status === TRANSFER_REQUESTING}>
-
                     <Container>
                         <HeaderTitle>
                             <Logo src={ACLogo} />
                             <Title>Transfer Asset</Title>
                         </HeaderTitle>
-                        {transferInfo.status === TRANSFER_SUCCESS && <Alert message="Transaction is successed" type="success"
-                            description={`Your transaction is ${transferInfo.tranID}`}
-                            closable showIcon
-                            action={
-                                <Link to={`/transaction/${transferInfo.tranID}`} >
-                                    Details
-                                </Link>
-                            }
-                        />}
+                        {transferInfo.status === TRANSFER_SUCCESS && 
+                        <div>
+                                <Alert message="Transaction is successed" type="success"
+                                description={`Your transaction is ${transferInfo.tranID}`}
+                                closable showIcon
+                                action={
+                                    <Link to={`/transaction/${transferInfo.tranID}`} >
+                                        Details
+                                    </Link>
+                                }
+                            />
+                            <br/>
+                            <ButtonSubmit onClick={()=>{this.props.resetTransferAsset();}} >New Transaction</ButtonSubmit>
+                        </div>}
                         {transferInfo.status !== TRANSFER_SUCCESS && <StyledForm
                             layout="vertical"
                             // initialValues={{
