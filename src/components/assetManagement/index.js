@@ -45,7 +45,11 @@ const AddIcon = styled.div`
 class AssetManagement extends React.Component {
 	listAccount = (acc) => {
 		if (acc.address === '') return;
-		const assets = Object.entries(acc.asset);
+		let assets = [];
+		if (acc.asset !=null && acc.asset != undefined){
+			assets = Object.entries(acc.asset);
+		}
+	
 		return <List.Item key={acc.address}>
 			<StyleItem>
 				<div>
@@ -95,7 +99,6 @@ class AssetManagement extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handleNewPrivatekey = this.handleNewPrivatekey.bind(this);
-		this.newPrivateKeyRef = React.createRef();
 	}
 	handleNewPrivatekey(event) {
 		this.setState((prevState, props) => ({
@@ -179,7 +182,7 @@ class AssetManagement extends React.Component {
 							            </Button>,
 									]}
 								>
-									<Input ref={this.newPrivateKeyRef} value={this.state.newPrivatekey} onChange={this.handleNewPrivatekey} />
+									<Input value={this.state.newPrivatekey} onChange={this.handleNewPrivatekey} />
 								</Modal>
 							</AddIcon>
 						</Col>

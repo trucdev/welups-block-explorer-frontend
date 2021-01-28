@@ -16,6 +16,6 @@ export default class Transaction {
 		if(!res.ok)
 			return false;
 		const jsonBody = await res.json();
-		return jsonBody.code === 0;
+		return jsonBody.status === "success";
 	}
 }

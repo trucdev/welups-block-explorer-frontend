@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Menu, Layout, Avatar } from 'antd';
-import { MailOutlined, AppstoreOutlined, NodeIndexOutlined, BlockOutlined, TransactionOutlined, DollarCircleOutlined, LoginOutlined, UserOutlined, SendOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { Menu, Layout } from 'antd';
+import { MailOutlined, AppstoreOutlined, NodeIndexOutlined, BlockOutlined, TransactionOutlined, DollarCircleOutlined, SendOutlined, QrcodeOutlined } from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
 import NotFound from './components/not-found';
@@ -15,7 +15,7 @@ import NodeTable from './components/nodes/index';
 import BlockTable from './components/blocks/index';
 import TokenDetails from './components/token/index';
 import IssueTokenTRC10 from './components/issueTokenTRC10/index';
-import TransferAsset from './components/transferasset/transferasset';
+import TransferAsset from './components/transferasset';
 import SignUp from './components/signup/signup';
 import Login from './components/login/index';
 import AssetManagement from './components/assetManagement/index';
@@ -90,21 +90,21 @@ class App extends Component {
               </Menu.Item>
             </StyledMenuRight>
             <StyledMenuLeft mode="horizontal">
-              <StyledSubMenu title="WALLET">
+              <StyledSubMenu title="Wallet">
                 <Menu.Item key="User" icon={<SendOutlined />}>
                   <Link to="/transferasset">Send</Link>
                 </Menu.Item>
                 <Menu.Item key="Log" icon={<QrcodeOutlined />}>Recevice</Menu.Item>
               </StyledSubMenu>
               {
-                login.token != "" ?
+                login.token !== "" ?
                   <StyledSubMenu title="ACCOUNT">
                     <Menu.Item key="User" >
-                      <Link to="/user">ASSET MANAGEMENT</Link>
+                      <Link to="/user">Asset Management</Link>
                     </Menu.Item>
                   </StyledSubMenu>
                   : <Menu.Item key="login" >
-                    <Link to="/login">REGISTER / LOG IN</Link>
+                    <Link to="/login">Login</Link>
                   </Menu.Item>
               }
             </StyledMenuLeft>
@@ -172,23 +172,23 @@ class App extends Component {
                 />
                 <Route
                   path="/tokens"
-                  render={(routeProps) => <TokenTable />}
+                  render={() => <TokenTable />}
                 />
                 <Route
                   path="/nodes"
-                  render={(routeProps) => <NodeTable />}
+                  render={() => <NodeTable />}
                 />
                 <routeProps
                   path="/issue-token-trc10"
-                  render={(routeProps) => <IssueTokenTRC10 />}
+                  render={() => <IssueTokenTRC10 />}
                 />
                 <Route
                   path="/login"
-                  render={(routeProps) => <Login />}
+                  render={() => <Login />}
                 />
                 <Route
                   path="/user"
-                  render={(routeProps) => <AssetManagement />}
+                  render={() => <AssetManagement />}
                 />
                 <Redirect to="/notfound" />
               </Switch>

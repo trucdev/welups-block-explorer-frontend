@@ -20,9 +20,10 @@ export default class Asset {
 					"asset_name": assetName
 				})
 			});
-			if (!res.ok || res.status != "success")
-				return { tranID: '', result: false };
 			const result = await res.json();
+			if (!res.ok || result.status !== "success")
+				return { tranID: '', result: false };
+		
 			const signature = bytes.byteArray2hexStr(new Uint8Array(crypto.signBytes(privateKey, code.hexStr2byteArray(result.data.tran_raw_hex))));
 			const status = await transaction.broadcast(result.data.tran_hex, result.data.tran_raw_hex, signature);
 			return { tranID: result.data.tran_id, result: status }

@@ -1,40 +1,49 @@
-import { API_ADDR } from '../config/config';
-import fetch from 'cross-fetch';
+import Asset from '../api/asset';
+import { notification } from 'antd';
 
-export const TRANSFER_DEFAULT = 'TRANSFER_DEFAULT';
-export const TRANSFER_LOAD = 'TRANSFER_LOAD';
-
-export function defaultTransfer() {
+export const TRANSFER_NONE = 'TRANSFER_NONE';
+export const TRANSFER_REQUESTING = 'TRANSFER_REQUESTING';
+export const TRANSFER_SUCCESS = 'TRANSFER_SUCCESS';
+export const TRANSFER_FAIL = 'TRANSFER_FAIL';
+export function reset(){
 	return {
-		type: TRANSFER_DEFAULT,
+		type: TRANSFER_NONE,
+	}
+}
+export function request() {
+	return {
+		type: TRANSFER_REQUESTING,
+	}
+}
+export function success(tranID) {
+	return {
+		type: TRANSFER_SUCCESS,
+		payload: {
+			tranID:tranID,
+		},
+	}
+}
+export function fail() {
+	return {
+		type: TRANSFER_FAIL,
 	}
 }
 
-export function loadTransfer(transfer) {
-	return {
-		type: TRANSFER_LOAD,
-		transfer:transfer
-	}
-}
 
-export function loadTransferApi(id) {
-	return (dispatch)=> {
-		dispatch(defaultTransfer());
-		fetch(`${API_ADDR}/TRANSFER/1`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			mode: 'cors',
-		}).then(res => res.json()).then((res) => {
-			var _res = {
-
-				confirm:res.status,
-				size:0
-			};
-			dispatch(loadTransfer(_res));
-		}).catch(err => {
-			console.log(err);
-		})
+export function transferAsset(fromPrivKey, to, amount, assetName) {
+	return async (dispatch)=> {
+		dispatch(request())
+		const res = await Asset.transfer(fromPrivKey, to, amount, assetName);
+		console.log(res);
+		if (!res.result){
+			dispatch(fail())
+			notification.error({
+				message: 'Failed!',
+				description: `Transfer has failed`,
+			});
+			return
+		}
+		//Success
+		dispatch(success(res.tranID));
 	}
 }
