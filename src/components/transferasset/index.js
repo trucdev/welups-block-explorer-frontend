@@ -1,17 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Form, Input, Button, Select, Modal, Spin, Alert } from 'antd';
+import { Form, Input, Button, Select, Spin, Alert } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import {
     transferAsset,
     reset,
-    TRANSFER_NONE,
     TRANSFER_REQUESTING,
-    TRANSFER_SUCCESS,
-    TRANSFER_FAIL
-} from '../../actions/transferasset';
-import { Redirect, Link } from 'react-router-dom';
+    TRANSFER_SUCCESS} from '../../actions/transferasset';
+import { Link } from 'react-router-dom';
 
 import ACLogo from '../../assets/images/ACLogo.png';
 
@@ -25,9 +22,6 @@ const ButtonSubmit = styled(Button)`
 `;
 const Item = styled(Form.Item)`
 	font-weight: bold;
-`;
-const IconContainer = styled.span`
-    font-size: 30px;
 `;
 const Wrapper = styled.div`
     display: flex;
@@ -65,11 +59,6 @@ const StyledForm = styled(Form)`
     width:450px;
     margin-left: 25px;
 `;
-const ModalContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
 
 
 const { Option } = Select;
@@ -83,8 +72,6 @@ class TransferAsset extends React.Component {
         this.changePrivateKey = this.changePrivateKey.bind(this);
     }
     state = {
-        loading: false,
-        visible: false,
         privateKey: "",
         to: "",
         assetName: "ACG",
@@ -93,19 +80,13 @@ class TransferAsset extends React.Component {
     componentDidMount(){
         this.props.resetTransferAsset();
     }
-    showModal = () => {
+    transfer = () => {
         //TODO: invalidate before do transfer
         this.props.transferAsset(this.state.privateKey,
             this.state.to,
             parseInt(this.state.amount),
             this.state.assetName);
 
-    };
-    handleOk = () => {
-        this.setState({ loading: true });
-        // setTimeout(() => {
-        //     this.setState({ loading: false, visible: false });
-        // }, 3000);
     };
     changeToAddress(event) {
         this.setState((prevState) => ({
@@ -119,10 +100,6 @@ class TransferAsset extends React.Component {
             assetName: asset
         }));
     }
-    handleCancel = () => {
-        this.setState({ visible: false });
-    };
-
     changeAmount(e) {
         this.setState((prevState) => ({
             ...prevState,
@@ -137,7 +114,6 @@ class TransferAsset extends React.Component {
     };
 
     render() {
-        // const { visible } = this.state;
         const { transferInfo } = this.props;
         const antIcon = <LoadingOutlined spin />;
         return (
@@ -164,9 +140,6 @@ class TransferAsset extends React.Component {
                         </div>}
                         {transferInfo.status !== TRANSFER_SUCCESS && <StyledForm
                             layout="vertical"
-                            // initialValues={{
-                            //     remember: true,
-                            // }}
                             size="large"
                         >
                             <TitleContainer>
@@ -247,52 +220,8 @@ class TransferAsset extends React.Component {
                             <Item>
                                 <TextArea></TextArea>
                             </Item>
-                            {/* <SmallItem name="remember" valuePropName="checked"> */}
-                            <ButtonSubmit type="submit" disabled={this.state.submitDisabled} htmlType="submit" onClick={this.showModal} >Send</ButtonSubmit>
-                            {/* </SmallItem> */}
-                            <Modal
-                                visible={false}
-                                title="Status"
-                                onOk={this.handleOk}
-                                onCancel={this.handleCancel}
-                                footer={[
-                                ]}
-                            >
-                                <ModalContent>
-                                    <div>
-                                        {(() => {
-                                            // if (Result = Success) {
-                                            //     return (
-                                            //         <IconContainer>
-                                            //             <CloseCircleOutlined />
-                                            //         </IconContainer>
-                                            //     )
-                                            // } else if (Result = Fail) {
-                                            //     return (
-                                            //         <IconContainer>
-                                            //             <CheckOutlined />
-                                            //         </IconContainer>
-                                            //     )
-                                            // } else
-                                            {
-                                                return (
-                                                    <IconContainer>
-                                                        <LoadingOutlined />
-                                                    </IconContainer>
-                                                )
-                                            }
-                                        })()}
-                                    </div>
-                                    <span>
-                                        {
-                                            // {Result} = Success ? "Success"
-                                            // : {Result} = Fail ? "Fail"
-                                            //     :
-                                            "Processing"}
-                                    </span>
-                                </ModalContent>
-
-                            </Modal>
+                            <ButtonSubmit type="submit" disabled={this.state.submitDisabled} htmlType="submit"
+                            onClick={this.transfer}>Send</ButtonSubmit>
                         </StyledForm>}
                     </Container>
                 </Spin>
