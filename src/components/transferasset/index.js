@@ -7,7 +7,8 @@ import {
     transferAsset,
     reset,
     TRANSFER_REQUESTING,
-    TRANSFER_SUCCESS} from '../../actions/transferasset';
+    TRANSFER_SUCCESS
+} from '../../actions/transferasset';
 import { Link } from 'react-router-dom';
 
 import ACLogo from '../../assets/images/ACLogo.png';
@@ -66,18 +67,17 @@ const { Option } = Select;
 class TransferAsset extends React.Component {
     constructor(props) {
         super(props);
-        this.changeToAddress = this.changeToAddress.bind(this);
-        this.changeAsset = this.changeAsset.bind(this);
-        this.changeAmount = this.changeAmount.bind(this);
-        this.changePrivateKey = this.changePrivateKey.bind(this);
+        this.state = {
+            privateKey: "",
+            to: "",
+            assetName: "ACG",
+            amount: ""
+        };
     }
-    state = {
-        privateKey: "",
-        to: "",
-        assetName: "ACG",
-        amount: ""
-    };
-    componentDidMount(){
+    componentDidMount() {
+        this.props.resetTransferAsset();
+    }
+    componentWillUnmount() {
         this.props.resetTransferAsset();
     }
     transfer = () => {
@@ -88,25 +88,25 @@ class TransferAsset extends React.Component {
             this.state.assetName);
 
     };
-    changeToAddress(event) {
+    changeToAddress = (e) => {
         this.setState((prevState) => ({
             ...prevState,
-            to: event.target.value
+            to: e.target.value
         }));
     }
-    changeAsset(asset) {
+    changeAsset = (asset) => {
         this.setState((prevState) => ({
             ...prevState,
             assetName: asset
         }));
     }
-    changeAmount(e) {
+    changeAmount = (e) => {
         this.setState((prevState) => ({
             ...prevState,
             amount: e.target.value
         }));
     };
-    changePrivateKey(e) {
+    changePrivateKey = (e) => {
         this.setState((prevState) => ({
             ...prevState,
             privateKey: e.target.value
@@ -114,6 +114,7 @@ class TransferAsset extends React.Component {
     };
 
     render() {
+        const assetNames = ["ACG", "VNDA", "USDA"];
         const { transferInfo } = this.props;
         const antIcon = <LoadingOutlined spin />;
         return (
@@ -124,20 +125,20 @@ class TransferAsset extends React.Component {
                             <Logo src={ACLogo} />
                             <Title>Transfer Asset</Title>
                         </HeaderTitle>
-                        {transferInfo.status === TRANSFER_SUCCESS && 
-                        <div>
+                        {transferInfo.status === TRANSFER_SUCCESS &&
+                            <div>
                                 <Alert message="Transaction is successed" type="success"
-                                description={`Your transaction is ${transferInfo.tranID}`}
-                                closable showIcon
-                                action={
-                                    <Link to={`/transaction/${transferInfo.tranID}`} >
-                                        Details
+                                    description={`Your transaction is ${transferInfo.tranID}`}
+                                    closable showIcon
+                                    action={
+                                        <Link to={`/transaction/${transferInfo.tranID}`} >
+                                            Details
                                     </Link>
-                                }
-                            />
-                            <br/>
-                            <ButtonSubmit onClick={()=>{this.props.resetTransferAsset();}} >New Transaction</ButtonSubmit>
-                        </div>}
+                                    }
+                                />
+                                <br />
+                                <ButtonSubmit onClick={() => { this.props.resetTransferAsset(); }} >New Transaction</ButtonSubmit>
+                            </div>}
                         {transferInfo.status !== TRANSFER_SUCCESS && <StyledForm
                             layout="vertical"
                             size="large"
@@ -185,16 +186,14 @@ class TransferAsset extends React.Component {
                                         message: 'Please choose your asset',
                                     },
                                 ]}
-                                initialValue="ACG"
+                                initialValue={assetNames[0]}
                             >
                                 <Select
                                     placeholder="Select a token"
                                     allowClear
                                     onChange={this.changeAsset}
                                 >
-                                    {/* TODO: should use an array to create a list of assets */}
-                                    <Option value="ACG">ACG</Option>
-                                    {/* <Option value="VNDA">VNDA</Option> */}
+                                    {assetNames.map((value) => <Option value={value} key={value}>{value}</Option>)}
                                 </Select>
                             </Item>
                             <TitleContainer>
@@ -221,7 +220,7 @@ class TransferAsset extends React.Component {
                                 <TextArea></TextArea>
                             </Item>
                             <ButtonSubmit type="submit" disabled={this.state.submitDisabled} htmlType="submit"
-                            onClick={this.transfer}>Send</ButtonSubmit>
+                                onClick={this.transfer}>Send</ButtonSubmit>
                         </StyledForm>}
                     </Container>
                 </Spin>
@@ -240,7 +239,7 @@ const mapDispatchToProps = (dispatch) => {
         transferAsset: (fromPrivkey, to, amount, assetName) => {
             dispatch(transferAsset(fromPrivkey, to, amount, assetName));
         },
-        resetTransferAsset: ()=>{
+        resetTransferAsset: () => {
             dispatch(reset());
         }
     };
