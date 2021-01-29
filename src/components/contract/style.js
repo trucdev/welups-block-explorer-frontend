@@ -69,8 +69,22 @@ export const contentAsset = (
 export const Wrapper = styled.div`
   padding: 0 2%;
 `;
-export const Item = styled.div`
-  padding: 0 20px 0 20px;
+export const FuncWrapper = styled.div`
+  margin: 2% 2%;
+  
+`;
+export const FuncName = styled.div`
+  padding: 1% 2%;
+  background-color: #fafafa;
+  border-radius: 5px 5px 0px 0px;
+  border: 1px solid rgba(223,215,202,.75);
+`;
+export const FuncBody = styled.div`
+  padding: 1% 2%;
+  border-radius: 0px 0px 5px 5px;
+  border-style: solid;
+  border-width: 0px 1px 1px 1px;
+  border-color: rgba(223,215,202,.75);
 `;
 export const Right = styled.div`
   text-align: right;
@@ -84,4 +98,11 @@ export const StyledLink = styled(Link)`
   &:link, &:visited {
     color: #c23631;
   }
+`;
+export const Result = styled.div`
+  color:rgb(0, 189, 12);
+  padding-left:20px;
+`;
+export const Root = styled.span`
+  color:rgb(59, 123, 234);
 `;

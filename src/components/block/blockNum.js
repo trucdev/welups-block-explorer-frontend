@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { BorderOutlined } from '@ant-design/icons';
 import {Title} from './style';
 
 class BlockNum extends Component{

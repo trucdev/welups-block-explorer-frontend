@@ -1,8 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Divider, Form, Input, Button, InputNumber } from 'antd';
+import { Row, Col, Divider, Form, Input, Button, InputNumber, DatePicker, Alert } from 'antd';
 import styled from 'styled-components';
-import {SwapOutlined} from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import {
+	issueTRC10,
+	reset,
+	ISSUE_TRC10_SUCCESS,
+} from '../../actions/issueTokenTRC10';
 
 const Header = styled.div`
 	text-align: left;
@@ -23,244 +28,356 @@ const StyleDivider = styled(Divider)`
 const StyleInputNumber = styled(InputNumber)`
     width: 100%;
 `;
-const TitleLeft = styled.div`
-	text-align:left;
-	margin-bottom: 5px;
-`;
-const SpanRed = styled.span`
-	color:red;
+const StyleDatePicker = styled(DatePicker)`
+    width: 100%;
 `;
 
-class IssueTokenTRC10 extends Component{
-	componentDidMount(){
+class IssueTokenTRC10 extends Component {
+	componentWillUnmount() {
+		this.props.resetIssueTRC10();
 	}
 
-	render(){
+	onFinish = (values) => {
+		values.end_time = values.end_time._d.valueOf();
+		values.start_time = values.start_time._d.valueOf();
+		values.frozen_supply = values.frozen_supply ? values.frozen_supply : {};
+		this.props.issueTRC10(
+			values.fromPrivKey,
+			values.name,
+			values.description,
+			values.abbr,
+			values.url_str,
+			values.precision,
+			values.total_supply,
+			values.start_time,
+			values.end_time,
+			values.free_asset_net_limit,
+			values.public_free_asset_net_limit,
+			values.trx_num,
+			values.ico_num,
+			values.vote_score,
+			values.frozen_supply,
+		);
+
+	}
+
+	render() {
+		const { issueTokenInfo } = this.props;
 		return (
 			<div>
 				<Header>Issue Token TRC10</Header>
 				<Wrapper>
-					<Form
-				        layout="vertical"
-				        name="basic"
-				        initialValues={{
-				        	remember: true,
-				        }}
-				        /*onFinish={onFinish}
-				        onFinishFailed={onFinishFailed}*/
-				    >
-				    	<SubHeader>Basic Information</SubHeader>
-						<StyleDivider/>
-				    	<Row>
-				    		<Col span={9}>
-				    			<Form.Item
-							        label="Token name:"
-							        name="tokenName"
-							        rules={[
-							            {
-								            required: true,
-								            message: 'Please input your token name!',
-								            min:2,
-								            max:30
-							            },
-							        ]}
-						        >
-						        	<Input placeholder="2-30 characters for token name"/>
-						        </Form.Item>
-				    		</Col>
-				    		<Col span={6}></Col>
-				    		<Col span={9}>
-				    			<Form.Item
-							        label="Token abbreviation:"
-							        name="tokenAbbr"
-							        rules={[
-							            {
-								            required: true,
-								            message: 'Please input your token abbreviation!',
-								            min:2,
-								            max:10
-							            },
-							        ]}
-						        >
-						        	<Input placeholder="2-10 characters for token abbreviation"/>
-						        </Form.Item>
-				    		</Col>
-				    	</Row>
-				    	<Row>
-				    		<Col span={9}>
-				    			<Form.Item
-							        label="Token introduction:"
-							        name="tokenIntro"
-							        rules={[
-							            {
-								            required: true,
-								            message: 'Please input your token introduction!',
-								            max:200,
-							            },
-							        ]}
-						        >
-						        	<Input.TextArea placeholder="Brief description of the purpose of the token, not exceeding 200 characters" rows={4}/>
-						        </Form.Item>
-				    		</Col>
-				    		<Col span={6}></Col>
-				    		<Col span={9}>
-				    			<Form.Item
-							        label="Total Supply:"
-							        name="totalSupply"
-							        rules={[
-							            {
-								            required: true,
-								            message: 'Please input your total supply!',
-							            },
-							        ]}
-						        >
-						        	<StyleInputNumber placeholder="Total token issuance(without precision)"/>
-						        </Form.Item>
-				    		</Col>
-				    	</Row>
-				    	<Row>
-				    		<Col span={9}>
-				    			<Form.Item
-							        label="Precision:"
-							        name="tokenPrecision"
-							        rules={[
-							            {
-								            required: true,
-								            message: 'Please input your token precision!',
-							            },
-							        ]}
-						        >
-						        	<StyleInputNumber placeholder="0-6"/>
-						        </Form.Item>
-				    		</Col>
-				    		<Col span={6}></Col>
-				    		<Col span={9}>
-				    			<Form.Item
-							        label="Issuer:"
-							        name="issuer"
-							        rules={[
-							            {
-								            required: true,
-							            },
-							        ]}
-						        >
-						        	<Input disabled placeholder="2-10 characters for token abbreviation"/>
-						        </Form.Item>
-				    		</Col>
-				    	</Row>
-				    	<SubHeader>Price Information</SubHeader>
-						<StyleDivider/>
-						<TitleLeft><SpanRed>*</SpanRed> Token price:</TitleLeft>
-						<Row>
-				    		<Col span={4}>
-				    			<Form.Item
-							        name="tokenPrice"
-							        rules={[
-							            {
-								            required: true,
-								            message: 'Token price cannot be empty!',
-							            },
-							        ]}
-						        >
-						        	<Input placeholder="Must be greater than zero"/>
-						        </Form.Item>
-				    		</Col>
-				    		<Col span={1}><SwapOutlined /></Col>
-				    		<Col span={4}>
-				    			<Form.Item
-							        name="trxPrice"
-							        rules={[
-							            {
-								            required: true,
-								            message: 'Token price cannot be empty!',
-							            },
-							        ]}
-						        >
-						        	<Input placeholder="Must be greater than zero"/>
-						        </Form.Item>
-				    		</Col>
-				    	</Row>
-				    	<SubHeader>Social Media Information</SubHeader>
-						<StyleDivider/>
-						<Row>
-				    		<Col span={9}>
-				    			<Form.Item
-				    				label="Project offical website:"
-							        name="websiteUrl"
-							        rules={[
-							            {
-								            required: true,
-								            message: 'Web URL is required!',
-							            },
-							        ]}
-						        >
-						        	<Input placeholder="Project offical website"/>
-						        </Form.Item>
-				    		</Col>
-				    		<Col span={6}></Col>
-				    		<Col span={9}>
-				    			<Form.Item
-				    				label="Email:"
-							        name="email"
-							        rules={[
-							        	{
-								            type: 'email',
-								            message: 'The input is not valid E-mail!',
-								        },
-							            {
-								            required: true,
-								            message: 'Email is required!',
-							            },
-							        ]}
-						        >
-						        	<Input placeholder="Contact email"/>
-						        </Form.Item>
-				    		</Col>
-				    	</Row>
-				    	<Row>
-				    		<Col span={9}>
-				    			<Form.Item
-				    				label="Link for GitHub:"
-							        name="githubUrl"
-						        >
-						        	<Input placeholder="Link for GitHub"/>
-						        </Form.Item>
-				    		</Col>
-				    		<Col span={6}></Col>
-				    		<Col span={9}>
-				    			<Form.Item
-				    				label="Link for white paper:"
-							        name="whitePaperUrl"
-						        >
-						        	<Input placeholder="Link for white paper"/>
-						        </Form.Item>
-				    		</Col>
-				    	</Row>
-				        <Form.Item >
-				        	<Row>
-				        		<Col span={22}></Col>
-				        		<Col span={2}>
-				        			<Button type="primary" htmlType="submit">
-							            Submit
-							        </Button>
-				        		</Col>
-				        	</Row>
-				        </Form.Item>
-				    </Form>
+					{issueTokenInfo.status === ISSUE_TRC10_SUCCESS &&
+						<div>
+							<Alert message="Transaction is successed" type="success"
+								description={`Your transaction is ${issueTokenInfo.tranID}`}
+								closable showIcon
+								action={
+									<Link to={`/transaction/${issueTokenInfo.tranID}`} >
+										Details
+                                    </Link>
+								}
+							/>
+							<br />
+							<Button onClick={() => { this.props.resetIssueTRC10(); }} >New Transaction</Button>
+						</div>}
+					{issueTokenInfo.status !== ISSUE_TRC10_SUCCESS &&
+						<Form
+							layout="vertical"
+							name="basic"
+							initialValues={{
+								remember: true,
+							}}
+							onFinish={this.onFinish}
+						>
+							<SubHeader>Basic Information</SubHeader>
+							<StyleDivider />
+							<Row>
+								<Col span={9}>
+
+									<Form.Item
+										label="Private Key of Issue:"
+										name="fromPrivKey"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your address!',
+											},
+										]}
+									>
+										<Input />
+									</Form.Item>
+
+								</Col>
+								<Col span={6}></Col>
+								<Col span={9}>
+									<Form.Item
+										label="Token name:"
+										name="name"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your token name!',
+												min: 2,
+												max: 30
+											},
+										]}
+									>
+										<Input placeholder="2-30 characters for token name" />
+									</Form.Item>
+
+								</Col>
+							</Row>
+							<Row>
+								<Col span={9}>
+									<Form.Item
+										label="Token abbreviation:"
+										name="abbr"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your token abbreviation!',
+												min: 2,
+												max: 10
+											},
+										]}
+									>
+										<Input placeholder="2-10 characters for token abbreviation" />
+									</Form.Item>
+
+								</Col>
+								<Col span={6}></Col>
+								<Col span={9}>
+
+									<Form.Item
+										label="Token introduction:"
+										name="description"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your token introduction!',
+												max: 200,
+											},
+										]}
+									>
+										<Input.TextArea placeholder="Brief description of the purpose of the token, not exceeding 200 characters" rows={4} />
+									</Form.Item>
+
+								</Col>
+							</Row>
+							<Row>
+								<Col span={9}>
+									<Form.Item
+										label="Total Supply:"
+										name="total_supply"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your total supply!',
+											},
+										]}
+									>
+										<StyleInputNumber placeholder="Total token issuance(without precision)" />
+									</Form.Item>
+
+								</Col>
+								<Col span={6}></Col>
+								<Col span={9}>
+
+
+									<Form.Item
+										label="Precision:"
+										name="precision"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your token precision!',
+											},
+										]}
+									>
+										<StyleInputNumber placeholder="0-6" />
+									</Form.Item>
+
+
+								</Col>
+							</Row>
+							<Row>
+								<Col span={9}>
+									<Form.Item
+										label="Free asset net limit:"
+										name="free_asset_net_limit"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your token free asset net limit!',
+											},
+										]}
+									>
+										<StyleInputNumber placeholder="0" />
+									</Form.Item>
+								</Col>
+								<Col span={6}></Col>
+								<Col span={9}>
+									<Form.Item
+										label="Public free asset net limit:"
+										name="public_free_asset_net_limit"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your token public free asset net limit!'
+											},
+										]}
+									>
+										<StyleInputNumber placeholder="0" />
+									</Form.Item>
+								</Col>
+							</Row>
+							<Row>
+								<Col span={9}>
+									<Form.Item
+										label="ACG number:"
+										name="trx_num"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your trx number!',
+											},
+										]}
+									>
+										<StyleInputNumber placeholder="0" />
+									</Form.Item>
+								</Col>
+								<Col span={6}></Col>
+								<Col span={9}>
+									<Form.Item
+										label="ICO number:"
+										name="ico_num"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your ico number!'
+											},
+										]}
+									>
+										<StyleInputNumber placeholder="0" />
+									</Form.Item>
+								</Col>
+							</Row>
+							<Row>
+								<Col span={9}>
+									<Form.Item
+										label="Vote score:"
+										name="vote_score"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your vote score!',
+											},
+										]}
+									>
+										<StyleInputNumber placeholder="0" />
+									</Form.Item>
+								</Col>
+								<Col span={6}></Col>
+								<Col span={9}>
+									<Form.Item
+										label="URL:"
+										name="url_str"
+									>
+										<Input placeholder="Website" />
+									</Form.Item>
+								</Col>
+							</Row>
+							<Row>
+								<Col span={9}>
+									<Form.Item
+										label="Start date:"
+										name="start_time"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your token start date!',
+											},
+										]}
+									>
+										<StyleDatePicker placeholder="Start date" />
+									</Form.Item>
+								</Col>
+								<Col span={6}></Col>
+								<Col span={9}>
+									<Form.Item
+										label="End date:"
+										name="end_time"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your token end date!',
+											},
+										]}
+									>
+										<StyleDatePicker placeholder="End date" />
+									</Form.Item>
+								</Col>
+							</Row>
+							<Form.Item >
+								<Row>
+									<Col span={22}></Col>
+									<Col span={2}>
+										<Button type="primary" htmlType="submit">
+											Submit
+                                    </Button>
+									</Col>
+								</Row>
+							</Form.Item>
+						</Form>}
 				</Wrapper>
-			</div>	
+			</div>
 		);
 	}
 }
 
 const mapStateToProps = (state) => {
 	return {
-		
+		issueTokenInfo: state.issueTokenTRC10,
 	};
 };
 
-const mapDispatchToProps = (dispatch,props) => {
+const mapDispatchToProps = (dispatch) => {
 	return {
+		issueTRC10: (privKey,
+			name,
+			desc,
+			abbr,
+			url,
+			precision,
+			totalSupply,
+			startTime,
+			endTime,
+			freeAssetNetLimit,
+			publicFreeAssetNetLimit,
+			trxNum,
+			icoNum,
+			voteScore,
+			frozenSupply) => {
+			dispatch(issueTRC10(privKey,
+				name,
+				desc,
+				abbr,
+				url,
+				precision,
+				totalSupply,
+				startTime,
+				endTime,
+				freeAssetNetLimit,
+				publicFreeAssetNetLimit,
+				trxNum,
+				icoNum,
+				voteScore,
+				frozenSupply));
+		},
+		resetIssueTRC10: () => {
+			dispatch(reset());
+		}
 	};
 };
 

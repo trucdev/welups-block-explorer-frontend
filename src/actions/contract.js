@@ -67,3 +67,67 @@ export function updateContractMenu(menuItem) {
 		menuItem:menuItem
 	}
 }
+
+function convert(value, type){
+	if(type.includes("uint")){
+		value = window.tronWeb.toDecimal(value._hex);
+	}else if(type==="address"){
+		value = window.tronWeb.address.fromHex(value);
+	}else if(type==="bool"){
+		value = value.toString();
+	}
+	return value;
+}
+
+function convertResult(result, type){
+	var res = [];
+	if(type.length===1){
+		res.push(convert(result, type[0].type));
+	}else{
+		type.map((typ, index)=>{
+			res.push(convert(result[index], typ.type));
+			return null;
+		});
+	}
+	return res;
+}
+
+export async function triggerWriteFunc(params, func, addr, value){
+    const trc20ContractAddress = addr;//contract address
+    var result;
+    try {
+        let contract = await window.tronWeb.contract().at(trc20ContractAddress);
+        //Use call to execute a pure or view smart contract method.
+        // These methods do not modify the blockchain, do not cost anything to execute and are also not broadcasted to the network.
+        if(value){
+        	result = await contract.methods.[func.name].apply(null, params).send({callValue:value});
+        }else{
+        	result = await contract.methods.[func.name].apply(null, params).send();
+        }
+        result = convertResult(result, func.outputs);
+        if(result.length!==1&&result.length!==0){
+        	result = JSON.stringify(result);
+        }
+    } catch(error) {
+    	result = JSON.stringify(error);
+    }
+    return result;
+}
+
+export async function triggerReadFunc(params, func, addr){
+    const trc20ContractAddress = addr;//contract address
+    var result;
+    try {
+        let contract = await window.tronWeb.contract().at(trc20ContractAddress);
+        //Use call to execute a pure or view smart contract method.
+        // These methods do not modify the blockchain, do not cost anything to execute and are also not broadcasted to the network.
+        result = await contract.methods.[func.name].apply(null, params).call();
+        result = convertResult(result, func.outputs);
+        if(result.length!==1&&result.length!==0){
+        	result = JSON.stringify(result);
+        }
+    } catch(error) {
+    	result = JSON.stringify(error);
+    }
+    return result;
+}

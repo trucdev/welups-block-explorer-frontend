@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import { Menu, Layout } from 'antd';
-import { MailOutlined, AppstoreOutlined, NodeIndexOutlined, BlockOutlined, TransactionOutlined, DollarCircleOutlined, SendOutlined, QrcodeOutlined } from '@ant-design/icons';
+import {
+  MailOutlined,
+  AppstoreOutlined,
+  NodeIndexOutlined,
+  BlockOutlined,
+  TransactionOutlined,
+  DollarCircleOutlined,
+  SendOutlined,
+  MoneyCollectOutlined,
+} from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
 import NotFound from './components/not-found';
@@ -90,21 +99,21 @@ class App extends Component {
               </Menu.Item>
             </StyledMenuRight>
             <StyledMenuLeft mode="horizontal">
-              <StyledSubMenu title="Wallet">
-                <Menu.Item key="User" icon={<SendOutlined />}>
-                  <Link to="/transferasset">Send</Link>
-                </Menu.Item>
-                <Menu.Item key="Log" icon={<QrcodeOutlined />}>Recevice</Menu.Item>
-              </StyledSubMenu>
               {
                 login.token !== "" ?
-                  <StyledSubMenu title="ACCOUNT">
-                    <Menu.Item key="User" >
-                      <Link to="/user">Asset Management</Link>
+                  <StyledSubMenu title={login.email}>
+                    <Menu.Item key="User" icon={<MoneyCollectOutlined />}>
+                      <Link to="/user">Assets</Link>
+                    </Menu.Item>
+                    <Menu.Item key="User" icon={<SendOutlined />}>
+                      <Link to="/transferasset">Send</Link>
+                    </Menu.Item>
+                    <Menu.Item key="User" icon={<MoneyCollectOutlined />}>
+                      <Link to="/issue-token-trc10">Issue TRC10</Link>
                     </Menu.Item>
                   </StyledSubMenu>
                   : <Menu.Item key="login" >
-                    <Link to="/login">Login</Link>
+                    <Link to="/login">Register/Login</Link>
                   </Menu.Item>
               }
             </StyledMenuLeft>
@@ -178,7 +187,7 @@ class App extends Component {
                   path="/nodes"
                   render={() => <NodeTable />}
                 />
-                <routeProps
+                <Route
                   path="/issue-token-trc10"
                   render={() => <IssueTokenTRC10 />}
                 />

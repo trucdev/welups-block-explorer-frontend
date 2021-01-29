@@ -23,7 +23,9 @@ import { pageBlocksReducer } from "./blocks";
 import { nodesReducer } from "./nodes";
 import { loginReducer } from "./login";
 import { assetManagementReducer } from "./assetManagement";
+import { issueTokenTRC10Reducer } from "./issueTokenTRC10";
 import {transferAssetReducer} from "./transferasset";
+
 export default combineReducers({
 	search: searchReducer,
 	system: homeSystemStateReducer,
@@ -46,5 +48,6 @@ export default combineReducers({
 	token:tokenReducer,
 	login:loginReducer,
 	assetManagement:assetManagementReducer,
+	issueTokenTRC10:issueTokenTRC10Reducer,
 	transferAsset: transferAssetReducer,
 });
