@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { checkAccountApi } from '../../actions/login';
+import { checkAccountApi, reset, LOGIN_REQUESTING, LOGIN_SUCCESS } from '../../actions/login';
 import styled from 'styled-components';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Spin } from 'antd';
 import  { Redirect } from 'react-router-dom';
+import { LoadingOutlined} from '@ant-design/icons';
 
 const StyledLinkLeft = styled(Link)`
 	&:link, &:visited {
@@ -24,30 +25,27 @@ const ButtonSubmit = styled(Button)`
 const Item = styled(Form.Item)`
 	font-weight: bold;
 `;
-const SmallItem = styled(Form.Item)`
-	margin-bottom: 0px!important;
-`;
 const Wrapper = styled.div`
 	margin: 10% 30%;
 `;
 
 
 class Login extends React.Component {
-
 	onFinish = (allValues) =>{
 		this.props.checkAccountApi({
 			email:allValues.email,
 			password:allValues.password
 		});
 	}	
-
 	render() {
+		const antIcon = <LoadingOutlined spin />;
 		var {login} = this.props;
-		if(login.status){
+		if(login.status === "success"){
 			return <Redirect to="/user" />
 		}
 		return (
 			<Wrapper>
+				<Spin indicator={antIcon} tip="Processing..."  spinning={login.type === LOGIN_REQUESTING}>
 				<Form
 					layout = "vertical"
 				    name="login"
@@ -85,16 +83,15 @@ class Login extends React.Component {
 				    >
 				        <Input.Password placeholder="Password"/>
 				    </Item>
-				    {/* <SmallItem  name="remember" valuePropName="checked"> */}
 				    	<ButtonSubmit type="primary" htmlType="submit">
-				            Log in
+							Log in
 				        </ButtonSubmit>
-				    {/* </SmallItem> */}
 				    <Form.Item >
 				        <StyledLinkLeft to={"/account/"} >Forgot password?</StyledLinkLeft>
 				        <StyledLinkRight to={"/signup"} >Sign up</StyledLinkRight>
 				    </Form.Item>
 			    </Form>
+				</Spin>
 			</Wrapper>
 		);
 	}

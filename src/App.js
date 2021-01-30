@@ -37,7 +37,7 @@ import {
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import ACLogo from './assets/images/ACLogo.png';
-import {initLogin} from './actions/login';
+import {reset} from './actions/login';
 const { Footer } = Layout;
 
 const AppWrapper = styled.div`
@@ -73,12 +73,13 @@ const StyledSubMenu = styled(SubMenu)`
 class App extends Component {
 
   logOut = () =>{
-    this.props.initLogin();
+    this.props.reset();
     return <Redirect to="/login" />
   }
 
   render() {
     var { login } = this.props;
+    console.log(login);
     return (
       <Router>
         <AppWrapper>
@@ -229,8 +230,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    initLogin: () => {
-      dispatch(initLogin());
+    reset: () => {
+      dispatch(reset());
     }
   };
 };
