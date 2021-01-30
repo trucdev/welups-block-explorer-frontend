@@ -20,6 +20,9 @@ const ColHead = styled(Col)`
 const StyleRow = styled(Row)`
 	margin:1% 0%;
 `;
+const StyleRowACG = styled(Row)`
+	margin-top:1%;
+`;
 const Wrapper = styled.div`
 	margin: 3% 0%;
 	text-align: left;
@@ -49,12 +52,19 @@ class AssetManagement extends React.Component {
 		if (acc.asset !=null && acc.asset != undefined){
 			assets = Object.entries(acc.asset);
 		}
-	
 		return <List.Item key={acc.address}>
 			<StyleItem>
 				<div>
 					<StyledLink to={"/account/" + acc.address}><Header>{acc.address}</Header></StyledLink>
 				</div>
+				<StyleRowACG>
+					<ColHead span={2}>
+						ACG balance:
+						</ColHead>
+					<Col span={22}>
+						{currencyFormat(acc.trxBalance/Math.pow(10,6))+" ACG"}
+					</Col>
+				</StyleRowACG>
 				<div>
 					<List
 						itemLayout="horizontal"
