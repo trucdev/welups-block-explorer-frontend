@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { List, Row, Col, Modal, Input, Button } from 'antd';
+import { List, Row, Col, Modal, Input, Button, Skeleton, Spin } from 'antd';
 import { currencyFormat } from '../../utils/utils';
-import { AppstoreAddOutlined } from '@ant-design/icons';
+import { AppstoreAddOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
-import { loadAssetApi, addAddrFromPrvkey } from '../../actions/assetManagement';
+import { loadAssetApi, addAddrFromPrvkey, ADDRESS_REQUESTING } from '../../actions/assetManagement';
 import { loadAccountDetails } from '../../actions/account';
 
 const StyledLink = styled(Link)`
@@ -49,7 +49,7 @@ class AssetManagement extends React.Component {
 	listAccount = (acc) => {
 		if (acc.address === '') return;
 		let assets = [];
-		if (acc.asset !=null && acc.asset != undefined){
+		if (acc.asset != null && acc.asset != undefined) {
 			assets = Object.entries(acc.asset);
 		}
 		return <List.Item key={acc.address}>
@@ -155,6 +155,7 @@ class AssetManagement extends React.Component {
 	}
 
 	render() {
+		const antIcon = <LoadingOutlined spin />;
 		let { assetManagement, login } = this.props;
 		let addresses = [];
 		if (Object.keys(assetManagement.addresses).length === 0 && assetManagement.addresses.constructor === Object) {
@@ -170,45 +171,47 @@ class AssetManagement extends React.Component {
 		const { visible, loading } = this.state;
 		return (
 			<Wrapper>
-				<Header>
-					<Row >
-						<Col span={6}>
-							{login.token !== "" ? login.email : null}
-						</Col>
-						<Col span={18}>
-							<AddIcon>
-								<AppstoreAddOutlined onClick={this.showModal} />
-								<Modal
-									visible={visible}
-									title="Enter private key to add:"
-									onOk={this.handleOk}
-									onCancel={this.handleCancel}
-									footer={[
-										<Button key="back" onClick={this.handleCancel}>
-											Cancel
+				<Spin indicator={antIcon} tip="Processing..."  spinning={assetManagement.status === "requesting"}>
+					<Header>
+						<Row >
+							<Col span={6}>
+								{login.token !== "" ? login.email : null}
+							</Col>
+							<Col span={18}>
+								<AddIcon>
+									<AppstoreAddOutlined onClick={this.showModal} />
+									<Modal
+										visible={visible}
+										title="Enter private key to add:"
+										onOk={this.handleOk}
+										onCancel={this.handleCancel}
+										footer={[
+											<Button key="back" onClick={this.handleCancel}>
+												Cancel
 							            </Button>,
-										<Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
-											Add
+											<Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
+												Add
 							            </Button>,
-									]}
-								>
-									<Input value={this.state.newPrivatekey} onChange={this.handleNewPrivatekey} />
-								</Modal>
-							</AddIcon>
-						</Col>
-					</Row>
-				</Header>
-				<StyleList>
-					<div>
-						<List
-							itemLayout="horizontal"
-							dataSource={addresses}
-							renderItem={([key, value]) => (
-								this.listAccount(value)
-							)}
-						/>
-					</div>
-				</StyleList>
+										]}
+									>
+										<Input value={this.state.newPrivatekey} onChange={this.handleNewPrivatekey} />
+									</Modal>
+								</AddIcon>
+							</Col>
+						</Row>
+					</Header>
+					<StyleList>
+						<div>
+							<List
+								itemLayout="horizontal"
+								dataSource={addresses}
+								renderItem={([key, value]) => (
+									this.listAccount(value)
+								)}
+							/>
+						</div>
+					</StyleList>
+				</Spin>
 			</Wrapper>
 		);
 	}

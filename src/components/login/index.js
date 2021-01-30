@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { checkAccountApi, reset, LOGIN_REQUESTING, LOGIN_SUCCESS } from '../../actions/login';
+import { checkAccountApi, LOGIN_REQUESTING } from '../../actions/login';
 import styled from 'styled-components';
 import { Form, Input, Button, Spin } from 'antd';
 import  { Redirect } from 'react-router-dom';

@@ -5,6 +5,7 @@ import { notification } from 'antd';
 export const ASSET_INIT = 'ASSET_INIT';
 export const ASSET_UPDATE = 'ASSET_UPDATE';
 export const ASSET_NEW_ADDR = 'ASSET_NEW_ADDR';
+export const ADDRESS_REQUESTING = 'ADDRESS_REQUESTING';
 export function initAsset() {
 	return {
 		type: ASSET_INIT,
@@ -26,7 +27,6 @@ export function addAddrFromPrvkey(id, token, privateKey) {
 	return async (dispatch) => {
 		//extract address from privatekey
 		const addr = Account.addressFromPrivateKey(privateKey);
-		console.log(addr);
 		const res = await fetch(`${API_ADDR}/users/${id}/addresses`, {
 			method: 'POST',
 			headers: {
@@ -84,6 +84,7 @@ const loadAssetDetails = async (addr) => {
 
 export function loadAssetApi(id, token) {
 	return async (dispatch) => {
+		dispatch(request())
 		const res = await fetch(`${API_ADDR}/users/${id}`, {
 			method: 'GET',
 			headers: {
@@ -118,5 +119,11 @@ export function loadAssetApi(id, token) {
 				break;
 		}
 
+	}
+}
+export function request(assets) {
+	return {
+		type: ADDRESS_REQUESTING,
+		payload: assets
 	}
 }
