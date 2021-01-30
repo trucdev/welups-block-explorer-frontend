@@ -9,6 +9,7 @@ import {
   DollarCircleOutlined,
   SendOutlined,
   MoneyCollectOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
@@ -36,6 +37,7 @@ import {
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import ACLogo from './assets/images/ACLogo.png';
+import {initLogin} from './actions/login';
 const { Footer } = Layout;
 
 const AppWrapper = styled.div`
@@ -69,6 +71,12 @@ const StyledSubMenu = styled(SubMenu)`
     margin-left:0;
 `;
 class App extends Component {
+
+  logOut = () =>{
+    this.props.initLogin();
+    return <Redirect to="/login" />
+  }
+
   render() {
     var { login } = this.props;
     return (
@@ -105,11 +113,14 @@ class App extends Component {
                     <Menu.Item key="User" icon={<MoneyCollectOutlined />}>
                       <Link to="/user">Assets</Link>
                     </Menu.Item>
-                    <Menu.Item key="User" icon={<SendOutlined />}>
+                    <Menu.Item key="transfer" icon={<SendOutlined />}>
                       <Link to="/transferasset">Send</Link>
                     </Menu.Item>
-                    <Menu.Item key="User" icon={<MoneyCollectOutlined />}>
+                    <Menu.Item key="issueTokenTRC10" icon={<MoneyCollectOutlined />}>
                       <Link to="/issue-token-trc10">Issue TRC10</Link>
+                    </Menu.Item>
+                    <Menu.Item key="logOut" icon={<LogoutOutlined />}>
+                      <Link to="/login" onClick={this.logOut}>Log out</Link>
                     </Menu.Item>
                   </StyledSubMenu>
                   : <Menu.Item key="login" >
@@ -216,4 +227,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null, null, { forwardRef: true })(App);
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    initLogin: () => {
+      dispatch(initLogin());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(App);
