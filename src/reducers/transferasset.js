@@ -15,7 +15,6 @@ export function transferAssetReducer(state = { status: TRANSFER_NONE, tranID:"",
 			state = { status:action.type, message:"Transfer is requesting", tranID:""}
 			break;
 		case TRANSFER_SUCCESS:
-			console.log(action);
 			state = {status:action.type, message:"Transfer successed", tranID: action.payload.tranID}
 			break;
 		case TRANSFER_FAIL:

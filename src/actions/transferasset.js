@@ -34,7 +34,6 @@ export function transferAsset(fromPrivKey, to, amount, assetName) {
 	return async (dispatch)=> {
 		dispatch(request())
 		const res = await Asset.transfer(fromPrivKey, to, amount, assetName);
-		console.log(res);
 		if (!res.result){
 			dispatch(fail())
 			notification.error({

@@ -75,7 +75,6 @@ export default class Asset {
 			});
 			
 			const result = await res.json();
-			console.log(result);
 			if (!res.ok || result.status !== "success")
 				return { tranID: '', result: false };
 

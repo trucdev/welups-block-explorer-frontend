@@ -23,7 +23,6 @@ class Block extends Component {
 	}
 
 	render() {
-		console.log(this.props.producer_hash)
 		return (
 			<div>
 				<Skeleton loading={this.props.producer_hash === 0}>

@@ -79,7 +79,6 @@ class App extends Component {
 
   render() {
     var { login } = this.props;
-    console.log(login);
     return (
       <Router>
         <AppWrapper>
