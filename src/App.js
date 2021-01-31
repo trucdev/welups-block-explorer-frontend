@@ -9,7 +9,9 @@ import {
   DollarCircleOutlined,
   SendOutlined,
   MoneyCollectOutlined,
+  WalletOutlined,
   LogoutOutlined,
+  KeyOutlined,
 } from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
@@ -143,7 +145,7 @@ class App extends Component {
               {
                 login.token !== "" ?
                   <StyledSubMenu title={login.email}>
-                    <Menu.Item key="User" icon={<MoneyCollectOutlined />}>
+                    <Menu.Item key="User" icon={<WalletOutlined />}>
                       <Link to="/user">Assets</Link>
                     </Menu.Item>
                     <Menu.Item key="transfer" icon={<SendOutlined />}>
@@ -152,7 +154,7 @@ class App extends Component {
                     <Menu.Item key="issueTokenTRC10" icon={<MoneyCollectOutlined />}>
                       <Link to="/issue-token-trc10">Issue TRC10</Link>
                     </Menu.Item>
-                    <Menu.Item key="logOut" icon={<LogoutOutlined />} onClick={this.generateAccount}>
+                    <Menu.Item key="generateAddress" icon={<KeyOutlined />} onClick={this.generateAccount}>
                       Generate Account
                     </Menu.Item>
                     <Menu.Item key="logOut" icon={<LogoutOutlined />}>
