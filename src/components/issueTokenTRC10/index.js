@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Divider, Form, Input, Button, InputNumber, DatePicker, Alert } from 'antd';
+import { Row, Col, Divider, Form, Input, Button, InputNumber, DatePicker, Result } from 'antd';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {
@@ -66,22 +66,25 @@ class IssueTokenTRC10 extends Component {
 		return (
 			<div>
 				<Header>Issue Token TRC10</Header>
-				<Wrapper>
-					{issueTokenInfo.status === ISSUE_TRC10_SUCCESS &&
-						<div>
-							<Alert message="Transaction is successed" type="success"
-								description={`Your transaction is ${issueTokenInfo.tranID}`}
-								closable showIcon
-								action={
+				{issueTokenInfo.status === ISSUE_TRC10_SUCCESS &&
+					<div>
+						<Result
+							status="success"
+							title={`Your TRC10 has been issued successfully!`}
+							subTitle={`You can check it at transaction ${issueTokenInfo.tranID}`}
+							extra={[
+								<Button type="primary">
 									<Link to={`/transaction/${issueTokenInfo.tranID}`} >
 										Details
                                     </Link>
-								}
-							/>
-							<br />
-							<Button onClick={() => { this.props.resetIssueTRC10(); }} >New Transaction</Button>
-						</div>}
-					{issueTokenInfo.status !== ISSUE_TRC10_SUCCESS &&
+								</Button>,
+								<Button onClick={() => { this.props.resetIssueTRC10(); }}>New TRC10</Button>,
+							]}
+						/>,
+					</div>}
+				{issueTokenInfo.status !== ISSUE_TRC10_SUCCESS &&
+					<Wrapper>
+
 						<Form
 							layout="vertical"
 							name="basic"
@@ -329,8 +332,8 @@ class IssueTokenTRC10 extends Component {
 									</Col>
 								</Row>
 							</Form.Item>
-						</Form>}
-				</Wrapper>
+						</Form>
+					</Wrapper>}
 			</div>
 		);
 	}

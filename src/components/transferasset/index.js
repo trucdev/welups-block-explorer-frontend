@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Form, Input, Button, Select, Spin, Alert } from 'antd';
+import { Form, Input, Button, Select, Spin, Result } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import {
     transferAsset,
@@ -120,29 +120,31 @@ class TransferAsset extends React.Component {
         return (
             <Wrapper>
                 <Spin indicator={antIcon} tip="Processing..." spinning={transferInfo.status === TRANSFER_REQUESTING}>
-                    <Container>
-                        <HeaderTitle>
-                            <Logo src={ACLogo} />
-                            <Title>Transfer Asset</Title>
-                        </HeaderTitle>
-                        {transferInfo.status === TRANSFER_SUCCESS &&
-                            <div>
-                                <Alert message="Transaction is successed" type="success"
-                                    description={`Your transaction is ${transferInfo.tranID}`}
-                                    closable showIcon
-                                    action={
+                    {transferInfo.status === TRANSFER_SUCCESS &&
+                        <div>
+                            <Result
+                                status="success"
+                                title={`Your transaction has been issued successfully!`}
+                                subTitle={`You can check it at transaction ${transferInfo.tranID}`}
+                                extra={[
+                                    <Button type="primary">
                                         <Link to={`/transaction/${transferInfo.tranID}`} >
-                                            Details
+                                            Go to details
                                     </Link>
-                                    }
-                                />
-                                <br />
-                                <ButtonSubmit onClick={() => { this.props.resetTransferAsset(); }} >New Transaction</ButtonSubmit>
-                            </div>}
-                        {transferInfo.status !== TRANSFER_SUCCESS && <StyledForm
+                                    </Button>,
+                                    <Button onClick={() => { this.props.resetTransferAsset(); }}>New Transfer</Button>,
+                                ]}
+                            />,
+                        </div>}
+                    {transferInfo.status !== TRANSFER_SUCCESS && <Container>
+                        <StyledForm
                             layout="vertical"
                             size="large"
                         >
+                            <HeaderTitle>
+                                <Logo src={ACLogo} />
+                                <Title>Transfer Asset</Title>
+                            </HeaderTitle>
                             <TitleContainer>
                                 <ContentTitle>Your private Key</ContentTitle>
                             </TitleContainer>
@@ -221,8 +223,8 @@ class TransferAsset extends React.Component {
                             </Item>
                             <ButtonSubmit type="submit" disabled={this.state.submitDisabled} htmlType="submit"
                                 onClick={this.transfer}>Send</ButtonSubmit>
-                        </StyledForm>}
-                    </Container>
+                        </StyledForm>
+                    </Container>}
                 </Spin>
             </Wrapper>
         );
