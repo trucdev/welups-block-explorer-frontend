@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Layout } from 'antd';
+import { Menu, Layout, Result } from 'antd';
 import {
   MailOutlined,
   AppstoreOutlined,
@@ -29,7 +29,7 @@ import TransferAsset from './components/transferasset';
 import SignUp from './components/signup/signup';
 import Login from './components/login/index';
 import AssetManagement from './components/assetManagement/index';
-import { Row, Col } from 'antd';
+import { Row, Col, Modal } from 'antd';
 import {
   BrowserRouter as Router,
   Route, Link, Redirect, Switch
@@ -37,7 +37,8 @@ import {
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import ACLogo from './assets/images/ACLogo.png';
-import {reset} from './actions/login';
+import { reset } from './actions/login';
+import Account from './api/account';
 const { Footer } = Layout;
 
 const AppWrapper = styled.div`
@@ -71,16 +72,48 @@ const StyledSubMenu = styled(SubMenu)`
     margin-left:0;
 `;
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalVisible: false,
+      newAddr: "",
+      newPrivKey: "",
+      password: "",
+    }
+  }
 
-  logOut = () =>{
+  logOut = () => {
     this.props.reset();
     return <Redirect to="/login" />
   }
-
+  generateAccount = () => {
+    const newAcc = Account.createAccount();
+    this.setState({
+      isModalVisible: true,
+      newAddr: newAcc.address,
+      newPrivKey: newAcc.privateKey,
+      password: newAcc.password,
+    });
+  }
+  onOk = () => {
+    this.setState({
+      isModalVisible: false,
+      newAddr: "",
+      newPrivKey: "",
+      password: "",
+    });
+  }
   render() {
     var { login } = this.props;
     return (
       <Router>
+        <Modal title="New address" centered visible={this.state.isModalVisible} onOk={this.onOk} onCancel={this.onOk}>
+          <Result
+            status="success"
+            title={`Your address: ${this.state.newAddr}`}
+            subTitle={`Your privatekey: ${this.state.newPrivKey}`}
+          />
+        </Modal>
         <AppWrapper>
           <MenuContainer>
             <StyledMenuRight mode="horizontal">
@@ -118,6 +151,9 @@ class App extends Component {
                     </Menu.Item>
                     <Menu.Item key="issueTokenTRC10" icon={<MoneyCollectOutlined />}>
                       <Link to="/issue-token-trc10">Issue TRC10</Link>
+                    </Menu.Item>
+                    <Menu.Item key="logOut" icon={<LogoutOutlined />} onClick={this.generateAccount}>
+                      Generate Account
                     </Menu.Item>
                     <Menu.Item key="logOut" icon={<LogoutOutlined />}>
                       <Link to="/login" onClick={this.logOut}>Log out</Link>
@@ -227,7 +263,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     reset: () => {
       dispatch(reset());
