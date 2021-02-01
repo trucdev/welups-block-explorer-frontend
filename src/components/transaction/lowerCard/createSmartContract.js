@@ -57,6 +57,7 @@ class CreateSmartContract extends Component {
 
   render() {
     const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
+    console.log(this.props.transaction);
     return (
       <Details>
         <Top>
@@ -78,7 +79,7 @@ class CreateSmartContract extends Component {
               <span >Contract Address</span>:
             </TitleContainer>
             <FillContainer>
-              <RedText >{this.props.transaction.contract.parameter.raw.ContractAddress}</RedText>
+              <RedText >{this.props.transaction.contractAddr}</RedText>
             </FillContainer>
           </Row>
         </Content>
