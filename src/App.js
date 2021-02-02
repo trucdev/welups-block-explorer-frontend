@@ -159,11 +159,11 @@ class App extends Component {
                     <Menu.Item key="generateAddress" icon={<KeyOutlined />} onClick={this.generateAccount}>
                       Generate Account
                     </Menu.Item>
-                    <Menu.Item key="logOut" icon={<LogoutOutlined />}>
-                      <Link to="/login" onClick={this.logOut}>Log out</Link>
-                    </Menu.Item>
                     <Menu.Item key="deployContract" icon={<DeploymentUnitOutlined />}>
                       <Link to="/deploycontract" >Deploy Contract</Link>
+                    </Menu.Item>
+                    <Menu.Item key="logOut" icon={<LogoutOutlined />}>
+                      <Link to="/login" onClick={this.logOut}>Log out</Link>
                     </Menu.Item>
                   </StyledSubMenu>
                   : <Menu.Item key="login" >

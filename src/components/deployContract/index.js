@@ -124,9 +124,12 @@ class DeployContract extends Component {
                                                 required: true,
                                                 message: 'Please input your Oe limit',
                                             },
+                                            { 
+
+                                            }
                                         ]}
                                     >
-                                        <Input />
+                                        <StyleInputNumber min={0}/>
                                     </Form.Item>
 
                                 </Col>
@@ -143,7 +146,7 @@ class DeployContract extends Component {
                                             },
                                         ]}
                                     >
-                                        <StyleInputNumber />
+                                        <StyleInputNumber min={0}/>
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -198,7 +201,7 @@ class DeployContract extends Component {
                                             },
                                         ]}
                                     >
-                                        <StyleInputNumber />
+                                        <StyleInputNumber min={0}/>
                                     </Form.Item>
 
                                 </Col>
