@@ -26,6 +26,7 @@ import { assetManagementReducer } from "./assetManagement";
 import { issueTokenTRC10Reducer } from "./issueTokenTRC10";
 import {transferAssetReducer} from "./transferasset";
 import {signUpReducer} from "./signup";
+import {deployContractReducer} from "./deployContract";
 export default combineReducers({
 	search: searchReducer,
 	system: homeSystemStateReducer,
@@ -49,6 +50,7 @@ export default combineReducers({
 	login:loginReducer,
 	assetManagement:assetManagementReducer,
 	issueTokenTRC10:issueTokenTRC10Reducer,
+	deployContract:deployContractReducer,
 	transferAsset: transferAssetReducer,
 	signUpReducer: signUpReducer,
 });

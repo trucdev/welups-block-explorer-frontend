@@ -73,7 +73,46 @@ export default class Asset {
 					frozen_supply: frozenSupply
 				})
 			});
-			
+
+			const result = await res.json();
+			if (!res.ok || result.status !== "success")
+				return { tranID: '', result: false };
+
+			const signature = bytes.byteArray2hexStr(new Uint8Array(crypto.signBytes(privateKey, code.hexStr2byteArray(result.data.tran_raw_hex))));
+			const status = await transaction.broadcast(result.data.tran_hex, result.data.tran_raw_hex, signature);
+			return { tranID: result.data.tran_id, result: status }
+		} catch (e) {
+			console.log(e);
+			return { tranID: '', result: false };
+		}
+	};
+	static async deployContract(
+		privateKey,
+		contractName,
+		abi,
+		condeStr,
+		feeLimit,
+		curPercent,
+		oeLimit) {
+		try {
+			const from = account.addressFromPrivateKey(privateKey);
+			const res = await fetch(`${API_ADDR}/contracts/deploy`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				mode: 'cors',
+				body: JSON.stringify({
+					from: from,
+					contract_name: contractName,
+					abi: abi,
+					codeStr: condeStr,
+					fee_limit: feeLimit,
+					cur_percent: curPercent,
+					oe_limit: oeLimit,
+				})
+			});
+
 			const result = await res.json();
 			if (!res.ok || result.status !== "success")
 				return { tranID: '', result: false };
