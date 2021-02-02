@@ -90,7 +90,7 @@ export default class Asset {
 		privateKey,
 		contractName,
 		abi,
-		condeStr,
+		codeStr,
 		feeLimit,
 		curPercent,
 		oeLimit) {
@@ -106,7 +106,7 @@ export default class Asset {
 					from: from,
 					contract_name: contractName,
 					abi: abi,
-					codeStr: condeStr,
+					code_str: codeStr,
 					fee_limit: feeLimit,
 					cur_percent: curPercent,
 					oe_limit: oeLimit,
