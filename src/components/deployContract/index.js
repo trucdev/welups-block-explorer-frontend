@@ -82,12 +82,12 @@ class DeployContract extends Component {
                                 <Col span={9}>
 
                                     <Form.Item
-                                        label="Address:"
+                                        label="Private key:"
                                         name="from"
                                         rules={[
                                             {
                                                 required: true,
-                                                message: 'Please input your address!',
+                                                message: 'Please input your private key!',
                                             },
                                         ]}
                                     >
@@ -116,39 +116,6 @@ class DeployContract extends Component {
                             </Row>
                             <Row>
                                 <Col span={9}>
-                                    <Form.Item
-                                        label="Oe limit:"
-                                        name="oeLimit"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input your Oe limit',
-                                            },
-                                        ]}
-                                    >
-                                        <StyleInputNumber min={0} />
-                                    </Form.Item>
-
-                                </Col>
-                                <Col span={6}></Col>
-
-                                <Col span={9}>
-                                    <Form.Item
-                                        label="Current percent:"
-                                        name="curPercent"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input your current percent',
-                                            },
-                                        ]}
-                                    >
-                                        <StyleInputNumber min={0} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col span={9}>
 
                                     <Form.Item
                                         label="CodeStr:"
@@ -157,6 +124,7 @@ class DeployContract extends Component {
                                             {
                                                 required: true,
                                                 message: 'Please input your CodeStr',
+                                                max: 20000,
                                             },
                                         ]}
                                     >
@@ -175,6 +143,7 @@ class DeployContract extends Component {
                                             {
                                                 required: true,
                                                 message: 'Please input your abi code',
+                                                max: 20000,
                                             },
                                         ]}
                                     >
@@ -182,6 +151,39 @@ class DeployContract extends Component {
                                     </Form.Item>
 
 
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={9}>
+                                    <Form.Item
+                                        label="Oe limit:"
+                                        name="oeLimit"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please input your Oe limit',
+                                            },
+                                        ]}
+                                    >
+                                        <StyleInputNumber min={0} />
+                                    </Form.Item>
+
+                                </Col>
+                                <Col span={6}></Col>
+
+                                <Col span={9}>
+                                    <Form.Item
+                                        label="Consumption percentage:"
+                                        name="curPercent"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please input your consumption percent',
+                                            },
+                                        ]}
+                                    >
+                                        <StyleInputNumber min={0} />
+                                    </Form.Item>
                                 </Col>
                             </Row>
                             <Row>
