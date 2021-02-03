@@ -157,7 +157,6 @@ class DeployContract extends Component {
                                             {
                                                 required: true,
                                                 message: 'Please input your CodeStr',
-                                                max: 20000,
                                             },
                                         ]}
                                     >
@@ -176,7 +175,6 @@ class DeployContract extends Component {
                                             {
                                                 required: true,
                                                 message: 'Please input your abi code',
-                                                max: 20000,
                                             },
                                         ]}
                                     >
