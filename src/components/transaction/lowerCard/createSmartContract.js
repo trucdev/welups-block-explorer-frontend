@@ -79,7 +79,7 @@ class CreateSmartContract extends Component {
               <span >Contract Address</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={"contract/"+CONTRACT}><RedText>{this.props.transaction.contractAddr}</RedText></Link>
+              <Link to={"/contract/"+CONTRACT}><RedText>{CONTRACT}</RedText></Link>
             </FillContainer>
           </Row>
         </Content>
