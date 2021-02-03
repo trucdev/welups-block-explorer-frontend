@@ -82,6 +82,10 @@ class SignUp extends React.Component {
                                 name="email"
                                 rules={[
                                     {
+                                        type: 'email',
+                                        message: 'Email is invalid',
+                                    },
+                                    {
                                         required: true,
                                         message: 'Please input your email!',
                                     },
@@ -96,24 +100,51 @@ class SignUp extends React.Component {
                                         required: true,
                                         message: 'Please input your password!',
                                     },
+                                    {
+                                        min: 8,
+                                        max: 16,
+                                        message: 'Password must be 8-16 characters',
+                                    },
                                 ]}
+                                hasFeedback
                             >
                                 <Input.Password placeholder="Password" />
                             </Item>
                             <Item
                                 name="confirm password"
+                                dependencies={['password']}
+                                hasFeedback
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Confirm Password Must Be Match With Password',
+                                        message: 'Please confirm your password',
                                     },
+                                    ({ getFieldValue }) => ({
+                                        validator(_, value) {
+                                            if (!value || getFieldValue('password') === value) {
+                                                return Promise.resolve();
+                                            }
+
+                                            return Promise.reject('Passwords did not match!');
+                                        },
+                                    })
                                 ]}
                             >
                                 <Input.Password placeholder="Confirm Password" />
                             </Item>
-                            <Form.Item >
-                                <StyledCheckbox>I agree to sign up <Link to=''>terms and conditions</Link></StyledCheckbox>
-                            </Form.Item>
+                            <Item
+                                name="agreement"
+                                valuePropName="checked"
+                                rules={[
+                                    {
+                                        validator: (_, value) =>
+                                            value ? Promise.resolve() : Promise.reject(''),
+                                    },
+                                ]}
+                            >
+                                <StyledCheckbox
+                                >I agree to sign up <Link>terms and conditions</Link></StyledCheckbox>
+                            </Item>
                             <SmallItem name="remember" valuePropName="checked">
                                 <ButtonSubmit type="primary" htmlType="submit">Create</ButtonSubmit>
                             </SmallItem>

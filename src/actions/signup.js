@@ -39,7 +39,7 @@ export function signUp(email, password) {
             dispatch(fail());
             notification.error({
                 message: 'Failed!',
-                description: `Sign up failed`,
+                description: `Email already in use`,
             });
             return
         };
