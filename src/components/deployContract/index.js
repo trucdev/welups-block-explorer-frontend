@@ -58,7 +58,7 @@ class DeployContract extends Component {
                             subTitle={`You can check it at transaction ${deployContractInfo.tranID}`}
                             extra={[
                                 <Button type="primary">
-                                    <Link to={`/contracts/${deployContractInfo.tranID}`} >
+                                    <Link to={`/transaction/${deployContractInfo.tranID}`} >
                                         Details
                                     </Link>
                                 </Button>,
