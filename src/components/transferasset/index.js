@@ -7,7 +7,9 @@ import {
     transferAsset,
     reset,
     TRANSFER_REQUESTING,
-    TRANSFER_SUCCESS
+    TRANSFER_SUCCESS,
+    loadTokens,
+    updatePageTokens
 } from '../../actions/transferasset';
 import { Link } from 'react-router-dom';
 
@@ -71,11 +73,14 @@ class TransferAsset extends React.Component {
             privateKey: "",
             to: "",
             assetName: "ACG",
-            amount: ""
+            amount: "",
+            loading:false
         };
     }
     componentDidMount() {
         this.props.resetTransferAsset();
+        const {transferInfo} = this.props;
+        this.props.loadTokens(transferInfo.pageToken.start_item, transferInfo.pageToken.page_limit);
     }
     componentWillUnmount() {
         this.props.resetTransferAsset();
@@ -112,10 +117,23 @@ class TransferAsset extends React.Component {
             privateKey: e.target.value
         }));
     };
+    onScroll = (e)=>{
+        var target = e.target;
+        var {transferInfo} = this.props;
+        if (!this.state.loading && target.scrollTop + target.offsetHeight === target.scrollHeight&&transferInfo.pageToken.start_item<=transferInfo.pageToken.total_items) {
+            this.setState({loading: true}, ()=>{
+                target.scrollTo(0, target.scrollHeight)
+                setTimeout(()=>{
+                    this.props.updatePageTokens(); 
+                    this.props.loadTokens(transferInfo.pageToken.start_item, transferInfo.pageToken.page_limit);
+                },1000)
+            })
+        }
+    }
 
     render() {
-        const assetNames = ["ACG", "VNDA", "USDA"];
         const { transferInfo } = this.props;
+        let assetNames = transferInfo.tokens?transferInfo.tokens:null;
         const antIcon = <LoadingOutlined spin />;
         return (
             <Wrapper>
@@ -191,11 +209,13 @@ class TransferAsset extends React.Component {
                                 initialValue={assetNames[0]}
                             >
                                 <Select
+                                    showSearch
                                     placeholder="Select a token"
                                     allowClear
                                     onChange={this.changeAsset}
+                                    onPopupScroll={this.onScroll}
                                 >
-                                    {assetNames.map((value) => <Option value={value} key={value}>{value}</Option>)}
+                                    {!this.state.loading ? assetNames.map((value, index) => <Option value={value} key={index}>{value}</Option>):<Option key="loading">Loading...</Option>}
                                 </Select>
                             </Item>
                             <TitleContainer>
@@ -243,7 +263,13 @@ const mapDispatchToProps = (dispatch) => {
         },
         resetTransferAsset: () => {
             dispatch(reset());
-        }
+        },
+        loadTokens: (offset, limit) => {
+            dispatch(loadTokens(offset, limit));
+        },
+        updatePageTokens: (page) => {
+            dispatch(updatePageTokens(page));
+        },
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(TransferAsset);
