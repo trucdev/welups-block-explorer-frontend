@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { List, Row, Col, Modal, Input, Button, Skeleton, Spin } from 'antd';
+import { List, Row, Col, Modal, Input, Button, Spin, Collapse } from 'antd';
 import { currencyFormat } from '../../utils/utils';
 import { AppstoreAddOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
-import { loadAssetApi, addAddrFromPrvkey, ADDRESS_REQUESTING } from '../../actions/assetManagement';
+import { loadAssetApi, addAddrFromPrvkey } from '../../actions/assetManagement';
 import { loadAccountDetails } from '../../actions/account';
 
 const StyledLink = styled(Link)`
@@ -39,6 +39,9 @@ const StyleList = styled.div`
 const StyleItem = styled.div`
 	width: 100%;
 `;
+const StyleCollapse = styled(Collapse)`
+	margin-top:1%;
+`;
 const AddIcon = styled.div`
   float:right;
 `;
@@ -46,37 +49,6 @@ const AddIcon = styled.div`
 
 
 class AssetManagement extends React.Component {
-	listAccount = (acc) => {
-		if (acc.address === '') return;
-		let assets = [];
-		if (acc.asset != null && acc.asset != undefined) {
-			assets = Object.entries(acc.asset);
-		}
-		return <List.Item key={acc.address}>
-			<StyleItem>
-				<div>
-					<StyledLink to={"/account/" + acc.address}><Header>{acc.address}</Header></StyledLink>
-				</div>
-				<StyleRowACG>
-					<ColHead span={2}>
-						ACG balance:
-						</ColHead>
-					<Col span={22}>
-						{currencyFormat(acc.trxBalance/Math.pow(10,6))+" ACG"}
-					</Col>
-				</StyleRowACG>
-				<div>
-					<List
-						itemLayout="horizontal"
-						dataSource={assets}
-						renderItem={([key, value]) => (
-							this.listItem(key, value)
-						)}
-					/>
-				</div>
-			</StyleItem>
-		</List.Item>;
-	}
 
 	listItem = (key, value) => {
 		return <List.Item key={key}>
@@ -161,9 +133,10 @@ class AssetManagement extends React.Component {
 		if (Object.keys(assetManagement.addresses).length === 0 && assetManagement.addresses.constructor === Object) {
 
 		} else {
-			addresses = Object.entries(assetManagement.addresses);
+			Object.entries(assetManagement.addresses).forEach(([key, value]) => {
+				addresses.push(value);
+			});
 		}
-
 
 		if (login.token === "") {
 			return <Redirect to="/login" />
@@ -202,13 +175,34 @@ class AssetManagement extends React.Component {
 					</Header>
 					<StyleList>
 						<div>
-							<List
-								itemLayout="horizontal"
-								dataSource={addresses}
-								renderItem={([key, value]) => (
-									this.listAccount(value)
-								)}
-							/>
+							<StyleCollapse expandIconPosition="right">
+								{addresses.map((acc, index)=>{
+									if (acc.address === '') return;
+									let assets = [];
+									if (acc.asset !== null && acc.asset !== undefined) {
+										assets = Object.entries(acc.asset);
+									}
+									return <Collapse.Panel header={<StyledLink to={"/account/" + acc.address}>{acc.address}</StyledLink>} key={acc.address}>
+											<StyleRowACG>
+												<ColHead span={2}>
+													ACG balance:
+													</ColHead>
+												<Col span={22}>
+													{currencyFormat(acc.trxBalance/Math.pow(10,6))+" ACG"}
+												</Col>
+											</StyleRowACG>
+											<div>
+												<List
+													itemLayout="horizontal"
+													dataSource={assets}
+													renderItem={([key, value]) => (
+														this.listItem(key, value)
+													)}
+												/>
+											</div>
+									    </Collapse.Panel>;
+								})}
+							</StyleCollapse>
 						</div>
 					</StyleList>
 				</Spin>
