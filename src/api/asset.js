@@ -125,4 +125,31 @@ export default class Asset {
 			return { tranID: '', result: false };
 		}
 	}
+
+	static async freeze(privateKey, to, frozenBalance, resource) {
+		try {
+			const from = account.addressFromPrivateKey(privateKey);
+			const res = await fetch(`${API_ADDR}/accounts/freeze`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				mode: 'cors',
+				body: JSON.stringify({
+					"from": from,
+					"delegate_to": to,
+					"frozen_balance": frozenBalance,
+					"resource": resource
+				})
+			});
+			const result = await res.json();
+			if (!res.ok || result.status !== "success")
+				return { tranID: '', result: false };
+
+			const signature = bytes.byteArray2hexStr(new Uint8Array(crypto.signBytes(privateKey, code.hexStr2byteArray(result.data.tran_raw_hex))));
+			const status = await transaction.broadcast(result.data.tran_hex, result.data.tran_raw_hex, signature);
+			return { tranID: result.data.tran_id, result: status }
+		} catch (e) {
+			console.log(e);
+			return { tranID: '', result: false };
+		}
+	}
 }

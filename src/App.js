@@ -12,7 +12,8 @@ import {
   WalletOutlined,
   LogoutOutlined,
   KeyOutlined,
-  DeploymentUnitOutlined
+  DeploymentUnitOutlined,
+  SplitCellsOutlined
 } from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
@@ -32,6 +33,7 @@ import TransferAsset from './components/transferasset';
 import SignUp from './components/signup/signup';
 import Login from './components/login/index';
 import AssetManagement from './components/assetManagement/index';
+import FreezeBalance from './components/freezeBalance/index';
 import DeployContract from './components/deployContract/index';
 import { Row, Col, Modal } from 'antd';
 import {
@@ -162,6 +164,9 @@ class App extends Component {
                     <Menu.Item key="deployContract" icon={<DeploymentUnitOutlined />}>
                       <Link to="/deploycontract" >Deploy Contract</Link>
                     </Menu.Item>
+                    <Menu.Item key="freezeBalance" icon={<SplitCellsOutlined />}>
+                      <Link to="/freeze-balance" >Freeze Balance</Link>
+                    </Menu.Item>
                     <Menu.Item key="logOut" icon={<LogoutOutlined />}>
                       <Link to="/login" onClick={this.logOut}>Log out</Link>
                     </Menu.Item>
@@ -252,6 +257,10 @@ class App extends Component {
                 <Route
                   path="/user"
                   render={() => <AssetManagement />}
+                />
+                <Route
+                  path="/freeze-balance"
+                  render={() => <FreezeBalance />}
                 />
                 <Route
                   path="/deploycontract"
