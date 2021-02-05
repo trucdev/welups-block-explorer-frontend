@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Divider, Form, Input, Button, InputNumber, Result } from 'antd';
+import { Row, Col, Divider, Form, Input, Button, InputNumber, Result, Spin } from 'antd';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {
     deployContract,
     reset,
     DEPLOY_CONTRACT_SUCCESS,
+    DEPLOY_CONTRACT_REQUESTING
 } from '../../actions/deployContract';
+import { LoadingOutlined} from '@ant-design/icons';
 
 const Header = styled.div`
 	text-align: left;
@@ -46,6 +48,7 @@ class DeployContract extends Component {
         );
     }
     render() {
+        const antIcon = <LoadingOutlined />;
         const { deployContractInfo } = this.props;
         return (
             <div>
@@ -68,6 +71,7 @@ class DeployContract extends Component {
 					</div>}
                 {deployContractInfo.status !== DEPLOY_CONTRACT_SUCCESS &&
                     <Wrapper>
+                        <Spin indicator={antIcon} tip="Processing..."  spinning={deployContractInfo.status === DEPLOY_CONTRACT_REQUESTING}>
                         <Form
                             layout="vertical"
                             name="basic"
@@ -212,6 +216,7 @@ class DeployContract extends Component {
                                 </Row>
                             </Form.Item>
                         </Form>
+                        </Spin>
                     </Wrapper>}
             </div>
         );
