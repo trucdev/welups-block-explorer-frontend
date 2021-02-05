@@ -215,6 +215,7 @@ class TransferAsset extends React.Component {
                                     onChange={this.changeAsset}
                                     onPopupScroll={this.onScroll}
                                 >
+                                    <Option value="ACG" key="ACG">ACG</Option>
                                     {!this.state.loading ? assetNames.map((value, index) => <Option value={value} key={index}>{value}</Option>):<Option key="loading">Loading...</Option>}
                                 </Select>
                             </Item>
