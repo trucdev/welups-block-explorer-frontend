@@ -35,6 +35,8 @@ import Login from './components/login/index';
 import AssetManagement from './components/assetManagement/index';
 import FreezeBalance from './components/freezeBalance/index';
 import DeployContract from './components/deployContract/index';
+import ForgotPassword from './components/forgotPassword/index';
+import NewPassword from './components/forgotPassword/newpassword';
 import { Row, Col, Modal } from 'antd';
 import {
   BrowserRouter as Router,
@@ -265,6 +267,14 @@ class App extends Component {
                 <Route
                   path="/deploycontract"
                   render={() => <DeployContract />}
+                />
+                <Route
+                  path="/forgotpassword"
+                  render={() => <ForgotPassword />}
+                />
+                <Route
+                  path="/newpassword"
+                  render={() => <NewPassword />}
                 />
                 <Redirect to="/notfound" />
               </Switch>
