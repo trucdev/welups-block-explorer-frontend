@@ -54,7 +54,7 @@ const AppWrapper = styled.div`
 `;
 const Logo = styled.img`
     height: 36px;
-    width: 30px;
+    width: 32px;
 `;
 const ContentRowWrapper = styled(Row)`
   padding-top:40px;
