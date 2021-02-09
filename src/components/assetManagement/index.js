@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { List, Row, Col, Modal, Input, Button, Spin, Collapse } from 'antd';
+import { List, Row, Col, Modal, Input, Button, Spin } from 'antd';
 import { currencyFormat } from '../../utils/utils';
 import { AppstoreAddOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
-import { loadAssetApi, addAddrFromPrvkey } from '../../actions/assetManagement';
+import { addAddrFromPrvkey } from '../../actions/assetManagement';
 import { loadAccountDetails } from '../../actions/account';
+import { LOGOUT, LOGIN_FAIL } from '../../actions/login';
+import Addresses from './addresses';
 
 const StyledLink = styled(Link)`
 	&:link, &:visited {
@@ -20,9 +22,6 @@ const ColHead = styled(Col)`
 const StyleRow = styled(Row)`
 	margin:1% 0%;
 `;
-const StyleRowACG = styled(Row)`
-	margin-top:1%;
-`;
 const Wrapper = styled.div`
 	margin: 3% 0%;
 	text-align: left;
@@ -33,14 +32,8 @@ const Header = styled.div`
 	font-size: 20px;
 	text-transform: uppercase;
 `;
-const StyleList = styled.div`
-	margin-left:2%;
-`;
 const StyleItem = styled.div`
 	width: 100%;
-`;
-const StyleCollapse = styled(Collapse)`
-	margin-top:1%;
 `;
 const AddIcon = styled.div`
   float:right;
@@ -120,15 +113,11 @@ class AssetManagement extends React.Component {
 	};
 
 	componentDidMount() {
-		let { login } = this.props;
-		if (login.token !== "") {
-			this.props.loadAssetApi(login.id, login.token);
-		}
 	}
 
 	render() {
 		const antIcon = <LoadingOutlined spin />;
-		let { assetManagement, login } = this.props;
+		let { assetManagement, login} = this.props;
 		let addresses = [];
 		if (Object.keys(assetManagement.addresses).length === 0 && assetManagement.addresses.constructor === Object) {
 
@@ -138,7 +127,7 @@ class AssetManagement extends React.Component {
 			});
 		}
 
-		if (login.token === "") {
+		if (login.type ===LOGOUT||login.type===LOGIN_FAIL) {
 			return <Redirect to="/login" />
 		}
 		const { visible, loading } = this.state;
@@ -173,38 +162,7 @@ class AssetManagement extends React.Component {
 							</Col>
 						</Row>
 					</Header>
-					<StyleList>
-						<div>
-							<StyleCollapse expandIconPosition="right">
-								{addresses.map((acc, index)=>{
-									if (acc.address === '') return;
-									let assets = [];
-									if (acc.asset !== null && acc.asset !== undefined) {
-										assets = Object.entries(acc.asset);
-									}
-									return <Collapse.Panel header={<StyledLink to={"/account/" + acc.address}>{acc.address}</StyledLink>} key={acc.address}>
-											<StyleRowACG>
-												<ColHead span={2}>
-													ACG balance:
-													</ColHead>
-												<Col span={22}>
-													{currencyFormat(acc.trxBalance/Math.pow(10,6))+" ACG"}
-												</Col>
-											</StyleRowACG>
-											<div>
-												<List
-													itemLayout="horizontal"
-													dataSource={assets}
-													renderItem={([key, value]) => (
-														this.listItem(key, value)
-													)}
-												/>
-											</div>
-									    </Collapse.Panel>;
-								})}
-							</StyleCollapse>
-						</div>
-					</StyleList>
+					{login.token!==""?<Addresses/>:null}
 				</Spin>
 			</Wrapper>
 		);
@@ -214,21 +172,18 @@ class AssetManagement extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		assetManagement: state.assetManagement,
+		account: state.account,
 		login: state.login,
-		account: state.account
 	};
 };
 const mapDispatchToProps = dispatch => {
 	return {
-		loadAssetApi: (id, token) => {
-			dispatch(loadAssetApi(id, token));
-		},
 		loadAccountDetails: (addr) => {
 			dispatch(loadAccountDetails(addr));
 		},
 		addAddrFromPrvkey: (id, token, privkey) => {
 			dispatch(addAddrFromPrvkey(id, token, privkey));
-		},
+		}
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(AssetManagement);

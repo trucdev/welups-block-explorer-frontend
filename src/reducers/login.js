@@ -2,7 +2,9 @@ import {
     LOGIN_NONE,
     LOGIN_REQUESTING,
     LOGIN_SUCCESS,
-    LOGIN_FAIL
+    LOGIN_FAIL,
+    LOAD_FROM_STORAGE,
+    LOGOUT
 } from '../actions/login';
 
 export function loginReducer(state = { type: LOGIN_NONE, status: "", message: "", description: "", token: "", id: "", email: ""}, action) {
@@ -18,6 +20,12 @@ export function loginReducer(state = { type: LOGIN_NONE, status: "", message: ""
             break;
         case LOGIN_FAIL:
             state = { type: action.type, status: "fail", message: "failed", description: "user or password invalid", token: "", email: "", id:""} 
+            break;
+        case LOAD_FROM_STORAGE:
+            state = action.tokenDecoded?{ type: action.type, status: "", message: "", description: "", token: action.token, email: action.tokenDecoded.email, id:action.tokenDecoded.id}:{ type: LOGOUT, status: "", message: "", description: "", token: "", email: "", id:""} 
+            break;
+        case LOGOUT:
+            state = { type: action.type, status: "", message: "", description: "", token: "", email: "", id:"" }
             break;
     }
     return state;

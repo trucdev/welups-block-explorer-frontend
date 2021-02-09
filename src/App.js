@@ -45,8 +45,9 @@ import {
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import ACLogo from './assets/images/ACLogo.png';
-import { reset } from './actions/login';
+import { logout, loadFromStorage } from './actions/login';
 import Account from './api/account';
+import jwt_decode from "jwt-decode";
 const { Footer } = Layout;
 
 const AppWrapper = styled.div`
@@ -91,7 +92,7 @@ class App extends Component {
   }
 
   logOut = () => {
-    this.props.reset();
+    this.props.logout();
     return <Redirect to="/login" />
   }
   generateAccount = () => {
@@ -110,6 +111,12 @@ class App extends Component {
       newPrivKey: "",
       password: "",
     });
+  }
+  componentDidMount(){
+    let { login} = this.props;
+    if(login.token===""){
+      this.props.loadFromStorage();
+    }
   }
   render() {
     var { login } = this.props;
@@ -149,7 +156,7 @@ class App extends Component {
             </StyledMenuRight>
             <StyledMenuLeft mode="horizontal">
               {
-                login.token !== "" ?
+                login.token !== ""?
                   <StyledSubMenu title={login.email}>
                     <Menu.Item key="User" icon={<WalletOutlined />}>
                       <Link to="/user">Assets</Link>
@@ -295,8 +302,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    reset: () => {
-      dispatch(reset());
+    logout: () => {
+      dispatch(logout());
+    },
+    loadFromStorage: () => {
+      dispatch(loadFromStorage());
     }
   };
 };
