@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Form, Input, Button, Select, Spin, Result } from 'antd';
+import { Form, Input, Button, Select, Spin, Result, InputNumber  } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import {
     transferAsset,
@@ -62,7 +62,9 @@ const StyledForm = styled(Form)`
     width:450px;
     margin-left: 25px;
 `;
-
+const StyledInputNumber = styled(InputNumber)`
+    width: 100%;
+`;
 
 const { Option } = Select;
 
@@ -105,10 +107,10 @@ class TransferAsset extends React.Component {
             assetName: asset
         }));
     }
-    changeAmount = (e) => {
+    changeAmount = (value) => {
         this.setState((prevState) => ({
             ...prevState,
-            amount: e.target.value
+            amount: value
         }));
     };
     changePrivateKey = (e) => {
@@ -203,7 +205,7 @@ class TransferAsset extends React.Component {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please choose your asset',
+                                        message: 'Please select a token',
                                     },
                                 ]}
                                 initialValue={assetNames[0]}
@@ -231,8 +233,8 @@ class TransferAsset extends React.Component {
                                     },
                                 ]}
                             >
-                                <Input default={0}
-                                    value={this.state.amount} onChange={this.changeAmount}
+                                <StyledInputNumber min={0}
+                                     value={this.state.amount} onChange={this.changeAmount}
                                 />
                             </Item>
 
@@ -242,7 +244,7 @@ class TransferAsset extends React.Component {
                             <Item>
                                 <TextArea></TextArea>
                             </Item>
-                            <ButtonSubmit type="submit" disabled={this.state.submitDisabled} htmlType="submit"
+                            <ButtonSubmit type="primary" htmlType="submit"
                                 onClick={this.transfer}>Send</ButtonSubmit>
                         </StyledForm>
                     </Container>}
