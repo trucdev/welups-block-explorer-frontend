@@ -47,7 +47,6 @@ import { connect } from 'react-redux';
 import ACLogo from './assets/images/ACLogo.png';
 import { logout, loadFromStorage } from './actions/login';
 import Account from './api/account';
-import jwt_decode from "jwt-decode";
 const { Footer } = Layout;
 
 const AppWrapper = styled.div`
@@ -66,19 +65,12 @@ const FooterWrapper = styled(Footer)`
   text-align: center;
   flex-shrink: 0;
 `;
-const StyledMenuRight = styled(Menu)`
-    width: 70%;
-`;
-const StyledMenuLeft = styled(Menu)`
-    width: 30%;
-    text-align: center;
-`;
-const MenuContainer = styled.div`
-    display: flex;
+const RightMenuItem = styled(Menu.Item)`
+  float: right;
 `;
 const { SubMenu } = Menu;
-const StyledSubMenu = styled(SubMenu)`
-    margin-left:0;
+const RightSubMenuItem = styled(SubMenu)`
+  float: right;
 `;
 class App extends Component {
   constructor(props) {
@@ -130,34 +122,13 @@ class App extends Component {
           />
         </Modal>
         <AppWrapper>
-          <MenuContainer>
-            <StyledMenuRight mode="horizontal">
+            <Menu mode="horizontal">
               <Menu.Item disabled={true}>
                 <Logo src={ACLogo} />
               </Menu.Item>
-              <Menu.Item key="home" icon={<MailOutlined />}>
-                <Link to="/home">Home</Link>
-              </Menu.Item>
-              <Menu.Item key="witness" icon={<AppstoreOutlined />}>
-                <Link to="/witness">Witnesses</Link>
-              </Menu.Item>
-              <Menu.Item key="blocks" icon={<BlockOutlined />}>
-                <Link to="/blocks">Blocks</Link>
-              </Menu.Item>
-              <Menu.Item key="nodes" icon={<NodeIndexOutlined />}>
-                <Link to="/nodes">Nodes</Link>
-              </Menu.Item>
-              <Menu.Item key="transactions" icon={<TransactionOutlined />}>
-                <Link to="/transactions">Transactions</Link>
-              </Menu.Item>
-              <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
-                <Link to="/tokens">Tokens</Link>
-              </Menu.Item>
-            </StyledMenuRight>
-            <StyledMenuLeft mode="horizontal">
               {
                 login.token !== ""?
-                  <StyledSubMenu title={login.email}>
+                  <RightSubMenuItem title={login.email}>
                     <Menu.Item key="User" icon={<WalletOutlined />}>
                       <Link to="/user">Assets</Link>
                     </Menu.Item>
@@ -179,13 +150,30 @@ class App extends Component {
                     <Menu.Item key="logOut" icon={<LogoutOutlined />}>
                       <Link to="/login" onClick={this.logOut}>Log out</Link>
                     </Menu.Item>
-                  </StyledSubMenu>
-                  : <Menu.Item key="login" >
+                  </RightSubMenuItem>
+                  : <RightMenuItem key="login" >
                     <Link to="/login">Register/Login</Link>
-                  </Menu.Item>
+                  </RightMenuItem>
               }
-            </StyledMenuLeft>
-          </MenuContainer>
+              <Menu.Item key="home" icon={<MailOutlined />}>
+                <Link to="/home">Home</Link>
+              </Menu.Item>
+              <Menu.Item key="witness" icon={<AppstoreOutlined />}>
+                <Link to="/witness">Witnesses</Link>
+              </Menu.Item>
+              <Menu.Item key="blocks" icon={<BlockOutlined />}>
+                <Link to="/blocks">Blocks</Link>
+              </Menu.Item>
+              <Menu.Item key="nodes" icon={<NodeIndexOutlined />}>
+                <Link to="/nodes">Nodes</Link>
+              </Menu.Item>
+              <Menu.Item key="transactions" icon={<TransactionOutlined />}>
+                <Link to="/transactions">Transactions</Link>
+              </Menu.Item>
+              <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
+                <Link to="/tokens">Tokens</Link>
+              </Menu.Item>
+            </Menu>
           <ContentRowWrapper justify='center' gutter={[5, 5]}>
             <Col xs={20} sm={20} md={20} lg={19} xl={18}>
               <Row gutter={[5, 5]}>
