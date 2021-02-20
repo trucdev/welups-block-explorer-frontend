@@ -9,6 +9,7 @@ import { loadAssetApi } from '../../actions/assetManagement';
 const StyledLink = styled(Link)`
 	&:link, &:visited {
 		color: #c23631;
+		word-break: break-all;
 	}
 `;
 const ColHead = styled(Col)`
@@ -29,6 +30,9 @@ const StyleItem = styled.div`
 const StyleCollapse = styled(Collapse)`
 	margin-top:1%;
 `;
+const LineBreak = styled.div`
+	word-break: break-all;
+`;
 
 
 
@@ -38,19 +42,19 @@ class Addresses extends React.Component {
 		return <List.Item key={key}>
 			<StyleItem>
 				<StyleRow >
-					<ColHead span={2}>
+					<ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
 						Asset name:
 						</ColHead>
-					<Col span={22}>
+					<Col xs={14} sm={20} md={20} lg={20} xl={22}>
 						<StyledLink to={"/token/" + key}>{key}</StyledLink>
 					</Col>
 				</StyleRow>
 				<StyleRow >
-					<ColHead span={2}>
+					<ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
 						Asset balance:
 						</ColHead>
-					<Col span={22}>
-						{currencyFormat(value)}
+					<Col xs={14} sm={20} md={20} lg={20} xl={22}>
+						<LineBreak>{currencyFormat(value)}</LineBreak>
 					</Col>
 				</StyleRow>
 			</StyleItem>
@@ -88,11 +92,11 @@ class Addresses extends React.Component {
 							}
 							return <Collapse.Panel header={<StyledLink to={"/account/" + acc.address}>{acc.address}</StyledLink>} key={acc.address}>
 									<StyleRowACG>
-										<ColHead span={2}>
+										<ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
 											ACG balance:
 											</ColHead>
-										<Col span={22}>
-											{currencyFormat(acc.trxBalance/Math.pow(10,6))+" ACG"}
+										<Col xs={14} sm={20} md={20} lg={20} xl={22}>
+											<LineBreak>{currencyFormat(acc.trxBalance/Math.pow(10,6))+" ACG"}</LineBreak>
 										</Col>
 									</StyleRowACG>
 									<div>

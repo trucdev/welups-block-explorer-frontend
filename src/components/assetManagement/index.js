@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { List, Row, Col, Modal, Input, Button, Spin } from 'antd';
+import { List, Row, Col, Modal, Input, Button, Spin, notification } from 'antd';
 import { currencyFormat } from '../../utils/utils';
 import { AppstoreAddOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
@@ -23,14 +23,19 @@ const StyleRow = styled(Row)`
 	margin:1% 0%;
 `;
 const Wrapper = styled.div`
-	margin: 3% 0%;
+	margin: 1% 0%;
 	text-align: left;
 `;
 const Header = styled.div`
 	text-align: left;
 	border-bottom: 5px solid #C23631;
-	font-size: 20px;
 	text-transform: uppercase;
+	@media (min-width: 280px) { 
+		font-size:15px!important;
+	}
+	@media (min-width: 768px) { 
+		font-size:20px!important;
+	}
 `;
 const StyleItem = styled.div`
 	width: 100%;
@@ -38,7 +43,9 @@ const StyleItem = styled.div`
 const AddIcon = styled.div`
   float:right;
 `;
-
+const LineBreak = styled.div`
+	word-break: break-all;
+`;
 
 
 class AssetManagement extends React.Component {
@@ -88,24 +95,32 @@ class AssetManagement extends React.Component {
 	};
 
 	handleOk = () => {
-		this.setState((prevState, props) => ({
-			...prevState,
-			loading: true
-		}));
-		setTimeout(() => {
+		if(this.state.newPrivatekey===""){
+			notification.error({
+			    message: `Error`,
+			    description:
+			      'Please enter new private key!',
+			});
+		}else{
 			this.setState((prevState, props) => ({
 				...prevState,
-				loading: false, visible: false
+				loading: true
 			}));
-		}, 3000);
-		//extract address from private key
-		this.props.addAddrFromPrvkey(this.props.login.id,
-			this.props.login.token,
-			this.state.newPrivatekey);
-		this.setState((prevState, props) => ({
-			...prevState,
-			newPrivatekey: ""
-		}));
+			setTimeout(() => {
+				this.setState((prevState, props) => ({
+					...prevState,
+					loading: false, visible: false
+				}));
+			}, 3000);
+			//extract address from private key
+			this.props.addAddrFromPrvkey(this.props.login.id,
+				this.props.login.token,
+				this.state.newPrivatekey);
+			this.setState((prevState, props) => ({
+				...prevState,
+				newPrivatekey: ""
+			}));
+		}
 	};
 
 	handleCancel = () => {
@@ -136,10 +151,12 @@ class AssetManagement extends React.Component {
 				<Spin indicator={antIcon} tip="Processing..."  spinning={assetManagement.status === "requesting"}>
 					<Header>
 						<Row >
-							<Col span={6}>
-								{login.token !== "" ? login.email : null}
+							<Col span={20}>
+								<LineBreak>
+									{login.token !== "" ? login.email : null}
+								</LineBreak>
 							</Col>
-							<Col span={18}>
+							<Col span={4}>
 								<AddIcon>
 									<AppstoreAddOutlined onClick={this.showModal} />
 									<Modal
