@@ -84,7 +84,7 @@ class Card extends Component {
       { title: 'Result', value:result },
       { title: 'Status', value: Status(status,numOfBlocks)},
       { title: 'Block', value: <HightLight>{blockNum}</HightLight> },
-      { title: 'Time', value: toDateTime(timestamp) },
+      { title: 'Time', value: toDateTime(timestamp?timestamp:0) },
       { title: 'Contract', value: contract.type},
       { title: 'Type URL', value: contract.parameter.type_url },
       { title: 'Value', value: <RowValueExt>{contract.parameter.value}</RowValueExt> },
