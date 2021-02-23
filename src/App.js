@@ -174,7 +174,7 @@ class App extends Component {
                 <Link to="/tokens">Tokens</Link>
               </Menu.Item>
             </Menu>
-          <ContentRowWrapper justify='center' gutter={[5, 5]}>
+          <ContentRowWrapper justify='center' gutter={[0, 0]}>
             <Col xs={20} sm={20} md={20} lg={19} xl={18}>
               <Row gutter={[5, 5]}>
                 <Col span={24} ><Search /></Col>

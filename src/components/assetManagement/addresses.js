@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { List, Row, Col, Collapse } from 'antd';
+import { Row, Col, Collapse, Table, Skeleton } from 'antd';
 import { currencyFormat } from '../../utils/utils';
-import { loadAssetApi } from '../../actions/assetManagement';
+import { loadAssetApi, loadAssetDetails } from '../../actions/assetManagement';
 
 const StyledLink = styled(Link)`
 	&:link, &:visited {
@@ -15,17 +15,11 @@ const StyledLink = styled(Link)`
 const ColHead = styled(Col)`
 	font-weight: bold;
 `;
-const StyleRow = styled(Row)`
-	margin:1% 0%;
-`;
 const StyleRowACG = styled(Row)`
-	margin-top:1%;
+	margin-bottom:1%;
 `;
 const StyleList = styled.div`
 	margin-left:2%;
-`;
-const StyleItem = styled.div`
-	width: 100%;
 `;
 const StyleCollapse = styled(Collapse)`
 	margin-top:1%;
@@ -33,41 +27,48 @@ const StyleCollapse = styled(Collapse)`
 const LineBreak = styled.div`
 	word-break: break-all;
 `;
-
-
+const columns = [
+    {
+		title: 'No.',
+		key: 'no',
+		render: (value, item, index) => (index + 1),
+		fixed: 'left',
+		width: 70,
+	},
+    {
+	    title: 'Asset Name',
+	    dataIndex: 'name',
+	    key: 'name',
+	    render: record => <StyledLink to={"/token/" + record} target="_blank">{record}</StyledLink>,
+    },
+    {
+	    title: 'Asset Balance',
+	    dataIndex: 'balance',
+	    key: 'balance',
+	    render: record => <LineBreak>{currencyFormat(record)}</LineBreak>,
+    }
+];
 
 class Addresses extends React.Component {
-
-	listItem = (key, value) => {
-		return <List.Item key={key}>
-			<StyleItem>
-				<StyleRow >
-					<ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
-						Asset name:
-						</ColHead>
-					<Col xs={14} sm={20} md={20} lg={20} xl={22}>
-						<StyledLink to={"/token/" + key}>{key}</StyledLink>
-					</Col>
-				</StyleRow>
-				<StyleRow >
-					<ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
-						Asset balance:
-						</ColHead>
-					<Col xs={14} sm={20} md={20} lg={20} xl={22}>
-						<LineBreak>{currencyFormat(value)}</LineBreak>
-					</Col>
-				</StyleRow>
-			</StyleItem>
-		</List.Item>;
-	}
-
-	
 	constructor(props) {
 		super(props);
 		let { login} = this.props;
 		if (login.token !== "") {
 			this.props.loadAssetApi(login.id, login.token);
-		} 
+		}
+		this.state = {
+			openTab: 0,
+		}
+	}
+
+	onChange = (values)=>{
+		if(values.length>this.state.openTab){
+			let addr = values[values.length-1];
+			this.props.loadAssetDetails(addr);
+		}
+		this.setState({
+            openTab:values.length
+        });
 	}
 
 	render() {
@@ -77,40 +78,38 @@ class Addresses extends React.Component {
 
 		} else {
 			Object.entries(assetManagement.addresses).forEach(([key, value]) => {
-				addresses.push(value);
+				addresses.push(key);
 			});
 		}
 		return (
 			<StyleList>
 				<div>
-					<StyleCollapse expandIconPosition="right">
+					{Object.keys(assetManagement.addresses).length !== 0?<StyleCollapse expandIconPosition="right" onChange={this.onChange}>
 						{addresses.map((acc, index)=>{
-							if (acc.address === '') return;
+							let info = assetManagement.addresses[acc];
 							let assets = [];
-							if (acc.asset !== null && acc.asset !== undefined) {
-								assets = Object.entries(acc.asset);
+							if (info&&info.asset !== null && info.asset !== undefined) {
+								Object.entries(info.asset).forEach(([key, value]) => {
+									assets.push({name:key,balance:value});
+								});
 							}
-							return <Collapse.Panel header={<StyledLink to={"/account/" + acc.address}>{acc.address}</StyledLink>} key={acc.address}>
-									<StyleRowACG>
-										<ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
-											ACG balance:
-											</ColHead>
-										<Col xs={14} sm={20} md={20} lg={20} xl={22}>
-											<LineBreak>{currencyFormat(acc.trxBalance/Math.pow(10,6))+" ACG"}</LineBreak>
-										</Col>
-									</StyleRowACG>
-									<div>
-										<List
-											itemLayout="horizontal"
-											dataSource={assets}
-											renderItem={([key, value]) => (
-												this.listItem(key, value)
-											)}
-										/>
-									</div>
+							return <Collapse.Panel header={<StyledLink to={"/account/" + acc}>{acc}</StyledLink>} key={acc} >
+									{info?
+										<div>
+											<StyleRowACG>
+	                                            <ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
+		                                            ACG balance:
+		                                        </ColHead>
+		                                        <Col xs={14} sm={20} md={20} lg={20} xl={22}>
+		                                            {currencyFormat(info.trxBalance/Math.pow(10,6))+" ACG"}
+		                                        </Col>
+		                                    </StyleRowACG>
+		                                    <Table rowKey="name" columns={columns} dataSource={assets} />
+		                                </div>
+	                                :<Skeleton active />}
 							    </Collapse.Panel>;
 						})}
-					</StyleCollapse>
+					</StyleCollapse>:null}
 				</div>
 			</StyleList>
 		);
@@ -128,7 +127,10 @@ const mapDispatchToProps = dispatch => {
 	return {
 		loadAssetApi: (id, token) => {
 			dispatch(loadAssetApi(id, token));
-		}
+		},
+		loadAssetDetails: (addr) => {
+			dispatch(loadAssetDetails(addr));
+		},
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(Addresses);

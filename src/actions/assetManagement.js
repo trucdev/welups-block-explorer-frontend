@@ -4,6 +4,7 @@ import Account from '../api/account';
 import { notification } from 'antd';
 export const ASSET_INIT = 'ASSET_INIT';
 export const ASSET_UPDATE = 'ASSET_UPDATE';
+export const ADDRESSES_UPDATE = 'ADDRESSES_UPDATE';
 export const ASSET_NEW_ADDR = 'ASSET_NEW_ADDR';
 export const ADDRESS_REQUESTING = 'ADDRESS_REQUESTING';
 export function initAsset() {
@@ -11,12 +12,23 @@ export function initAsset() {
 		type: ASSET_INIT,
 	}
 }
-export function updateAsset(assets) {
+export function updateAsset(assets, addr) {
 	return {
 		type: ASSET_UPDATE,
-		payload: assets
+		payload:{
+			assets: assets,
+			addr:addr
+		}	
 	}
 }
+
+export function updateAddresses(addresses) {
+	return {
+		type: ADDRESSES_UPDATE,
+		payload: addresses
+	}
+}
+
 export function newAddress(assetInfo) {
 	return {
 		type: ASSET_NEW_ADDR,
@@ -67,19 +79,20 @@ export function addAddrFromPrvkey(id, token, privateKey) {
 		}
 	}
 }
-const loadAssetDetails = async (addr) => {
-	const res = await fetch(`${API_ADDR}/accounts/${addr}`, {
-		method: 'GET',
-		headers: { 'Content-Type': 'application/json', },
-		mode: 'cors',
-	});
-	if (!res.ok) return undefined;
-	const result = await res.json();
+export function loadAssetDetails(addr){
+	return async (dispatch) =>{
+		const res = await fetch(`${API_ADDR}/accounts/${addr}`, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json', },
+			mode: 'cors',
+		}); 
+		if (!res.ok) return undefined;
+		const result = await res.json();
 
-	if (result.status === "success") {
-		return result.data
+		if (result.status === "success") {
+			dispatch(updateAsset(result.data, addr));
+		}
 	}
-	return undefined
 }
 
 export function loadAssetApi(id, token) {
@@ -101,16 +114,12 @@ export function loadAssetApi(id, token) {
 		switch (result.status) {
 			case "success":
 				//Fetch assets of the current user
-				let assets = {};
+				let addresses = {};
 				for (let index = 0; index < result.data.addresses.length; index++) {
 					const addr = result.data.addresses[index];
-
-					const assetInfo = await loadAssetDetails(addr);
-					if (assetInfo !== undefined) {
-						assets[addr]= assetInfo;
-					}
+					addresses[addr]= null;
 				}
-				dispatch(updateAsset(assets));
+				dispatch(updateAddresses(addresses));
 				break;
 			case "fail":
 			case "error":
