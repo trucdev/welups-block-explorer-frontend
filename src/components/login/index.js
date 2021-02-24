@@ -87,7 +87,7 @@ class Login extends React.Component {
 							Log in
 				        </ButtonSubmit>
 				    <Form.Item >
-				        <StyledLinkLeft to={"/forgotpassword"} >Forgot password?</StyledLinkLeft>
+				        <StyledLinkLeft to={"/resetpassword"} >Forgot password?</StyledLinkLeft>
 				        <StyledLinkRight to={"/signup"} >Sign up</StyledLinkRight>
 				    </Form.Item>
 			    </Form>

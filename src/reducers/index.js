@@ -28,6 +28,7 @@ import {transferAssetReducer} from "./transferasset";
 import {freezeBalanceReducer} from "./freezeBalance";
 import {signUpReducer} from "./signup";
 import {deployContractReducer} from "./deployContract";
+import {sendTokenReducer, newPasswordReducer} from "./resetPassword";
 export default combineReducers({
 	search: searchReducer,
 	system: homeSystemStateReducer,
@@ -54,5 +55,7 @@ export default combineReducers({
 	deployContract:deployContractReducer,
 	transferAsset: transferAssetReducer,
 	signUpReducer: signUpReducer,
-	freezeBalance:freezeBalanceReducer
+	freezeBalance:freezeBalanceReducer,
+	sendToken: sendTokenReducer,
+	newPassword: newPasswordReducer
 });

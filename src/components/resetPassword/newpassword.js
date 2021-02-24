@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Form, Input, Button, Spin, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import { newPassword, NEW_PASSWORD_SUCCESS, NEW_PASSWORD_REQUESTING } from '../../actions/resetPassword';
 
 const LeftHeader = styled.div`
 	text-align: left;
@@ -47,15 +48,46 @@ const Content = styled.span`
 `;
 
 class NewPassword extends React.Component {
+    onCreateNewPassword = (values) => {
+        var email = this.props.sendToken.email ;
+        this.props.createNewPassword(
+            values.token, 
+            values.password,
+            email
+        )
+    }
+
     render() {
+        const {newPassword} = this.props;
+        if (newPassword.type === NEW_PASSWORD_SUCCESS) {
+            return <Redirect to="/login" />
+        }
         const antIcon = <LoadingOutlined spin />;
         return (
             <Wrapper>
-                {/* <Spin indicator={antIcon} tip="Processing..." > */}
+                <Spin indicator={antIcon} tip="Processing..." spinning={newPassword.type === NEW_PASSWORD_REQUESTING}>
                 <LeftHeader>Create new password</LeftHeader>
                 <StyledForm
+                    name="new-password"
+                    initialValues={{
+                        remember: true,
+                    }}
                     size="large"
+                    onFinish={this.onCreateNewPassword}
                 >
+                    <Form.Item
+                        name="token"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your verify code!',
+                            },
+                        ]}
+                    >
+                        <FlexStartView>
+                            <Input placeholder="Security code" />
+                        </FlexStartView>
+                    </Form.Item>
                     <Form.Item>
                         <FlexStartView>
                             <Content>Create a new password with at least 8 characters. A strong password is a combination of characters, numbers, and punctuation.</Content>
@@ -102,13 +134,13 @@ class NewPassword extends React.Component {
                     </Form.Item>
                     <StyledItem >
                         <ButtonContainer>
-                            <StyleButton type="primary" href="/login">
+                            <StyleButton type="primary" htmlType="submit">
                                 Continue
                         </StyleButton>
                         </ButtonContainer>
                     </StyledItem>
                 </StyledForm>
-                {/* </Spin> */}
+                </Spin>
             </Wrapper>
         );
     }
@@ -116,10 +148,15 @@ class NewPassword extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        newPassword: state.newPassword,
+        sendToken: state.sendToken,
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
+        createNewPassword: (token, password, email) => {
+            dispatch(newPassword(token, password, email));
+        },
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(NewPassword);

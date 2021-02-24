@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Form, Input, Button, Spin, notification } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { LoadingOutlined } from '@ant-design/icons';
+import { sendToken, SEND_TOKEN_SUCCESS, SEND_TOKEN_REQUESTING } from '../../actions/resetPassword';
 
 const LeftHeader = styled.div`
 	text-align: left;
@@ -46,29 +47,23 @@ const StyledItem = styled(Form.Item)`
 const Content = styled.span`
     font-size: 15px;
 `;
-const { Search } = Input;
 
-const openNotification = () => {
-    notification.open({
-        message: 'Email found',
-        description:
-            'A verification code has been sent to your email address, please check for verification code.',
-    });
-};
-
-class ForgotPassword extends React.Component {
-    onFinish = (allValues) => {
-        this.props.checkAccountApi({
-            email: allValues.email,
-        });
+class ResetPassword extends React.Component {
+    onFinish = (email) => {
+        this.props.toSendToken(email.email);
     }
     render() {
         const antIcon = <LoadingOutlined spin />;
+        const {sendToken} = this.props;
+        if (sendToken.type === SEND_TOKEN_SUCCESS){
+            return <Redirect to="/newpassword" />
+        }
         return (
             <Wrapper>
-                {/* <Spin indicator={antIcon} tip="Processing..." > */}
+                <Spin indicator={antIcon} tip="Processing..." spinning={sendToken.type === SEND_TOKEN_REQUESTING}>
                 <LeftHeader>Find your account</LeftHeader>
                 <StyledForm
+                    name="send-token"
                     onFinish={this.onFinish}
                     size="large"
                 >
@@ -82,50 +77,31 @@ class ForgotPassword extends React.Component {
                         rules={[
                             {
                                 type: 'email',
-                                message: 'Your E-mail is invalid!',
+                                message: 'Email is invalid',
                             },
                             {
                                 required: true,
-                                message: 'Please input your E-mail!',
+                                message: 'Please input your email!',
                             },
                         ]}
                     >
-                        <FlexStartView>
-
-                            <Search
-                                placeholder="Email"
-                                enterButton="Search"
-                                onSearch={openNotification}
-                            />
-                        </FlexStartView>
-                    </Form.Item>
-                    <Form.Item>
-                        <FlexStartView>
-                            <Content>Email verification code</Content>
-                        </FlexStartView>
-                    </Form.Item>
-                    <Form.Item
-                        name="verifycode"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your verify code!',
-                            },
-                        ]}
-                    >
-                        <FlexStartView>
-                            <Input placeholder="Security code" />
-                        </FlexStartView>
+                        
+                        
+                        
+                            <Input
+                                    placeholder="Email"
+                                />
+                        
                     </Form.Item>
                     <StyledItem >
                         <ButtonContainer>
-                            <SearchButton  htmlType="submit" type="primary" href="/newpassword">
+                            <SearchButton  htmlType="submit" type="primary">
                                 Continue
                         </SearchButton>
                         </ButtonContainer>
                     </StyledItem>
                 </StyledForm>
-                {/* </Spin> */}
+                </Spin>
             </Wrapper>
         );
     }
@@ -133,10 +109,15 @@ class ForgotPassword extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        sendToken: state.sendToken,
+        
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
+        toSendToken: (email) => {
+            dispatch(sendToken(email));
+        }
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(ForgotPassword);
+export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(ResetPassword);
