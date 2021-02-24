@@ -83,7 +83,7 @@ class DeployContract extends Component {
                             <SubHeader>Contract Information</SubHeader>
                             <StyleDivider />
                             <Row>
-                                <Col span={9}>
+                                <Col xs={24} sm={9} md={9} lg={9} xl={9}>
 
                                     <Form.Item
                                         label="Private key:"
@@ -99,8 +99,8 @@ class DeployContract extends Component {
                                     </Form.Item>
 
                                 </Col>
-                                <Col span={6}></Col>
-                                <Col span={9}>
+                                <Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
+                                <Col xs={24} sm={9} md={9} lg={9} xl={9}>
                                     <Form.Item
                                         label="Contract name:"
                                         name="contractName"
@@ -119,7 +119,7 @@ class DeployContract extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col span={9}>
+                                <Col xs={24} sm={9} md={9} lg={9} xl={9}>
 
                                     <Form.Item
                                         label="CodeStr:"
@@ -135,8 +135,8 @@ class DeployContract extends Component {
                                     </Form.Item>
 
                                 </Col>
-                                <Col span={6}></Col>
-                                <Col span={9}>
+                                <Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
+                                <Col xs={24} sm={9} md={9} lg={9} xl={9}>
 
 
                                     <Form.Item
@@ -156,7 +156,7 @@ class DeployContract extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col span={9}>
+                                <Col xs={24} sm={9} md={9} lg={9} xl={9}>
                                     <Form.Item
                                         label="Oe limit:"
                                         name="oeLimit"
@@ -171,9 +171,9 @@ class DeployContract extends Component {
                                     </Form.Item>
 
                                 </Col>
-                                <Col span={6}></Col>
+                                <Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
 
-                                <Col span={9}>
+                                <Col xs={24} sm={9} md={9} lg={9} xl={9}>
                                     <Form.Item
                                         label="Consumption percentage:"
                                         name="curPercent"
@@ -189,7 +189,7 @@ class DeployContract extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col span={9}>
+                                <Col xs={24} sm={9} md={9} lg={9} xl={9}>
                                     <Form.Item
                                         label="Fee Limit:"
                                         name="feeLimit"
@@ -207,8 +207,8 @@ class DeployContract extends Component {
                             </Row>
                             <Form.Item >
                                 <Row>
-                                    <Col span={22}></Col>
-                                    <Col span={2}>
+                                    <Col xs={16} sm={20} md={21} lg={21} xl={22}></Col>
+                                    <Col xs={6} sm={4} md={3} lg={3} xl={2}>
                                         <Button type="primary" htmlType="submit">
                                             Deploy
                                     </Button>

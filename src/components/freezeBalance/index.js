@@ -38,9 +38,6 @@ const Logo = styled.img`
     width: 55px;
     margin-bottom: 20px;
 `;
-const Container = styled.div`
-    width:500px;
-`;
 const Title = styled.span`
     font-size: 25px;
     font-weight: 600;
@@ -59,8 +56,12 @@ const HeaderTitle = styled.div`
     align-items: center;
 `;
 const StyledForm = styled(Form)`
-    width:450px;
-    margin-left: 25px;
+    @media (min-width: 540px) { 
+        width:450px;
+    }
+    @media (max-width: 450px) { 
+        width:250px;
+    }
 `;
 
 
@@ -99,7 +100,7 @@ class FreezeBalance extends React.Component {
                                 ]}
                             />,
                         </div>}
-                    {freezeBalancee.status !== FREEZE_BALANCE_SUCCESS && <Container>
+                    {freezeBalancee.status !== FREEZE_BALANCE_SUCCESS && 
                         <StyledForm
                             layout="vertical"
                             size="large"
@@ -167,7 +168,7 @@ class FreezeBalance extends React.Component {
                             </Item>
                             <ButtonSubmit type="submit" htmlType="submit">Freeze</ButtonSubmit>
                         </StyledForm>
-                    </Container>}
+                    }
                 </Spin>
             </Wrapper>
         );

@@ -96,7 +96,7 @@ class IssueTokenTRC10 extends Component {
 							<SubHeader>Basic Information</SubHeader>
 							<StyleDivider />
 							<Row>
-								<Col span={9}>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 
 									<Form.Item
 										label="Private Key of Issue:"
@@ -112,8 +112,8 @@ class IssueTokenTRC10 extends Component {
 									</Form.Item>
 
 								</Col>
-								<Col span={6}></Col>
-								<Col span={9}>
+								<Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="Token name:"
 										name="name"
@@ -132,7 +132,7 @@ class IssueTokenTRC10 extends Component {
 								</Col>
 							</Row>
 							<Row>
-								<Col span={9}>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="Token abbreviation:"
 										name="abbr"
@@ -149,8 +149,8 @@ class IssueTokenTRC10 extends Component {
 									</Form.Item>
 
 								</Col>
-								<Col span={6}></Col>
-								<Col span={9}>
+								<Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 
 									<Form.Item
 										label="Token introduction:"
@@ -169,7 +169,7 @@ class IssueTokenTRC10 extends Component {
 								</Col>
 							</Row>
 							<Row>
-								<Col span={9}>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="Total Supply:"
 										name="total_supply"
@@ -184,8 +184,8 @@ class IssueTokenTRC10 extends Component {
 									</Form.Item>
 
 								</Col>
-								<Col span={6}></Col>
-								<Col span={9}>
+								<Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 
 
 									<Form.Item
@@ -205,7 +205,7 @@ class IssueTokenTRC10 extends Component {
 								</Col>
 							</Row>
 							<Row>
-								<Col span={9}>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="Free asset net limit:"
 										name="free_asset_net_limit"
@@ -219,8 +219,8 @@ class IssueTokenTRC10 extends Component {
 										<StyleInputNumber placeholder="0" />
 									</Form.Item>
 								</Col>
-								<Col span={6}></Col>
-								<Col span={9}>
+								<Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="Public free asset net limit:"
 										name="public_free_asset_net_limit"
@@ -236,7 +236,7 @@ class IssueTokenTRC10 extends Component {
 								</Col>
 							</Row>
 							<Row>
-								<Col span={9}>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="ACG number:"
 										name="trx_num"
@@ -250,8 +250,8 @@ class IssueTokenTRC10 extends Component {
 										<StyleInputNumber placeholder="0" />
 									</Form.Item>
 								</Col>
-								<Col span={6}></Col>
-								<Col span={9}>
+								<Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="ICO number:"
 										name="ico_num"
@@ -267,7 +267,7 @@ class IssueTokenTRC10 extends Component {
 								</Col>
 							</Row>
 							<Row>
-								<Col span={9}>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="Vote score:"
 										name="vote_score"
@@ -281,8 +281,8 @@ class IssueTokenTRC10 extends Component {
 										<StyleInputNumber placeholder="0" />
 									</Form.Item>
 								</Col>
-								<Col span={6}></Col>
-								<Col span={9}>
+								<Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="URL:"
 										name="url_str"
@@ -292,7 +292,7 @@ class IssueTokenTRC10 extends Component {
 								</Col>
 							</Row>
 							<Row>
-								<Col span={9}>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="Start date:"
 										name="start_time"
@@ -306,8 +306,8 @@ class IssueTokenTRC10 extends Component {
 										<StyleDatePicker placeholder="Start date" />
 									</Form.Item>
 								</Col>
-								<Col span={6}></Col>
-								<Col span={9}>
+								<Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
+								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 									<Form.Item
 										label="End date:"
 										name="end_time"
@@ -324,8 +324,8 @@ class IssueTokenTRC10 extends Component {
 							</Row>
 							<Form.Item >
 								<Row>
-									<Col span={22}></Col>
-									<Col span={2}>
+									<Col xs={16} sm={20} md={21} lg={21} xl={22}></Col>
+									<Col xs={6} sm={4} md={3} lg={3} xl={2}>
 										<Button type="primary" htmlType="submit">
 											Submit
                                     </Button>
