@@ -31,6 +31,7 @@ import TokenDetails from './components/token/index';
 import IssueTokenTRC10 from './components/issueTokenTRC10/index';
 import TransferAsset from './components/transferasset';
 import SignUp from './components/signup/signup';
+import ActivateAccount from './components/signup/activate';
 import Login from './components/login/index';
 import AssetManagement from './components/assetManagement/index';
 import FreezeBalance from './components/freezeBalance/index';
@@ -188,6 +189,10 @@ class App extends Component {
                 <Route
                   path="/signup"
                   render={(routeProps) => <SignUp {...routeProps} />}
+                />
+                <Route
+                  path="/activate-account"
+                  render={(routeProps) => <ActivateAccount {...routeProps} />}
                 />
                 <Route
                   exact

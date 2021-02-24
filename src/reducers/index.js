@@ -26,7 +26,7 @@ import { assetManagementReducer } from "./assetManagement";
 import { issueTokenTRC10Reducer } from "./issueTokenTRC10";
 import {transferAssetReducer} from "./transferasset";
 import {freezeBalanceReducer} from "./freezeBalance";
-import {signUpReducer} from "./signup";
+import {signUpReducer, activateMailReducer} from "./signup";
 import {deployContractReducer} from "./deployContract";
 import {sendTokenReducer, newPasswordReducer} from "./resetPassword";
 export default combineReducers({
@@ -57,5 +57,6 @@ export default combineReducers({
 	signUpReducer: signUpReducer,
 	freezeBalance:freezeBalanceReducer,
 	sendToken: sendTokenReducer,
-	newPassword: newPasswordReducer
+	newPassword: newPasswordReducer,
+	activateMail: activateMailReducer
 });
