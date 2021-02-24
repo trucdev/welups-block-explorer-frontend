@@ -16,11 +16,17 @@ export function loadFromStorage(){
     try{
       tokenDecoded = jwt_decode(token);
     }catch(e){}
+    if(tokenDecoded&&tokenDecoded.exp<Date.now()/1000){
+    	localStorage.removeItem('token');
+    	tokenDecoded = null; 
+    }
 	return {
 		type: LOAD_FROM_STORAGE,
-		token: token,
-		tokenDecoded: tokenDecoded 
-	}
+		payload:{
+			token: token,
+			tokenDecoded: tokenDecoded
+		}	
+    }  
 }
 export function logout(){
 	localStorage.removeItem('token');

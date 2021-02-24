@@ -22,10 +22,12 @@ export function loginReducer(state = { type: LOGIN_NONE, status: "", message: ""
             state = { type: action.type, status: "fail", message: "failed", description: "user or password invalid", token: "", email: "", id:""} 
             break;
         case LOAD_FROM_STORAGE:
-            state = action.tokenDecoded?{ type: action.type, status: "", message: "", description: "", token: action.token, email: action.tokenDecoded.email, id:action.tokenDecoded.id}:{ type: LOGOUT, status: "", message: "", description: "", token: "", email: "", id:""} 
+            state = action.payload.tokenDecoded?{ type: action.type, status: "", message: "", description: "", token: action.payload.token, email: action.payload.tokenDecoded.email, id:action.payload.tokenDecoded.id}:{ type: LOGOUT, status: "", message: "", description: "", token: "", email: "", id:""} 
             break;
         case LOGOUT:
             state = { type: action.type, status: "", message: "", description: "", token: "", email: "", id:"" }
+            break;
+        default:
             break;
     }
     return state;
