@@ -5,6 +5,7 @@ import Trigger from './lowerCard/triggerSmartContract';
 import TransferContract from './lowerCard/transferContract';
 import TransferAssetContract from './lowerCard/transferAssetContract';
 import CreateSmartContract from './lowerCard/createSmartContract';
+import IssueAssetContract from './lowerCard/issueAssetContract';
 import styled from 'styled-components';
 import { loadTransactionDetails } from '../../actions/transaction';
 import ReactJson from 'react-json-view';
@@ -23,12 +24,12 @@ const CardTitle = styled.div`
 
 class TransactionDetails extends Component {
 	contractDetails=(type, raw)=>{
-
 		switch(type){
 			case "TriggerSmartContract": return <Trigger/>;
 			case "TransferContract": return <TransferContract/>;
 			case "TransferAssetContract": return <TransferAssetContract/>;
 			case "CreateSmartContract": return <CreateSmartContract/>;
+			case "AssetIssueContract": return <IssueAssetContract/>;
 			case "": return <Skeleton loading></Skeleton>
 			default: return      <ReactJson src={raw} />;
 		};

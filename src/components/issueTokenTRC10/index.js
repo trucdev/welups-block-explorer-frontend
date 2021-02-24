@@ -60,8 +60,8 @@ class IssueTokenTRC10 extends Component {
 		);
 
 	}
-
 	render() {
+		
 		const { issueTokenInfo } = this.props;
 		return (
 			<div>
