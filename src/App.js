@@ -257,7 +257,7 @@ class App extends Component {
                   render={() => <Login />}
                 />
                 <Route
-                  path="/user"
+                  exact path="/user"
                   render={() => <AssetManagement />}
                 />
                 <Route
