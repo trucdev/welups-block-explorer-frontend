@@ -134,19 +134,19 @@ class App extends Component {
                       <Link to="/user">Assets</Link>
                     </Menu.Item>
                     <Menu.Item key="transfer" icon={<SendOutlined />}>
-                      <Link to="/transferasset">Send</Link>
+                      <Link to="/user/transferasset">Send</Link>
                     </Menu.Item>
                     <Menu.Item key="issueTokenTRC10" icon={<MoneyCollectOutlined />}>
-                      <Link to="/issue-token-trc10">Issue TRC10</Link>
+                      <Link to="/user/issue-token-trc10">Issue TRC10</Link>
                     </Menu.Item>
                     <Menu.Item key="generateAddress" icon={<KeyOutlined />} onClick={this.generateAccount}>
                       Generate Account
                     </Menu.Item>
                     <Menu.Item key="deployContract" icon={<DeploymentUnitOutlined />}>
-                      <Link to="/deploycontract" >Deploy Contract</Link>
+                      <Link to="/user/deploycontract" >Deploy Contract</Link>
                     </Menu.Item>
                     <Menu.Item key="freezeBalance" icon={<SplitCellsOutlined />}>
-                      <Link to="/freeze-balance" >Freeze Balance</Link>
+                      <Link to="/user/freeze-balance" >Freeze Balance</Link>
                     </Menu.Item>
                     <Menu.Item key="logOut" icon={<LogoutOutlined />}>
                       <Link to="/login" onClick={this.logOut}>Log out</Link>
@@ -217,7 +217,7 @@ class App extends Component {
                   render={(routeProps) => <TransactionDetails {...routeProps} />}
                 />
                 <Route
-                  path="/transferasset"
+                  path="/user/transferasset"
                   render={(routeProps) => <TransferAsset {...routeProps} />}
                 />
                 <Route
@@ -249,7 +249,7 @@ class App extends Component {
                   render={() => <NodeTable />}
                 />
                 <Route
-                  path="/issue-token-trc10"
+                  path="/user/issue-token-trc10"
                   render={() => <IssueTokenTRC10 />}
                 />
                 <Route
@@ -261,11 +261,11 @@ class App extends Component {
                   render={() => <AssetManagement />}
                 />
                 <Route
-                  path="/freeze-balance"
+                  path="/user/freeze-balance"
                   render={() => <FreezeBalance />}
                 />
                 <Route
-                  path="/deploycontract"
+                  path="/user/deploycontract"
                   render={() => <DeployContract />}
                 />
                 <Route
