@@ -80,6 +80,7 @@ class Addresses extends React.Component {
 			Object.entries(assetManagement.addresses).forEach(([key, value]) => {
 				addresses.push(key);
 			});
+			addresses.sort();
 		}
 		return (
 			<StyleList>
