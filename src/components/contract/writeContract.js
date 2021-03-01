@@ -3,42 +3,33 @@ import { connect } from 'react-redux';
 import { Button, Form, Input} from 'antd';
 import {FuncWrapper, FuncName, FuncBody, Result, Root} from './style';
 import FormInputs from './formInputs';
-import * as action from '../../actions/contract';
+import {triggerSmartContract, CONTRACT_WRITE} from '../../actions/contract';
+import { Link } from 'react-router-dom';
 
 class WriteContract extends Component{
-	constructor(props){
-        super(props);
-        this.state = {
-            contractResult:null
-        }
-    }
 
 	triggerSmartContract = async (values)=> {
-		var {func, addr} = this.props;
+        var {func, addr, contract, no} = this.props;
+        var amount = values.acgSend?parseInt(values.acgSend):0;
 		var params = [];
+		var jsonString = [];
 		Object.keys(values).map((key) => {
 			if(key!="acgSend"){
 				params.push(values[key]);
 			}
 			return null;
 		});
-	    const trc20ContractAddress = addr;//contract address
-        let contract = await window.tronWeb.contract().at(trc20ContractAddress);
-        //Use call to execute a pure or view smart contract method.
-        // These methods do not modify the blockchain, do not cost anything to execute and are also not broadcasted to the network.
-        let result="";
-        if(values.acgSend){
-        	result = await action.triggerWriteFunc(params, func, addr, values.acgSend);
-        }else{
-        	result = await action.triggerWriteFunc(params, func, addr);
-        }
-        this.setState({
-            contractResult:result
-        });
+		var method = func.name + "(";
+		func.inputs.map((value,index)=>{
+			method += value.type +(index===func.inputs.length-1?"":",");
+			jsonString.push({[value.type]:params[index]});
+		})
+		method+=")";
+		this.props.triggerSmartContract(no, contract.prikey, addr, method, jsonString, func.outputs, CONTRACT_WRITE, amount);
 	}
 
 	render(){
-		var {func, no} = this.props;
+		var {func, no, contract} = this.props;
 		var form = func.inputs?func.inputs.map((inp, index)=>{
 			return <FormInputs key={index} inp={inp} ind={index}/>
 		}):null;
@@ -64,7 +55,13 @@ class WriteContract extends Component{
 				        	<Button htmlType="submit">Call</Button>
 				        </Form.Item>
 				    </Form>
-				    <Result><Root>{this.state.contractResult?"root: ":null}</Root>{this.state.contractResult}</Result>
+                    {contract.result&&contract.result.no===no&&contract.result.type===CONTRACT_WRITE?
+	                    <Result>
+	                        <Root>{"Result: "}</Root>
+	                        {"Transaction ID: "}<Link to={"/transaction/"+contract.result.tran_id} target="_blank">{contract.result.tran_id}</Link>
+	                        {"  Status:"+contract.result.status}
+	                    </Result>
+                    :null}
 				</FuncBody>
 			</FuncWrapper>
 		);
@@ -73,10 +70,14 @@ class WriteContract extends Component{
 
 const mapStateToProps = (state) => {
 	return {
+		contract : state.contract,
 	};
 };
 const mapDispatchToProps = dispatch => {
 	return {
+		triggerSmartContract: (no, prikey, addr, method, jsonString, outputs, type, amount) => {
+			dispatch(triggerSmartContract(no, prikey, addr, method, jsonString, outputs, type, amount));
+		},
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(WriteContract);

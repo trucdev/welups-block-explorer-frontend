@@ -1,4 +1,4 @@
-import {CONTRACT_LOAD, CONTRACT_DEFAULT, CONTRACT_DEFAULT_MENU, CONTRACT_MENU_UPDATE} from  '../actions/contract';
+import {CONTRACT_LOAD, CONTRACT_DEFAULT, PRI_KEY_DEFAULT, PRI_KEY_UPDATE, RESULT_DEFAULT, RESULT_UPDATE} from  '../actions/contract';
 
 export function contractReducer(state=defaultContractState, action){
 	switch(action.type){
@@ -7,6 +7,15 @@ export function contractReducer(state=defaultContractState, action){
 			break;
 		case CONTRACT_LOAD:
 			state = action.contract;
+			break;
+		case PRI_KEY_UPDATE:
+			state = {...state, prikey: action.payload};
+			break;
+		case RESULT_UPDATE:
+			state = {...state, result: action.payload};
+			break;
+		case RESULT_DEFAULT:
+			state = {...state, result:{}};
 			break;
 	}
 	return state;
@@ -28,23 +37,11 @@ var dataContract = {
 	initial_asset:0,
 	abi:null,
 	bytecode:null,
-	assets:null
+	assets:null,
+	prikey:"",
+	result:{}
 };
 
 const defaultContractState = dataContract;
 
-export function contractMenuReducer(state=defaultMenuState, action){
-	switch(action.type){
-		case CONTRACT_DEFAULT_MENU:
-			state = defaultMenuState;
-			break;
-		case CONTRACT_MENU_UPDATE:
-			state = action.menuItem;
-			break;
-	}
-	return state;
-}
 
-var dataMenuContract = "contractCode";
-
-const defaultMenuState = dataMenuContract;

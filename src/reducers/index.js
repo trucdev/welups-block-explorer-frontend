@@ -12,7 +12,7 @@ import {
 import { transactionReducer } from "./transaction";
 import { transactionsReducer } from "./transactions";
 import { accountReducer } from "./account";
-import {contractReducer, contractMenuReducer} from "./contract";
+import {contractReducer} from "./contract";
 import { witnessesReducer } from "./witnesses";
 import { tokensReducer } from "./tokens";
 import { tokenReducer } from "./token";
@@ -45,7 +45,6 @@ export default combineReducers({
 	nodes:nodesReducer,
 	pageTokens:pageTokensReducer,
 	pageTransactions:pageTransactionsReducer,
-	contractMenu:contractMenuReducer,
 	blocks:blocksReducer,
 	pageBlocks:pageBlocksReducer,
 	token:tokenReducer,
