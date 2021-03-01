@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { signUp, SIGNUP_REQUESTING, SIGNUP_SUCCESS } from '../../actions/signup';
+import { signUp, SIGNUP_REQUESTING, SIGNUP_SUCCESS, SIGNUP_FAIL } from '../../actions/signup';
 import styled from 'styled-components';
 import { Form, Input, Button, Spin, Checkbox } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -54,8 +54,9 @@ class SignUp extends React.Component {
     };
     render() {
         const { signUpInfo } = this.props;
-        if (signUpInfo.status === SIGNUP_SUCCESS) {
-            return <Redirect to="/activate-account" />
+        switch(signUpInfo.status){
+            case "SIGNUP_SUCCESS":  return <Redirect to="/activate-account" />;
+            case "SIGNUP_FAIL": return <Redirect to="/login" />;
         }
         const antIcon = <LoadingOutlined spin />;
         return (

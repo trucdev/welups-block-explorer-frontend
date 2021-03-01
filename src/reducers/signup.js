@@ -11,6 +11,7 @@ import {
 
 
 export function signUpReducer(state = {type: SIGNUP_NONE, status: "", email: "",}, action) {
+    
     switch (action.type) {
         case SIGNUP_NONE:
             state = {type: action.type, status: "", email: "",};

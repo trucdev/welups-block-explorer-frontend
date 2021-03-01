@@ -4,10 +4,11 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOAD_FROM_STORAGE,
-    LOGOUT
+    LOGOUT,
+    LOGIN_ERROR
 } from '../actions/login';
 
-export function loginReducer(state = { type: LOGIN_NONE, status: "", message: "", description: "", token: "", id: "", email: ""}, action) {
+export function loginReducer(state = { type: LOGIN_NONE, status: "", message: "", description: "", token: "", id: "", email: "", code: ""}, action) {
     switch (action.type) {
         case LOGIN_NONE:
             state = { type: action.type, status: "", message: "", description: "", token: "", email: "", id:"" }
@@ -19,13 +20,16 @@ export function loginReducer(state = { type: LOGIN_NONE, status: "", message: ""
             state = { type: action.type, status: "success", message: "successed", description: "", token: action.payload.token, email: action.payload.email, id: action.payload.id}
             break;
         case LOGIN_FAIL:
-            state = { type: action.type, status: "fail", message: "failed", description: "user or password invalid", token: "", email: "", id:""} 
+            state = { type: action.type, code: action.payload.code , status: LOGIN_FAIL, message: "failed", description: "user or password invalid", token: "", email: action.payload.email, id:""} 
             break;
         case LOAD_FROM_STORAGE:
             state = action.payload.tokenDecoded?{ type: action.type, status: "", message: "", description: "", token: action.payload.token, email: action.payload.tokenDecoded.email, id:action.payload.tokenDecoded.id}:{ type: LOGOUT, status: "", message: "", description: "", token: "", email: "", id:""} 
             break;
         case LOGOUT:
             state = { type: action.type, status: "", message: "", description: "", token: "", email: "", id:"" }
+            break;
+        case LOGIN_ERROR:
+            state = { type: action.type, status: "error", code: action.payload.code }
             break;
         default:
             break;

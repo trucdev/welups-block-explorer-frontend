@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { checkAccountApi, LOGIN_REQUESTING } from '../../actions/login';
+import { checkAccountApi, LOGIN_REQUESTING, LOGIN_SUCCESS, LOGIN_FAIL } from '../../actions/login';
 import styled from 'styled-components';
 import { Form, Input, Button, Spin } from 'antd';
-import  { Redirect } from 'react-router-dom';
-import { LoadingOutlined} from '@ant-design/icons';
+import { Redirect } from 'react-router-dom';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const StyledLinkLeft = styled(Link)`
 	&:link, &:visited {
@@ -31,66 +31,70 @@ const Wrapper = styled.div`
 
 
 class Login extends React.Component {
-	onFinish = (allValues) =>{
+	onFinish = (allValues) => {
 		this.props.checkAccountApi({
-			email:allValues.email,
-			password:allValues.password
+			email: allValues.email,
+			password: allValues.password
 		});
-	}	
+	}
 	render() {
 		const antIcon = <LoadingOutlined spin />;
-		var {login} = this.props;
-		if(login.status === "success"||login.token!==""){
-			return <Redirect to="/user" />
-		}
+		var { login } = this.props;
+		var code = login.code;
+		if (login.type === LOGIN_SUCCESS){
+            return <Redirect to="/user" />
+        }
+		if (code === 2){
+            return <Redirect to="/activate-account" />
+        }
 		return (
 			<Wrapper>
-				<Spin indicator={antIcon} tip="Processing..."  spinning={login.type === LOGIN_REQUESTING}>
-				<Form
-					layout = "vertical"
-				    name="login"
-				    initialValues={{
-				       	remember: true,
-				    }}
-				    onFinish = {this.onFinish}
-				    size = "large"
-			    >
-				    <Item
-				        label="Email"
-				        name="email"
-				        rules={[
-				        	{
-					            type: 'email',
-					            message: 'The input is not valid E-mail!',
-				            },
-				            {
-					            required: true,
-					            message: 'Please input your email!',
-				            }
-				        ]}
-				    >
-				        <Input placeholder="Email"/>
-				    </Item>
-				    <Item
-				        label="Password"
-				        name="password"
-				        rules={[
-				          {
-				            required: true,
-				            message: 'Please input your password!',
-				          },
-				        ]}
-				    >
-				        <Input.Password placeholder="Password"/>
-				    </Item>
-				    	<ButtonSubmit type="primary" htmlType="submit">
+				<Spin indicator={antIcon} tip="Processing..." spinning={login.type === LOGIN_REQUESTING}>
+					<Form
+						layout="vertical"
+						name="login"
+						initialValues={{
+							remember: true,
+						}}
+						onFinish={this.onFinish}
+						size="large"
+					>
+						<Item
+							label="Email"
+							name="email"
+							rules={[
+								{
+									type: 'email',
+									message: 'The input is not valid E-mail!',
+								},
+								{
+									required: true,
+									message: 'Please input your email!',
+								}
+							]}
+						>
+							<Input placeholder="Email" />
+						</Item>
+						<Item
+							label="Password"
+							name="password"
+							rules={[
+								{
+									required: true,
+									message: 'Please input your password!',
+								},
+							]}
+						>
+							<Input.Password placeholder="Password" />
+						</Item>
+						<ButtonSubmit type="primary" htmlType="submit">
 							Log in
 				        </ButtonSubmit>
-				    <Form.Item >
-				        <StyledLinkLeft to={"/resetpassword"} >Forgot password?</StyledLinkLeft>
-				        <StyledLinkRight to={"/signup"} >Sign up</StyledLinkRight>
-				    </Form.Item>
-			    </Form>
+						<Form.Item >
+							<StyledLinkLeft to={"/resetpassword"} >Forgot password?</StyledLinkLeft>
+							<StyledLinkRight to={"/signup"} >Sign up</StyledLinkRight>
+						</Form.Item>
+					</Form>
 				</Spin>
 			</Wrapper>
 		);

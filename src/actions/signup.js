@@ -5,6 +5,7 @@ export const SIGNUP_NONE = 'SIGNUP_NONE';
 export const SIGNUP_REQUESTING = 'SIGNUP_REQUESTING';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
+export const SIGNUP_ERROR = 'SIGNUP_ERROR';
 
 export function request() {
     return { type: SIGNUP_REQUESTING }
@@ -15,8 +16,11 @@ export function success(status) {
         payload: status,
     }
 }
-export function fail() {
-    return { type: SIGNUP_FAIL }
+export function fail(status) {
+    return {
+        type: SIGNUP_FAIL,
+        payload: status,
+    }
 }
 
 export function signUp(email, password) {
@@ -32,20 +36,24 @@ export function signUp(email, password) {
             })
         });
         const result = await res.json();
-        if (!res.ok || result.status !== "success") {
-            dispatch(fail());
-            notification.error({
-                message: 'Failed!',
-                description: `Email already in use`,
-            });
-            return
-        };
         result.email = email;
-        dispatch(success(result));
-        notification.success({
-            message: 'Success!',
-            description: `A verification code has been sent to your email`,
-        });
+        switch (result.status) {
+            case "success":
+                dispatch(success(result));
+                notification.success({
+                    message: 'Success!',
+                    description: `A verification code has been sent to your email`,
+                });
+                break;
+            case "error":
+                dispatch(fail());
+                notification.warning({
+                    message: 'Account existed',
+                    description: ``,
+                });
+            break;
+        }
+
     }
 }
 
@@ -77,7 +85,7 @@ export function reset() {
 
 export function activateMail(token, email) {
     return async (dispatch) => {
-        dispatch(request())
+        dispatch(requestActivate())
         const res = await fetch(`${API_ADDR}/users/verify-user`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', },
@@ -88,7 +96,7 @@ export function activateMail(token, email) {
             })
         });
         const result = await res.json();
-        if( !res.ok || result.status !== "success") {
+        if (!res.ok || result.status !== "success") {
             dispatch(failActivate());
             notification.error({
                 message: 'Failed',

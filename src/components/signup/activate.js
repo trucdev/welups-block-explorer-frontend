@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Form, Input, Button, Spin, notification } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { LoadingOutlined } from '@ant-design/icons';
-import { activateMail, ACTIVATE_SUCCESS, ACTIVATE_REQUESTING, reset } from '../../actions/signup';
+import { activateMail, ACTIVATE_SUCCESS, ACTIVATE_REQUESTING, reset, ACTIVATE_NONE } from '../../actions/signup';
+import { checkAccountApi } from '../../actions/login';
 
 const LeftHeader = styled.div`
 	text-align: left;
@@ -53,7 +53,8 @@ class ActivateAccount extends React.Component {
         this.props.resetSignUp();
     }
     onActivate = (values) => {
-        var email = this.props.signupMail.email;
+        
+        var email = this.props.signUp.email ? this.props.signUp.email : this.props.login.email;
         this.props.doActivate(
             values.token,
             email
@@ -62,7 +63,8 @@ class ActivateAccount extends React.Component {
     render() {
         const antIcon = <LoadingOutlined spin />;
         const {activateMail} = this.props;
-        if (activateMail.type === ACTIVATE_SUCCESS){
+        console.log(activateMail)
+        if (activateMail.type === ACTIVATE_SUCCESS ){
             return <Redirect to="/login" />
         }
         return (
@@ -74,7 +76,7 @@ class ActivateAccount extends React.Component {
                     initialValues={{
                         remember: true,
                     }}
-                    onFinish={this.onActivate}
+                    onFinish={this.onActivate ? this.onActivate : this.onVerify}
                     size="large"
                 >
                     <Form.Item>
@@ -91,9 +93,6 @@ class ActivateAccount extends React.Component {
                             },
                         ]}
                     >
-                        
-                        
-                        
                             <Input/>
                         
                     </Form.Item>
@@ -114,7 +113,8 @@ class ActivateAccount extends React.Component {
 const mapStateToProps = (state) => {
     return {
         activateMail: state.activateMail,
-        signupMail: state.signUpReducer,
+        signUp: state.signUpReducer,
+        login: state.login,
     };
 };
 const mapDispatchToProps = dispatch => {

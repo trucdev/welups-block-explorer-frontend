@@ -9,50 +9,64 @@ export const LOGIN_REQUESTING = 'LOGIN_REQUESTING';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOAD_FROM_STORAGE = 'LOAD_FROM_STORAGE';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
 
-export function loadFromStorage(){
-	let tokenDecoded=null;
-    let token = localStorage.getItem('token');
-    try{
-      tokenDecoded = jwt_decode(token);
-    }catch(e){}
-    if(tokenDecoded&&tokenDecoded.exp<Date.now()/1000){
-    	localStorage.removeItem('token');
-    	tokenDecoded = null; 
-    }
+export function loadFromStorage() {
+	let tokenDecoded = null;
+	let token = localStorage.getItem('token');
+	try {
+		tokenDecoded = jwt_decode(token);
+	} catch (e) { }
+	if (tokenDecoded && tokenDecoded.exp < Date.now() / 1000) {
+		localStorage.removeItem('token');
+		tokenDecoded = null;
+	}
 	return {
 		type: LOAD_FROM_STORAGE,
-		payload:{
+		payload: {
 			token: token,
 			tokenDecoded: tokenDecoded
-		}	
-    }  
+		}
+	}
 }
-export function logout(){
+export function logout() {
 	localStorage.removeItem('token');
 	return {
 		type: LOGOUT,
 	}
 }
-export function reset(){
+export function reset() {
 	return {
 		type: LOGIN_NONE,
 	}
 }
-export function request(){
+export function request() {
 	return {
-		type:LOGIN_REQUESTING,
+		type: LOGIN_REQUESTING,
 	}
 }
-export function success(status){
+export function success(status) {
 	return {
 		type: LOGIN_SUCCESS,
 		payload: status,
 	}
 }
-export function fail(){
+export function fail(email, code) {
 	return {
 		type: LOGIN_FAIL,
+		payload: {
+			email: email,
+			code: code
+		}
+	}
+}
+export function error(status, code) {
+	return {
+		type: LOGIN_ERROR,
+		payload: {
+			status: status,
+			code: code
+		}
 	}
 }
 
@@ -69,28 +83,47 @@ export function checkAccountApi(acc) {
 			})
 		});
 		const result = await res.json();
-		if (!res.ok) {
-		};
-		switch (result.status) {
-			case "success":
-				localStorage.setItem('token', result.data.token);
-				let decoded = jwt_decode(result.data.token);
-				result.data.id = decoded.id;
-				result.data.email = decoded.email;
-				dispatch(success(result.data));
-				break;
-			case "fail":
-				dispatch(fail());
-				break;
-			case "error":
-				notification.error({
-					message: 'Log in failed!',
-					description: result.message,
-				});
-				dispatch(fail());
-				break;
-			default:
-				break;
+		var code = result.data.code;
+		var email = acc.email;
+		if (result.data.code) {
+			switch (result.data.code) {
+				case 2:
+					//has not active
+					dispatch(fail(
+						email, 
+						code, 
+					));
+					notification.warning({
+						message: 'Account existed',
+						description: 'This account hasn not been activated, a verification code has been sent to your email, please check',
+					});
+					break;
+				case 3:
+					//account not exist
+					dispatch(error(email, code));
+					notification.error({
+						message: 'Log in failed!',
+						description: 'Your email or password is invalid',
+					});
+					break;
+				case 1:
+					//wrong password
+					dispatch(error(email, code));
+					notification.error({
+						message: 'Log in failed!',
+						description: 'Your email or password is invalid',
+					});
+					break;
+				default:
+					break;
+			}
+		}
+		else {
+			localStorage.setItem('token', result.data.token);
+			let decoded = jwt_decode(result.data.token);
+			result.data.id = decoded.id;
+			result.data.email = decoded.email;
+			dispatch(success(result.data));
 		}
 
 	}
