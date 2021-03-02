@@ -21,12 +21,13 @@ const initTran = {
     }
 }
 export function transactionReducer(state = initTran, action) {
+	console.log(action, "action");
 	switch (action.type) {
 		case TRANSACTION_DETAIL_UDPATE:
 			return {
 				...state,
 				hash: action.payload.hash,
-				blockNum: action.payload.block_number,
+				blockNum: action.payload.blockNumber,
 				contractAddr: action.payload.contract_address,
 				result: action.payload.result,
 				timestamp: action.payload.timestamp,
