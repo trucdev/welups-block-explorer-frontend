@@ -13,7 +13,8 @@ import {
   LogoutOutlined,
   KeyOutlined,
   DeploymentUnitOutlined,
-  SplitCellsOutlined
+  SplitCellsOutlined,
+  PlusCircleOutlined
 } from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
@@ -38,6 +39,7 @@ import FreezeBalance from './components/freezeBalance/index';
 import DeployContract from './components/deployContract/index';
 import ResetPassword from './components/resetPassword/index';
 import NewPassword from './components/resetPassword/newpassword';
+import PriKeyManagement from './components/prikeyManagement/index';
 import { Row, Col, Modal } from 'antd';
 import {
   BrowserRouter as Router,
@@ -139,7 +141,7 @@ class App extends Component {
                     <Menu.Item key="issueTokenTRC10" icon={<MoneyCollectOutlined />}>
                       <Link to="/user/issue-token-trc10">Issue TRC10</Link>
                     </Menu.Item>
-                    <Menu.Item key="generateAddress" icon={<KeyOutlined />} onClick={this.generateAccount}>
+                    <Menu.Item key="generateAddress" icon={<PlusCircleOutlined />} onClick={this.generateAccount}>
                       Generate Account
                     </Menu.Item>
                     <Menu.Item key="deployContract" icon={<DeploymentUnitOutlined />}>
@@ -147,6 +149,9 @@ class App extends Component {
                     </Menu.Item>
                     <Menu.Item key="freezeBalance" icon={<SplitCellsOutlined />}>
                       <Link to="/user/freeze-balance" >Freeze Balance</Link>
+                    </Menu.Item>
+                    <Menu.Item key="prikeyManagement" icon={<KeyOutlined />}>
+                      <Link to="/prikey-management" >Private Management</Link>
                     </Menu.Item>
                     <Menu.Item key="logOut" icon={<LogoutOutlined />}>
                       <Link to="/login" onClick={this.logOut}>Log out</Link>
@@ -275,6 +280,10 @@ class App extends Component {
                 <Route
                   path="/newpassword"
                   render={() => <NewPassword />}
+                />
+                <Route
+                  path="/prikey-management"
+                  render={() => <PriKeyManagement />}
                 />
                 <Redirect to="/notfound" />
               </Switch>

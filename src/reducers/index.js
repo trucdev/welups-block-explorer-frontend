@@ -29,6 +29,7 @@ import {freezeBalanceReducer} from "./freezeBalance";
 import {signUpReducer, activateMailReducer} from "./signup";
 import {deployContractReducer} from "./deployContract";
 import {sendTokenReducer, newPasswordReducer} from "./resetPassword";
+import {prikeyManagementReducer} from "./prikeyManagement";
 export default combineReducers({
 	search: searchReducer,
 	system: homeSystemStateReducer,
@@ -57,5 +58,6 @@ export default combineReducers({
 	freezeBalance:freezeBalanceReducer,
 	sendToken: sendTokenReducer,
 	newPassword: newPasswordReducer,
+	prikeyManagement: prikeyManagementReducer,
 	activateMail: activateMailReducer
 });
