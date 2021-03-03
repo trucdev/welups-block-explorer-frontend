@@ -133,15 +133,6 @@ class AssetManagement extends React.Component {
 	render() {
 		const antIcon = <LoadingOutlined spin />;
 		let { assetManagement, login} = this.props;
-		let addresses = [];
-		if (Object.keys(assetManagement.addresses).length === 0 && assetManagement.addresses.constructor === Object) {
-
-		} else {
-			Object.entries(assetManagement.addresses).forEach(([key, value]) => {
-				addresses.push(value);
-			});
-		}
-
 		if (login.type ===LOGOUT||login.type===LOGIN_FAIL) {
 			return <Redirect to="/login" />
 		}

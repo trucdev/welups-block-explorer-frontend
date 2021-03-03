@@ -29,10 +29,10 @@ export function updateAddresses(addresses) {
 	}
 }
 
-export function newAddress(assetInfo) {
+export function newAddress(addr) {
 	return {
 		type: ASSET_NEW_ADDR,
-		payload: assetInfo
+		payload: addr
 	}
 }
 export function addAddrFromPrvkey(id, token, privateKey) {
@@ -61,15 +61,7 @@ export function addAddrFromPrvkey(id, token, privateKey) {
 		const result = await res.json();
 		switch (result.status) {
 			case "success":
-				const assetInfo = await loadAssetDetails(addr);
-				if (assetInfo !== undefined) {
-					return dispatch(newAddress(assetInfo));
-				}
-				//TODO: notification error
-				notification.error({
-					message: 'Add asset failed!',
-					description: `Add asset failed ${addr}`,
-				});
+				dispatch(newAddress(addr));
 				break;
 			case "fail":
 			case "error":

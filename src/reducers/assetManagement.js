@@ -13,9 +13,8 @@ const initAsset = {
 export function assetManagementReducer(state = initAsset, action) {
     switch (action.type) {
         case ASSET_NEW_ADDR:
-            let addresses = state.addresses;
-            addresses[action.payload.address]=action.payload;
-            return {...state, addresses:addresses, status: "none"}
+            state.addresses[action.payload]= null;
+            return {...state};
         case ADDRESS_REQUESTING:
             return {...state, status: "requesting"};
         case ASSET_UPDATE:
