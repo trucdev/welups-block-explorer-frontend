@@ -51,12 +51,13 @@ export function success(status) {
 		payload: status,
 	}
 }
-export function fail(email, code) {
+export function fail(email, code, password) {
 	return {
 		type: LOGIN_FAIL,
 		payload: {
 			email: email,
-			code: code
+			code: code,
+			password: password
 		}
 	}
 }
@@ -83,15 +84,18 @@ export function checkAccountApi(acc) {
 			})
 		});
 		const result = await res.json();
+		
 		var code = result.data.code;
 		var email = acc.email;
+		var password = acc.password;
 		if (result.data.code) {
-			switch (result.data.code) {
+			switch (result.data.code) { 
 				case 2:
 					//has not active
 					dispatch(fail(
 						email, 
 						code, 
+						password
 					));
 					notification.warning({
 						message: 'Account existed',

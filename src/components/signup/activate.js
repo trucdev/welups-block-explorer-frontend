@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Form, Input, Button, Spin, notification } from 'antd';
+import { Form, Input, Button, Spin } from 'antd';
+import { checkAccountApi, LOGIN_SUCCESS} from '../../actions/login';
 import { Redirect } from 'react-router-dom';
 import { LoadingOutlined } from '@ant-design/icons';
 import { activateMail, ACTIVATE_SUCCESS, ACTIVATE_REQUESTING, reset, ACTIVATE_NONE } from '../../actions/signup';
-import { checkAccountApi } from '../../actions/login';
 
 const LeftHeader = styled.div`
 	text-align: left;
@@ -55,17 +55,18 @@ class ActivateAccount extends React.Component {
     onActivate = (values) => {
         
         var email = this.props.signUp.email ? this.props.signUp.email : this.props.login.email;
+        var password = this.props.signUp.password ? this.props.signUp.password : this.props.login.password;
         this.props.doActivate(
             values.token,
-            email
+            email,
+            password,
         )
     }
     render() {
         const antIcon = <LoadingOutlined spin />;
-        const {activateMail} = this.props;
-        console.log(activateMail)
-        if (activateMail.type === ACTIVATE_SUCCESS ){
-            return <Redirect to="/login" />
+        const {activateMail, login} = this.props;
+        if (login.type === LOGIN_SUCCESS){
+            return <Redirect to="/user" />
         }
         return (
             <Wrapper>
@@ -119,12 +120,15 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        doActivate: (token, email) => {
-            dispatch(activateMail(token, email));
+        doActivate: (token, email, password) => {
+            dispatch(activateMail(token, email, password));
         },
         resetSignUp: () => {
             dispatch(reset());
-        }
+        },
+        checkAccountApi: (acc) => {
+			dispatch(checkAccountApi(acc));
+		},
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(ActivateAccount);

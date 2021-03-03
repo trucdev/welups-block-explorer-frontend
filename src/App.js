@@ -258,6 +258,7 @@ class App extends Component {
                   render={() => <IssueTokenTRC10 />}
                 />
                 <Route
+                exact
                   path="/login"
                   render={() => <Login />}
                 />
