@@ -1,11 +1,13 @@
 import { notification } from 'antd';
 import fetch from 'cross-fetch';
 import { API_ADDR } from '../config/config';
+import {checkAccountApi} from './login';
 export const SIGNUP_NONE = 'SIGNUP_NONE';
 export const SIGNUP_REQUESTING = 'SIGNUP_REQUESTING';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 export const SIGNUP_ERROR = 'SIGNUP_ERROR';
+
 
 export function request() {
     return { type: SIGNUP_REQUESTING }
@@ -83,7 +85,7 @@ export function reset() {
 }
 
 
-export function activateMail(token, email) {
+export function activateMail(token, email, password) {
     return async (dispatch) => {
         dispatch(requestActivate())
         const res = await fetch(`${API_ADDR}/users/verify-user`, {
@@ -109,5 +111,10 @@ export function activateMail(token, email) {
             message: 'Success',
             description: 'Your account has been activated successfully'
         })
+        var acc = {
+            email: email,
+            password: password
+        }
+        dispatch(checkAccountApi(acc));
     }
 }

@@ -21,7 +21,6 @@ const initTran = {
     }
 }
 export function transactionReducer(state = initTran, action) {
-	console.log(action, "action");
 	switch (action.type) {
 		case TRANSACTION_DETAIL_UDPATE:
 			return {
