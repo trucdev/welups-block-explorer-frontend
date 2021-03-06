@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Divider, Form, Input, Button, InputNumber, Result, Spin } from 'antd';
+import { Row, Col, Divider, Form, Input, Button, InputNumber, Result, Spin, Select, notification } from 'antd';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
     deployContract,
     reset,
@@ -30,10 +30,21 @@ const StyleDivider = styled(Divider)`
 const StyleInputNumber = styled(InputNumber)`
     width: 100%;
 `;
+const { Option } = Select;
 
 class DeployContract extends Component {
     componentWillUnmount() {
         this.props.resetDeployContract();
+    }
+
+    componentDidMount(){
+        var {prikeys, login} = this.props;
+        if((!prikeys.prikeys&&login.token!=="")||(prikeys.prikeys.length===0&&login.token!=="")){
+            notification.warning({
+                message: 'Warning!',
+                description: "You have no private key, please add somes in private key management to perform transaction!",
+            });
+        }
     }
 
     onFinish = (values) => {
@@ -49,7 +60,10 @@ class DeployContract extends Component {
     }
     render() {
         const antIcon = <LoadingOutlined />;
-        const { deployContractInfo } = this.props;
+        const { deployContractInfo, login, prikeys } = this.props;
+        if(login.token===""){
+            return <Redirect to="/login" />
+        }
         return (
             <div>
                 <Header>Deploy Smart Contract</Header>
@@ -95,7 +109,13 @@ class DeployContract extends Component {
                                             },
                                         ]}
                                     >
-                                        <Input />
+                                        <Select
+                                            showSearch
+                                            placeholder="Select a private key"
+                                            allowClear
+                                        >
+                                            {prikeys.prikeys&&prikeys.prikeys.length!==0?prikeys.prikeys.map((value, index) => <Option value={value.prikey} key={index}>{value.name}</Option>):null}
+                                        </Select>
                                     </Form.Item>
 
                                 </Col>
@@ -226,6 +246,8 @@ class DeployContract extends Component {
 const mapStateToProps = (state) => {
     return {
         deployContractInfo: state.deployContract,
+        prikeys:state.prikeyManagement,
+        login: state.login,
     };
 };
 

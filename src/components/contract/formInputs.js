@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Form, Input} from 'antd';
-import {FuncWrapper, FuncName, FuncBody} from './style';
 
 class FormInputs extends Component{
 	render(){

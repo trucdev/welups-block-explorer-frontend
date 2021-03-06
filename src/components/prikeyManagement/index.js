@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {addToStorage, LOADING, loadPrikeyFromStorage, request, deletePriKey} from '../../actions/prikeyManagement';
-import { Row, Col, Modal, Input, Button, Spin, Form, Table } from 'antd';
+import {addToStorage, deletePriKey} from '../../actions/prikeyManagement';
+import { Row, Col, Modal, Input, Button, Form, Table, notification } from 'antd';
 import {Redirect} from "react-router-dom";
 import styled from 'styled-components';
 import { AppstoreAddOutlined, LoadingOutlined } from '@ant-design/icons';
@@ -30,11 +30,14 @@ const LineBreak = styled.div`
 `;
 
 class PriKeyManagement extends Component{
-
 	componentDidMount(){
-		var { login } = this.props;
-		this.props.request();
-		this.props.loadPrikeyFromStorage(login.email);
+		var {prikeys, login} = this.props;
+		if((!prikeys.prikeys&&login.token!=="")||(prikeys.prikeys.length===0&&login.token!=="")){
+            notification.warning({
+                message: 'Warning!',
+                description: "You have no private key, please add somes in private key management to perform transaction!",
+            });
+        }
 	}
 
 	onDelete = (e, index)=>{
@@ -112,85 +115,82 @@ class PriKeyManagement extends Component{
 		if(login.token===""){
       		return <Redirect to="/login" />
     	}
-		const antIcon = <LoadingOutlined spin />;
 		const { visible, loading } = this.state;
 		var {prikeys} = this.props;
 		return (
 			<Wrapper>
-				<Spin indicator={antIcon} tip="Processing..."  spinning={prikeys.type === LOADING}>
-					<Header>
-						<Row >
-							<Col span={20}>
-								<LineBreak>
-									PriKey Management
-								</LineBreak>
-							</Col>
-							<Col span={4}>
-								<AddIcon>
-									<AppstoreAddOutlined onClick={this.showModal} />
-									<Modal
-										visible={visible}
-										onCancel={this.handleCancel}
-										footer={null}
-									>
-										<Form
-											layout = "vertical"
-										    name="login"
-										    initialValues={{
-										       	remember: true,
-										    }}
-										    onFinish = {this.handleOk}
-										    size = "medium"
-									    >
-										    <Form.Item
-										        label="Name"
-										        name="name"
-										        rules={[
-										            {
-											            required: true,
-											            message: 'Please input your private key name!',
-										            }
-										        ]}
-										    >
-										        <Input placeholder="Private key name"/>
-										    </Form.Item>
-										    <Form.Item
-										        label="Private Key"
-										        name="prikey"
-										        rules={[
-										          {
+				<Header>
+					<Row >
+						<Col span={20}>
+							<LineBreak>
+								PriKey Management
+							</LineBreak>
+						</Col>
+						<Col span={4}>
+							<AddIcon>
+								<AppstoreAddOutlined onClick={this.showModal} />
+								<Modal
+									visible={visible}
+									onCancel={this.handleCancel}
+									footer={null}
+								>
+									<Form
+										layout = "vertical"
+									    name="login"
+									    initialValues={{
+									       	remember: true,
+									    }}
+									    onFinish = {this.handleOk}
+									    size = "medium"
+								    >
+									    <Form.Item
+									        label="Name"
+									        name="name"
+									        rules={[
+									            {
 										            required: true,
-										            message: 'Please input your private key!',
-										          },
-										        ]}
-										    >
-										        <Input placeholder="Private key"/>
-										    </Form.Item>
-							           		<Row>
-												<Col>
-													<Button htmlType="submit" type="primary" loading={loading} >
-														Add
-										            </Button>
-												</Col>
-												<Col span={1}></Col>
-												<Col>
-													<Button key="back" onClick={this.handleCancel}>
-														Cancel
-									           		</Button>
-												</Col>
-											</Row>
-									    </Form>
-									</Modal>
-								</AddIcon>
-							</Col>
-						</Row>
-					</Header>
-					<Table columns={this.columns}
-						dataSource={prikeys.prikeys}
-						rowKey="prikey"
-						scroll={{ x: 1300 }} sticky
-					/>
-				</Spin>
+										            message: 'Please input your private key name!',
+									            }
+									        ]}
+									    >
+									        <Input placeholder="Private key name"/>
+									    </Form.Item>
+									    <Form.Item
+									        label="Private Key"
+									        name="prikey"
+									        rules={[
+									          {
+									            required: true,
+									            message: 'Please input your private key!',
+									          },
+									        ]}
+									    >
+									        <Input placeholder="Private key"/>
+									    </Form.Item>
+						           		<Row>
+											<Col>
+												<Button htmlType="submit" type="primary" loading={loading} >
+													Add
+									            </Button>
+											</Col>
+											<Col span={1}></Col>
+											<Col>
+												<Button key="back" onClick={this.handleCancel}>
+													Cancel
+								           		</Button>
+											</Col>
+										</Row>
+								    </Form>
+								</Modal>
+							</AddIcon>
+						</Col>
+					</Row>
+				</Header>
+				<Table columns={this.columns}
+					dataSource={prikeys.prikeys}
+					rowKey="prikey"
+					scroll={{ x: 1300 }} sticky
+				/>
 			</Wrapper>
 		);
 	}
@@ -207,12 +207,6 @@ const mapDispatchToProps = (dispatch,props) => {
 	return {
 		addToStorage: (prikey, email)=>{
 			dispatch(addToStorage(prikey, email));
-		},
-		loadPrikeyFromStorage: (email)=>{
-			dispatch(loadPrikeyFromStorage(email));
-		},
-		request: ()=>{
-			dispatch(request());
 		},
 		deletePriKey: (index, email)=>{
 			dispatch(deletePriKey(index, email));

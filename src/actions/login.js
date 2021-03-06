@@ -2,6 +2,7 @@ import fetch from 'cross-fetch';
 import { API_ADDR } from '../config/config';
 import { notification } from 'antd';
 import jwt_decode from "jwt-decode";
+import {loadPrikeyFromStorage} from './prikeyManagement';
 
 export const LOGIN_NONE = 'LOGIN_NONE';
 export const LOGOUT = 'LOGOUT';
@@ -12,21 +13,29 @@ export const LOAD_FROM_STORAGE = 'LOAD_FROM_STORAGE';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 
 export function loadFromStorage() {
-	let tokenDecoded = null;
-	let token = localStorage.getItem('token');
-	try {
-		tokenDecoded = jwt_decode(token);
-	} catch (e) { }
-	if (tokenDecoded && tokenDecoded.exp < Date.now() / 1000) {
-		localStorage.removeItem('token');
-		tokenDecoded = null;
-	}
-	return {
-		type: LOAD_FROM_STORAGE,
-		payload: {
+	return (dispatch)=>{
+		let tokenDecoded = null;
+		let token = localStorage.getItem('token');
+		try {
+			tokenDecoded = jwt_decode(token);
+		} catch (e) { }
+		if (tokenDecoded && tokenDecoded.exp < Date.now() / 1000) {
+			localStorage.removeItem('token');
+			tokenDecoded = null;
+		}
+		dispatch(load({
 			token: token,
 			tokenDecoded: tokenDecoded
+		})); 
+		if(tokenDecoded&&tokenDecoded.email){
+			dispatch(loadPrikeyFromStorage(tokenDecoded.email));
 		}
+	}
+}
+export function load(tokens) {
+	return {
+		type: LOAD_FROM_STORAGE,
+		payload: tokens
 	}
 }
 export function logout() {

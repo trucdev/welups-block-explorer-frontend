@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Form, Input, Button, Select, Spin, Result, InputNumber } from 'antd';
+import { Form, Input, Button, Select, Spin, Result, InputNumber, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import {
     freezeBalance,
@@ -9,7 +9,7 @@ import {
     FREEZE_BALANCE_REQUESTING,
     FREEZE_BALANCE_SUCCESS
 } from '../../actions/freezeBalance';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import ACLogo from '../../assets/images/ACLogo.png';
 
@@ -70,6 +70,13 @@ const { Option } = Select;
 class FreezeBalance extends React.Component {
     componentDidMount() {
         this.props.reset();
+        var {prikeys, login} = this.props;
+        if((!prikeys.prikeys&&login.token!=="")||(prikeys.prikeys.length===0&&login.token!=="")){
+            notification.warning({
+                message: 'Warning!',
+                description: "You have no private key, please add somes in private key management to perform transaction!",
+            });
+        }
     }
     componentWillUnmount() {
         this.props.reset();
@@ -79,8 +86,11 @@ class FreezeBalance extends React.Component {
     }
 
     render() {
-        const { freezeBalancee } = this.props;
+        const { freezeBalancee, login, prikeys } = this.props;
         const antIcon = <LoadingOutlined spin />;
+        if(login.token===""){
+            return <Redirect to="/login" />
+        }
         return (
             <Wrapper>
                 <Spin indicator={antIcon} tip="Processing..." spinning={freezeBalancee.status === FREEZE_BALANCE_REQUESTING}>
@@ -122,7 +132,13 @@ class FreezeBalance extends React.Component {
                                     },
                                 ]}
                             >
-                                <Input/>
+                                <Select
+                                    showSearch
+                                    placeholder="Select a private key"
+                                    allowClear
+                                >
+                                    {prikeys.prikeys&&prikeys.prikeys.length!==0?prikeys.prikeys.map((value, index) => <Option value={value.prikey} key={index}>{value.name}</Option>):null}
+                                </Select>
                             </Item>
                             <TitleContainer>
                                 <ContentTitle>To</ContentTitle>
@@ -178,6 +194,8 @@ class FreezeBalance extends React.Component {
 const mapStateToProps = (state) => {
     return {
         freezeBalancee: state.freezeBalance,
+        prikeys:state.prikeyManagement,
+        login: state.login,
     };
 };
 const mapDispatchToProps = (dispatch) => {

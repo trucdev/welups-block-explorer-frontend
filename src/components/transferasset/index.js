@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Form, Input, Button, Select, Spin, Result, InputNumber  } from 'antd';
+import { Form, Input, Button, Select, Spin, Result, InputNumber, notification  } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import {
     transferAsset,
@@ -11,8 +11,7 @@ import {
     loadTokens,
     updatePageTokens
 } from '../../actions/transferasset';
-import { Link } from 'react-router-dom';
-
+import { Link, Redirect } from 'react-router-dom';
 import ACLogo from '../../assets/images/ACLogo.png';
 
 const { TextArea } = Input;
@@ -81,9 +80,17 @@ class TransferAsset extends React.Component {
         };
     }
     componentDidMount() {
+        var {prikeys, transferInfo, login} = this.props;
+        if((!prikeys.prikeys&&login.token!=="")||(prikeys.prikeys.length===0&&login.token!=="")){
+            notification.warning({
+                message: 'Warning!',
+                description: "You have no private key, please add somes in private key management to perform transaction!",
+            });
+        }
         this.props.resetTransferAsset();
-        const {transferInfo} = this.props;
-        this.props.loadTokens(transferInfo.pageToken.start_item, transferInfo.pageToken.page_limit);
+        if(transferInfo.tokens.length===0){
+            this.props.loadTokens(transferInfo.pageToken.start_item, transferInfo.pageToken.page_limit);
+        }
     }
     componentWillUnmount() {
         this.props.resetTransferAsset();
@@ -114,10 +121,10 @@ class TransferAsset extends React.Component {
             amount: value
         }));
     };
-    changePrivateKey = (e) => {
+    changePrivateKey = (prikey) => {
         this.setState((prevState) => ({
             ...prevState,
-            privateKey: e.target.value
+            privateKey: prikey
         }));
     };
     onScroll = (e)=>{
@@ -135,7 +142,10 @@ class TransferAsset extends React.Component {
     }
 
     render() {
-        const { transferInfo } = this.props;
+        const { transferInfo, prikeys, login } = this.props;
+        if(login.token===""){
+            return <Redirect to="/login" />
+        }
         let assetNames = transferInfo.tokens?transferInfo.tokens:null;
         const antIcon = <LoadingOutlined spin />;
         return (
@@ -178,9 +188,14 @@ class TransferAsset extends React.Component {
                                     },
                                 ]}
                             >
-                                <Input
-                                    value={this.state.privateKey} onChange={this.changePrivateKey}
-                                />
+                                <Select
+                                    showSearch
+                                    placeholder="Select a private key"
+                                    allowClear
+                                    onChange={this.changePrivateKey}
+                                >
+                                    {prikeys.prikeys&&prikeys.prikeys.length!==0?prikeys.prikeys.map((value, index) => <Option value={value.prikey} key={index}>{value.name}</Option>):null}
+                                </Select>
                             </Item>
                             <TitleContainer>
                                 <ContentTitle>To</ContentTitle>
@@ -258,6 +273,8 @@ class TransferAsset extends React.Component {
 const mapStateToProps = (state) => {
     return {
         transferInfo: state.transferAsset,
+        prikeys:state.prikeyManagement,
+        login: state.login,
     };
 };
 const mapDispatchToProps = (dispatch) => {

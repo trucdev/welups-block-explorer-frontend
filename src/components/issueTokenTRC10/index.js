@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Divider, Form, Input, Button, InputNumber, DatePicker, Result } from 'antd';
+import { Row, Col, Divider, Form, Input, Button, InputNumber, DatePicker, Result, Select, notification } from 'antd';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
 	issueTRC10,
 	reset,
@@ -32,9 +32,21 @@ const StyleDatePicker = styled(DatePicker)`
     width: 100%;
 `;
 
+const { Option } = Select;
+
 class IssueTokenTRC10 extends Component {
 	componentWillUnmount() {
 		this.props.resetIssueTRC10();
+	}
+
+	componentDidMount(){
+		var {prikeys, login} = this.props;
+		if((!prikeys.prikeys&&login.token!=="")||(prikeys.prikeys.length===0&&login.token!=="")){
+            notification.warning({
+                message: 'Warning!',
+                description: "You have no private key, please add somes in private key management to perform transaction!",
+            });
+        }
 	}
 
 	onFinish = (values) => {
@@ -61,8 +73,10 @@ class IssueTokenTRC10 extends Component {
 
 	}
 	render() {
-		
-		const { issueTokenInfo } = this.props;
+		const { issueTokenInfo, login, prikeys } = this.props;
+		if(login.token===""){
+      		return <Redirect to="/login" />
+    	}
 		return (
 			<div>
 				<Header>Issue Token TRC10</Header>
@@ -84,7 +98,6 @@ class IssueTokenTRC10 extends Component {
 					</div>}
 				{issueTokenInfo.status !== ISSUE_TRC10_SUCCESS &&
 					<Wrapper>
-
 						<Form
 							layout="vertical"
 							name="basic"
@@ -108,9 +121,14 @@ class IssueTokenTRC10 extends Component {
 											},
 										]}
 									>
-										<Input />
+										<Select
+		                                    showSearch
+		                                    placeholder="Select a private key"
+		                                    allowClear
+		                                >
+		                                    {prikeys.prikeys&&prikeys.prikeys.length!==0?prikeys.prikeys.map((value, index) => <Option value={value.prikey} key={index}>{value.name}</Option>):null}
+		                                </Select>
 									</Form.Item>
-
 								</Col>
 								<Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
 								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
@@ -182,12 +200,9 @@ class IssueTokenTRC10 extends Component {
 									>
 										<StyleInputNumber placeholder="Total token issuance(without precision)" />
 									</Form.Item>
-
 								</Col>
 								<Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
 								<Col xs={24} sm={9} md={9} lg={9} xl={9}>
-
-
 									<Form.Item
 										label="Precision:"
 										name="precision"
@@ -200,8 +215,6 @@ class IssueTokenTRC10 extends Component {
 									>
 										<StyleInputNumber placeholder="0-6" />
 									</Form.Item>
-
-
 								</Col>
 							</Row>
 							<Row>
@@ -286,6 +299,12 @@ class IssueTokenTRC10 extends Component {
 									<Form.Item
 										label="URL:"
 										name="url_str"
+										rules={[
+											{
+												required: true,
+												message: 'Please input your url!',
+											},
+										]}
 									>
 										<Input placeholder="Website" />
 									</Form.Item>
@@ -342,6 +361,8 @@ class IssueTokenTRC10 extends Component {
 const mapStateToProps = (state) => {
 	return {
 		issueTokenInfo: state.issueTokenTRC10,
+		prikeys:state.prikeyManagement,
+		login: state.login,
 	};
 };
 

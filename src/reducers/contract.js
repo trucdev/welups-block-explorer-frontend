@@ -1,4 +1,4 @@
-import {CONTRACT_LOAD, CONTRACT_DEFAULT, PRI_KEY_DEFAULT, PRI_KEY_UPDATE, RESULT_DEFAULT, RESULT_UPDATE} from  '../actions/contract';
+import {CONTRACT_LOAD, CONTRACT_DEFAULT, PRI_KEY_UPDATE, RESULT_DEFAULT, RESULT_UPDATE} from  '../actions/contract';
 
 export function contractReducer(state=defaultContractState, action){
 	switch(action.type){
@@ -16,6 +16,8 @@ export function contractReducer(state=defaultContractState, action){
 			break;
 		case RESULT_DEFAULT:
 			state = {...state, result:{}};
+			break;
+		default:
 			break;
 	}
 	return state;

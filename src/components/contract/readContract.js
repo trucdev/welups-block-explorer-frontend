@@ -4,7 +4,6 @@ import { Button, Form} from 'antd';
 import {FuncWrapper, FuncName, FuncBody, Result, Root} from './style';
 import FormInputs from './formInputs';
 import {triggerSmartContract, CONTRACT_READ} from '../../actions/contract';
-import { Link } from 'react-router-dom';
 
 class ReadContract extends Component{
 

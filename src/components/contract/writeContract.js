@@ -14,7 +14,7 @@ class WriteContract extends Component{
 		var params = [];
 		var jsonString = [];
 		Object.keys(values).map((key) => {
-			if(key!="acgSend"){
+			if(key!=="acgSend"){
 				params.push(values[key]);
 			}
 			return null;

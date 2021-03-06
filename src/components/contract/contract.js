@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import * as action from '../../actions/contract';
 import { Row, Col } from 'antd';
 import {Table, BorderRed, Div, FontFamily, Title} from './style';
-import {Link} from "react-router-dom";
 import ContractAddress from './contractAddress';
 import ContractOverview from './contractOverview';
 import ContractInformation from './contractInformation';
