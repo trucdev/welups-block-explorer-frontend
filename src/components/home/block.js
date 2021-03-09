@@ -27,12 +27,12 @@ class BlockList extends React.Component {
 						<span>Block:<RecentItemData><StyledLink to={`/block/${block.num}`}>{block.num}</StyledLink></RecentItemData></span>
 					</Col>
 					<RecentRightCol xs={24}  sm={24} md={12} >
-						<span>Producer:<RecentItemData ><StyledLink to={`/account/${block.producer}`}>{block.nameProducer?block.nameProducer:block.producer}</StyledLink></RecentItemData></span>
+						<span>Producer:<RecentItemData ><StyledLink to={`/account/${block.witness_address}`}>{block.witness_name?block.witness_name:block.witness_address}</StyledLink></RecentItemData></span>
 					</RecentRightCol>
 				</Row>
 				<Row >
 					<Col span={24}>
-						<span>Include: <RecentItemData>{block.transactions}</RecentItemData> transactions</span>
+						<span>Include: <RecentItemData>{block.num_of_txs}</RecentItemData> transactions</span>
 					</Col>
 				</Row>
 				<Row >
