@@ -51,7 +51,7 @@ class TransactionList extends React.Component {
 				</Row>
 				<Row >
 					<Col xs={0} sm={0} md={24}>
-						{tran.contract.type==="TransferAssetContract"||tran.contract.type==="TransferContract"?
+						{tran.contract.type==="TransferAssetContract"||tran.contract.type==="TransferContract" && tran.contract.parameter.raw.OwnerAddress&&tran.contract.parameter.raw.ToAddress?
 						<div>
 							<span>From </span>
 							<StyledLink to={"/account/"+tran.contract.parameter.raw.OwnerAddress} target="_blank">
