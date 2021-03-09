@@ -22,7 +22,8 @@ class TransactionList extends React.Component {
 	}
 	tranItem = (tran) => {
 		var amount = null;
-		switch(tran.type){
+		const contractType = tran.contract.type;
+		switch(contractType){
 			default: amount= null;break;
 			case "TransferContract": amount = currencyFormat(decimalFormat(tran.contract.parameter.raw.Amount/1000000)) + " ACG";break;
 			case "TransferAssetContract": amount = currencyFormat(tran.contract.parameter.raw.Amount);break;
@@ -39,7 +40,7 @@ class TransactionList extends React.Component {
 						<span>
 							<RecentItemData>
 								{amount}&nbsp;
-								{	tran.type==="TransferAssetContract"?
+								{	tran.contract.type==="TransferAssetContract"?
 									<StyledLink to={`/token/${tran.contract.parameter.raw.AssetID}`} target="_blank">
 										{tran.contract.parameter.raw.AssetName}
 									</StyledLink>
@@ -50,7 +51,7 @@ class TransactionList extends React.Component {
 				</Row>
 				<Row >
 					<Col xs={0} sm={0} md={24}>
-						{tran.type==="TransferAssetContract"||tran.type==="TransferContract"?
+						{tran.contract.type==="TransferAssetContract"||tran.contract.type==="TransferContract"?
 						<div>
 							<span>From </span>
 							<StyledLink to={"/account/"+tran.contract.parameter.raw.OwnerAddress} target="_blank">
@@ -69,7 +70,7 @@ class TransactionList extends React.Component {
 
 				<Row >
 					<Col xs={24} sm={24} md={12}>
-						<span>Type:<RecentItemData>{tran.type}</RecentItemData></span>
+						<span>Type:<RecentItemData>{tran.contract.type}</RecentItemData></span>
 					</Col>
 					<RecentRightCol xs={24} sm={24} md={12} >
 						<span><RecentItemData>{tran.timestamp?toTimeAgo(tran.timestamp):"unknown"}</RecentItemData></span>
