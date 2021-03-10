@@ -29,7 +29,7 @@ export function loginReducer(state = { type: LOGIN_NONE, status: "", message: ""
             state = { type: action.type, status: "", message: "", description: "", token: "", email: "", id:"" }
             break;
         case LOGIN_ERROR:
-            state = { type: action.type, status: "error", code: action.payload.code }
+            state = { ...state, type: action.type, status: "error", code: action.payload.code }
             break;
         default:
             break;
