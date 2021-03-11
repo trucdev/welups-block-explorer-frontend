@@ -20,12 +20,12 @@ export function updateTransactions(transactions) {
 export function loadTransactions(offset, limit) {
 	return (dispatch) => {
 		dispatch(initTransactions());
-		fetch(`${API_ADDR}/transactions?num=${offset}&limit=${limit}&sort=desc`, {
+		fetch(`${API_ADDR}/transactions?offset=${offset}&limit=${limit}&sort=desc`, {
 			method: 'GET',
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
 			dispatch(updateTransactions(res.data));
-			if(offset===-1){
+			if(offset===0){
 				dispatch(initPageTransactionsBlock(res.data[0]?res.data[0].blockNumber:0));
 			}
 		}).catch(err => {

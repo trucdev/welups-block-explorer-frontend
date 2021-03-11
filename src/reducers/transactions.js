@@ -24,8 +24,8 @@ export function transactionsReducer(state = initTransactions, action) {
 
 var initPageTransactions = {
 	start_page: 1,
-	start_item: -1,
-	page_limit: 5,
+	start_item: 1,
+	page_limit: 10,
 	total_items: 5000,
 	current_page: 1,
 };

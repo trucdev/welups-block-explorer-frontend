@@ -79,16 +79,14 @@ color: '#E50915';
 
 class Card extends Component {
   render() {
-    const { hash, result, status, blockNum, timestamp, numOfBlocks, contract}= this.props.transaction;
+    const status = this.props.status;
+    const { hash, contract, blockNum, result, timestamp }= this.props.transaction;
     const content = [
       { title: 'Result', value:result },
-      { title: 'Status', value: Status(status,numOfBlocks)},
+      { title: 'Status', value: Status(status)},
       { title: 'Block', value: <HightLight>{blockNum}</HightLight> },
       { title: 'Time', value: toDateTime(timestamp?timestamp:0) },
       { title: 'Contract', value: contract.type},
-      { title: 'Type URL', value: contract.parameter.type_url },
-      { title: 'Value', value: <RowValueExt>{contract.parameter.value}</RowValueExt> },
-      // { title: 'Extracted Raw', value: <ReactJson src={contract.parameter.raw} />},
     ];
     return (
       <Wrap>

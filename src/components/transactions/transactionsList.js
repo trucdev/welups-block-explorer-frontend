@@ -42,7 +42,7 @@ const columns = [
 	},
 	{
 		title: 'Block',
-		dataIndex: 'blockNumber',
+		dataIndex: 'block_number',
 		key: 'blockNumber',
 		width: '10%',
 		render: text =>
@@ -52,16 +52,19 @@ const columns = [
 	},
 	{
 		title: 'Transaction type',
-		dataIndex: 'type',
+		dataIndex: 'contract',
 		width: '15%',
 		key: 'type',
+		render: record =>{
+			return <span>{record.type}</span>
+		}
 	},
 	{
 		title: 'From',
 		key: 'from',
 		width: '12%',
 		render: record =>{
-			if (record.type === "TransferContract" || record.type === "TransferAssetContract"  ) {
+			if (record.contract.type === "TransferContract" || record.contract.type === "TransferAssetContract"  ) {
 				return  <Link to={"/account/" + record.contract.parameter.raw.OwnerAddress}><RedText>{record.contract.parameter.raw.OwnerAddress.substring(0, 6) + "..." + record.contract.parameter.raw.OwnerAddress.substring(28, 34)}</RedText></Link>
 			}else{ 
 				return <span>&nbsp; &nbsp; &nbsp; -</span>		
@@ -73,7 +76,7 @@ const columns = [
 		key: 'to',
 		width: '12%',
 		render: record =>{
-			if (record.type === "TransferContract" || record.type === "TransferAssetContract"  ) {
+			if (record.contract.type=== "TransferContract" || record.contract.type === "TransferAssetContract"  ) {
 				return <Link to={"/account/" + record.contract.parameter.raw.ToAddress}><RedText>{record.contract.parameter.raw.ToAddress.substring(0, 6) + "..." + record.contract.parameter.raw.ToAddress.substring(28, 34)}</RedText></Link>
 			}else{ 
 				return <span>&nbsp; &nbsp; &nbsp; -</span>		
@@ -85,9 +88,9 @@ const columns = [
 		width: '12%',
 		key: 'amount',
 		render: record =>{
-			if (record.type === "TransferAssetContract"  ) {
-				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.Amount))}</span>
-			}else if (record.type === "TransferContract" ) {
+			if (record.contract.type === "TransferAssetContract"  ) {
+				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.Amount/1000000))}</span>
+			}else if (record.contract.type === "TransferContract" ) {
 				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.Amount/1000000))} ACG</span>
 			}
 			else{ 
@@ -101,7 +104,7 @@ const columns = [
 		width: '10%',
 		key: 'asset',
 		render: record =>{
-			if (record.type === "TransferAssetContract"  ) {
+			if (record.contract.type === "TransferAssetContract"  ) {
 				return <RedText>{record.contract.parameter.raw.AssetName}</RedText>
 			}else{ 
 				return <span>&nbsp; &nbsp; &nbsp; -</span>		
@@ -123,9 +126,6 @@ class TransactionsList extends React.Component {
 	componentDidMount() {
 		const { pageTransactions } = this.props;
 		this.props.loadTransactions(pageTransactions.start_item, pageTransactions.page_limit);
-
-
-
 	}
 
 	onChange = (pageNumber, pageLimit) => {
@@ -134,27 +134,27 @@ class TransactionsList extends React.Component {
 		this.props.loadTransactions(pageTransactions.start_item, pageTransactions.page_limit);
 	}
 	render() {
-		var { transactions, pageTransactions } = this.props;
+		var { transactions, pageTransactions} = this.props;
 		return (
 			<Container>
 				<Title>List of Transactions</Title>
 				<div id="datetime"></div>
 				<Table columns={columns}
 					dataSource={transactions}
+					pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'], }}
 					rowKey="hash"
-					pagination={false}
 					scroll={{ x: 1500 }} sticky
 					loading={transactions.length === 0 ? true:false}
 					locale={{ emptyText: 'Loading' }}
 				/>
-				<PagiContainer>
+				{/* <PagiContainer>
 					<Pagination
 						current={pageTransactions.start_page}
 						total={pageTransactions.total_items}
 						onChange={this.onChange}
 						showSizeChanger={false}
 						showQuickJumper />
-				</PagiContainer>
+				</PagiContainer> */}
 			</Container>
 
 
