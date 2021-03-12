@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import {TableRow, Th, QuestionMark, Flex, contentRatio, StyledLink} from './style';
 import {Popover } from 'antd';
 import {currencyFormat} from '../../utils/utils';
+import styled from 'styled-components';
+
+const RatioText = styled.span`
+	margin-right: 10px;
+`;
 
 class ContractInformation extends Component{
 	render(){
@@ -36,7 +41,8 @@ class ContractInformation extends Component{
 						</Flex>
 					</Th>
 					<td>
-						<span>Contracts{contract.energy_ratio_contract}%&nbsp;&nbsp;Users{contract.energy_ratio_user}%</span>
+						<RatioText>Contracts {contract.energy_ratio_contract}%</RatioText>
+						<RatioText>Users {contract.energy_ratio_user}%</RatioText>
 					</td>
 				</TableRow>
 			</tbody>
