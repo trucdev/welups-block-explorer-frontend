@@ -44,7 +44,7 @@ export function loadContractApi(addr) {
 				energy_ratio_user:res.data.percentage_ratio,
 				initial_asset:0,
 				abi:res.data.abi.entrys,
-				bytecode:res.data.bytecode,
+				bytecode:res.data.byte_code,
 				assets:res.data.assets
 			};
 			dispatch(loadContract(_res));
