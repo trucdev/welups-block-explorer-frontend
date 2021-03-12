@@ -57,6 +57,7 @@ const columns = [
 		title: 'Total Missed',
 		key: 'total_missed',
 		dataIndex: 'total_missed',
+		render: text => <span>{text?text:0}</span>
 	},
 	{
 		title: 'Lastest block num',
