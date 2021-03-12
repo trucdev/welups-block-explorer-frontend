@@ -38,7 +38,6 @@ const BadgeRed = styled(Badge)`
     }  
 `;
 const confirm = 19;
-
 const columns = [
 	{
 		title: 'No.',
@@ -68,14 +67,14 @@ const columns = [
 	},
 	{
 		title: 'Transactions',
-		dataIndex: 'transactions',
+		dataIndex: 'num_of_txs',
 		key: 'transactions',
+		render: text => <span>{text}</span>,	
 	},
 	{
 		title: 'Producer',
-		dataIndex: 'producer',
 		key: 'producer',
-		render: record => <StyledLink key={record.hash} to={`/account/${record.hash}`} >{record.name?record.name:record.hash}</StyledLink>,
+		render: record => <StyledLink key={record.witness_name} to={`/account/${record.witness_address}`} >{record.witness_name}</StyledLink>,
 	}
 ];
 
@@ -105,7 +104,7 @@ class BlockTable extends React.Component {
 					rowKey="num"
 					scroll={{ x: 1300 }} sticky
 					pagination={false}
-					loading={blocks.length === 0 ? true:false}
+					loading={blocks&&blocks.length === 0 ? true:false}
 					locale={{ emptyText: 'Loading' }}
 				/>
 				<Pagin>

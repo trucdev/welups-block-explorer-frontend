@@ -29,13 +29,13 @@ export function loadBlockApi(id) {
 		}).then(res => res.json()).then((res) => {
 			var _res = {
 				block_num:res.data.num,
-				transaction_num:res.data.transactions,
+				transaction_num:res.data.num_of_txs,
 				block_hash:res.data.hash,
-				producer_hash:res.data.producer.hash,
-				producer_name:res.data.producer.name,
+				producer_hash:res.data.witness_address,
+				producer_name:res.data.witness_name,
 				parent_hash:res.data.parent_hash,
 				time:res.data.timestamp,
-				confirm:res.data.status,
+				confirm:res.data.confirmed,
 				size:0
 			};
 			dispatch(loadBlock(_res));

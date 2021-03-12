@@ -44,10 +44,12 @@ class TransactionTable extends React.Component {
 	}
 	render() {
 		var {transactionList, confirm} = this.props;
+		if (transactionList){
 		transactionList.map((item)=>{
 			item.status = confirm;
 			return null;
 		});
+	}
 		return (
 			<Table columns={columns}
 				dataSource={transactionList}
