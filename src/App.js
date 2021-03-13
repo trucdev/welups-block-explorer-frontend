@@ -14,7 +14,8 @@ import {
   KeyOutlined,
   DeploymentUnitOutlined,
   SplitCellsOutlined,
-  PlusCircleOutlined
+  PlusCircleOutlined,
+  FileTextOutlined
 } from '@ant-design/icons';
 import Home from './components/home';
 import BlockDetail from './components/block/block';
@@ -40,6 +41,7 @@ import DeployContract from './components/deployContract/index';
 import ResetPassword from './components/resetPassword/index';
 import NewPassword from './components/resetPassword/newpassword';
 import PriKeyManagement from './components/prikeyManagement/index';
+import ContractTable from './components/contracts/index';
 import { Row, Col, Modal } from 'antd';
 import {
   BrowserRouter as Router,
@@ -179,6 +181,9 @@ class App extends Component {
               <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
                 <Link to="/tokens">Tokens</Link>
               </Menu.Item>
+              <Menu.Item key="contracts" icon={<FileTextOutlined />}>
+                <Link to="/contracts">Contracts</Link>
+              </Menu.Item>
             </Menu>
           <ContentRowWrapper justify='center' gutter={[0, 0]}>
             <Col xs={20} sm={20} md={20} lg={19} xl={18}>
@@ -285,6 +290,10 @@ class App extends Component {
                 <Route
                   path="/prikey-management"
                   render={() => <PriKeyManagement />}
+                />
+                <Route
+                  path="/contracts"
+                  render={() => <ContractTable />}
                 />
                 <Redirect to="/notfound" />
               </Switch>
