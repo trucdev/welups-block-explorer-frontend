@@ -41,7 +41,7 @@ class Login extends React.Component {
 		const antIcon = <LoadingOutlined spin />;
 		var { login } = this.props;
 		var code = login.code;
-		if (login.type === LOGIN_SUCCESS && login.token!==""){
+		if (login.type === LOGIN_SUCCESS || login.token!==""){
             return <Redirect to="/user" />
         }
 		if (code === 2){
