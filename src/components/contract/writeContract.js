@@ -20,10 +20,12 @@ class WriteContract extends Component{
 			return null;
 		});
 		var method = func.name + "(";
+		if(func.inputs){
 		func.inputs.map((value,index)=>{
 			method += value.type +(index===func.inputs.length-1?"":",");
 			jsonString.push({[value.type]:params[index]});
 		})
+	}
 		method+=")";
 		this.props.triggerSmartContract(no, contract.prikey, addr, method, jsonString, func.outputs, CONTRACT_WRITE, amount);
 	}
