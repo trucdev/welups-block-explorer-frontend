@@ -45,7 +45,7 @@ const columns = [
 	{
 		title: 'Owner Address',
 		dataIndex: 'owner_addr',
-		render: text => <StyledLink key={text} to={`/token/${text}`}>{text}</StyledLink>,
+		render: text => <StyledLink key={text} to={`/account/${text}`}>{text}</StyledLink>,
 		key: 'owner_addr',
 	},
 ];
