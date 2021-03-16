@@ -137,6 +137,7 @@ export function checkAccountApi(acc) {
 			result.data.id = decoded.id;
 			result.data.email = decoded.email;
 			dispatch(success(result.data));
+			dispatch(loadPrikeyFromStorage(decoded.email));
 		}
 
 	}
