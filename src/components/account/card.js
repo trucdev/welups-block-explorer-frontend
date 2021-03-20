@@ -38,11 +38,9 @@ const RowValue = styled.div`
   text-align: left;
   overflow: auto;
 `;
-
-const HightLight= styled.span`
-  color: '#E50915';
-`;
-
+const RedText = styled.span`
+    color: #E50915;
+    `;
 class Card extends Component {
   componentDidMount(){
     this.props.loadAccountDetails(this.props.addr);
@@ -51,20 +49,17 @@ class Card extends Component {
     
     const acc= this.props.account;
     const content = [
-      { title: 'Name', value:<HightLight>{ acc.name} </HightLight> },
-      { title: 'Total Balance', value:<HightLight>{ currencyFormat(acc.totalBalance)} </HightLight> },
-      { title: 'ACG Balance',  value: <HightLight>{currencyFormat(decimalFormat(acc.trxBalance/Math.pow(10,6)))} ACG</HightLight>},
-      { title: 'Transactions',  value: acc.transactions},
-      { title: 'Transferred',  value: acc.transferred},
-      { title: 'Available Balance',  value: currencyFormat(acc.availableBalance)},
-      { title: 'Net Usage',  value: acc.netUsage},
-      { title: 'Bandwidth  Used',  value: acc.bandwidthUsed},
+      { title: 'Name', value:<RedText>{ acc.name?acc.name:"-"} </RedText> },
+      { title: 'Total Balance',  value: <RedText>{currencyFormat(decimalFormat(acc.acgBalance/Math.pow(10,6)))} ACG</RedText>},
+      { title: 'Transactions',  value: acc.transNum},
       { title: 'BandWidth Total',  value: acc.bandwidthTotal},
-      { title: 'Create Time',  value: toDateTime(acc.createTime)},
-      { title: 'Frozen Balance',  value: currencyFormat(acc.frozenBalance)},
+      { title: 'Bandwidth  Used',  value: acc.bandwidthUsed},
+      { title: 'Available BandWidth',  value: acc.bandwidthLeft},
+      { title: 'Create Time',  value: toDateTime(acc.createTime?acc.createTime:0)},
+      { title: 'Frozen Balance',  value: currencyFormat(acc.frozenBalance?acc.frozenBalance:0)},
       { title: 'Energy Total',  value: acc.energyTotal},
       { title: 'Energy Used',  value: acc.energyUsed},
-      // { title: 'Assets', value: <ReactJson src={ acc.asset} />},
+      { title: 'Available Energy',  value: acc.energyLeft},
     ];
     return (
       <Wrap>
