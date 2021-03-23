@@ -66,7 +66,8 @@ const RowTitleUpper = styled.div`
 `;
 const Status = (status, numOfBlocks) => (<StatusContainer>
   <StatusConfirm>
-    <RowTitleUpper>{status}</RowTitleUpper>
+    {status === true ? <RowTitleUpper>CONFIRMED</RowTitleUpper>: <RowTitleUpper>UNCONFIRMED</RowTitleUpper> }
+    
   </StatusConfirm>
   <StatusBlockNum>
     <RowValue>confirmed by {numOfBlocks} blocks</RowValue>
@@ -79,11 +80,10 @@ color: '#E50915';
 
 class Card extends Component {
   render() {
-    const status = this.props.status;
-    const { hash, contract, blockNum, result, timestamp }= this.props.transaction;
+    const { hash, contract, blockNum, result, timestamp, numOfBlocks, status }= this.props.transaction;
     const content = [
       { title: 'Result', value:result },
-      { title: 'Status', value: Status(status)},
+      { title: 'Status', value: Status(status, numOfBlocks)},
       { title: 'Block', value: <HightLight>{blockNum}</HightLight> },
       { title: 'Time', value: toDateTime(timestamp?timestamp:0) },
       { title: 'Contract', value: contract.type},

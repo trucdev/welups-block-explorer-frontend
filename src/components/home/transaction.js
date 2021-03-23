@@ -51,17 +51,17 @@ class TransactionList extends React.Component {
 				</Row>
 				<Row >
 					<Col xs={0} sm={0} md={24}>
-						{tran.contract.type==="TransferAssetContract"||tran.contract.type==="TransferContract" && tran.contract.parameter.raw.OwnerAddress&&tran.contract.parameter.raw.ToAddress?
+						{tran.contract.type==="TransferAssetContract"||tran.contract.type==="TransferContract" && tran.contract.parameter.raw.owner_address&&tran.contract.parameter.raw.to_address?
 						<div>
 							<span>From </span>
-							<StyledLink to={"/account/"+tran.contract.parameter.raw.OwnerAddress} target="_blank">
-								{tran.contract.parameter.raw.OwnerAddress.substring(0,7)+
-									"..."+tran.contract.parameter.raw.OwnerAddress.substring(tran.contract.parameter.raw.OwnerAddress.length-4,tran.contract.parameter.raw.OwnerAddress.length-1)}
+							<StyledLink to={"/account/"+tran.contract.parameter.raw.owner_address} target="_blank">
+								{tran.contract.parameter.raw.owner_address.substring(0,7)+
+									"..."+tran.contract.parameter.raw.owner_address.substring(tran.contract.parameter.raw.owner_address.length-4,tran.contract.parameter.raw.owner_address.length-1)}
 							</StyledLink>
 							<span> To </span>
-							<StyledLink to={"/account/"+tran.contract.parameter.raw.ToAddress} target="_blank">
-								{tran.contract.parameter.raw.ToAddress.substring(0,7)+
-									"..."+tran.contract.parameter.raw.ToAddress.substring(tran.contract.parameter.raw.ToAddress.length-4,tran.contract.parameter.raw.ToAddress.length-1)}
+							<StyledLink to={"/account/"+tran.contract.parameter.raw.to_address} target="_blank">
+								{tran.contract.parameter.raw.to_address.substring(0,7)+
+									"..."+tran.contract.parameter.raw.to_address.substring(tran.contract.parameter.raw.to_address.length-4,tran.contract.parameter.raw.to_address.length-1)}
 							</StyledLink>
 						</div> 
 						:<br></br>}

@@ -64,20 +64,24 @@ const columns = [
 		key: 'from',
 		width: '12%',
 		render: record =>{
-			if (record.contract.type === "TransferContract" || record.contract.type === "TransferAssetContract"  ) {
-				return  <Link to={"/account/" + record.contract.parameter.raw.OwnerAddress}><RedText>{record.contract.parameter.raw.OwnerAddress.substring(0, 6) + "..." + record.contract.parameter.raw.OwnerAddress.substring(28, 34)}</RedText></Link>
-			}else{ 
-				return <span>&nbsp; &nbsp; &nbsp; -</span>		
+			if (record.contract.parameter.raw.owner_address) {	
+				return  <Link to={"/account/" + record.contract.parameter.raw.owner_address}>
+					<RedText>
+						{record.contract.parameter.raw.owner_address.substring(0, 6) + "..." + record.contract.parameter.raw.owner_address.substring(record.contract.parameter.raw.owner_address.length -7,record.contract.parameter.raw.owner_address.length -1)}
+						</RedText>
+					</Link>
+			}else {
+				return <span>-</span>
 			}
-		}	
+		}
 	},
 	{
 		title: 'To',
 		key: 'to',
 		width: '12%',
 		render: record =>{
-			if (record.contract.type=== "TransferContract" || record.contract.type === "TransferAssetContract"  ) {
-				return <Link to={"/account/" + record.contract.parameter.raw.ToAddress}><RedText>{record.contract.parameter.raw.ToAddress.substring(0, 6) + "..." + record.contract.parameter.raw.ToAddress.substring(28, 34)}</RedText></Link>
+			if (record.contract.parameter.raw.to_address) {
+				return <Link to={"/account/" + record.contract.parameter.raw.to_address}><RedText>{record.contract.parameter.raw.to_address.substring(0, 6) + "..." + record.contract.parameter.raw.to_address.substring(record.contract.parameter.raw.to_address.length - 7, record.contract.parameter.raw.to_address.length -1)}</RedText></Link>
 			}else{ 
 				return <span>&nbsp; &nbsp; &nbsp; -</span>		
 			}
@@ -89,9 +93,9 @@ const columns = [
 		key: 'amount',
 		render: record =>{
 			if (record.contract.type === "TransferAssetContract"  ) {
-				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.Amount/1000000))}</span>
+				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.amount/1000000))}</span>
 			}else if (record.contract.type === "TransferContract" ) {
-				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.Amount/1000000))} ACG</span>
+				return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.amount/1000000))} ACG</span>
 			}
 			else{ 
 				return <span>&nbsp; &nbsp; &nbsp; -</span>
@@ -105,7 +109,7 @@ const columns = [
 		key: 'asset',
 		render: record =>{
 			if (record.contract.type === "TransferAssetContract"  ) {
-				return <RedText>{record.contract.parameter.raw.AssetName}</RedText>
+				return <RedText>{record.contract.parameter.raw.asset_name}</RedText>
 			}else{ 
 				return <span>&nbsp; &nbsp; &nbsp; -</span>		
 			}
@@ -124,37 +128,40 @@ const columns = [
 ];
 class TransactionsList extends React.Component {
 	componentDidMount() {
-		const { pageTransactions } = this.props;
-		this.props.loadTransactions(pageTransactions.start_item, pageTransactions.page_limit);
+		const { transactions } = this.props;
+		this.props.loadTransactions(transactions.transactionPage.start_item, transactions.transactionPage.page_limit);
 	}
 
 	onChange = (pageNumber, pageLimit) => {
 		this.props.updatePageTransactions(pageNumber);
-		var { pageTransactions } = this.props;
-		this.props.loadTransactions(pageTransactions.start_item, pageTransactions.page_limit);
+		var { transactions } = this.props;
+		if(pageLimit!==transactions.transactionPage.page_limit){
+			this.props.updatePageTransactionsLimit(pageLimit);
+		}
+		this.props.loadTransactions(transactions.transactionPage.start_item, transactions.transactionPage.page_limit);
 	}
 	render() {
-		var { transactions, pageTransactions} = this.props;
+		var { transactions} = this.props;
 		return (
 			<Container>
 				<Title>List of Transactions</Title>
 				<div id="datetime"></div>
 				<Table columns={columns}
-					dataSource={transactions}
-					pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'], }}
+					dataSource={transactions.transactions}
 					rowKey="hash"
 					scroll={{ x: 1500 }} sticky
-					loading={transactions.length === 0 ? true:false}
+					pagination={false}
+					loading={transactions.transactions.length === 0 ? true:false}
 					locale={{ emptyText: 'Loading' }}
 				/>
-				{/* <PagiContainer>
+				<PagiContainer>
 					<Pagination
-						current={pageTransactions.start_page}
-						total={pageTransactions.total_items}
+						current={transactions.transactionPage.start_page}
+						total={transactions.transactionPage.total_items}
 						onChange={this.onChange}
-						showSizeChanger={false}
+						showSizeChanger
 						showQuickJumper />
-				</PagiContainer> */}
+				</PagiContainer>
 			</Container>
 
 
@@ -168,7 +175,6 @@ const mapStateToProps = (state) => {
 
 	return {
 		transactions: state.transactions,
-		pageTransactions: state.pageTransactions
 	};
 };
 const mapDispatchToProps = dispatch => {

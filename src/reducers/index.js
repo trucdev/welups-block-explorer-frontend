@@ -17,7 +17,6 @@ import { witnessesReducer } from "./witnesses";
 import { tokensReducer } from "./tokens";
 import { tokenReducer } from "./token";
 import { pageTokensReducer } from "./tokens";
-import { pageTransactionsReducer } from "./transactions";
 import { blocksReducer } from "./blocks";
 import { pageBlocksReducer } from "./blocks";
 import { nodesReducer } from "./nodes";
@@ -46,7 +45,6 @@ export default combineReducers({
 	tokens:tokensReducer,
 	nodes:nodesReducer,
 	pageTokens:pageTokensReducer,
-	pageTransactions:pageTransactionsReducer,
 	blocks:blocksReducer,
 	pageBlocks:pageBlocksReducer,
 	token:tokenReducer,

@@ -56,7 +56,7 @@ const FillContainer = styled.div`
 class CreateSmartContract extends Component {
 
   render() {
-    const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
+    const FROM = this.props.transaction.contract.parameter.raw.owner_address;
     const CONTRACT = this.props.transaction.contractAddr;
     return (
       <Details>

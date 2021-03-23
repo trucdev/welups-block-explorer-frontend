@@ -57,8 +57,8 @@ const FillContainer = styled.div`
 class TransferContract extends Component {
 
   render() {
-const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
-const TO = this.props.transaction.contract.parameter.raw.ToAddress;
+const FROM = this.props.transaction.contract.parameter.raw.owner_address;
+const TO = this.props.transaction.contract.parameter.raw.to_address;
     return (
       <Details>
         <Top>

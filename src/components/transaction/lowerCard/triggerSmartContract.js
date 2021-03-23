@@ -62,7 +62,7 @@ const ContentLine = styled.div`
 class Trigger extends Component {
 
   render() {
-    const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
+    const FROM = this.props.transaction.contract.parameter.raw.owner_address;
     return (
       <Details>
         <Top>
@@ -85,8 +85,8 @@ class Trigger extends Component {
             </TitleContainer>
             <FillContainer>
               <ContentLine>
-              <Link to={`/contract/${this.props.transaction.contract.parameter.raw.ContractAddress}`}>
-                <RedText >{this.props.transaction.contract.parameter.raw.ContractAddress}</RedText>
+              <Link to={`/contract/${this.props.transaction.contract.parameter.raw.contract_address}`}>
+                <RedText >{this.props.transaction.contract.parameter.raw.contract_address}</RedText>
                 </Link>
               </ContentLine>
               {/* <ContentLine>

@@ -57,12 +57,12 @@ const FillContainer = styled.div`
 class IssueAssetContract extends Component {
 
     render() {
-        const FROM = this.props.transaction.contract.parameter.raw.OwnerAddress;
-        const TOTAL = this.props.transaction.contract.parameter.raw.TotalSupply;
-        const ACGNUM = this.props.transaction.contract.parameter.raw.TrxNum;
-        const PRECIS = this.props.transaction.contract.parameter.raw.Precision;
-        const TOKEN = this.props.transaction.contract.parameter.raw.Abbr;
-        const URL = this.props.transaction.contract.parameter.raw.Url;
+        const FROM = this.props.transaction.contract.parameter.raw.owner_address;
+        const TOTAL = this.props.transaction.contract.parameter.raw.total_supply;
+        const ACGNUM = this.props.transaction.contract.parameter.raw.trx_num;
+        const PRECIS = this.props.transaction.contract.parameter.raw.precision;
+        const TOKEN = this.props.transaction.contract.parameter.raw.abbr;
+        const URL = this.props.transaction.contract.parameter.raw.url;
         return (
             <Details>
                 <Top>
@@ -84,7 +84,7 @@ class IssueAssetContract extends Component {
                             <span >Asset Name</span>:
                         </TitleContainer>
                         <FillContainer>
-                            <Link to={"/token/" + this.props.transaction.contract.parameter.raw.Id}>
+                            <Link to={"/token/" + this.props.transaction.contract.parameter.raw.id}>
                                 <RedText >{TOKEN}</RedText>
                             </Link>
                         </FillContainer>

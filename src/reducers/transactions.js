@@ -4,66 +4,45 @@ import {
 	PAGE_TRANSACTIONS_INIT,
 	PAGE_TRANSACTIONS_UPDATE,
 	PAGE_TRANSACTIONS_TOTAL_UPDATE,
-	PAGE_TRANSACTIONS_LIMIT_UPDATE,
-	PAGE_TRANSACTIONS_START_UPDATE,
-	PAGE_TRANSACTIONS_BlOCK_INIT,
+	PAGE_TRANSACTIONS_LIMIT_UPDATE
 } from '../actions/transactions';
 
-const initTransactions = [];
+const initTransactions = {
+	transactions:[],
+	transactionPage:{
+		start_page:1,
+		start_item:0,
+		page_limit:10,
+		total_items:10000,
+		current_page:1
+	}
+};
 
 export function transactionsReducer(state = initTransactions, action) {
 	switch (action.type) {
 		case TRANSACTIONS_UPDATE:
-			return action.payload;
+			state = {...state, transactions: action.payload};
+			break;
 		case TRANSACTIONS_INIT:
-			return initTransactions;
-		default:
-			return state;
-	}
-}
-
-var initPageTransactions = {
-	start_page: 1,
-	start_item: 1,
-	page_limit: 10,
-	total_items: 5000,
-	current_page: 1,
-};
-
-
-
-export function pageTransactionsReducer(state = initPageTransactions, action) {
-	switch (action.type) {
-		case PAGE_TRANSACTIONS_BlOCK_INIT:
-			initPageTransactions.start_item = action.blockNumber;
-			state = initPageTransactions;
-			return state;
-			
+			break;
 		case PAGE_TRANSACTIONS_UPDATE:
-			initPageTransactions.current_page = action.payload;
-			initPageTransactions.start_item -= initPageTransactions.page_limit* (initPageTransactions.current_page - initPageTransactions.start_page) ;
-			initPageTransactions.start_page = action.payload;
-			initPageTransactions.total_items += initPageTransactions.current_page  % 500 === 0 ? 5000 : 0;
-			state = initPageTransactions;
-			return state;
+			state.transactionPage.current_page = action.payload;
+			state.transactionPage.start_item += (state.transactionPage.current_page-state.transactionPage.start_page)*state.transactionPage.page_limit;
+			state.transactionPage.start_page = action.payload;
+			break;
 		case PAGE_TRANSACTIONS_INIT:
-			return initPageTransactions;
+			break;
 		case PAGE_TRANSACTIONS_TOTAL_UPDATE:
-			initPageTransactions.total_items = action.payload;
-			state = initPageTransactions;
-			return state;
+			state.transactionPage.total_items = action.payload;
+			break;
 		case PAGE_TRANSACTIONS_LIMIT_UPDATE:
-			initPageTransactions.page_limit = action.payload;
-			initPageTransactions.start_page = 1;
-			initPageTransactions.start_item = 0;
-			initPageTransactions.current_page = 1;
-			state = initPageTransactions;
-			return state;
-		case PAGE_TRANSACTIONS_START_UPDATE:
-			initPageTransactions.start_item = action.payload;
-			state = initPageTransactions;
-			return state;
+			state.transactionPage.page_limit = action.payload;
+			state.transactionPage.start_page = 1;
+			state.transactionPage.start_item = 0;
+			state.transactionPage.current_page = 1;
+			break;
 		default:
-			return state;
+			break;
 	}
+	return state;
 }
