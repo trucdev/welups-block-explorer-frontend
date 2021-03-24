@@ -27,6 +27,7 @@
     "react-time-ago": "^6.2.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "solc": "^0.8.2",
     "styled-components": "^5.2.1",
     "tronweb": "^3.2.2",
     "web-vitals": "^0.2.4",
