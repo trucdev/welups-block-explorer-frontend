@@ -1,5 +1,7 @@
 import { notification } from 'antd';
 import Asset from '../api/asset';
+import { API_ADDR } from '../config/config';
+import { loadTransactionDetails } from './transaction';
 
 export const ISSUE_TRC10_NONE = 'ISSUE_TRC10_NONE';
 export const ISSUE_TRC10_REQUESTING = 'ISSUE_TRC10_REQUESTING';
@@ -68,7 +70,31 @@ export function issueTRC10(privKey,
 			});
 			return
 		}
-		//Success
-		dispatch(success(res.tranID));
+		let flag = false;
+		function checkTransactionStatus() {
+			if (flag == true) {
+				clearInterval(timer);
+				return;
+			}
+			fetch(`${API_ADDR}/transactions/${res.tranID}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				mode: 'cors',
+			}).then(res => res.json()).then((res) => {
+				flag = true
+				if (res.data.ret === "SUCESS") {
+					dispatch(success(res.tranID));
+				}
+				else {
+					dispatch(fail(res.tranID));
+				}
+			}).catch(err => {
+				console.log(err);
+				dispatch(fail(res.tranID));
+			});
+		}
+		var timer = setInterval(checkTransactionStatus, 3000);
 	}
 }

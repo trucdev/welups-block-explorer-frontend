@@ -8,6 +8,8 @@ import {
     reset,
     DEPLOY_CONTRACT_SUCCESS,
     DEPLOY_CONTRACT_REQUESTING,
+    DEPLOY_CONTRACT_FAIL,
+    DEPLOY_CONTRACT_NONE,
     compileContract,
     upload,
 } from '../../actions/deployContract';
@@ -112,7 +114,17 @@ class DeployContract extends Component {
                             ]}
                         />,
 					</div>}
-                {deployContractInfo.status !== DEPLOY_CONTRACT_SUCCESS &&
+                    {deployContractInfo.status === DEPLOY_CONTRACT_FAIL &&
+                        <div>
+                            <Result
+                                status="error"
+                                title={`Your transaction hasn't been issued, something must went wrong`}
+                                extra={[
+                                    <Button onClick={() => { this.props.resetDeployContract(); }}>New Transfer</Button>,
+                                ]}
+                            />,
+                        </div>}
+                {deployContractInfo.status === DEPLOY_CONTRACT_NONE &&
                     <Wrapper>
                         <Spin indicator={antIcon} tip="Processing..."  spinning={deployContractInfo.status === DEPLOY_CONTRACT_REQUESTING}>
                             <SubHeader>Upload and Compile</SubHeader>

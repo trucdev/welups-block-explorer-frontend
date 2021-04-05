@@ -7,7 +7,9 @@ import {
     freezeBalance,
     reset,
     FREEZE_BALANCE_REQUESTING,
-    FREEZE_BALANCE_SUCCESS
+    FREEZE_BALANCE_SUCCESS,
+    FREEZE_BALANCE_FAIL,
+    FREEZE_BALANCE_NONE,
 } from '../../actions/freezeBalance';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -70,8 +72,8 @@ const { Option } = Select;
 class FreezeBalance extends React.Component {
     componentDidMount() {
         this.props.reset();
-        var {prikeys, login} = this.props;
-        if((!prikeys.prikeys&&login.token!=="")||(prikeys.prikeys.length===0&&login.token!=="")){
+        var { prikeys, login } = this.props;
+        if ((!prikeys.prikeys && login.token !== "") || (prikeys.prikeys.length === 0 && login.token !== "")) {
             notification.warning({
                 message: 'Warning!',
                 description: "You have no private key, please add somes in private key management to perform transaction!",
@@ -88,7 +90,7 @@ class FreezeBalance extends React.Component {
     render() {
         const { freezeBalancee, login, prikeys } = this.props;
         const antIcon = <LoadingOutlined spin />;
-        if(login.token===""){
+        if (login.token === "") {
             return <Redirect to="/login" />
         }
         return (
@@ -110,11 +112,21 @@ class FreezeBalance extends React.Component {
                                 ]}
                             />,
                         </div>}
-                    {freezeBalancee.status !== FREEZE_BALANCE_SUCCESS && 
+                    {freezeBalancee.status === FREEZE_BALANCE_FAIL &&
+                        <div>
+                            <Result
+                                status="error"
+                                title={`Your transaction hasn't been issued, something must went wrong`}
+                                extra={[
+                                    <Button onClick={() => { this.props.reset(); }}>New Transfer</Button>,
+                                ]}
+                            />,
+                        </div>}
+                    {freezeBalancee.status === FREEZE_BALANCE_NONE &&
                         <StyledForm
                             layout="vertical"
                             size="large"
-                            onFinish = {this.onFinish}
+                            onFinish={this.onFinish}
                         >
                             <HeaderTitle>
                                 <Logo src={ACLogo} />
@@ -137,7 +149,7 @@ class FreezeBalance extends React.Component {
                                     placeholder="Select a private key"
                                     allowClear
                                 >
-                                    {prikeys.prikeys&&prikeys.prikeys.length!==0?prikeys.prikeys.map((value, index) => <Option value={value.prikey} key={index}>{value.name}</Option>):null}
+                                    {prikeys.prikeys && prikeys.prikeys.length !== 0 ? prikeys.prikeys.map((value, index) => <Option value={value.prikey} key={index}>{value.name}</Option>) : null}
                                 </Select>
                             </Item>
                             <TitleContainer>
@@ -146,7 +158,7 @@ class FreezeBalance extends React.Component {
                             <Item
                                 name="delegate_to"
                             >
-                                <Input/>
+                                <Input />
                             </Item>
                             <TitleContainer>
                                 <ContentTitle>Resource</ContentTitle>
@@ -180,7 +192,7 @@ class FreezeBalance extends React.Component {
                                     },
                                 ]}
                             >
-                                <StyleInputNumber/>
+                                <StyleInputNumber />
                             </Item>
                             <ButtonSubmit type="submit" htmlType="submit">Freeze</ButtonSubmit>
                         </StyledForm>
@@ -194,7 +206,7 @@ class FreezeBalance extends React.Component {
 const mapStateToProps = (state) => {
     return {
         freezeBalancee: state.freezeBalance,
-        prikeys:state.prikeyManagement,
+        prikeys: state.prikeyManagement,
         login: state.login,
     };
 };

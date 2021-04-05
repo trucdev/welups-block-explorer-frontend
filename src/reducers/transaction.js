@@ -32,6 +32,7 @@ export function transactionReducer(state = initTran, action) {
 				timestamp: action.payload.timestamp,
 				numOfBlocks: action.payload.num_of_blocks,
 				contract: action.payload.contract,
+				
 			};
 		case TRANSACTION_DETAIL_INIT:
 			return initTran;

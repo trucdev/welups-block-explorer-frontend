@@ -6,7 +6,7 @@ export const TRANSFER_NONE = 'TRANSFER_NONE';
 export const TRANSFER_REQUESTING = 'TRANSFER_REQUESTING';
 export const TRANSFER_SUCCESS = 'TRANSFER_SUCCESS';
 export const TRANSFER_FAIL = 'TRANSFER_FAIL';
-export function reset(){
+export function reset() {
 	return {
 		type: TRANSFER_NONE,
 	}
@@ -20,22 +20,25 @@ export function success(tranID) {
 	return {
 		type: TRANSFER_SUCCESS,
 		payload: {
-			tranID:tranID,
+			tranID: tranID,
 		},
 	}
 }
-export function fail() {
+export function fail(tranID) {
 	return {
 		type: TRANSFER_FAIL,
+		payload: {
+			tranID: tranID,
+		},
 	}
 }
 
 
 export function transferAsset(fromPrivKey, to, amount, assetName) {
-	return async (dispatch)=> {
+	return async (dispatch) => {
 		dispatch(request())
 		const res = await Asset.transfer(fromPrivKey, to, amount, assetName);
-		if (!res.result){
+		if (!res.result) {
 			dispatch(fail())
 			notification.error({
 				message: 'Failed!',
@@ -43,8 +46,32 @@ export function transferAsset(fromPrivKey, to, amount, assetName) {
 			});
 			return
 		}
-		//Success
-		dispatch(success(res.tranID));
+		let flag = false;
+		function checkTransactionStatus() {
+			if (flag == true) {
+				clearInterval(timer);
+				return;
+			}
+			fetch(`${API_ADDR}/transactions/${res.tranID}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				mode: 'cors',
+			}).then(res => res.json()).then((res) => {
+				flag = true
+				if (res.data.ret === "SUCESS") {
+					dispatch(success(res.tranID));
+				}
+				else {
+					dispatch(fail(res.tranID));
+				}
+			}).catch(err => {
+				console.log(err);
+				dispatch(fail(res.tranID));
+			});
+		}
+		var timer = setInterval(checkTransactionStatus, 3000);
 	}
 }
 
@@ -71,7 +98,7 @@ export function loadTokens(offset, limit) {
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
 			dispatch(updatePageTokensTotal(res.data[0].total_assets));
-			var tokens = res.data?res.data.map((token, index)=>{return token.name}):[];
+			var tokens = res.data ? res.data.map((token, index) => { return token.name }) : [];
 			dispatch(updateTokens(tokens));
 		}).catch(err => {
 			console.log(err);

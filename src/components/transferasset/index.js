@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Form, Input, Button, Select, Spin, Result, InputNumber, notification  } from 'antd';
+import { Form, Input, Button, Select, Spin, Result, InputNumber, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import {
     transferAsset,
     reset,
     TRANSFER_REQUESTING,
     TRANSFER_SUCCESS,
+    TRANSFER_FAIL,
+    TRANSFER_NONE,
     loadTokens,
     updatePageTokens
 } from '../../actions/transferasset';
@@ -76,19 +78,19 @@ class TransferAsset extends React.Component {
             to: "",
             assetName: "ACG",
             amount: "",
-            loading:false
+            loading: false
         };
     }
     componentDidMount() {
-        var {prikeys, transferInfo, login} = this.props;
-        if((!prikeys.prikeys&&login.token!=="")||(prikeys.prikeys.length===0&&login.token!=="")){
+        var { prikeys, transferInfo, login } = this.props;
+        if ((!prikeys.prikeys && login.token !== "") || (prikeys.prikeys.length === 0 && login.token !== "")) {
             notification.warning({
                 message: 'Warning!',
                 description: "You have no private key, please add somes in private key management to perform transaction!",
             });
         }
         this.props.resetTransferAsset();
-        if(transferInfo.tokens.length===0){
+        if (transferInfo.tokens.length === 0) {
             this.props.loadTokens(transferInfo.pageToken.start_item, transferInfo.pageToken.page_limit);
         }
     }
@@ -127,47 +129,58 @@ class TransferAsset extends React.Component {
             privateKey: prikey
         }));
     };
-    onScroll = (e)=>{
+    onScroll = (e) => {
         var target = e.target;
-        var {transferInfo} = this.props;
-        if (!this.state.loading && target.scrollTop + target.offsetHeight === target.scrollHeight&&transferInfo.pageToken.start_item<=transferInfo.pageToken.total_items) {
-            this.setState({loading: true}, ()=>{
+        var { transferInfo } = this.props;
+        if (!this.state.loading && target.scrollTop + target.offsetHeight === target.scrollHeight && transferInfo.pageToken.start_item <= transferInfo.pageToken.total_items) {
+            this.setState({ loading: true }, () => {
                 target.scrollTo(0, target.scrollHeight)
-                setTimeout(()=>{
-                    this.props.updatePageTokens(); 
+                setTimeout(() => {
+                    this.props.updatePageTokens();
                     this.props.loadTokens(transferInfo.pageToken.start_item, transferInfo.pageToken.page_limit);
-                },1000)
+                }, 1000)
             })
         }
     }
 
     render() {
         const { transferInfo, prikeys, login } = this.props;
-        if(login.token===""){
+        if (login.token === "") {
             return <Redirect to="/login" />
         }
-        let assetNames = transferInfo.tokens?transferInfo.tokens:null;
+        let assetNames = transferInfo.tokens ? transferInfo.tokens : null;
         const antIcon = <LoadingOutlined spin />;
+        console.log(transferInfo)
         return (
             <Wrapper>
                 <Spin indicator={antIcon} tip="Processing..." spinning={transferInfo.status === TRANSFER_REQUESTING}>
                     {transferInfo.status === TRANSFER_SUCCESS &&
                         <div>
                             <Result
-                                status="success"
-                                title={`Your transaction has been issued successfully!`}
-                                subTitle={`You can check it at transaction ${transferInfo.tranID}`}
-                                extra={[
-                                    <Button type="primary">
-                                        <Link to={`/transaction/${transferInfo.tranID}`} >
-                                            Go to details
+								status="success"
+								title={`Your TRC10 has been issued successfully!`}
+								subTitle={`You can check it at transaction ${transferInfo.tranID}`}
+								extra={[
+									<Button type="primary">
+										<Link to={`/transaction/${transferInfo.tranID}`} >
+											Details
                                     </Link>
-                                    </Button>,
+									</Button>,
+									<Button onClick={() => { this.props.resetTransferAsset(); }}>New TRC10</Button>,
+								]}
+							/>,
+                        </div>}
+                        {transferInfo.status === TRANSFER_FAIL &&
+                        <div>
+                            <Result
+                                status="error"
+                                title={`Your transaction hasn't been issued, something must went wrong`}
+                                extra={[
                                     <Button onClick={() => { this.props.resetTransferAsset(); }}>New Transfer</Button>,
                                 ]}
                             />,
                         </div>}
-                    {transferInfo.status !== TRANSFER_SUCCESS && 
+                    {transferInfo.status === TRANSFER_NONE &&
                         <StyledForm
                             layout="vertical"
                             size="large"
@@ -194,7 +207,7 @@ class TransferAsset extends React.Component {
                                     allowClear
                                     onChange={this.changePrivateKey}
                                 >
-                                    {prikeys.prikeys&&prikeys.prikeys.length!==0?prikeys.prikeys.map((value, index) => <Option value={value.prikey} key={index}>{value.name}</Option>):null}
+                                    {prikeys.prikeys && prikeys.prikeys.length !== 0 ? prikeys.prikeys.map((value, index) => <Option value={value.prikey} key={index}>{value.name}</Option>) : null}
                                 </Select>
                             </Item>
                             <TitleContainer>
@@ -234,7 +247,7 @@ class TransferAsset extends React.Component {
                                     onPopupScroll={this.onScroll}
                                 >
                                     <Option value="ACG" key="ACG">ACG</Option>
-                                    {!this.state.loading ? assetNames.map((value, index) => <Option value={value} key={index}>{value}</Option>):<Option key="loading">Loading...</Option>}
+                                    {!this.state.loading ? assetNames.map((value, index) => <Option value={value} key={index}>{value}</Option>) : <Option key="loading">Loading...</Option>}
                                 </Select>
                             </Item>
                             <TitleContainer>
@@ -250,7 +263,7 @@ class TransferAsset extends React.Component {
                                 ]}
                             >
                                 <StyledInputNumber min={0}
-                                     value={this.state.amount} onChange={this.changeAmount}
+                                    value={this.state.amount} onChange={this.changeAmount}
                                 />
                             </Item>
 
@@ -273,7 +286,7 @@ class TransferAsset extends React.Component {
 const mapStateToProps = (state) => {
     return {
         transferInfo: state.transferAsset,
-        prikeys:state.prikeyManagement,
+        prikeys: state.prikeyManagement,
         login: state.login,
     };
 };
