@@ -1,129 +1,137 @@
-import Asset from '../api/asset';
-import { notification } from 'antd';
-import { API_ADDR } from '../config/config';
+import Asset from "../api/asset";
+import { notification } from "antd";
+import { API_ADDR } from "../config/config";
 
-export const TRANSFER_NONE = 'TRANSFER_NONE';
-export const TRANSFER_REQUESTING = 'TRANSFER_REQUESTING';
-export const TRANSFER_SUCCESS = 'TRANSFER_SUCCESS';
-export const TRANSFER_FAIL = 'TRANSFER_FAIL';
+export const TRANSFER_NONE = "TRANSFER_NONE";
+export const TRANSFER_REQUESTING = "TRANSFER_REQUESTING";
+export const TRANSFER_SUCCESS = "TRANSFER_SUCCESS";
+export const TRANSFER_FAIL = "TRANSFER_FAIL";
 export function reset() {
-	return {
-		type: TRANSFER_NONE,
-	}
+  return {
+    type: TRANSFER_NONE,
+  };
 }
 export function request() {
-	return {
-		type: TRANSFER_REQUESTING,
-	}
+  return {
+    type: TRANSFER_REQUESTING,
+  };
 }
 export function success(tranID) {
-	return {
-		type: TRANSFER_SUCCESS,
-		payload: {
-			tranID: tranID,
-		},
-	}
+  return {
+    type: TRANSFER_SUCCESS,
+    payload: {
+      tranID: tranID,
+    },
+  };
 }
 export function fail(tranID) {
-	return {
-		type: TRANSFER_FAIL,
-		payload: {
-			tranID: tranID,
-		},
-	}
+  return {
+    type: TRANSFER_FAIL,
+    payload: {
+      tranID: tranID,
+    },
+  };
 }
-
 
 export function transferAsset(fromPrivKey, to, amount, assetName) {
-	return async (dispatch) => {
-		dispatch(request())
-		const res = await Asset.transfer(fromPrivKey, to, amount, assetName);
-		if (!res.result) {
-			dispatch(fail())
-			notification.error({
-				message: 'Failed!',
-				description: `Transfer has failed`,
-			});
-			return
-		}
-		let flag = false;
-		function checkTransactionStatus() {
-			if (flag == true) {
-				clearInterval(timer);
-				return;
-			}
-			fetch(`${API_ADDR}/transactions/${res.tranID}`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				mode: 'cors',
-			}).then(res => res.json()).then((res) => {
-				flag = true
-				if (res.data.ret === "SUCESS") {
-					dispatch(success(res.tranID));
-				}
-				else {
-					dispatch(fail(res.tranID));
-				}
-			}).catch(err => {
-				console.log(err);
-				dispatch(fail(res.tranID));
-			});
-		}
-		var timer = setInterval(checkTransactionStatus, 3000);
-	}
+  return async (dispatch) => {
+    dispatch(request());
+    const res1 = await Asset.transfer(fromPrivKey, to, amount, assetName);
+    if (!res1.result) {
+      dispatch(fail());
+      notification.error({
+        message: "Failed!",
+        description: `Transfer has failed`,
+      });
+      return;
+    }
+    let flag = false;
+    let timer;
+    function checkTransactionStatus() {
+      if (flag == true) {
+        clearInterval(timer);
+        return;
+      }
+      fetch(`${API_ADDR}/transactions/${res1.tranID}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          flag = true;
+          if (res.data.ret && res.data.ret === "SUCESS") {
+            dispatch(success(res1.tranID));
+          } else {
+            dispatch(fail(res1.tranID));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    timer = setInterval(checkTransactionStatus, 6000);
+  };
 }
 
-export const TRANSFER_TOKENS_INIT = 'TRANSFER_TOKENS_INIT';
-export const TRANSFER_TOKENS_UPDATE = 'TRANSFER_TOKENS_UPDATE';
-
+export const TRANSFER_TOKENS_INIT = "TRANSFER_TOKENS_INIT";
+export const TRANSFER_TOKENS_UPDATE = "TRANSFER_TOKENS_UPDATE";
 
 export function initTokens() {
-	return {
-		type: TRANSFER_TOKENS_INIT,
-	}
+  return {
+    type: TRANSFER_TOKENS_INIT,
+  };
 }
 export function updateTokens(tokens) {
-	return {
-		type: TRANSFER_TOKENS_UPDATE,
-		payload: tokens
-	}
+  return {
+    type: TRANSFER_TOKENS_UPDATE,
+    payload: tokens,
+  };
 }
 
 export function loadTokens(offset, limit) {
-	return (dispatch) => {
-		fetch(`${API_ADDR}/assets?offset=${offset}&limit=${limit}`, {
-			method: 'GET',
-			mode: 'cors',
-		}).then(res => res.json()).then((res) => {
-			dispatch(updatePageTokensTotal(res.data[0].total_assets));
-			var tokens = res.data ? res.data.map((token, index) => { return token.name }) : [];
-			dispatch(updateTokens(tokens));
-		}).catch(err => {
-			console.log(err);
-		})
-	}
+  return (dispatch) => {
+    fetch(`${API_ADDR}/assets?offset=${offset}&limit=${limit}`, {
+      method: "GET",
+      mode: "cors",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        dispatch(updatePageTokensTotal(res.data[0].total_assets));
+        var tokens = res.data
+          ? res.data.map((token, index) => {
+              return token.name;
+            })
+          : [];
+        dispatch(updateTokens(tokens));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 }
 
-export const TRANSFER_PAGE_TOKENS_INIT = 'TRANSFER_PAGE_TOKENS_INIT';
-export const TRANSFER_PAGE_TOKENS_UPDATE = 'TRANSFER_PAGE_TOKENS_UPDATE';
-export const TRANSFER_PAGE_TOKENS_TOTAL_UPDATE = 'TRANSFER_PAGE_TOKENS_TOTAL_UPDATE';
+export const TRANSFER_PAGE_TOKENS_INIT = "TRANSFER_PAGE_TOKENS_INIT";
+export const TRANSFER_PAGE_TOKENS_UPDATE = "TRANSFER_PAGE_TOKENS_UPDATE";
+export const TRANSFER_PAGE_TOKENS_TOTAL_UPDATE =
+  "TRANSFER_PAGE_TOKENS_TOTAL_UPDATE";
 
 export function initPageTokens() {
-	return {
-		type: TRANSFER_PAGE_TOKENS_INIT,
-	}
+  return {
+    type: TRANSFER_PAGE_TOKENS_INIT,
+  };
 }
 export function updatePageTokens() {
-	return {
-		type: TRANSFER_PAGE_TOKENS_UPDATE,
-	}
+  return {
+    type: TRANSFER_PAGE_TOKENS_UPDATE,
+  };
 }
 
 export function updatePageTokensTotal(total) {
-	return {
-		type: TRANSFER_PAGE_TOKENS_TOTAL_UPDATE,
-		payload: total
-	}
+  return {
+    type: TRANSFER_PAGE_TOKENS_TOTAL_UPDATE,
+    payload: total,
+  };
 }
