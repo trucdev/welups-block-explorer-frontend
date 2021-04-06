@@ -2,8 +2,8 @@ name: Prod Deploy
 
 on:
   push:
-    branches:
-    - 'releases/**'
+    tags:
+    - '**'
 
 jobs:
   build:
