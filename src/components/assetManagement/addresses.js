@@ -28,31 +28,31 @@ const LineBreak = styled.div`
 	word-break: break-all;
 `;
 const columns = [
-    {
+	{
 		title: 'No.',
 		key: 'no',
 		render: (value, item, index) => (index + 1),
 		fixed: 'left',
 		width: 70,
 	},
-    {
-	    title: 'Asset Name',
-	    dataIndex: 'name',
-	    key: 'name',
-	    render: record => <StyledLink to={"/token/" + record} target="_blank">{record}</StyledLink>,
-    },
-    {
-	    title: 'Asset Balance',
-	    dataIndex: 'balance',
-	    key: 'balance',
-	    render: record => <LineBreak>{currencyFormat(record)}</LineBreak>,
-    }
+	{
+		title: 'Asset Name',
+		dataIndex: 'name',
+		key: 'name',
+		render: record => <StyledLink to={"/token/" + record} target="_blank">{record}</StyledLink>,
+	},
+	{
+		title: 'Asset Balance',
+		dataIndex: 'balance',
+		key: 'balance',
+		render: record => <LineBreak>{currencyFormat(record)}</LineBreak>,
+	}
 ];
 
 class Addresses extends React.Component {
 	constructor(props) {
 		super(props);
-		let { login} = this.props;
+		let { login } = this.props;
 		if (login.token !== "") {
 			this.props.loadAssetApi(login.id, login.token);
 		}
@@ -61,18 +61,18 @@ class Addresses extends React.Component {
 		}
 	}
 
-	onChange = (values)=>{
-		if(values.length>this.state.openTab){
-			let addr = values[values.length-1];
+	onChange = (values) => {
+		if (values.length > this.state.openTab) {
+			let addr = values[values.length - 1];
 			this.props.loadAssetDetails(addr);
 		}
 		this.setState({
-            openTab:values.length
-        });
+			openTab: values.length
+		});
 	}
 
 	render() {
-		let { assetManagement} = this.props;
+		let { assetManagement } = this.props;
 		let addresses = [];
 		if (Object.keys(assetManagement.addresses).length === 0 && assetManagement.addresses.constructor === Object) {
 
@@ -82,35 +82,36 @@ class Addresses extends React.Component {
 			});
 			addresses.sort();
 		}
+
 		return (
 			<StyleList>
 				<div>
-					{Object.keys(assetManagement.addresses).length !== 0?<StyleCollapse expandIconPosition="right" onChange={this.onChange}>
-						{addresses.map((acc, index)=>{
+					{Object.keys(assetManagement.addresses).length !== 0 ? <StyleCollapse expandIconPosition="right" onChange={this.onChange}>
+						{addresses.map((acc, index) => {
 							let info = assetManagement.addresses[acc];
 							let assets = [];
-							if (info&&info.asset !== null && info.asset !== undefined) {
-								Object.entries(info.asset).forEach(([key, value]) => {
-									assets.push({name:key,balance:value});
+							if (info && info.assets !== null && info.assets !== undefined) {
+								Object.entries(info.assets).forEach(([key, value]) => {
+									assets.push({ name: key, balance: value });
 								});
 							}
 							return <Collapse.Panel header={<StyledLink to={"/account/" + acc}>{acc}</StyledLink>} key={acc} >
-									{info?
-										<div>
-											<StyleRowACG>
-	                                            <ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
-		                                            ACG balance:
+								{info ?
+									<div>
+										<StyleRowACG>
+											<ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
+												ACG balance:
 		                                        </ColHead>
-		                                        <Col xs={14} sm={20} md={20} lg={20} xl={22}>
-		                                            {currencyFormat(info.trxBalance/Math.pow(10,6))+" ACG"}
-		                                        </Col>
-		                                    </StyleRowACG>
-		                                    <Table rowKey="name" columns={columns} dataSource={assets} />
-		                                </div>
-	                                :<Skeleton active />}
-							    </Collapse.Panel>;
+											<Col xs={14} sm={20} md={20} lg={20} xl={22}>
+												{currencyFormat(info.token_balance / Math.pow(10, 6)) + " ACG"}
+											</Col>
+										</StyleRowACG>
+										<Table rowKey="name" columns={columns} dataSource={assets} />
+									</div>
+									: <Skeleton active />}
+							</Collapse.Panel>;
 						})}
-					</StyleCollapse>:null}
+					</StyleCollapse> : null}
 				</div>
 			</StyleList>
 		);

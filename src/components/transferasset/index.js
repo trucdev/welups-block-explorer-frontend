@@ -150,7 +150,6 @@ class TransferAsset extends React.Component {
         }
         let assetNames = transferInfo.tokens ? transferInfo.tokens : null;
         const antIcon = <LoadingOutlined spin />;
-        console.log(transferInfo)
         return (
             <Wrapper>
                 <Spin indicator={antIcon} tip="Processing..." spinning={transferInfo.status === TRANSFER_REQUESTING}>

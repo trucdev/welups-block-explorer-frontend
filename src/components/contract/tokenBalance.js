@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Table} from 'antd';
-import {Div, StyledLink} from './style';
+import { Table } from 'antd';
+import { Div, StyledLink } from './style';
 
 const columns = [
 	{
@@ -15,7 +15,7 @@ const columns = [
 		title: 'Token',
 		dataIndex: 'token',
 		key: 'token',
-		render: record => <StyledLink key={record} to={"/token/"+record} target="_blank">{record}</StyledLink>
+		render: record => <StyledLink key={record} to={"/token/" + record} target="_blank">{record}</StyledLink>
 	},
 	{
 		title: 'Balance',
@@ -24,16 +24,16 @@ const columns = [
 	}
 ];
 
-class TokenBalance extends Component{
-	render(){
-		let {contract} = this.props;
-		var entries = contract.assets?Object.entries(contract.assets):null;
+class TokenBalance extends Component {
+	render() {
+		let { contract } = this.props;
+		var entries = contract.assets ? Object.entries(contract.assets) : null;
 		var newTest = [];
-		if(entries){
-			Array.from(entries, (val,ind) => {
+		if (entries) {
+			Array.from(entries, (val, ind) => {
 				var item = {};
-				Array.from(val, (value,index) => {
-					index===0?item.token=value:item.balance=value; 
+				Array.from(val, (value, index) => {
+					index === 0 ? item.token = value : item.balance = value;
 					return null;
 				});
 				newTest.push(item);
@@ -43,9 +43,9 @@ class TokenBalance extends Component{
 		return (
 			<div>
 				<Div>
-			    	<span>A Total of</span> {newTest?newTest.length:null} <span>Tokens</span>
-			    </Div>
-			    <Table columns={columns}
+					<span>A Total of</span> {newTest ? newTest.length : null} <span>Tokens</span>
+				</Div>
+				<Table columns={columns}
 					dataSource={newTest}
 					rowKey="token"
 					scroll={{ x: 1300 }} sticky
