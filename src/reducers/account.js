@@ -22,8 +22,10 @@ const initAcc = {
 }
 
 export function accountReducer(state = initAcc, action) {
+	
 	switch (action.type) {
 		case ACCOUNT_DETAIL_UDPATE:
+			const froBalance = (accumulator, currentValue) => accumulator + currentValue.frozen_balance;
 			return {
 				...state,
 				name: action.payload.name,
@@ -35,14 +37,14 @@ export function accountReducer(state = initAcc, action) {
 				bandwidthUsed:action.payload.bandwidthUsed,
 				bandwidthTotal:action.payload.bandwidthTotal,
 				createTime:action.payload.create_time,
-				frozenBalance:action.payload.frozen_balance,
+				frozenBalance:action.payload.frozen_balance.reduce(froBalance, 0),
 				energyTotal:action.payload.energy_total,
 				energyUsed:action.payload.energy_used,
 				transNum:action.payload.num_of_trans,
 				asset:action.payload.assets||{},
 				bandwidthTotal: action.payload.band_width_total,
-				bandwidthUsed: action.payload.band_width_used,
-				bandwidthLeft: action.payload.band_width_total - action.payload.band_width_used,
+				bandwidthUsed: action.payload.band_width_used?action.payload.band_width_used:'0',
+				bandwidthLeft: action.payload.band_width_used?action.payload.band_width_total - action.payload.band_width_used:action.payload.band_width_total,
 				energyTotal: action.payload.energy_total,
 				energyUsed: action.payload.energy_used,
 				energyLeft: action.payload.energy_total - action.payload.energy_used,
