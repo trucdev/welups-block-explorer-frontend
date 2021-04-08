@@ -37,11 +37,10 @@ const Item = styled(Form.Item)`
   font-weight: bold;
 `;
 const Wrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+	width:100%;
+    height:100%;
+    justify-content: center;
 `;
 const Logo = styled.img`
   height: 66px;
@@ -223,7 +222,7 @@ class TransferAsset extends React.Component {
               ,
             </div>
           )}
-          {transferInfo.status === TRANSFER_NONE && (
+          {(transferInfo.status !== TRANSFER_FAIL&&transferInfo.status !== TRANSFER_SUCCESS )&& (
             <StyledForm layout="vertical" size="large">
               <HeaderTitle>
                 <Logo src={ACLogo} />
