@@ -159,8 +159,8 @@ class TransactionsList extends React.Component {
 						current={transactions.transactionPage.start_page}
 						total={transactions.transactionPage.total_items}
 						onChange={this.onChange}
-						showSizeChanger
-						showQuickJumper />
+						showSizeChanger={false}
+						showQuickJumper={false} />
 				</PagiContainer>
 			</Container>
 
