@@ -112,7 +112,7 @@ class BlockTable extends React.Component {
 						current={pageBlocks.start_page} 
 						total={pageBlocks.total_items} 
 						onChange={this.onChange}
-						showSizeChanger
+						showSizeChanger={false}
 						showQuickJumper/>
 				</Pagin>
 			</Wrapper>
