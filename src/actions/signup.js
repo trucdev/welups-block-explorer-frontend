@@ -50,10 +50,12 @@ export function signUp(email, password) {
             case "error":
                 dispatch(fail());
                 notification.warning({
-                    message: 'Account existed',
-                    description: ``,
+                    message: 'Error!',
+                    description: result.message?result.message:"",
                 });
-            break;
+                break;
+            default:
+                break;
         }
 
     }

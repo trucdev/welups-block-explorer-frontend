@@ -56,7 +56,6 @@ class SignUp extends React.Component {
         const { signUpInfo } = this.props;
         switch(signUpInfo.status){
             case "SIGNUP_SUCCESS":  return <Redirect to="/activate-account" />;
-            case "SIGNUP_FAIL": return <Redirect to="/login" />;
         }
         const antIcon = <LoadingOutlined spin />;
         return (
