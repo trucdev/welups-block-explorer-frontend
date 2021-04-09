@@ -79,7 +79,7 @@ export function issueTRC10(
     let flag = false;
     let timer;
     function checkTransactionStatus() {
-      if (flag == true) {
+      if (flag) {
         clearInterval(timer);
         return;
       }
@@ -92,11 +92,13 @@ export function issueTRC10(
       })
         .then((res) => res.json())
         .then((res) => {
-          flag = true;
-          if (res.data.ret && res.data.ret === "SUCESS") {
-            dispatch(success(res1.tranID));
-          } else {
-            dispatch(fail(res1.tranID));
+          if(res.status&&res.status==="success"){
+            if (res.data.ret && res.data.ret === "SUCESS") {
+              dispatch(success(res1.tranID));
+            } else {
+              dispatch(fail(res1.tranID));
+            }
+            flag = true;
           }
         })
         .catch((err) => {

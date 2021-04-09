@@ -48,7 +48,7 @@ export function freezeBalance(privateKey, to, frozenBalance, resource) {
     let flag = false;
     let timer;
     function checkTransactionStatus() {
-      if (flag == true) {
+      if (flag) {
         clearInterval(timer);
         return;
       }
@@ -61,11 +61,13 @@ export function freezeBalance(privateKey, to, frozenBalance, resource) {
       })
         .then((res) => res.json())
         .then((res) => {
-          flag = true;
-          if (res.data.ret && res.data.ret === "SUCESS") {
-            dispatch(success(res1.tranID));
-          } else {
-            dispatch(fail(res1.tranID));
+          if(res.status&&res.status==="success"){
+            if (res.data.ret && res.data.ret === "SUCESS") {
+              dispatch(success(res1.tranID));
+            } else {
+              dispatch(fail(res1.tranID));
+            }
+            flag = true;
           }
         })
         .catch((err) => {
