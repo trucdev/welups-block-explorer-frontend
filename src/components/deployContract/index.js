@@ -124,7 +124,7 @@ class DeployContract extends Component {
                                 ]}
                             />,
                         </div>}
-                {deployContractInfo.status === DEPLOY_CONTRACT_NONE &&
+                {(deployContractInfo.status !== DEPLOY_CONTRACT_SUCCESS && deployContractInfo.status !== DEPLOY_CONTRACT_FAIL) &&
                     <Wrapper>
                         <Spin indicator={antIcon} tip="Processing..."  spinning={deployContractInfo.status === DEPLOY_CONTRACT_REQUESTING}>
                             <SubHeader>Upload and Compile</SubHeader>

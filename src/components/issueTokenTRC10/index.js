@@ -112,7 +112,7 @@ class IssueTokenTRC10 extends Component {
                                 ]}
                             />,
                         </div>}
-					{issueTokenInfo.status === ISSUE_TRC10_NONE &&
+					{(issueTokenInfo.status !== ISSUE_TRC10_SUCCESS && issueTokenInfo.status !== ISSUE_TRC10_FAIL) &&
 						<Wrapper>
 							<Form
 								layout="vertical"

@@ -122,7 +122,7 @@ class FreezeBalance extends React.Component {
                                 ]}
                             />,
                         </div>}
-                    {freezeBalancee.status === FREEZE_BALANCE_NONE &&
+                    {(freezeBalancee.status !== FREEZE_BALANCE_SUCCESS &&freezeBalancee.status !== FREEZE_BALANCE_FAIL) &&
                         <StyledForm
                             layout="vertical"
                             size="large"
