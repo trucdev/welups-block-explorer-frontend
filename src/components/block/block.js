@@ -29,7 +29,7 @@ class Block extends Component {
 					<Row>
 						<Col>
 							<h2>
-								<span>BLOCK</span>
+								<h3>BLOCK</h3>
 							</h2>
 						</Col>
 					</Row>

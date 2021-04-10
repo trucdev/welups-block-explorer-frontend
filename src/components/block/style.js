@@ -66,14 +66,14 @@ export const StatusTag = styled.span`
 
 export const BadgeGreen = styled(Badge)`
     .ant-badge-count {
-        background-color: #E1F3E0;
+        background-color: #97e9a4;
         color: black
     }  
 `;
 
 export const BadgeRed = styled(Badge)`
     .ant-badge-count {
-        background-color: #f58078;
+        background-color: #db736f;
         color: black
     }  
 `;
