@@ -24,8 +24,8 @@ export function loadTokens(offset, limit) {
 			method: 'GET',
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
-			dispatch(updatePageTokensTotal(res.data[0].total_assets));
-			dispatch(updateTokens(res.data));
+			dispatch(updatePageTokensTotal(res.data.total_assets));
+			dispatch(updateTokens(res.data.result));
 		}).catch(err => {
 			console.log(err);
 		})

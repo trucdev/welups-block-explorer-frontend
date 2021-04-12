@@ -32,27 +32,21 @@ var initPageBlocks = {
 export function pageBlocksReducer(state = initPageBlocks, action) {
 	switch (action.type) {
 		case PAGE_BLOCKS_UPDATE:
-			initPageBlocks.current_page = action.payload;
-			initPageBlocks.start_item -= (initPageBlocks.current_page-initPageBlocks.start_page)*initPageBlocks.page_limit;
-			initPageBlocks.start_page = action.payload;
-			state = initPageBlocks;
+			state.current_page = action.payload;
+			state.start_item -= (state.current_page-state.start_page)*state.page_limit;
+			state.start_page = action.payload;
 			return state;
 		case PAGE_BLOCKS_INIT:
 			return initPageBlocks;
 		case PAGE_BLOCKS_TOTAL_UPDATE:
-			initPageBlocks.total_items = action.payload;
-			state = initPageBlocks;
+			state.total_items = action.payload;
 			return state;
 		case PAGE_BLOCKS_LIMIT_UPDATE:
-			initPageBlocks.page_limit = action.payload;
-			initPageBlocks.start_page = 1;
-			initPageBlocks.start_item = 0;
-			initPageBlocks.current_page = 1;
-			state = initPageBlocks;
+			state.start_item -= (action.payload-state.page_limit)*(state.current_page-1);
+			state.page_limit = action.payload;
 			return state;
 		case PAGE_BLOCKS_START_UPDATE:
-			initPageBlocks.start_item = action.payload;
-			state = initPageBlocks;
+			state.start_item = action.payload;
 			return state;
 		default:
 			return state;

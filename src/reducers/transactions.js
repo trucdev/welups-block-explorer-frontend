@@ -37,9 +37,7 @@ export function transactionsReducer(state = initTransactions, action) {
 			break;
 		case PAGE_TRANSACTIONS_LIMIT_UPDATE:
 			state.transactionPage.page_limit = action.payload;
-			state.transactionPage.start_page = 1;
-			state.transactionPage.start_item = 0;
-			state.transactionPage.current_page = 1;
+			state.transactionPage.start_item = (state.transactionPage.current_page-1)*state.transactionPage.page_limit;
 			break;
 		default:
 			break;

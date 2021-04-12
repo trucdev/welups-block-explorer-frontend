@@ -23,33 +23,6 @@ const Pagin = styled.div`
 	margin-top: 15px;
 	text-align: right!important;
 `;
-const columns = [
-	{
-		title: 'No.',
-		key: 'no',
-		render: (value, item, index) => (index + 1),
-		fixed: 'left',
-		width: 70,
-	},
-	{
-		title: 'Contract address',
-		dataIndex: 'addr',
-		key:'addr',
-		render: text => <StyledLink key={text} to={`/contract/${text}`}>{text}</StyledLink>,
-	},
-	{
-		title: 'Name',
-		key: 'name',
-		dataIndex: 'name',
-	},
-	{
-		title: 'Owner Address',
-		dataIndex: 'owner_addr',
-		render: text => <StyledLink key={text} to={`/account/${text}`}>{text}</StyledLink>,
-		key: 'owner_addr',
-	},
-];
-
 
 class ContractTable extends React.Component {
 	componentDidMount() {
@@ -68,6 +41,32 @@ class ContractTable extends React.Component {
 
 	render() {
 		var {contracts} = this.props;
+		const columns = [
+			{
+				title: 'No.',
+				key: 'no',
+				render: (value, item, index) => (index + 1 + (contracts.contractPage.current_page - 1)*contracts.contractPage.page_limit),
+				fixed: 'left',
+				width: 70,
+			},
+			{
+				title: 'Contract address',
+				dataIndex: 'addr',
+				key:'addr',
+				render: text => <StyledLink key={text} to={`/contract/${text}`}>{text}</StyledLink>,
+			},
+			{
+				title: 'Name',
+				key: 'name',
+				dataIndex: 'name',
+			},
+			{
+				title: 'Owner Address',
+				dataIndex: 'owner_addr',
+				render: text => <StyledLink key={text} to={`/account/${text}`}>{text}</StyledLink>,
+				key: 'owner_addr',
+			},
+		];
 		return (
 			<Wrapper>
 				<LeftHeader>List of Tokens</LeftHeader>

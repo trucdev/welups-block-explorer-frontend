@@ -26,7 +26,7 @@ export function loadBlocks(offset, limit) {
 			mode: 'cors',
 		}).then(res => res.json()).then((res) => {
 			if(offset===0){
-				dispatch(updatePageBlocksTotal(res.data[0].num));
+				dispatch(updatePageBlocksTotal(res.data[0].num+1));
 				dispatch(updatePageBlocksStart(res.data[0].num));
 			}
 			dispatch(updateBlocks(res.data));

@@ -24,40 +24,6 @@ const Pagin = styled.div`
 	margin-top: 15px;
 	text-align: right!important;
 `;
-const columns = [
-	{
-		title: 'No.',
-		key: 'no',
-		render: (value, item, index) => (index + 1),
-		fixed: 'left',
-		width: 70,
-	},
-	{
-		title: 'ID',
-		key: 'id',
-		render: record => <StyledLink key={record.id} to={`/token/${record.id}`}>{record.id}</StyledLink>,
-		width: 160,
-	},
-	{
-		title: 'Name',
-		key: 'name',
-		render: record => <StyledLink key={record.name} to={`/token/${record.id}`}>{record.name}</StyledLink>,
-	},
-	{
-		title: 'Abbreviation',
-		render: record => <StyledLink key={record.abbr} to={`/token/${record.id}`}>{record.abbr}</StyledLink>,
-		key: 'abbr',
-	},
-	{
-		title: 'Total Supply',
-		dataIndex: 'total_supply',
-		key: 'total_supply',
-		render: record => { var text = record?currencyFormat(record):null;
-							return text;
-						}
-	},
-];
-
 
 class TokenTable extends React.Component {
 	componentDidMount() {
@@ -76,6 +42,39 @@ class TokenTable extends React.Component {
 
 	render() {
 		var {tokens, pageTokens} = this.props;
+		const columns = [
+			{
+				title: 'No.',
+				key: 'no',
+				render: (value, item, index) => (index + 1 + (pageTokens.current_page - 1)*pageTokens.page_limit),
+				fixed: 'left',
+				width: 70,
+			},
+			{
+				title: 'ID',
+				key: 'id',
+				render: record => <StyledLink key={record.id} to={`/token/${record.id}`}>{record.id}</StyledLink>,
+				width: 160,
+			},
+			{
+				title: 'Name',
+				key: 'name',
+				render: record => <StyledLink key={record.name} to={`/token/${record.id}`}>{record.name}</StyledLink>,
+			},
+			{
+				title: 'Abbreviation',
+				render: record => <StyledLink key={record.abbr} to={`/token/${record.id}`}>{record.abbr}</StyledLink>,
+				key: 'abbr',
+			},
+			{
+				title: 'Total Supply',
+				dataIndex: 'total_supply',
+				key: 'total_supply',
+				render: record => { var text = record?currencyFormat(record):null;
+									return text;
+								}
+			},
+		];
 		return (
 			<Wrapper>
 				<LeftHeader>List of Tokens</LeftHeader>

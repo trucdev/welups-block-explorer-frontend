@@ -37,46 +37,7 @@ const BadgeRed = styled(Badge)`
         color: black
     }  
 `;
-const confirm = 19;
-const columns = [
-	{
-		title: 'No.',
-		key: 'no',
-		render: (value, item, index) => (index + 1),
-		fixed: 'left',
-		width: 70,
-	},
-	{
-		title: 'Height',
-		dataIndex: 'num',
-		key: 'height',
-		render: text => <StyledLink key={text} to={"/block/"+text} >{text}</StyledLink>,
-	},
-	{
-		title: 'Age',
-		key: 'age',
-		render: record => {
-			var time = record.timestamp?toTimeAgo(record.timestamp):"unknown";
-			return time;
-		}
-	},
-	{
-		title: 'Status',
-		key: 'status',
-		render: () => confirm>=19?<BadgeGreen count="CONFIRMED"/>:<BadgeRed count="UNCOMFIRMED"/>
-	},
-	{
-		title: 'Transactions',
-		dataIndex: 'num_of_txs',
-		key: 'transactions',
-		render: text => <span>{text}</span>,	
-	},
-	{
-		title: 'Producer',
-		key: 'producer',
-		render: record => <StyledLink key={record.witness_name} to={`/account/${record.witness_address}`} >{record.witness_name}</StyledLink>,
-	}
-];
+
 
 
 class BlockTable extends React.Component {
@@ -86,16 +47,58 @@ class BlockTable extends React.Component {
 	}
 
 	onChange=(pageNumber, pageLimit) =>{
-	    this.props.updatePageBlocks(pageNumber);
-	    var {pageBlocks} = this.props;
+		var {pageBlocks} = this.props;
+		if(pageNumber!==pageBlocks.current_page){
+	    	this.props.updatePageBlocks(pageNumber);
+	    }
 	    if(pageLimit!==pageBlocks.page_limit){
 	    	this.props.updatePageBlocksLimit(pageLimit);
 	    }
-	    this.props.loadBlocks(pageBlocks.start_item, pageBlocks.page_limit);
+	    this.props.loadBlocks(pageBlocks.start_item+1, pageLimit);
 	}
 
 	render() {
 		var {blocks, pageBlocks} = this.props;
+		const confirm = 19;
+		const columns = [
+			{
+				title: 'No.',
+				key: 'no',
+				render: (value, item, index) => (index + 1+(pageBlocks.current_page-1)*pageBlocks.page_limit),
+				fixed: 'left',
+				width: 70,
+			},
+			{
+				title: 'Height',
+				dataIndex: 'num',
+				key: 'height',
+				render: text => <StyledLink key={text} to={"/block/"+text} >{text}</StyledLink>,
+			},
+			{
+				title: 'Age',
+				key: 'age',
+				render: record => {
+					var time = record.timestamp?toTimeAgo(record.timestamp):"unknown";
+					return time;
+				}
+			},
+			{
+				title: 'Status',
+				key: 'status',
+				render: () => confirm>=19?<BadgeGreen count="CONFIRMED"/>:<BadgeRed count="UNCOMFIRMED"/>
+			},
+			{
+				title: 'Transactions',
+				dataIndex: 'num_of_txs',
+				key: 'transactions',
+				render: text => <span>{text}</span>,	
+			},
+			{
+				title: 'Producer',
+				key: 'producer',
+				render: record => <StyledLink key={record.witness_name} to={`/account/${record.witness_address}`} >{record.witness_name}</StyledLink>,
+			}
+		];
 		return (
 			<Wrapper>
 				<LeftHeader>List of Blocks</LeftHeader>
@@ -112,7 +115,7 @@ class BlockTable extends React.Component {
 						current={pageBlocks.start_page} 
 						total={pageBlocks.total_items} 
 						onChange={this.onChange}
-						showSizeChanger={false}
+						showSizeChanger
 						showQuickJumper/>
 				</Pagin>
 			</Wrapper>
