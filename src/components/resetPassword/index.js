@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Form, Input, Button, Spin, notification } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { LoadingOutlined } from '@ant-design/icons';
-import { sendToken, SEND_TOKEN_SUCCESS, SEND_TOKEN_REQUESTING } from '../../actions/resetPassword';
+import { sendToken, SEND_TOKEN_SUCCESS, SEND_TOKEN_REQUESTING, SEND_TOKEN_NONE, reset } from '../../actions/resetPassword';
 
 const LeftHeader = styled.div`
 	text-align: left;
@@ -49,6 +49,9 @@ const Content = styled.span`
 `;
 
 class ResetPassword extends React.Component {
+    componentWillUnmount() {
+        this.props.resetForgotPassword();
+    }
     onFinish = (email) => {
         this.props.toSendToken(email.email);
     }
@@ -117,7 +120,10 @@ const mapDispatchToProps = dispatch => {
     return {
         toSendToken: (email) => {
             dispatch(sendToken(email));
-        }
+        },
+        resetForgotPassword: () => {
+            dispatch(reset());
+        },
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(ResetPassword);

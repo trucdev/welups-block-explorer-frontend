@@ -23,6 +23,11 @@ export function success(status) {
         payload: status,
     };
 }
+export function reset() {
+    return {
+        type: SEND_TOKEN_NONE
+    };
+}
 
 export function sendToken(email) {
     return async (dispatch) => {
