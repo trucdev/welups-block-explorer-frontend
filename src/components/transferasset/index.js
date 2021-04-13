@@ -18,7 +18,6 @@ import {
   TRANSFER_REQUESTING,
   TRANSFER_SUCCESS,
   TRANSFER_FAIL,
-  TRANSFER_NONE,
   loadTokens,
   updatePageTokens,
 } from "../../actions/transferasset";
@@ -37,10 +36,10 @@ const Item = styled(Form.Item)`
   font-weight: bold;
 `;
 const Wrapper = styled.div`
-    display: flex;
+  display: flex;
 	width:100%;
-    height:100%;
-    justify-content: center;
+  height:100%;
+  justify-content: center;
 `;
 const Logo = styled.img`
   height: 66px;

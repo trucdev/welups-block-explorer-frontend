@@ -17,10 +17,12 @@ const Wrapper = styled.div`
     width: 100%;
 `;
 const StyledForm = styled(Form)`
-    border-width: 1px;
-    width: 40%;
-    margin-left: 30%;
-    margin-top: 20px;
+    @media (min-width: 540px) {
+    width: 450px;
+  }
+  @media (max-width: 450px) {
+    width: 400px;
+  }
 `;
 const StyleButton = styled(Button)`
     background-color: #c23631;
@@ -46,19 +48,25 @@ const StyledItem = styled(Form.Item)`
 const Content = styled.span`
     font-size: 15px;
 `;
+const Container = styled.div`
+    display: flex;
+	width:100%;
+    height:100%;
+    justify-content: center;
+`;
 
 class NewPassword extends React.Component {
     onCreateNewPassword = (values) => {
-        var email = this.props.sendToken.email ;
+        var email = this.props.sendToken.email;
         this.props.createNewPassword(
-            values.token, 
+            values.token,
             values.password,
             email
         )
     }
 
     render() {
-        const {newPassword} = this.props;
+        const { newPassword } = this.props;
         if (newPassword.type === NEW_PASSWORD_SUCCESS) {
             return <Redirect to="/login" />
         }
@@ -66,80 +74,82 @@ class NewPassword extends React.Component {
         return (
             <Wrapper>
                 <Spin indicator={antIcon} tip="Processing..." spinning={newPassword.type === NEW_PASSWORD_REQUESTING}>
-                <LeftHeader>Create new password</LeftHeader>
-                <StyledForm
-                    name="new-password"
-                    initialValues={{
-                        remember: true,
-                    }}
-                    size="large"
-                    onFinish={this.onCreateNewPassword}
-                >
-                    <Form.Item
-                        name="token"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your verify code!',
-                            },
-                        ]}
-                    >
-                        <FlexStartView>
-                            <Input placeholder="Security code" />
-                        </FlexStartView>
-                    </Form.Item>
-                    <Form.Item>
-                        <FlexStartView>
-                            <Content>Create a new password with at least 8 characters. A strong password is a combination of characters, numbers, and punctuation.</Content>
-                        </FlexStartView>
-                        <Form.Item
-                            name="password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your password!',
-                                },
-                                {
-                                    min: 8,
-                                    max: 16,
-                                    message: 'Password must be 8-16 characters',
-                                },
-                            ]}
-                            hasFeedback
+                    <LeftHeader>Create new password</LeftHeader>
+                    <Container>
+                        <StyledForm
+                            name="new-password"
+                            initialValues={{
+                                remember: true,
+                            }}
+                            size="large"
+                            onFinish={this.onCreateNewPassword}
                         >
-                            <Input.Password placeholder="Password" />
-                        </Form.Item>
-                    </Form.Item>
-                    <Form.Item
-                        name="confirm password"
-                        dependencies={['password']}
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please confirm your password',
-                            },
-                            ({ getFieldValue }) => ({
-                                validator(_, value) {
-                                    if (!value || getFieldValue('password') === value) {
-                                        return Promise.resolve();
-                                    }
+                            <Form.Item
+                                name="token"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your verify code!',
+                                    },
+                                ]}
+                            >
+                                <FlexStartView>
+                                    <Input placeholder="Security code" />
+                                </FlexStartView>
+                            </Form.Item>
+                            <Form.Item>
+                                <FlexStartView>
+                                    <Content>Create a new password with at least 8 characters. A strong password is a combination of characters, numbers, and punctuation.</Content>
+                                </FlexStartView>
+                                <Form.Item
+                                    name="password"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input your password!',
+                                        },
+                                        {
+                                            min: 8,
+                                            max: 16,
+                                            message: 'Password must be 8-16 characters',
+                                        },
+                                    ]}
+                                    hasFeedback
+                                >
+                                    <Input.Password placeholder="Password" />
+                                </Form.Item>
+                            </Form.Item>
+                            <Form.Item
+                                name="confirm password"
+                                dependencies={['password']}
+                                hasFeedback
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please confirm your password',
+                                    },
+                                    ({ getFieldValue }) => ({
+                                        validator(_, value) {
+                                            if (!value || getFieldValue('password') === value) {
+                                                return Promise.resolve();
+                                            }
 
-                                    return Promise.reject('Passwords did not match!');
-                                },
-                            })
-                        ]}
-                    >
-                        <Input.Password placeholder="Confirm Password" />
-                    </Form.Item>
-                    <StyledItem >
-                        <ButtonContainer>
-                            <StyleButton type="primary" htmlType="submit">
-                                Continue
+                                            return Promise.reject('Passwords did not match!');
+                                        },
+                                    })
+                                ]}
+                            >
+                                <Input.Password placeholder="Confirm Password" />
+                            </Form.Item>
+                            <StyledItem >
+                                <ButtonContainer>
+                                    <StyleButton type="primary" htmlType="submit">
+                                        Continue
                         </StyleButton>
-                        </ButtonContainer>
-                    </StyledItem>
-                </StyledForm>
+                                </ButtonContainer>
+                            </StyledItem>
+                        </StyledForm>
+                    </Container>
                 </Spin>
             </Wrapper>
         );

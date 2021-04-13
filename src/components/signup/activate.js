@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Form, Input, Button, Spin } from 'antd';
-import { checkAccountApi, LOGIN_SUCCESS} from '../../actions/login';
+import { checkAccountApi, LOGIN_SUCCESS } from '../../actions/login';
 import { Redirect } from 'react-router-dom';
 import { LoadingOutlined } from '@ant-design/icons';
 import { activateMail, ACTIVATE_SUCCESS, ACTIVATE_REQUESTING, reset, ACTIVATE_NONE } from '../../actions/signup';
@@ -16,13 +16,14 @@ const LeftHeader = styled.div`
 const Wrapper = styled.div`
 	margin: 5px;
     width: 100%;
-    
 `;
 const StyledForm = styled(Form)`
-    border-width: 1px;
-    width: 40%;
-    margin-left: 30%;
-    margin-top: 20px;
+  @media (min-width: 540px) {
+    width: 450px;
+  }
+  @media (max-width: 450px) {
+    width: 400px;
+  }
 `;
 const SearchButton = styled(Button)`
     background-color: #c23631;
@@ -47,13 +48,19 @@ const StyledItem = styled(Form.Item)`
 const Content = styled.span`
     font-size: 15px;
 `;
+const Container = styled.div`
+    display: flex;
+	width:100%;
+    height:100%;
+    justify-content: center;
+`;
 
 class ActivateAccount extends React.Component {
     componentWillUnmount() {
         this.props.resetSignUp();
     }
     onActivate = (values) => {
-        
+
         var email = this.props.signUp.email ? this.props.signUp.email : this.props.login.email;
         var password = this.props.signUp.password ? this.props.signUp.password : this.props.login.password;
         this.props.doActivate(
@@ -64,47 +71,49 @@ class ActivateAccount extends React.Component {
     }
     render() {
         const antIcon = <LoadingOutlined spin />;
-        const {activateMail, login} = this.props;
-        if (login.type === LOGIN_SUCCESS){
+        const { activateMail, login } = this.props;
+        if (login.type === LOGIN_SUCCESS) {
             return <Redirect to="/user" />
         }
         return (
             <Wrapper>
                 <Spin indicator={antIcon} tip="Processing..." spinning={activateMail.type === ACTIVATE_REQUESTING}>
-                <LeftHeader>Activate your account</LeftHeader>
-                <StyledForm
-                    name="activate-account"
-                    initialValues={{
-                        remember: true,
-                    }}
-                    onFinish={this.onActivate ? this.onActivate : this.onVerify}
-                    size="large"
-                >
-                    <Form.Item>
-                        <FlexStartView>
-                            <Content>Please enter the verification code from email.</Content>
-                        </FlexStartView>
-                    </Form.Item>
-                    <Form.Item
-                        name="token"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your verification code!',
-                            },
-                        ]}
-                    >
-                            <Input/>
-                        
-                    </Form.Item>
-                    <StyledItem >
-                        <ButtonContainer>
-                            <SearchButton  htmlType="submit" type="primary">
-                                Continue
+                    <LeftHeader>Activate your account</LeftHeader>
+                    <Container>
+                        <StyledForm
+                            name="activate-account"
+                            initialValues={{
+                                remember: true,
+                            }}
+                            onFinish={this.onActivate ? this.onActivate : this.onVerify}
+                            size="large"
+                        >
+                            <Form.Item>
+                                <FlexStartView>
+                                    <Content>Please enter the verification code from email.</Content>
+                                </FlexStartView>
+                            </Form.Item>
+                            <Form.Item
+                                name="token"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your verification code!',
+                                    },
+                                ]}
+                            >
+                                <Input />
+
+                            </Form.Item>
+                            <StyledItem >
+                                <ButtonContainer>
+                                    <SearchButton htmlType="submit" type="primary">
+                                        Continue
                         </SearchButton>
-                        </ButtonContainer>
-                    </StyledItem>
-                </StyledForm>
+                                </ButtonContainer>
+                            </StyledItem>
+                        </StyledForm>
+                    </Container>
                 </Spin>
             </Wrapper>
         );
@@ -127,8 +136,8 @@ const mapDispatchToProps = dispatch => {
             dispatch(reset());
         },
         checkAccountApi: (acc) => {
-			dispatch(checkAccountApi(acc));
-		},
+            dispatch(checkAccountApi(acc));
+        },
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(ActivateAccount);

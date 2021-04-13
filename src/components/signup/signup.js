@@ -23,13 +23,14 @@ const SmallItem = styled(Form.Item)`
 	margin-bottom: 0px!important;
 `;
 const Wrapper = styled.div`
+	margin: 5px;
+    width: 100%;
+`;
+const Container = styled.div`
     display: flex;
 	width:100%;
     height:100%;
     justify-content: center;
-`;
-const Container = styled.div`
-    width:450px;
 `;
 const Logo = styled.img`
     height: 66px;
@@ -43,7 +44,14 @@ const Title = styled.span`
     font-size: 25px;
     font-weight: 600;
 `;
-
+const StyledForm = styled(Form)`
+    @media (min-width: 540px) {
+    width: 450px;
+  }
+  @media (max-width: 450px) {
+    width: 400px;
+  }
+`;
 
 class SignUp extends React.Component {
     onSignUp = (values) => {
@@ -54,15 +62,15 @@ class SignUp extends React.Component {
     };
     render() {
         const { signUpInfo } = this.props;
-        switch(signUpInfo.status){
-            case "SIGNUP_SUCCESS":  return <Redirect to="/activate-account" />;
+        switch (signUpInfo.status) {
+            case "SIGNUP_SUCCESS": return <Redirect to="/activate-account" />;
         }
         const antIcon = <LoadingOutlined spin />;
         return (
             <Wrapper>
-                <Container>
-                    <Spin indicator={antIcon} tip="Processing..." spinning={signUpInfo.status === SIGNUP_REQUESTING}>
-                        <Form
+                <Spin indicator={antIcon} tip="Processing..." spinning={signUpInfo.status === SIGNUP_REQUESTING}>
+                    <Container>
+                        <StyledForm
                             layout="vertical"
                             name="login"
                             initialValues={{
@@ -148,9 +156,9 @@ class SignUp extends React.Component {
                             <Form.Item >
                                 <StyledLinkLeft to={"/login"}>Already have account? Login</StyledLinkLeft>
                             </Form.Item>
-                        </Form>
-                    </Spin>
-                </Container>
+                        </StyledForm>
+                    </Container>
+                </Spin>
             </Wrapper>
         );
     }
