@@ -124,7 +124,7 @@ class TransactionList extends React.Component {
     );
   };
   render() {
-    let trans = this.props.trans ?? [];
+    let trans = this.props.trans == null ? [] : this.props.trans;
     trans.sort(function (a, b) {
       return b.timestamp - a.timestamp;
     });
