@@ -109,9 +109,9 @@ class App extends Component {
       password: "",
     });
   }
-  componentDidMount(){
-    let { login} = this.props;
-    if(login.token===""){
+  componentDidMount() {
+    let { login } = this.props;
+    if (login.token === "") {
       this.props.loadFromStorage();
     }
   }
@@ -127,64 +127,64 @@ class App extends Component {
           />
         </Modal>
         <AppWrapper>
-            <Menu mode="horizontal">
-              <Menu.Item disabled={true}>
-                <Logo src={ACLogo} />
-              </Menu.Item>
-              {
-                login.token !== ""?
-                  <RightSubMenuItem title={login.email}>
-                    <Menu.Item key="User" icon={<WalletOutlined />}>
-                      <Link to="/user">Assets</Link>
-                    </Menu.Item>
-                    <Menu.Item key="transfer" icon={<SendOutlined />}>
-                      <Link to="/user/transferasset">Send</Link>
-                    </Menu.Item>
-                    <Menu.Item key="issueTokenTRC10" icon={<MoneyCollectOutlined />}>
-                      <Link to="/user/issue-token-trc10">Issue TRC10</Link>
-                    </Menu.Item>
-                    <Menu.Item key="generateAddress" icon={<PlusCircleOutlined />} onClick={this.generateAccount}>
-                      Generate Account
-                    </Menu.Item>
-                    <Menu.Item key="deployContract" icon={<DeploymentUnitOutlined />}>
-                      <Link to="/user/deploycontract" >Deploy Contract</Link>
-                    </Menu.Item>
-                    <Menu.Item key="freezeBalance" icon={<SplitCellsOutlined />}>
-                      <Link to="/user/freeze-balance" >Freeze Balance</Link>
-                    </Menu.Item>
-                    <Menu.Item key="prikeyManagement" icon={<KeyOutlined />}>
-                      <Link to="/prikey-management" >Private Management</Link>
-                    </Menu.Item>
-                    <Menu.Item key="logOut" icon={<LogoutOutlined />}>
-                      <Link to="/login" onClick={this.logOut}>Log out</Link>
-                    </Menu.Item>
-                  </RightSubMenuItem>
-                  : <RightMenuItem key="login" >
-                    <Link to="/login">Register/Login</Link>
-                  </RightMenuItem>
-              }
-              <Menu.Item key="home" icon={<MailOutlined />}>
-                <Link to="/home">Home</Link>
-              </Menu.Item>
-              <Menu.Item key="witness" icon={<AppstoreOutlined />}>
-                <Link to="/witness">Witnesses</Link>
-              </Menu.Item>
-              <Menu.Item key="blocks" icon={<BlockOutlined />}>
-                <Link to="/blocks">Blocks</Link>
-              </Menu.Item>
-              <Menu.Item key="nodes" icon={<NodeIndexOutlined />}>
-                <Link to="/nodes">Nodes</Link>
-              </Menu.Item>
-              <Menu.Item key="transactions" icon={<TransactionOutlined />}>
-                <Link to="/transactions">Transactions</Link>
-              </Menu.Item>
-              <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
-                <Link to="/tokens">Tokens</Link>
-              </Menu.Item>
-              <Menu.Item key="contracts" icon={<FileTextOutlined />}>
-                <Link to="/contracts">Contracts</Link>
-              </Menu.Item>
-            </Menu>
+          <Menu mode="horizontal">
+            <Menu.Item disabled={true}>
+              <Logo src={ACLogo} />
+            </Menu.Item>
+            {
+              login.token !== "" ?
+                <RightSubMenuItem title={login.email}>
+                  <Menu.Item key="User" icon={<WalletOutlined />}>
+                    <Link to="/user">Assets</Link>
+                  </Menu.Item>
+                  <Menu.Item key="transfer" icon={<SendOutlined />}>
+                    <Link to="/user/transferasset">Send</Link>
+                  </Menu.Item>
+                  <Menu.Item key="issueTokenTRC10" icon={<MoneyCollectOutlined />}>
+                    <Link to="/user/issue-token-trc10">Issue TRC10</Link>
+                  </Menu.Item>
+                  <Menu.Item key="deployContract" icon={<DeploymentUnitOutlined />}>
+                    <Link to="/user/deploycontract" >Deploy Contract</Link>
+                  </Menu.Item>
+                  <Menu.Item key="freezeBalance" icon={<SplitCellsOutlined />}>
+                    <Link to="/user/freeze-balance" >Freeze Balance</Link>
+                  </Menu.Item>
+                  <Menu.Item key="prikeyManagement" icon={<KeyOutlined />}>
+                    <Link to="/prikey-management" >Private Management</Link>
+                  </Menu.Item>
+                  <Menu.Item key="logOut" icon={<LogoutOutlined />}>
+                    <Link to="/login" onClick={this.logOut}>Log out</Link>
+                  </Menu.Item>
+                </RightSubMenuItem>
+                : <RightMenuItem key="login" >
+                  <Link to="/login">Register/Login</Link>
+                </RightMenuItem>
+            }
+            <Menu.Item key="home" icon={<MailOutlined />}>
+              <Link to="/home">Home</Link>
+            </Menu.Item>
+            <Menu.Item key="witness" icon={<AppstoreOutlined />}>
+              <Link to="/witness">Witnesses</Link>
+            </Menu.Item>
+            <Menu.Item key="blocks" icon={<BlockOutlined />}>
+              <Link to="/blocks">Blocks</Link>
+            </Menu.Item>
+            <Menu.Item key="nodes" icon={<NodeIndexOutlined />}>
+              <Link to="/nodes">Nodes</Link>
+            </Menu.Item>
+            <Menu.Item key="transactions" icon={<TransactionOutlined />}>
+              <Link to="/transactions">Transactions</Link>
+            </Menu.Item>
+            <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
+              <Link to="/tokens">Tokens</Link>
+            </Menu.Item>
+            <Menu.Item key="contracts" icon={<FileTextOutlined />}>
+              <Link to="/contracts">Contracts</Link>
+            </Menu.Item>
+            <Menu.Item key="generateAddress" icon={<PlusCircleOutlined />} onClick={this.generateAccount}>
+              <Link>Generate Account</Link>
+            </Menu.Item>
+          </Menu>
           <ContentRowWrapper justify='center' gutter={[0, 0]}>
             <Col xs={20} sm={20} md={20} lg={19} xl={18}>
               <Row gutter={[5, 5]}>
@@ -263,7 +263,7 @@ class App extends Component {
                   render={() => <IssueTokenTRC10 />}
                 />
                 <Route
-                exact
+                  exact
                   path="/login"
                   render={() => <Login />}
                 />
