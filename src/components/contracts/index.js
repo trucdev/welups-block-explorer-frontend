@@ -40,7 +40,7 @@ class ContractTable extends React.Component {
 	}
 
 	render() {
-		var {contracts} = this.props;
+		var { contracts } = this.props;
 		const columns = [
 			{
 				title: 'No.',
@@ -75,7 +75,7 @@ class ContractTable extends React.Component {
 					rowKey="addr"
 					scroll={{ x: 1300 }} sticky
 					pagination={false}
-					loading={contracts.contracts.length === 0 ? true:false}
+					loading={contracts.contracts !== null ? (contracts.contracts.length === 0 ? true:false) : false}
 					locale={{ emptyText: 'Loading' }}
 				/>
 				<Pagin>
