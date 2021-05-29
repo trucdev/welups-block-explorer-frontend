@@ -117,6 +117,5 @@ export function activateMail(token, email, password) {
             email: email,
             password: password
         }
-        dispatch(checkAccountApi(acc));
     }
 }

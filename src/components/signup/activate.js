@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Form, Input, Button, Spin } from 'antd';
-import { checkAccountApi, LOGIN_SUCCESS } from '../../actions/login';
+import { checkAccountApi } from '../../actions/login';
 import { Redirect } from 'react-router-dom';
 import { LoadingOutlined } from '@ant-design/icons';
 import { activateMail, ACTIVATE_SUCCESS, ACTIVATE_REQUESTING, reset, ACTIVATE_NONE } from '../../actions/signup';
@@ -71,8 +71,8 @@ class ActivateAccount extends React.Component {
     }
     render() {
         const antIcon = <LoadingOutlined spin />;
-        const { activateMail, login } = this.props;
-        if (login.type === LOGIN_SUCCESS) {
+        const { activateMail } = this.props;
+        if (activateMail.type === ACTIVATE_SUCCESS) {
             return <Redirect to="/user" />
         }
         return (
