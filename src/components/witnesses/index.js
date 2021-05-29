@@ -57,7 +57,7 @@ const columns = [
 		title: 'Total Missed',
 		key: 'total_missed',
 		dataIndex: 'total_missed',
-		render: text => <span>{text?text:0}</span>
+		render: text => <span>{text ? text : 0}</span>
 	},
 	{
 		title: 'Lastest block num',
@@ -91,16 +91,17 @@ class WitnessTable extends React.Component {
 	}
 	render() {
 		const witnesses = this.props.witnesses;
+		console.log(witnesses)
 		return (
 			<Wrapper>
 				<LeftHeader>List of Witness</LeftHeader>
-				<Table columns={columns}
-					dataSource={witnesses}
-					rowKey="address"
-					scroll={{ x: 1500 }} sticky
-					loading={witnesses.length === 0 ? true:false}
-					locale={{ emptyText: 'Loading' }}
-				/>
+					<Table columns={columns}
+						dataSource={witnesses}
+						rowKey="address"
+						scroll={{ x: 1500 }} sticky
+						loading={ witnesses !== null ? (witnesses.length === 0 ? true : false) : false }
+						locale={{ emptyText: 'Loading' }}
+					/>
 			</Wrapper>
 
 		);
