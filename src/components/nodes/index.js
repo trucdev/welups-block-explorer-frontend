@@ -47,7 +47,7 @@ class NodeTable extends React.Component {
 				<Table columns={columns}
 					dataSource={nodes}
 					rowKey="host"
-					loading={nodes.length === 0 ? true:false}
+					loading={nodes !== null ? (nodes.length === 0 ? true:false) : false}
 					locale={{ emptyText: 'Loading' }}
 				/>
 			</Wrapper>
