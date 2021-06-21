@@ -2062,9 +2062,9 @@
   dependencies:
     "@babel/runtime" "^7.10.2"
 
-"@tronscan/client@acgroupvn/tronscan-node-client":
+"@tronscan/client@Clownsss/tronscan-node-client":
   version "0.2.67"
-  resolved "https://codeload.github.com/acgroupvn/tronscan-node-client/tar.gz/2e71e14eb06997703bb18a1a54ebd9883d1a0159"
+  resolved "git+ssh://git@github.com/Clownsss/tronscan-node-client.git#2f9569330e48c0b3f78e2c226ac256939f0bfcee"
   dependencies:
     axios "^0.18.0"
     babel-plugin-transform-class-properties "^6.24.1"
