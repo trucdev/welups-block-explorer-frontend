@@ -49,7 +49,7 @@ import {
 } from "react-router-dom";
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import WUelupsLogo from './assets/images/WUelupsLogo.png';
+import ACLogo from './assets/images/ACLogo.png';
 import { logout, loadFromStorage } from './actions/login';
 import Account from './api/account';
 const { Footer } = Layout;
@@ -60,8 +60,8 @@ const AppWrapper = styled.div`
   flex: 1 0 auto;
 `;
 const Logo = styled.img`
-    height: 40px;
-    width: 140px;
+    height: 36px;
+    width: 32px;
 `;
 const ContentRowWrapper = styled(Row)`
   padding-top:40px;
@@ -129,7 +129,7 @@ class App extends Component {
         <AppWrapper>
           <Menu mode="horizontal">
             <Menu.Item disabled={true}>
-              <Logo src={WUelupsLogo} />
+              <Logo src={ACLogo} />
             </Menu.Item>
             {
               login.token !== "" ?
@@ -300,7 +300,7 @@ class App extends Component {
             </Col>
           </ContentRowWrapper>
         </AppWrapper>
-        <FooterWrapper>Designed by Welups</FooterWrapper>
+        <FooterWrapper>Designed by ACGroup</FooterWrapper>
       </Router>
 
     );
