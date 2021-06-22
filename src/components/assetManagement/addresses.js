@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Row, Col, Collapse, Table, Skeleton } from 'antd';
 import { currencyFormat } from '../../utils/utils';
 import { loadAssetApi, loadAssetDetails } from '../../actions/assetManagement';
+import { GLOBAL_SYMBOL } from '../../constant';
 
 const StyledLink = styled(Link)`
 	&:link, &:visited {
@@ -100,7 +101,7 @@ class Addresses extends React.Component {
 									<div>
 										<StyleRowACG>
 											<ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
-												ACG balance:
+												{GLOBAL_SYMBOL} balance:
 		                                        </ColHead>
 											<Col xs={14} sm={20} md={20} lg={20} xl={22}>
 												{currencyFormat(info.token_balance / Math.pow(10, 6)) + " ACG"}

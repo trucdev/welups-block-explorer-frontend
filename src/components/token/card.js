@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {currencyFormat, toDateTime, toDateTimeEndTime} from '../../utils/utils';
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { Skeleton} from 'antd';
+import { Skeleton } from 'antd';
+import { GLOBAL_SYMBOL } from '../../constant';
 
 const Wrap = styled.div`
     display: flex;
@@ -56,7 +57,7 @@ class Card extends Component {
         { title: 'Id',  value: this.props.token.id},
         { title: 'Issuer',  value: <StyledLink to={`/account/${this.props.token.owner_address}`}>{this.props.token.owner_address}</StyledLink>},,
         { title: 'Total supply',  value: <RedText>{currencyFormat(this.props.token.total_supply)}</RedText>},
-        { title: 'Price',  value: <span> {currencyFormat(this.props.token.num)} {this.props.token.abbr} <ArrowRightOutlined/> {currencyFormat(this.props.token.trx_num)} ACG</span> },
+        { title: 'Price',  value: <span> {currencyFormat(this.props.token.num)} {this.props.token.abbr} <ArrowRightOutlined/> {currencyFormat(this.props.token.trx_num)} {GLOBAL_SYMBOL}</span> },
         { title: 'Start time',  value: toDateTime(this.props.token.start_time)},
         { title: 'End time',  value:   toDateTimeEndTime(this.props.token.end_time)},
         { title: 'Offical Website',  value: <LinkA href={this.props.token.url} target="_blank">{this.props.token.url}</LinkA>},

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { GLOBAL_SYMBOL } from '../../constant';
 import {
   Form,
   Input,
@@ -83,7 +84,7 @@ class TransferAsset extends React.Component {
     this.state = {
       privateKey: "",
       to: "",
-      assetName: "ACG",
+      assetName: {GLOBAL_SYMBOL},
       amount: "",
       loading: false,
     };
@@ -288,8 +289,8 @@ class TransferAsset extends React.Component {
                   onChange={this.changeAsset}
                   onPopupScroll={this.onScroll}
                 >
-                  <Option value="ACG" key="ACG">
-                    ACG
+                  <Option value={GLOBAL_SYMBOL} key={GLOBAL_SYMBOL}>
+                    {GLOBAL_SYMBOL}
                   </Option>
                   {!this.state.loading ? (
                     assetNames.map((value, index) => (

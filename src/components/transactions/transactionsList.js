@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { loadTransactions, updatePageTransactions, updatePageTransactionsLimit, } from '../../actions/transactions';
 import { Table, Pagination } from 'antd';
 import { Link } from "react-router-dom";
-import {toTimeAgo, decimalFormat, currencyFormat} from '../../utils/utils';
+import { toTimeAgo, decimalFormat, currencyFormat } from '../../utils/utils';
+import { GLOBAL_SYMBOL } from '../../constant';
 
 const Container = styled.div`
 	margin: 5px;
@@ -112,7 +113,7 @@ class TransactionsList extends React.Component {
 					if (record.contract.type === "TransferAssetContract"  ) {
 						return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.amount/1000000))}</span>
 					}else if (record.contract.type === "TransferContract" ) {
-						return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.amount/1000000))} ACG</span>
+						return <span>{currencyFormat(decimalFormat(record.contract.parameter.raw.amount/1000000))} {GLOBAL_SYMBOL}</span>
 					}
 					else{ 
 						return <span>&nbsp; &nbsp; &nbsp; -</span>

@@ -5,8 +5,9 @@ import bytes from "@tronscan/client/src/utils/bytes";
 import code from "@tronscan/client/src/lib/code";
 import crypto from "@tronscan/client/src/utils/crypto";
 import account from './account';
+import { GLOBAL_SYMBOL } from '../constant';
 export default class Asset {
-	static async transfer(privateKey, to, amount, assetName = 'ACG') {
+	static async transfer(privateKey, to, amount, assetName = { GLOBAL_SYMBOL }) {
 		try {
 			const from = account.addressFromPrivateKey(privateKey);
 			const res = await fetch(`${API_ADDR}/assets/transfer`, {
