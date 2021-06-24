@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Form, Input, Button, Spin } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { LoadingOutlined } from '@ant-design/icons';
-import ACLogo from "../../assets/images/ACLogo.png";
+import WUelupsLogo from "../../assets/images/WUelupsLogo.png";
 
 const StyledLinkLeft = styled(Link)`
 	&:link, &:visited {
@@ -22,7 +22,7 @@ const StyledLinkRight = styled(Link)`
 `;
 const Logo = styled.img`
   height: 66px;
-  width: 55px;
+  width: 200px;
   margin-bottom: 20px;
 `;
 const ButtonSubmit = styled(Button)`
@@ -91,7 +91,7 @@ class Login extends React.Component {
 							size="large"
 						>
 							<HeaderTitle>
-								<Logo src={ACLogo} />
+								<Logo src={WUelupsLogo} />
 								<Title>Login</Title>
 							</HeaderTitle>
 							<Item
