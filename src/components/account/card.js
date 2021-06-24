@@ -5,6 +5,7 @@ import { CopyOutlined } from '@ant-design/icons';
 import { loadAccountDetails } from '../../actions/account';
 import { Skeleton} from 'antd';
 import { toDateTime, currencyFormat, decimalFormat } from '../../utils/utils';
+import { GLOBAL_SYMBOL } from '../../constant';
 const Wrap = styled.div`
     display: flex;
     flex-direction: column;
@@ -50,7 +51,7 @@ class Card extends Component {
     const acc= this.props.account;
     const content = [
       { title: 'Name', value:<RedText>{ acc.name?acc.name:"-"} </RedText> },
-      { title: 'Total Balance',  value: <RedText>{currencyFormat(decimalFormat(acc.acgBalance/Math.pow(10,6)))} ACG</RedText>},
+      { title: 'Total Balance', value: <RedText>{currencyFormat(decimalFormat(acc.acgBalance / Math.pow(10, 6)))} {GLOBAL_SYMBOL}</RedText>},
       { title: 'Transactions',  value: acc.transNum},
       { title: 'BandWidth Total',  value: acc.bandwidthTotal},
       { title: 'Bandwidth  Used',  value: acc.bandwidthUsed},

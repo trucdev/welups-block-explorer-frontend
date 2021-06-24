@@ -4,7 +4,7 @@ import { FaExchangeAlt } from "react-icons/fa";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { currencyFormat, decimalFormat } from '../../../utils/utils';
-
+import { GLOBAL_SYMBOL } from '../../../constant';
 
 const RedText = styled.span`
     color: #E50915;
@@ -102,7 +102,7 @@ class IssueAssetContract extends Component {
                             <span >Price</span>:
                         </TitleContainer>
                         <FillContainer>
-                            <span >{currencyFormat(decimalFormat(ACGNUM/1000000))} ACG</span>
+                            <span >{currencyFormat(decimalFormat(ACGNUM/1000000))} {GLOBAL_SYMBOL}</span>
                         </FillContainer>
                     </Row>
                     <Row>

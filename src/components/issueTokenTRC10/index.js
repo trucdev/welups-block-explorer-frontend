@@ -4,6 +4,7 @@ import { Row, Col, Divider, Spin, Form, Input, Button, InputNumber, DatePicker, 
 import styled from 'styled-components';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link, Redirect } from 'react-router-dom';
+import { GLOBAL_SYMBOL } from '../../constant';
 import {
 	issueTRC10,
 	ISSUE_TRC10_REQUESTING,
@@ -267,7 +268,7 @@ class IssueTokenTRC10 extends Component {
 								<Row>
 									<Col xs={24} sm={9} md={9} lg={9} xl={9}>
 										<Form.Item
-											label="ACG number:"
+											label={GLOBAL_SYMBOL + " number:"}
 											name="trx_num"
 											rules={[
 												{

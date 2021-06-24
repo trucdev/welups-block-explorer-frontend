@@ -5,6 +5,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { connect } from "react-redux";
 import { loadRecentTrans } from "../../actions/home";
 import { Row, Col } from "antd";
+import { GLOBAL_SYMBOL } from '../../constant';
 import {
   RecentListTitleFrame,
   RecentListTitle,
@@ -31,7 +32,7 @@ class TransactionList extends React.Component {
         amount =
           currencyFormat(
             decimalFormat(tran.contract.parameter.raw.amount / 1000000)
-          ) + " ACG";
+          ) + " " + {GLOBAL_SYMBOL};
         break;
       case "TransferAssetContract":
         amount = currencyFormat(tran.contract.parameter.raw.amount);

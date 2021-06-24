@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {TableRow, Th} from './style';
-import {decimalFormat, currencyFormat} from '../../utils/utils';
+import { decimalFormat, currencyFormat } from '../../utils/utils';
+import { GLOBAL_SYMBOL } from '../../constant';
 
 class ContractOverview extends Component{
 	render(){
@@ -21,7 +22,7 @@ class ContractOverview extends Component{
 						<span>Balance:</span>
 					</Th>
 					<td>
-						<span>{currencyFormat(decimalFormat(contract.balance/Math.pow(10,6)))} ACG</span>
+						<span>{currencyFormat(decimalFormat(contract.balance / Math.pow(10, 6)))} {GLOBAL_SYMBOL}</span>
 					</td>
 				</TableRow>
 				<TableRow>
