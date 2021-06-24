@@ -32,7 +32,7 @@ class TransactionList extends React.Component {
         amount =
           currencyFormat(
             decimalFormat(tran.contract.parameter.raw.amount / 1000000)
-          ) + " " + {GLOBAL_SYMBOL};
+          ) + " " + GLOBAL_SYMBOL;
         break;
       case "TransferAssetContract":
         amount = currencyFormat(tran.contract.parameter.raw.amount);
