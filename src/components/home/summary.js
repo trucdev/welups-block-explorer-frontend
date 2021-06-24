@@ -38,7 +38,7 @@ class SummaryBar extends Component {
 					<SummaryCardValue>{this.props.systemState.block_height}</SummaryCardValue>
 				</SummaryCard>
 				<SummaryCard>
-					<SummaryCardTitle>TRC10 Tokens</SummaryCardTitle>
+					<SummaryCardTitle>WRC10 Tokens</SummaryCardTitle>
 					<SummaryCardValue>{this.props.systemState.asset_num}</SummaryCardValue>
 				</SummaryCard>
 				<SummaryCard>
