@@ -23,7 +23,7 @@ import {
   updatePageTokens,
 } from "../../actions/transferasset";
 import { Link, Redirect } from "react-router-dom";
-import ACLogo from "../../assets/images/ACLogo.png";
+import WUelupsLogo from "../../assets/images/WUelupsLogo.png";
 
 const { TextArea } = Input;
 const ButtonSubmit = styled(Button)`
@@ -44,7 +44,7 @@ const Wrapper = styled.div`
 `;
 const Logo = styled.img`
   height: 66px;
-  width: 55px;
+  width: 200px;
   margin-bottom: 20px;
 `;
 const Title = styled.span`
@@ -225,7 +225,7 @@ class TransferAsset extends React.Component {
           {(transferInfo.status !== TRANSFER_FAIL&&transferInfo.status !== TRANSFER_SUCCESS )&& (
             <StyledForm layout="vertical" size="large">
               <HeaderTitle>
-                <Logo src={ACLogo} />
+                <Logo src={WUelupsLogo} />
                 <Title>Transfer Asset</Title>
               </HeaderTitle>
               <TitleContainer>

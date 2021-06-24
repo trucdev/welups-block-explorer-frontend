@@ -13,7 +13,7 @@ import {
 } from '../../actions/freezeBalance';
 import { Link, Redirect } from 'react-router-dom';
 
-import ACLogo from '../../assets/images/ACLogo.png';
+import WUelupsLogo from '../../assets/images/WUelupsLogo.png';
 
 const StyleInputNumber = styled(InputNumber)`
     width: 100%;
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
 `;
 const Logo = styled.img`
     height: 66px;
-    width: 55px;
+    width: 200px;
     margin-bottom: 20px;
 `;
 const Title = styled.span`
@@ -129,7 +129,7 @@ class FreezeBalance extends React.Component {
                             onFinish={this.onFinish}
                         >
                             <HeaderTitle>
-                                <Logo src={ACLogo} />
+                                <Logo src={WUelupsLogo} />
                                 <Title>Freeze Balance</Title>
                             </HeaderTitle>
                             <TitleContainer>
