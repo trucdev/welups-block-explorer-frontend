@@ -104,7 +104,7 @@ class Addresses extends React.Component {
 												{GLOBAL_SYMBOL} balance:
 		                                        </ColHead>
 											<Col xs={14} sm={20} md={20} lg={20} xl={22}>
-												{currencyFormat(info.token_balance / Math.pow(10, 6)) + " ACG"}
+												{currencyFormat(info.token_balance / Math.pow(10, 6)) + { GLOBAL_SYMBOL }}
 											</Col>
 										</StyleRowACG>
 										<Table rowKey="name" columns={columns} dataSource={assets} />
