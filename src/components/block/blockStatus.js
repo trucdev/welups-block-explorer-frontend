@@ -6,7 +6,6 @@ import {Popover } from 'antd';
 class BlockStatus extends Component{
 	render(){
 		var {confirm} = this.props;
-
 		return (
 			<TableRow>
 				<Th>
@@ -19,7 +18,7 @@ class BlockStatus extends Component{
 					</Flex>
 				</Th>
 				<td>
-					{confirm==="confirmed"?<BadgeGreen count="CONFIRMED"/>:<BadgeRed count="UNCOMFIRMED"/>}
+					{confirm?<BadgeGreen count="CONFIRMED"/>:<BadgeRed count="UNCOMFIRMED"/>}
 				</td>
 			</TableRow>				
 		);

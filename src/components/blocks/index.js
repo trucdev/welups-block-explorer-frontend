@@ -33,7 +33,7 @@ const BadgeGreen = styled(Badge)`
 
 const BadgeRed = styled(Badge)`
     .ant-badge-count {
-        background-color: #ff0000;
+        background-color: #FF7677;
         color: black
     }  
 `;
@@ -59,7 +59,6 @@ class BlockTable extends React.Component {
 
 	render() {
 		var {blocks, pageBlocks} = this.props;
-		const confirm = 19;
 		const columns = [
 			{
 				title: 'No.',
@@ -85,7 +84,10 @@ class BlockTable extends React.Component {
 			{
 				title: 'Status',
 				key: 'status',
-				render: () => confirm>=19?<BadgeGreen count="CONFIRMED"/>:<BadgeRed count="UNCOMFIRMED"/>
+				render: record => {
+					var status = record.confirmed?<BadgeGreen count="CONFIRMED"/>:<BadgeRed count="UNCOMFIRMED"/>
+					return status;
+				}
 			},
 			{
 				title: 'Transactions',
