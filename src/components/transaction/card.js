@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from 'styled-components';
 import { CopyOutlined } from '@ant-design/icons';
-import { Skeleton} from 'antd';
-import {toDateTime} from '../../utils/utils';
+import { Skeleton } from 'antd';
+import { toDateTime } from '../../utils/utils';
 
 const Wrap = styled.div`
     display: flex;
@@ -47,8 +47,6 @@ const StatusContainer = styled.div`
     flex-direction: row;
 `;
 const StatusConfirm = styled.div`
-    background-color: #E1F3E0;
-    padding-left: 5px;
     padding-right: 5px;
     margin-right: 15px;
 `;
@@ -59,54 +57,65 @@ const StatusBlockNum = styled.div`
     margin-right: 15px;
 `;
 
-const RowTitleUpper = styled.div`
+const RowTitleUpperGreen = styled.div`
+  background-color: #E1F3E0;
+  min-width: 70px;
+  text-align: left;
+  text-transform: uppercase;
+  padding-left: 5px;
+  padding-right: 5px;
+`;
+const RowTitleUpperRed = styled.div`
+  background-color: #FF7677;
   min-width: 100px;
   text-align: left;
   text-transform: uppercase;
+  padding-left: 5px;
+  padding-right: 5px;
 `;
-const Status = (status, numOfBlocks) => (<StatusContainer>
+const Status = (confirmed, numOfBlocks) => (<StatusContainer>
   <StatusConfirm>
-    {status === true ? <RowTitleUpper>CONFIRMED</RowTitleUpper>: <RowTitleUpper>UNCONFIRMED</RowTitleUpper> }
-    
+    {confirmed === true ? <RowTitleUpperGreen>CONFIRMED</RowTitleUpperGreen> : <RowTitleUpperRed>UNCONFIRMED</RowTitleUpperRed>}
+
   </StatusConfirm>
   <StatusBlockNum>
     <RowValue>confirmed by {numOfBlocks} blocks</RowValue>
   </StatusBlockNum>
 </StatusContainer>);
-const HightLight= styled.span`
+const HightLight = styled.span`
 color: '#E50915';
 `;
 
 
 class Card extends Component {
   render() {
-    const { hash, contract, blockNum, result, timestamp, numOfBlocks, status }= this.props.transaction;
+    const { hash, contract, blockNum, result, timestamp, numOfBlocks, confirmed } = this.props.transaction;
     const content = [
-      { title: 'Result', value:result },
-      { title: 'Status', value: Status(status, numOfBlocks)},
+      { title: 'Result', value: result },
+      { title: 'Status', value: Status(confirmed, numOfBlocks) },
       { title: 'Block', value: <HightLight>{blockNum}</HightLight> },
-      { title: 'Time', value: toDateTime(timestamp?timestamp:0) },
-      { title: 'Contract', value: contract.type},
+      { title: 'Time', value: toDateTime(timestamp ? timestamp : 0) },
+      { title: 'Contract', value: contract.type },
     ];
     return (
       <Wrap>
-         <Skeleton loading={hash===""}>
-        <Content>
-          <CardContent>
-            <CardHeader>Hash: <span>{hash} <CopyOutlined /> </span></CardHeader>
-          </CardContent>
-          {content.map((item,index) => {
-            return (
-            <CardContent key ={index} >
-              <RowTitle >{item.title}:</RowTitle>
-              <RowValue>{item.value}</RowValue>
+        <Skeleton loading={hash === ""}>
+          <Content>
+            <CardContent>
+              <CardHeader>Hash: <span>{hash} <CopyOutlined /> </span></CardHeader>
             </CardContent>
-            )
-          })}
-        </Content>
+            {content.map((item, index) => {
+              return (
+                <CardContent key={index} >
+                  <RowTitle >{item.title}:</RowTitle>
+                  <RowValue>{item.value}</RowValue>
+                </CardContent>
+              )
+            })}
+          </Content>
         </Skeleton>
       </Wrap>
-      
+
     );
   }
 }
@@ -118,7 +127,7 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = dispatch => {
-	return {
-	};
+  return {
+  };
 };
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(Card);

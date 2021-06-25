@@ -9,8 +9,8 @@ const initTran = {
 	contractAddr: "",
 	result: "",
 	timestamp: 0,
-	status: "",
 	numOfBlocks: 0,
+	confirmed: "",
 	contract: {
         type: "",
         parameter: {
@@ -32,6 +32,7 @@ export function transactionReducer(state = initTran, action) {
 				timestamp: action.payload.timestamp,
 				numOfBlocks: action.payload.num_of_blocks,
 				contract: action.payload.contract,
+				confirmed: action.payload.confirmed,
 				
 			};
 		case TRANSACTION_DETAIL_INIT:
