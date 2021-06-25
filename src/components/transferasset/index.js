@@ -184,7 +184,7 @@ class TransferAsset extends React.Component {
             <div>
               <Result
                 status="success"
-                title={`Your TRC10 has been issued successfully!`}
+                title={`Your transaction hasn't been issued successfully!`}
                 subTitle={`You can check it at transaction ${transferInfo.tranID}`}
                 extra={[
                   <Button type="primary">
@@ -197,7 +197,7 @@ class TransferAsset extends React.Component {
                       this.props.resetTransferAsset();
                     }}
                   >
-                    New TRC10
+                    New Transfer
                   </Button>,
                 ]}
               />
