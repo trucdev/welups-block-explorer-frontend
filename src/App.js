@@ -129,7 +129,7 @@ class App extends Component {
         <AppWrapper>
           <Menu mode="horizontal">
             <Menu.Item disabled={true}>
-              <Logo src={WUelupsLogo} />
+              {/* <Logo src={WUelupsLogo} /> */}
             </Menu.Item>
             {
               login.token !== "" ?

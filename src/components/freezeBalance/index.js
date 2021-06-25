@@ -129,7 +129,7 @@ class FreezeBalance extends React.Component {
                             onFinish={this.onFinish}
                         >
                             <HeaderTitle>
-                                <Logo src={WUelupsLogo} />
+                                {/* <Logo src={WUelupsLogo} /> */}
                                 <Title>Freeze Balance</Title>
                             </HeaderTitle>
                             <TitleContainer>
