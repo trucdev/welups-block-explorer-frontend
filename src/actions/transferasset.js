@@ -101,13 +101,12 @@ export function loadTokens(offset, limit) {
     })
       .then((res) => res.json())
       .then((res) => {
-        dispatch(updatePageTokensTotal(res.data[0].total_assets));
-        var tokens = res.data
-          ? res.data.map((token, index) => {
-              return token.name;
-            })
-          : [];
-        dispatch(updateTokens(tokens));
+        dispatch(updatePageTokensTotal(res.data.total_assets));
+          const tokens = res.data.result.map(item => {
+            const token = item.abbr;
+            return token;
+          })
+        dispatch(updateTokens(tokens ? tokens : []));
       })
       .catch((err) => {
         console.log(err);
