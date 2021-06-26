@@ -3,8 +3,6 @@ import fetch from 'cross-fetch'
 import Contract from '../api/contract'
 import { notification } from 'antd'
 import * as ethers from 'ethers'
-import { getBase58CheckAddress } from '@tronscan/client/src/utils/crypto'
-import code from '@tronscan/client/src/lib/code'
 
 export const CONTRACT_DEFAULT = 'CONTRACT_DEFAULT'
 export const CONTRACT_LOAD = 'CONTRACT_LOAD'
@@ -137,8 +135,33 @@ export function triggerSmartContract(
   }
 }
 
+function convert(value, type) {
+  if (type.includes('uint')) {
+    value = parseInt(value)
+  } else if (type === 'address') {
+    value = window.tronWeb.address.fromHex(value)
+  } else if (type === 'bool') {
+    value = value.toString()
+  } else if (type === 'string') {
+    value = window.tronWeb.toUtf8(value)
+  }
+  return value
+}
+function convertResult(result, type) {
+  var res = []
+  if (type.length === 1) {
+    res.push(convert(result[0], type[0].type))
+  } else {
+    type.map((typ, index) => {
+      res.push(convert(result[index], typ.type))
+      return null
+    })
+  }
+  return res
+}
+
 const AbiCoder = ethers.utils.AbiCoder
-const ADDRESS_PREFIX = '41'
+const ADDRESS_PREFIX = 'W'
 
 //types:Parameter type list, if the function has multiple return values, the order of the types in the list should conform to the defined order
 //output: Data before decoding
@@ -158,10 +181,7 @@ async function decodeParams(types, output, ignoreMethodHash) {
   if (output.replace(/^0x/, '').length % 64)
     throw new Error('The encoded string is not valid. Its length must be a multiple of 64.')
   return abiCoder.decode(types, output).reduce((obj, arg, index) => {
-    console.log(arg)
-    if (types[index] == 'address') {
-      arg = getBase58CheckAddress(code.hexStr2byteArray(ADDRESS_PREFIX + arg.substring(2)))
-    }
+    if (types[index] == 'address') arg = ADDRESS_PREFIX + arg.substr(2).toLowerCase()
     obj.push(arg)
     return obj
   }, [])
