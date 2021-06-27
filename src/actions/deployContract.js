@@ -1,7 +1,7 @@
 import { notification } from "antd";
 import Asset from "../api/asset";
-import * as wrapper from "solc/wrapper";
 import { API_ADDR } from "../config/config";
+import { getCompiler } from "../utils/compiler";
 
 export const DEPLOY_CONTRACT_NONE = "DEPLOY_CONTRACT_NONE";
 export const DEPLOY_CONTRACT_REQUESTING = "DEPLOY_CONTRACT_REQUESTING";
@@ -94,7 +94,7 @@ export function deployContract(
       })
         .then((res) => res.json())
         .then((res) => {
-          if(res.status&&res.status==="success"){
+          if (res.status && res.status === "success") {
             if (res.data.ret && res.data.ret === "SUCESS") {
               dispatch(success(res1.tranID));
             } else {
@@ -110,11 +110,12 @@ export function deployContract(
     timer = setInterval(checkTransactionStatus, 3000);
   };
 }
-export function compileContract(contract) {
-  return (dispatch) => {
+export function compileContract(contract, version) {
+  return async (dispatch) => {
     dispatch(request());
     try {
-      const solc = wrapper(window.Module);
+      const solc = await getCompiler(version);
+      console.log(solc);
       var input = {
         language: "Solidity",
         sources: {
@@ -125,7 +126,7 @@ export function compileContract(contract) {
         settings: {
           outputSelection: {
             "*": {
-              "*": ["abi", "evm.bytecode.opcodes"],
+              "*": ["*"],
             },
           },
         },
