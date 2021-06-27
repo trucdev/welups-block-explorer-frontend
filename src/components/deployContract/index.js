@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   Row,
   Col,
@@ -12,74 +12,73 @@ import {
   Select,
   notification,
   Upload,
-} from "antd";
-import styled from "styled-components";
-import getVersions from "../../utils/compiler";
-import { Link, Redirect } from "react-router-dom";
+} from 'antd'
+import styled from 'styled-components'
+import getVersions from '../../utils/compiler'
+import { Link, Redirect } from 'react-router-dom'
 import {
   deployContract,
   reset,
   DEPLOY_CONTRACT_SUCCESS,
   DEPLOY_CONTRACT_REQUESTING,
   DEPLOY_CONTRACT_FAIL,
-  DEPLOY_CONTRACT_NONE,
   compileContract,
   upload,
-} from "../../actions/deployContract";
-import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
+} from '../../actions/deployContract'
+import { LoadingOutlined, UploadOutlined } from '@ant-design/icons'
 
 const Header = styled.div`
   text-align: left;
   border-bottom: 5px solid #c23631;
   font-size: 20px;
   text-transform: uppercase;
-`;
+`
 const SubHeader = styled.div`
   text-align: left;
   font-size: 17px;
-`;
+`
 const Wrapper = styled.div`
   margin: 1.5% 0% 2% 2%;
-`;
+`
 const StyleDivider = styled(Divider)`
   margin: 15px 0;
-`;
+`
 const StyleInputNumber = styled(InputNumber)`
   width: 100%;
-`;
-const { Option } = Select;
+`
+const { Option } = Select
 
 class DeployContract extends Component {
   constructor(props) {
-    super(props);
-    this.state = { versions: {}, selectedVersion: "" };
+    super(props)
+    this.state = { versions: {}, selectedVersion: '' }
   }
   componentWillUnmount() {
-    this.props.resetDeployContract();
+    this.props.resetDeployContract()
   }
 
   componentDidMount() {
     const loadVersions = ({ soljsonReleases }) => {
       this.setState({
         versions: soljsonReleases,
-      });
-    };
-    getVersions().then(loadVersions);
-    var { prikeys, login } = this.props;
+      })
+    }
+    getVersions().then(loadVersions)
+    var { prikeys, login } = this.props
     if (
-      (!prikeys.prikeys && login.token !== "") ||
-      (prikeys.prikeys.length === 0 && login.token !== "")
+      (!prikeys.prikeys && login.token !== '') ||
+      (prikeys.prikeys.length === 0 && login.token !== '')
     ) {
       notification.warning({
-        message: "Warning!",
+        message: 'Warning!',
         description:
-          "You have no private key, please add somes in private key management to perform transaction!",
-      });
+          'You have no private key, please add somes in private key management to perform transaction!',
+      })
     }
   }
 
   onFinish = (values) => {
-    let { deployContractInfo } = this.props;
+    let { deployContractInfo } = this.props
     this.props.deployContract(
       values.from,
       values.name,
@@ -88,37 +87,34 @@ class DeployContract extends Component {
       values.feeLimit,
       values.curPercent,
       values.oeLimit
-    );
-  };
+    )
+  }
 
   onChangeVersion = (value) => {
     this.setState((state) => {
-      return { ...state, selectedVersion: value };
-    });
-  };
+      return { ...state, selectedVersion: value }
+    })
+  }
 
-  onCompile = (value) => {
-    var { deployContractInfo } = this.props;
+  onCompile = () => {
+    var { deployContractInfo } = this.props
     if (deployContractInfo.contract) {
-      this.props.compileContract(
-        deployContractInfo.contract,
-        this.state.selectedVersion
-      );
+      this.props.compileContract(deployContractInfo.contract, this.state.selectedVersion)
     } else {
       notification.error({
-        message: "Error!",
-        description: "Please upload a file first!",
-      });
+        message: 'Error!',
+        description: 'Please upload a file first!',
+      })
     }
-  };
+  }
 
   render() {
-    const antIcon = <LoadingOutlined />;
-    const { deployContractInfo, login, prikeys } = this.props;
-    if (login.token === "") {
-      return <Redirect to="/login" />;
+    const antIcon = <LoadingOutlined />
+    const { deployContractInfo, login, prikeys } = this.props
+    if (login.token === '') {
+      return <Redirect to="/login" />
     }
-    const versions = this.state.versions;
+    const versions = this.state.versions
     return (
       <div>
         <Header>Deploy Smart Contract</Header>
@@ -130,17 +126,15 @@ class DeployContract extends Component {
               subTitle={`You can check it at transaction ${deployContractInfo.tranID}`}
               extra={[
                 <Button key="detail" type="primary">
-                  <Link to={`/transaction/${deployContractInfo.tranID}`}>
-                    Details
-                  </Link>
+                  <Link to={`/transaction/${deployContractInfo.tranID}`}>Details</Link>
                 </Button>,
                 <Button
                   key="new"
                   onClick={() => {
-                    this.props.resetDeployContract();
+                    this.props.resetDeployContract()
                   }}
                 >
-                  New{" "}
+                  New{' '}
                 </Button>,
               ]}
             />
@@ -155,7 +149,7 @@ class DeployContract extends Component {
               extra={[
                 <Button
                   onClick={() => {
-                    this.props.resetDeployContract();
+                    this.props.resetDeployContract()
                   }}
                 >
                   New Transfer
@@ -171,9 +165,7 @@ class DeployContract extends Component {
               <Spin
                 indicator={antIcon}
                 tip="Processing..."
-                spinning={
-                  deployContractInfo.status === DEPLOY_CONTRACT_REQUESTING
-                }
+                spinning={deployContractInfo.status === DEPLOY_CONTRACT_REQUESTING}
               >
                 <SubHeader>Upload and Compile</SubHeader>
                 <StyleDivider />
@@ -191,17 +183,15 @@ class DeployContract extends Component {
                         accept=".sol"
                         maxCount={1}
                         beforeUpload={(file) => {
-                          const reader = new FileReader();
+                          const reader = new FileReader()
                           reader.onload = (e) => {
-                            this.props.upload(e.target.result);
-                          };
-                          reader.readAsText(file);
-                          return false;
+                            this.props.upload(e.target.result)
+                          }
+                          reader.readAsText(file)
+                          return false
                         }}
                       >
-                        <Button icon={<UploadOutlined />}>
-                          Click to Upload
-                        </Button>
+                        <Button icon={<UploadOutlined />}>Click to Upload</Button>
                       </Upload>
                     </Col>
                     <Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
@@ -212,7 +202,7 @@ class DeployContract extends Component {
                         rules={[
                           {
                             required: true,
-                            message: "Please choose a suitable version!",
+                            message: 'Please choose a suitable version!',
                           },
                         ]}
                       >
@@ -262,15 +252,11 @@ class DeployContract extends Component {
                             rules={[
                               {
                                 required: true,
-                                message: "Please input your private key!",
+                                message: 'Please input your private key!',
                               },
                             ]}
                           >
-                            <Select
-                              showSearch
-                              placeholder="Select a private key"
-                              allowClear
-                            >
+                            <Select showSearch placeholder="Select a private key" allowClear>
                               {prikeys.prikeys && prikeys.prikeys.length !== 0
                                 ? prikeys.prikeys.map((value, index) => (
                                     <Option value={value.prikey} key={index}>
@@ -286,10 +272,11 @@ class DeployContract extends Component {
                           <Form.Item
                             label="Fee Limit:"
                             name="feeLimit"
+                            initialValue={100000000}
                             rules={[
                               {
                                 required: true,
-                                message: "Please input your fee limit",
+                                message: 'Please input your fee limit',
                               },
                             ]}
                           >
@@ -302,10 +289,11 @@ class DeployContract extends Component {
                           <Form.Item
                             label="Oe limit:"
                             name="oeLimit"
+                            initialValue={100000000}
                             rules={[
                               {
                                 required: true,
-                                message: "Please input your Oe limit",
+                                message: 'Please input your Oe limit',
                               },
                             ]}
                           >
@@ -317,11 +305,11 @@ class DeployContract extends Component {
                           <Form.Item
                             label="Consumption percentage:"
                             name="curPercent"
+                            initialValue={5}
                             rules={[
                               {
                                 required: true,
-                                message:
-                                  "Please input your consumption percent",
+                                message: 'Please input your consumption percent',
                               },
                             ]}
                           >
@@ -337,7 +325,7 @@ class DeployContract extends Component {
                             rules={[
                               {
                                 required: true,
-                                message: "Please select contract name!",
+                                message: 'Please select contract name!',
                               },
                             ]}
                           >
@@ -346,13 +334,11 @@ class DeployContract extends Component {
                               placeholder="Please select main contract deployment"
                               allowClear
                             >
-                              {Object.entries(deployContractInfo.infos).map(
-                                ([key, value]) => (
-                                  <Option value={key} key={key}>
-                                    {key}
-                                  </Option>
-                                )
-                              )}
+                              {Object.entries(deployContractInfo.infos).map(([key, value]) => (
+                                <Option value={key} key={key}>
+                                  {key}
+                                </Option>
+                              ))}
                             </Select>
                           </Form.Item>
                         </Col>
@@ -376,7 +362,7 @@ class DeployContract extends Component {
             </Wrapper>
           )}
       </div>
-    );
+    )
   }
 }
 
@@ -385,44 +371,26 @@ const mapStateToProps = (state) => {
     deployContractInfo: state.deployContract,
     prikeys: state.prikeyManagement,
     login: state.login,
-  };
-};
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deployContract: (
-      from,
-      contractName,
-      abi,
-      condeStr,
-      feeLimit,
-      curPercent,
-      oeLimit
-    ) => {
-      dispatch(
-        deployContract(
-          from,
-          contractName,
-          abi,
-          condeStr,
-          feeLimit,
-          curPercent,
-          oeLimit
-        )
-      );
+    deployContract: (from, contractName, abi, condeStr, feeLimit, curPercent, oeLimit) => {
+      dispatch(deployContract(from, contractName, abi, condeStr, feeLimit, curPercent, oeLimit))
     },
     resetDeployContract: () => {
-      dispatch(reset());
+      dispatch(reset())
     },
     upload: (tex) => {
-      dispatch(upload(tex));
+      dispatch(upload(tex))
     },
     compileContract: (contract, version) => {
-      dispatch(compileContract(contract, version));
+      dispatch(compileContract(contract, version))
     },
-  };
-};
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
   forwardRef: true,
-})(DeployContract);
+})(DeployContract)
