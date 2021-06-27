@@ -126,7 +126,7 @@ export function compileContract(contract, version) {
         settings: {
           outputSelection: {
             "*": {
-              "*": ["*"],
+              "*": ["abi", "evm.bytecode.opcodes"],
             },
           },
         },
