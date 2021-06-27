@@ -106,34 +106,42 @@ export function triggerSmartContract(
 ) {
   return async (dispatch) => {
     dispatch(defaultResult())
-    var res = await Contract.triggerFunction(
-      privateKey,
-      address,
-      method,
-      jsonString,
-      type,
-      t_amount
-    )
-    if (res === false) {
-      notification.error({
-        message: 'Failed!',
-        description: `Trigger has failed`,
-      })
-      return
-    }
-    //Success
-    if (res.tran_id) {
-    } else {
-      const convertOutput = outputs.map((output) => output.type)
-      res.data = await Promise.all(
-        res.data.contract_results.map((res, index) => {
-          return decodeParams([convertOutput[index]], res, true)
-        })
+    try {
+      var res = await Contract.triggerFunction(
+        privateKey,
+        address,
+        method,
+        jsonString,
+        type,
+        t_amount
       )
+      if (res === false) {
+        notification.error({
+          message: 'Failed!',
+          description: `Trigger has failed`,
+        })
+        return
+      }
+      //Success
+      if (res.tran_id) {
+      } else {
+        const convertOutput = outputs.map((output) => output.type)
+        if (res.data.hasOwnProperty('contract_results')) {
+          res.data = await Promise.all(
+            res.data.contract_results.map((res, index) => {
+              return decodeParams([convertOutput[index]], res, true)
+            })
+          )
+        } else {
+          res.data = 'undefined'
+        }
+      }
+      res.no = no
+      res.type = type
+      dispatch(updateResult(res))
+    } catch (err) {
+      console.error(err)
     }
-    res.no = no
-    res.type = type
-    dispatch(updateResult(res))
   }
 }
 
@@ -150,6 +158,7 @@ async function decodeParams(types, output, ignoreMethodHash) {
       ignoreMethodHash = output
       output = types
     }
+
     if (ignoreMethodHash && output.replace(/^0x/, '').length % 64 === 8)
       output = '0x' + output.replace(/^0x/, '').substring(8)
     const abiCoder = new AbiCoder()
@@ -160,8 +169,17 @@ async function decodeParams(types, output, ignoreMethodHash) {
       }
     }
     return abiCoder.decode(types, output).reduce((obj, arg, index) => {
-      if (types[index] == 'address') {
-        arg = getBase58CheckAddress(code.hexStr2byteArray(ADDRESS_PREFIX + arg.substring(2)))
+      if (types[index].includes('address')) {
+        if (types[index].includes('[')) {
+          arg = arg.map((value) => {
+            return getBase58CheckAddress(code.hexStr2byteArray(ADDRESS_PREFIX + value.substring(2)))
+          })
+        } else {
+          arg = getBase58CheckAddress(code.hexStr2byteArray(ADDRESS_PREFIX + arg.substring(2)))
+        }
+      }
+      if (types[index].includes('[')) {
+        arg = '[' + arg + ']'
       }
       obj.push(arg)
       return obj
