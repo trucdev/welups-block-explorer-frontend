@@ -3,6 +3,8 @@ import fetch from 'cross-fetch'
 import Contract from '../api/contract'
 import { notification } from 'antd'
 import * as ethers from 'ethers'
+import { getBase58CheckAddress } from '@tronscan/client/src/utils/crypto'
+import code from '@tronscan/client/src/lib/code'
 
 export const CONTRACT_DEFAULT = 'CONTRACT_DEFAULT'
 export const CONTRACT_LOAD = 'CONTRACT_LOAD'
@@ -60,7 +62,7 @@ export function loadContractApi(addr) {
         dispatch(loadContract(_res))
       })
       .catch((err) => {
-        console.log(err)
+        console.error(err)
       })
   }
 }
@@ -135,54 +137,36 @@ export function triggerSmartContract(
   }
 }
 
-function convert(value, type) {
-  if (type.includes('uint')) {
-    value = parseInt(value)
-  } else if (type === 'address') {
-    value = window.tronWeb.address.fromHex(value)
-  } else if (type === 'bool') {
-    value = value.toString()
-  } else if (type === 'string') {
-    value = window.tronWeb.toUtf8(value)
-  }
-  return value
-}
-function convertResult(result, type) {
-  var res = []
-  if (type.length === 1) {
-    res.push(convert(result[0], type[0].type))
-  } else {
-    type.map((typ, index) => {
-      res.push(convert(result[index], typ.type))
-      return null
-    })
-  }
-  return res
-}
-
 const AbiCoder = ethers.utils.AbiCoder
-const ADDRESS_PREFIX = 'W'
+const ADDRESS_PREFIX = '41'
 
 //types:Parameter type list, if the function has multiple return values, the order of the types in the list should conform to the defined order
 //output: Data before decoding
 //ignoreMethodHash：Decode the function return value, fill falseMethodHash with false, if decode the data field in the gettransactionbyid result, fill ignoreMethodHash with true
 
 async function decodeParams(types, output, ignoreMethodHash) {
-  if (!output || typeof output === 'boolean') {
-    ignoreMethodHash = output
-    output = types
+  try {
+    if (!output || typeof output === 'boolean') {
+      ignoreMethodHash = output
+      output = types
+    }
+    if (ignoreMethodHash && output.replace(/^0x/, '').length % 64 === 8)
+      output = '0x' + output.replace(/^0x/, '').substring(8)
+    const abiCoder = new AbiCoder()
+    if (output.replace(/^0x/, '').length % 64) {
+      const outputlength = 64 - output.replace(/^0x/, '').length
+      for (let index = 0; index < outputlength; index++) {
+        output = output + '0'
+      }
+    }
+    return abiCoder.decode(types, output).reduce((obj, arg, index) => {
+      if (types[index] == 'address') {
+        arg = getBase58CheckAddress(code.hexStr2byteArray(ADDRESS_PREFIX + arg.substring(2)))
+      }
+      obj.push(arg)
+      return obj
+    }, [])
+  } catch (e) {
+    console.error(e)
   }
-
-  if (ignoreMethodHash && output.replace(/^0x/, '').length % 64 === 8)
-    output = '0x' + output.replace(/^0x/, '').substring(8)
-
-  const abiCoder = new AbiCoder()
-
-  if (output.replace(/^0x/, '').length % 64)
-    throw new Error('The encoded string is not valid. Its length must be a multiple of 64.')
-  return abiCoder.decode(types, output).reduce((obj, arg, index) => {
-    if (types[index] == 'address') arg = ADDRESS_PREFIX + arg.substr(2).toLowerCase()
-    obj.push(arg)
-    return obj
-  }, [])
 }
