@@ -211,7 +211,7 @@ class TransferAsset extends React.Component {
           {transferInfo.status !== TRANSFER_FAIL && transferInfo.status !== TRANSFER_SUCCESS && (
             <StyledForm layout="vertical" size="large">
               <HeaderTitle>
-                {/* <Logo src={WUelupsLogo} /> */}
+                <Logo src={WUelupsLogo} />
                 <Title>Transfer Asset</Title>
               </HeaderTitle>
               <TitleContainer>

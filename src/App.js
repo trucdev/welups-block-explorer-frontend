@@ -47,6 +47,7 @@ import TransactionDetails from './components/transaction'
 import TransactionsList from './components/transactions/transactionsList'
 import TransferAsset from './components/transferasset'
 import WitnessTable from './components/witnesses'
+import WUelupsLogo from './assets/images/WUelupsLogo.png'
 const { Footer } = Layout
 
 const AppWrapper = styled.div`
@@ -129,7 +130,9 @@ class App extends Component {
         </Modal>
         <AppWrapper>
           <Menu mode="horizontal">
-            <Menu.Item disabled={true}>{/* <Logo src={WUelupsLogo} /> */}</Menu.Item>
+            <Menu.Item disabled={true}>
+              <Logo src={WUelupsLogo} />
+            </Menu.Item>
             {login.token !== '' ? (
               <RightSubMenuItem title={login.email}>
                 <Menu.Item key="User" icon={<WalletOutlined />}>
