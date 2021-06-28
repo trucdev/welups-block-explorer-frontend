@@ -1,7 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { checkAccountApi, LOGIN_REQUESTING, LOGIN_SUCCESS, LOGIN_FAIL } from '../../actions/login'
+import {
+  checkAccountApi,
+  LOGIN_REQUESTING,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  reset,
+} from '../../actions/login'
 import styled from 'styled-components'
 import { Form, Input, Button, Spin } from 'antd'
 import { Redirect } from 'react-router-dom'
@@ -63,6 +69,9 @@ const Container = styled.div`
 `
 
 class Login extends React.Component {
+  componentWillUnmount() {
+    this.props.resetLogin()
+  }
   onFinish = (allValues) => {
     this.props.checkAccountApi({
       email: allValues.email,
@@ -148,6 +157,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     checkAccountApi: (acc) => {
       dispatch(checkAccountApi(acc))
+    },
+    resetLogin: () => {
+      dispatch(reset())
     },
   }
 }
