@@ -183,7 +183,7 @@ class App extends Component {
               <Link to="/tokens">WRC10 Tokens</Link>
             </Menu.Item>
             <Menu.Item key="contracts" icon={<FileTextOutlined />}>
-              <Link to="/contracts">WRC10 Contracts</Link>
+              <Link to="/contracts">WRC20 Contracts</Link>
             </Menu.Item>
             <Menu.Item
               key="generateAddress"

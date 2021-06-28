@@ -83,7 +83,7 @@ class ContractTable extends React.Component {
     ]
     return (
       <Wrapper>
-        <LeftHeader>List of WRC10 CONTRACTS</LeftHeader>
+        <LeftHeader>List of WRC20 CONTRACTS</LeftHeader>
         <Table
           columns={columns}
           dataSource={contracts.contracts}
