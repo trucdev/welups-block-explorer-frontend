@@ -129,7 +129,9 @@ class App extends Component {
         </Modal>
         <AppWrapper>
           <Menu mode="horizontal">
-            <Menu.Item disabled={true}>{/* <Logo src={WUelupsLogo} /> */}</Menu.Item>
+            <Menu.Item disabled={true}>
+              <Logo src={WUelupsLogo} />
+            </Menu.Item>
             {login.token !== '' ? (
               <RightSubMenuItem title={login.email}>
                 <Menu.Item key="User" icon={<WalletOutlined />}>

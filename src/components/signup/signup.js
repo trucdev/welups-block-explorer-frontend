@@ -82,7 +82,7 @@ class SignUp extends React.Component {
               size="large"
               onFinish={this.onSignUp}
             >
-              {/* <Logo src={WUelupsLogo} /> */}
+              <Logo src={WUelupsLogo} />
               <Item>
                 <Title>Create Account</Title>
               </Item>
