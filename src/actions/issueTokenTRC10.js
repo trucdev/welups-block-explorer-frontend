@@ -1,15 +1,15 @@
-import { notification } from "antd";
-import Asset from "../api/asset";
-import { API_ADDR } from "../config/config";
-import { loadTransactionDetails } from "./transaction";
+import { notification } from 'antd'
+import Asset from '../api/asset'
+import { API_ADDR } from '../config/config'
+import { loadTransactionDetails } from './transaction'
 
-export const ISSUE_TRC10_NONE = "ISSUE_TRC10_NONE";
-export const ISSUE_TRC10_REQUESTING = "ISSUE_TRC10_REQUESTING";
-export const ISSUE_TRC10_SUCCESS = "ISSUE_TRC10_SUCCESS";
-export const ISSUE_TRC10_FAIL = "ISSUE_TRC10_FAIL";
+export const ISSUE_TRC10_NONE = 'ISSUE_TRC10_NONE'
+export const ISSUE_TRC10_REQUESTING = 'ISSUE_TRC10_REQUESTING'
+export const ISSUE_TRC10_SUCCESS = 'ISSUE_TRC10_SUCCESS'
+export const ISSUE_TRC10_FAIL = 'ISSUE_TRC10_FAIL'
 
 export function request() {
-  return { type: ISSUE_TRC10_REQUESTING };
+  return { type: ISSUE_TRC10_REQUESTING }
 }
 export function fail(tranID) {
   return {
@@ -17,10 +17,10 @@ export function fail(tranID) {
     payload: {
       tranID: tranID,
     },
-  };
+  }
 }
 export function reset() {
-  return { type: ISSUE_TRC10_NONE };
+  return { type: ISSUE_TRC10_NONE }
 }
 export function success(tranID) {
   return {
@@ -28,7 +28,7 @@ export function success(tranID) {
     payload: {
       tranID: tranID,
     },
-  };
+  }
 }
 
 export function issueTRC10(
@@ -50,7 +50,7 @@ export function issueTRC10(
 ) {
   return async (dispatch) => {
     //dispatch request
-    dispatch(request());
+    dispatch(request())
     const res1 = await Asset.issueTRC10(
       privKey,
       name,
@@ -67,44 +67,44 @@ export function issueTRC10(
       icoNum,
       voteScore,
       frozenSupply
-    );
+    )
     if (!res1.result) {
-      dispatch(fail());
+      dispatch(fail())
       notification.error({
-        message: "Failed!",
+        message: 'Failed!',
         description: `Transfer has failed`,
-      });
-      return;
+      })
+      return
     }
-    let flag = false;
-    let timer;
+    let flag = false
+    let timer
     function checkTransactionStatus() {
       if (flag) {
-        clearInterval(timer);
-        return;
+        clearInterval(timer)
+        return
       }
       fetch(`${API_ADDR}/transactions/${res1.tranID}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        mode: "cors",
+        mode: 'cors',
       })
         .then((res) => res.json())
         .then((res) => {
-          if(res.status&&res.status==="success"){
-            if (res.data.ret && res.data.ret === "SUCESS") {
-              dispatch(success(res1.tranID));
+          if (res.status && res.status === 'success') {
+            if (res.data.ret && res.data.ret === 'SUCESS') {
+              dispatch(success(res1.tranID))
             } else {
-              dispatch(fail(res1.tranID));
+              dispatch(fail(res1.tranID))
             }
-            flag = true;
+            flag = true
           }
         })
         .catch((err) => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     }
-    timer = setInterval(checkTransactionStatus, 6000);
-  };
+    timer = setInterval(checkTransactionStatus, 6000)
+  }
 }

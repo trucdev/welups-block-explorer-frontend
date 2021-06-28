@@ -27,17 +27,17 @@
   color: white;
 }
 
-.home-content-wrapper{
+.home-content-wrapper {
   padding: 16px 50px;
   min-height: 800px;
 }
 
-.foot-wrapper{
+.foot-wrapper {
   text-align: center;
   flex-shrink: 0;
 }
 
-.search-wrapper{
+.search-wrapper {
   margin: 5px;
 }
 

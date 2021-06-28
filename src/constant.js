@@ -1,1 +1,1 @@
- export const GLOBAL_SYMBOL = 'WEL'
+export const GLOBAL_SYMBOL = 'WEL'

@@ -1,64 +1,66 @@
-import fetch from 'cross-fetch';
+import fetch from 'cross-fetch'
 
-import { API_ADDR } from '../config/config';
-export const TOKENS_INIT = 'TOKENS_INIT';
-export const TOKENS_UPDATE = 'TOKENS_UPDATE';
-
+import { API_ADDR } from '../config/config'
+export const TOKENS_INIT = 'TOKENS_INIT'
+export const TOKENS_UPDATE = 'TOKENS_UPDATE'
 
 export function initTokens() {
-	return {
-		type: TOKENS_INIT,
-	}
+  return {
+    type: TOKENS_INIT,
+  }
 }
 export function updateTokens(tokens) {
-	return {
-		type: TOKENS_UPDATE,
-		payload: tokens
-	}
+  return {
+    type: TOKENS_UPDATE,
+    payload: tokens,
+  }
 }
 
 export function loadTokens(offset, limit) {
-	return (dispatch) => {
-		dispatch(initTokens());
-		fetch(`${API_ADDR}/assets?offset=${offset}&limit=${limit}`, {
-			method: 'GET',
-			mode: 'cors',
-		}).then(res => res.json()).then((res) => {
-			dispatch(updatePageTokensTotal(res.data.total_assets));
-			dispatch(updateTokens(res.data.result));
-		}).catch(err => {
-			console.log(err);
-		})
-	}
+  return (dispatch) => {
+    dispatch(initTokens())
+    fetch(`${API_ADDR}/assets?offset=${offset}&limit=${limit}`, {
+      method: 'GET',
+      mode: 'cors',
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        dispatch(updatePageTokensTotal(res.data.total_assets))
+        dispatch(updateTokens(res.data.result))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 }
 
-export const PAGE_TOKENS_INIT = 'PAGE_TOKENS_INIT';
-export const PAGE_TOKENS_UPDATE = 'PAGE_TOKENS_UPDATE';
-export const PAGE_TOKENS_TOTAL_UPDATE = 'PAGE_TOKENS_TOTAL_UPDATE';
-export const PAGE_TOKENS_LIMIT_UPDATE = 'PAGE_TOKENS_LIMIT_UPDATE';
+export const PAGE_TOKENS_INIT = 'PAGE_TOKENS_INIT'
+export const PAGE_TOKENS_UPDATE = 'PAGE_TOKENS_UPDATE'
+export const PAGE_TOKENS_TOTAL_UPDATE = 'PAGE_TOKENS_TOTAL_UPDATE'
+export const PAGE_TOKENS_LIMIT_UPDATE = 'PAGE_TOKENS_LIMIT_UPDATE'
 
 export function initPageTokens() {
-	return {
-		type: PAGE_TOKENS_INIT,
-	}
+  return {
+    type: PAGE_TOKENS_INIT,
+  }
 }
 export function updatePageTokens(page) {
-	return {
-		type: PAGE_TOKENS_UPDATE,
-		payload: page
-	}
+  return {
+    type: PAGE_TOKENS_UPDATE,
+    payload: page,
+  }
 }
 
 export function updatePageTokensTotal(total) {
-	return {
-		type: PAGE_TOKENS_TOTAL_UPDATE,
-		payload: total
-	}
+  return {
+    type: PAGE_TOKENS_TOTAL_UPDATE,
+    payload: total,
+  }
 }
 
 export function updatePageTokensLimit(limit) {
-	return {
-		type: PAGE_TOKENS_LIMIT_UPDATE,
-		payload: limit
-	}
+  return {
+    type: PAGE_TOKENS_LIMIT_UPDATE,
+    payload: limit,
+  }
 }

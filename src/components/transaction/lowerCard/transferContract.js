@@ -1,41 +1,41 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { FaExchangeAlt } from "react-icons/fa";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { currencyFormat, decimalFormat } from "../../../utils/utils";
-import { GLOBAL_SYMBOL } from '../../../constant';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { FaExchangeAlt } from 'react-icons/fa'
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import { currencyFormat, decimalFormat } from '../../../utils/utils'
+import { GLOBAL_SYMBOL } from '../../../constant'
 
 const RedText = styled.span`
   color: #e50915;
-`;
+`
 const Details = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   background-color: #ffffff;
   margin-top: 15px;
-`;
+`
 const Top = styled.div`
   padding-top: 25px;
   padding-bottom: 10px;
   align-items: top;
   padding-left: 25px;
   display: inline-block;
-`;
+`
 const DetailTop = styled.h5`
   font-size: 14px;
-`;
+`
 const Content = styled.div`
   width: 100%;
   padding-left: 25px;
   padding-right: 25px;
   background-color: #ffffff;
-`;
+`
 const Row = styled.div`
   display: flex;
   border-bottom: 1px solid #eeeeee;
-`;
+`
 const TitleContainer = styled.div`
   height: 40px;
   align-items: flex-start;
@@ -44,7 +44,7 @@ const TitleContainer = styled.div`
   width: 12%;
   justify-content: flex-start;
   padding-top: 10px;
-`;
+`
 const FillContainer = styled.div`
   align-items: flex-start;
   font-size: 14px;
@@ -52,12 +52,12 @@ const FillContainer = styled.div`
   text-align: left;
   padding-top: 10px;
   padding-bottom: 3px;
-`;
+`
 
 class TransferContract extends Component {
   render() {
-    const FROM = this.props.transaction.contract.parameter.raw.owner_address;
-    const TO = this.props.transaction.contract.parameter.raw.to_address;
+    const FROM = this.props.transaction.contract.parameter.raw.owner_address
+    const TO = this.props.transaction.contract.parameter.raw.to_address
     return (
       <Details>
         <Top>
@@ -71,7 +71,7 @@ class TransferContract extends Component {
               <span>From</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={"/account/" + FROM}>
+              <Link to={'/account/' + FROM}>
                 <RedText>{FROM}</RedText>
               </Link>
             </FillContainer>
@@ -81,7 +81,7 @@ class TransferContract extends Component {
               <span>To</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={"/account/" + TO}>
+              <Link to={'/account/' + TO}>
                 <RedText>{TO}</RedText>
               </Link>
             </FillContainer>
@@ -93,29 +93,26 @@ class TransferContract extends Component {
             <FillContainer>
               <span>
                 {currencyFormat(
-                  decimalFormat(
-                    this.props.transaction.contract.parameter.raw.amount /
-                      1000000
-                  )
-                )}{" "}
+                  decimalFormat(this.props.transaction.contract.parameter.raw.amount / 1000000)
+                )}{' '}
                 {GLOBAL_SYMBOL}
               </span>
             </FillContainer>
           </Row>
         </Content>
       </Details>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     transaction: state.transaction,
-  };
-};
+  }
+}
 const mapDispatchToProps = (dispatch) => {
-  return {};
-};
+  return {}
+}
 export default connect(mapStateToProps, mapDispatchToProps, null, {
   forwardRef: true,
-})(TransferContract);
+})(TransferContract)

@@ -1,18 +1,18 @@
-import { notification } from "antd";
-import Asset from "../api/asset";
-import { API_ADDR } from "../config/config";
-import { getCompiler } from "../utils/compiler";
+import { notification } from 'antd'
+import Asset from '../api/asset'
+import { API_ADDR } from '../config/config'
+import { getCompiler } from '../utils/compiler'
 
-export const DEPLOY_CONTRACT_NONE = "DEPLOY_CONTRACT_NONE";
-export const DEPLOY_CONTRACT_REQUESTING = "DEPLOY_CONTRACT_REQUESTING";
-export const DEPLOY_CONTRACT_SUCCESS = "DEPLOY_CONTRACT_SUCCESS";
-export const DEPLOY_CONTRACT_FAIL = "DEPLOY_CONTRACT_FAIL";
-export const COMPILE_CONTRACT_SUCCESS = "COMPILE_CONTRACT_SUCCESS";
-export const COMPILE_CONTRACT_FAIL = "COMPILE_CONTRACT_FAIL";
-export const UPLOAD_CONTRACT = "UPLOAD_CONTRACT";
+export const DEPLOY_CONTRACT_NONE = 'DEPLOY_CONTRACT_NONE'
+export const DEPLOY_CONTRACT_REQUESTING = 'DEPLOY_CONTRACT_REQUESTING'
+export const DEPLOY_CONTRACT_SUCCESS = 'DEPLOY_CONTRACT_SUCCESS'
+export const DEPLOY_CONTRACT_FAIL = 'DEPLOY_CONTRACT_FAIL'
+export const COMPILE_CONTRACT_SUCCESS = 'COMPILE_CONTRACT_SUCCESS'
+export const COMPILE_CONTRACT_FAIL = 'COMPILE_CONTRACT_FAIL'
+export const UPLOAD_CONTRACT = 'UPLOAD_CONTRACT'
 
 export function request() {
-  return { type: DEPLOY_CONTRACT_REQUESTING };
+  return { type: DEPLOY_CONTRACT_REQUESTING }
 }
 export function fail(tranID) {
   return {
@@ -20,11 +20,11 @@ export function fail(tranID) {
     payload: {
       tranID: tranID,
     },
-  };
+  }
 }
 
 export function reset() {
-  return { type: DEPLOY_CONTRACT_NONE };
+  return { type: DEPLOY_CONTRACT_NONE }
 }
 export function success(tranID) {
   return {
@@ -32,35 +32,27 @@ export function success(tranID) {
     payload: {
       tranID: tranID,
     },
-  };
+  }
 }
 export function failCompile() {
-  return { type: COMPILE_CONTRACT_FAIL };
+  return { type: COMPILE_CONTRACT_FAIL }
 }
 export function successCompile(infos) {
   return {
     type: COMPILE_CONTRACT_SUCCESS,
     payload: infos,
-  };
+  }
 }
 export function upload(tex) {
   return {
     type: UPLOAD_CONTRACT,
     payload: tex,
-  };
+  }
 }
 
-export function deployContract(
-  from,
-  contractName,
-  abi,
-  condeStr,
-  feeLimit,
-  curPercent,
-  oeLimit
-) {
+export function deployContract(from, contractName, abi, condeStr, feeLimit, curPercent, oeLimit) {
   return async (dispatch) => {
-    dispatch(request());
+    dispatch(request())
     const res1 = await Asset.deployContract(
       from,
       contractName,
@@ -69,55 +61,54 @@ export function deployContract(
       feeLimit,
       curPercent,
       oeLimit
-    );
+    )
     if (!res1.result) {
-      dispatch(fail());
+      dispatch(fail())
       notification.error({
-        message: "Failed!",
+        message: 'Failed!',
         description: `Deployment has failed`,
-      });
-      return;
+      })
+      return
     }
-    let flag = false;
-    let timer;
+    let flag = false
+    let timer
     function checkTransactionStatus() {
       if (flag) {
-        clearInterval(timer);
-        return;
+        clearInterval(timer)
+        return
       }
       fetch(`${API_ADDR}/transactions/${res1.tranID}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        mode: "cors",
+        mode: 'cors',
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res.status && res.status === "success") {
-            if (res.data.ret && res.data.ret === "SUCESS") {
-              dispatch(success(res1.tranID));
+          if (res.status && res.status === 'success') {
+            if (res.data.ret && res.data.ret === 'SUCESS') {
+              dispatch(success(res1.tranID))
             } else {
-              dispatch(fail(res1.tranID));
+              dispatch(fail(res1.tranID))
             }
-            flag = true;
+            flag = true
           }
         })
         .catch((err) => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     }
-    timer = setInterval(checkTransactionStatus, 3000);
-  };
+    timer = setInterval(checkTransactionStatus, 3000)
+  }
 }
 export function compileContract(contract, version) {
   return async (dispatch) => {
-    dispatch(request());
+    dispatch(request())
     try {
-      const solc = await getCompiler(version);
-      console.log(solc);
+      const solc = await getCompiler(version)
       var input = {
-        language: "Solidity",
+        language: 'Solidity',
         sources: {
           contract: {
             content: contract,
@@ -125,34 +116,34 @@ export function compileContract(contract, version) {
         },
         settings: {
           outputSelection: {
-            "*": {
-              "*": ["abi", "evm.bytecode.opcodes"],
+            '*': {
+              '*': ['abi', 'evm.bytecode.opcodes'],
             },
           },
         },
-      };
-      var output = JSON.parse(solc.compile(JSON.stringify(input)));
+      }
+      var output = JSON.parse(solc.compile(JSON.stringify(input)))
       if (output && output.errors) {
-        dispatch(failCompile());
+        dispatch(failCompile())
         output.errors.forEach((value, index) => {
           notification.error({
-            message: "Failed!",
+            message: 'Failed!',
             description: value.message,
-          });
-        });
-        return;
+          })
+        })
+        return
       }
-      dispatch(successCompile(output.contracts.contract));
+      dispatch(successCompile(output.contracts.contract))
       notification.success({
-        message: "Success!",
-        description: "Compile successfully!",
-      });
+        message: 'Success!',
+        description: 'Compile successfully!',
+      })
     } catch (e) {
-      dispatch(failCompile());
+      dispatch(failCompile())
       notification.error({
-        message: "Failed!",
+        message: 'Failed!',
         description: e.toString(),
-      });
+      })
     }
-  };
+  }
 }

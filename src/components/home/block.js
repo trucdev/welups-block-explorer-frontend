@@ -1,10 +1,10 @@
-import React from "react";
-import { List } from "antd";
-import { BlockOutlined } from "@ant-design/icons";
-import PerfectScrollbar from "react-perfect-scrollbar";
-import { connect } from "react-redux";
-import { loadRecentBlocks } from "../../actions/home";
-import { Row, Col } from "antd";
+import React from 'react'
+import { List } from 'antd'
+import { BlockOutlined } from '@ant-design/icons'
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import { connect } from 'react-redux'
+import { loadRecentBlocks } from '../../actions/home'
+import { Row, Col } from 'antd'
 import {
   RecentListTitleFrame,
   RecentListTitle,
@@ -13,12 +13,12 @@ import {
   RecentItemData,
   StyledLink,
   RecentRightCol,
-} from "./recent-list";
-import { toTimeAgo } from "../../utils/utils";
+} from './recent-list'
+import { toTimeAgo } from '../../utils/utils'
 
 class BlockList extends React.Component {
   componentDidMount() {
-    this.props.loadRecentBlocks();
+    this.props.loadRecentBlocks()
   }
   blockItem = (block) => {
     return (
@@ -29,9 +29,7 @@ class BlockList extends React.Component {
               <span>
                 Block:
                 <RecentItemData>
-                  <StyledLink to={`/block/${block.num}`}>
-                    {block.num}
-                  </StyledLink>
+                  <StyledLink to={`/block/${block.num}`}>{block.num}</StyledLink>
                 </RecentItemData>
               </span>
             </Col>
@@ -40,9 +38,7 @@ class BlockList extends React.Component {
                 Producer:
                 <RecentItemData>
                   <StyledLink to={`/account/${block.witness_address}`}>
-                    {block.witness_name
-                      ? block.witness_name
-                      : block.witness_address}
+                    {block.witness_name ? block.witness_name : block.witness_address}
                   </StyledLink>
                 </RecentItemData>
               </span>
@@ -51,8 +47,7 @@ class BlockList extends React.Component {
           <Row>
             <Col span={24}>
               <span>
-                Include: <RecentItemData>{block.num_of_txs}</RecentItemData>{" "}
-                transactions
+                Include: <RecentItemData>{block.num_of_txs}</RecentItemData> transactions
               </span>
             </Col>
           </Row>
@@ -65,20 +60,20 @@ class BlockList extends React.Component {
             <RecentRightCol xs={24} sm={24} md={12}>
               <span>
                 <RecentItemData>
-                  {block.timestamp ? toTimeAgo(block.timestamp) : "unknown"}
+                  {block.timestamp ? toTimeAgo(block.timestamp) : 'unknown'}
                 </RecentItemData>
               </span>
             </RecentRightCol>
           </Row>
         </RecentItem>
       </List.Item>
-    );
-  };
+    )
+  }
   render() {
-    let blocks = this.props.blocks ?? [];
+    let blocks = this.props.blocks ?? []
     blocks.sort(function (a, b) {
-      return b.num - a.num;
-    });
+      return b.num - a.num
+    })
     return (
       <div>
         <RecentListTitleFrame>
@@ -90,28 +85,28 @@ class BlockList extends React.Component {
             <List
               dataSource={blocks}
               loading={blocks.length === 0 ? true : false}
-              locale={{ emptyText: "Loading" }}
+              locale={{ emptyText: 'Loading' }}
               renderItem={(block) => this.blockItem(block)}
             />
           </PerfectScrollbar>
         </RecentListContentFrame>
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     blocks: state.homeBlocks.blocks,
-  };
-};
+  }
+}
 const mapDispatchToProps = (dispatch) => {
   return {
     loadRecentBlocks: () => {
-      dispatch(loadRecentBlocks());
+      dispatch(loadRecentBlocks())
     },
-  };
-};
+  }
+}
 export default connect(mapStateToProps, mapDispatchToProps, null, {
   forwardRef: true,
-})(BlockList);
+})(BlockList)

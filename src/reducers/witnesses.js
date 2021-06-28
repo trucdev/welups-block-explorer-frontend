@@ -1,7 +1,4 @@
-import {
-	WITNESSES_INIT,
-	WITNESSES_UPDATE,
-} from '../actions/witnesses';
+import { WITNESSES_INIT, WITNESSES_UPDATE } from '../actions/witnesses'
 
 const initWitnesses = []
 // {
@@ -16,12 +13,12 @@ const initWitnesses = []
 // 	is_jobs: false
 // }
 export function witnessesReducer(state = initWitnesses, action) {
-	switch (action.type) {
-		case WITNESSES_UPDATE:
-			return action.payload;
-		case WITNESSES_INIT:
-			return initWitnesses;
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case WITNESSES_UPDATE:
+      return action.payload
+    case WITNESSES_INIT:
+      return initWitnesses
+    default:
+      return state
+  }
 }

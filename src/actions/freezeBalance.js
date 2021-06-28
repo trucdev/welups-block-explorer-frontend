@@ -1,20 +1,20 @@
-import Asset from "../api/asset";
-import { notification } from "antd";
-import { API_ADDR } from "../config/config";
+import Asset from '../api/asset'
+import { notification } from 'antd'
+import { API_ADDR } from '../config/config'
 
-export const FREEZE_BALANCE_NONE = "FREEZE_BALANCE_NONE";
-export const FREEZE_BALANCE_REQUESTING = "FREEZE_BALANCE_REQUESTING";
-export const FREEZE_BALANCE_SUCCESS = "FREEZE_BALANCE_SUCCESS";
-export const FREEZE_BALANCE_FAIL = "FREEZE_BALANCE_FAIL";
+export const FREEZE_BALANCE_NONE = 'FREEZE_BALANCE_NONE'
+export const FREEZE_BALANCE_REQUESTING = 'FREEZE_BALANCE_REQUESTING'
+export const FREEZE_BALANCE_SUCCESS = 'FREEZE_BALANCE_SUCCESS'
+export const FREEZE_BALANCE_FAIL = 'FREEZE_BALANCE_FAIL'
 export function reset() {
   return {
     type: FREEZE_BALANCE_NONE,
-  };
+  }
 }
 export function request() {
   return {
     type: FREEZE_BALANCE_REQUESTING,
-  };
+  }
 }
 export function success(tranID) {
   return {
@@ -22,7 +22,7 @@ export function success(tranID) {
     payload: {
       tranID: tranID,
     },
-  };
+  }
 }
 export function fail(tranID) {
   return {
@@ -30,50 +30,50 @@ export function fail(tranID) {
     payload: {
       tranID: tranID,
     },
-  };
+  }
 }
 
 export function freezeBalance(privateKey, to, frozenBalance, resource) {
   return async (dispatch) => {
-    dispatch(request());
-    const res1 = await Asset.freeze(privateKey, to, frozenBalance, resource);
+    dispatch(request())
+    const res1 = await Asset.freeze(privateKey, to, frozenBalance, resource)
     if (!res1.result) {
-      dispatch(fail());
+      dispatch(fail())
       notification.error({
-        message: "Failed!",
+        message: 'Failed!',
         description: `Transfer has failed`,
-      });
-      return;
+      })
+      return
     }
-    let flag = false;
-    let timer;
+    let flag = false
+    let timer
     function checkTransactionStatus() {
       if (flag) {
-        clearInterval(timer);
-        return;
+        clearInterval(timer)
+        return
       }
       fetch(`${API_ADDR}/transactions/${res1.tranID}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        mode: "cors",
+        mode: 'cors',
       })
         .then((res) => res.json())
         .then((res) => {
-          if(res.status&&res.status==="success"){
-            if (res.data.ret && res.data.ret === "SUCESS") {
-              dispatch(success(res1.tranID));
+          if (res.status && res.status === 'success') {
+            if (res.data.ret && res.data.ret === 'SUCESS') {
+              dispatch(success(res1.tranID))
             } else {
-              dispatch(fail(res1.tranID));
+              dispatch(fail(res1.tranID))
             }
-            flag = true;
+            flag = true
           }
         })
         .catch((err) => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     }
-    timer = setInterval(checkTransactionStatus, 6000);
-  };
+    timer = setInterval(checkTransactionStatus, 6000)
+  }
 }

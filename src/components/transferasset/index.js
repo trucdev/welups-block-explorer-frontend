@@ -1,18 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
-import styled from "styled-components";
-import { GLOBAL_SYMBOL } from '../../constant';
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Spin,
-  Result,
-  InputNumber,
-  notification,
-} from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import React from 'react'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { GLOBAL_SYMBOL } from '../../constant'
+import { Form, Input, Button, Select, Spin, Result, InputNumber, notification } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 import {
   transferAsset,
   reset,
@@ -21,49 +12,49 @@ import {
   TRANSFER_FAIL,
   loadTokens,
   updatePageTokens,
-} from "../../actions/transferasset";
-import { Link, Redirect } from "react-router-dom";
-import WUelupsLogo from "../../assets/images/WUelupsLogo.png";
+} from '../../actions/transferasset'
+import { Link, Redirect } from 'react-router-dom'
+import WUelupsLogo from '../../assets/images/WUelupsLogo.png'
 
-const { TextArea } = Input;
+const { TextArea } = Input
 const ButtonSubmit = styled(Button)`
   width: 100%;
   background-color: #c23631;
   border-color: #c23631;
   margin-bottom: 40px;
   color: #ffffff;
-`;
+`
 const Item = styled(Form.Item)`
   font-weight: bold;
-`;
+`
 const Wrapper = styled.div`
   display: flex;
-	width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   justify-content: center;
-`;
+`
 const Logo = styled.img`
   height: 66px;
   width: 200px;
   margin-bottom: 20px;
-`;
+`
 const Title = styled.span`
   font-size: 25px;
   font-weight: 600;
-`;
+`
 const ContentTitle = styled.span`
   font-weight: 400;
   margin-left: 7px;
-`;
+`
 const TitleContainer = styled.div`
   text-align: left;
-`;
+`
 const HeaderTitle = styled.div`
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
+`
 const StyledForm = styled(Form)`
   @media (min-width: 540px) {
     width: 450px;
@@ -71,46 +62,43 @@ const StyledForm = styled(Form)`
   @media (max-width: 450px) {
     width: 250px;
   }
-`;
+`
 const StyledInputNumber = styled(InputNumber)`
   width: 100%;
-`;
+`
 
-const { Option } = Select;
+const { Option } = Select
 
 class TransferAsset extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      privateKey: "",
-      to: "",
-      assetName: {GLOBAL_SYMBOL},
-      amount: "",
+      privateKey: '',
+      to: '',
+      assetName: { GLOBAL_SYMBOL },
+      amount: '',
       loading: false,
-    };
+    }
   }
   componentDidMount() {
-    var { prikeys, transferInfo, login } = this.props;
+    var { prikeys, transferInfo, login } = this.props
     if (
-      (!prikeys.prikeys && login.token !== "") ||
-      (prikeys.prikeys.length === 0 && login.token !== "")
+      (!prikeys.prikeys && login.token !== '') ||
+      (prikeys.prikeys.length === 0 && login.token !== '')
     ) {
       notification.warning({
-        message: "Warning!",
+        message: 'Warning!',
         description:
-          "You have no private key, please add somes in private key management to perform transaction!",
-      });
+          'You have no private key, please add somes in private key management to perform transaction!',
+      })
     }
-    this.props.resetTransferAsset();
+    this.props.resetTransferAsset()
     if (transferInfo.tokens.length === 0) {
-      this.props.loadTokens(
-        transferInfo.pageToken.start_item,
-        transferInfo.pageToken.page_limit
-      );
+      this.props.loadTokens(transferInfo.pageToken.start_item, transferInfo.pageToken.page_limit)
     }
   }
   componentWillUnmount() {
-    this.props.resetTransferAsset();
+    this.props.resetTransferAsset()
   }
   transfer = () => {
     //TODO: invalidate before do transfer
@@ -119,60 +107,60 @@ class TransferAsset extends React.Component {
       this.state.to,
       parseInt(this.state.amount),
       this.state.assetName
-    );
-  };
+    )
+  }
   changeToAddress = (e) => {
     this.setState((prevState) => ({
       ...prevState,
       to: e.target.value,
-    }));
-  };
+    }))
+  }
   changeAsset = (asset) => {
     this.setState((prevState) => ({
       ...prevState,
       assetName: asset,
-    }));
-  };
+    }))
+  }
   changeAmount = (value) => {
     this.setState((prevState) => ({
       ...prevState,
       amount: value,
-    }));
-  };
+    }))
+  }
   changePrivateKey = (prikey) => {
     this.setState((prevState) => ({
       ...prevState,
       privateKey: prikey,
-    }));
-  };
+    }))
+  }
   onScroll = (e) => {
-    var target = e.target;
-    var { transferInfo } = this.props;
+    var target = e.target
+    var { transferInfo } = this.props
     if (
       !this.state.loading &&
       target.scrollTop + target.offsetHeight === target.scrollHeight &&
       transferInfo.pageToken.start_item <= transferInfo.pageToken.total_items
     ) {
       this.setState({ loading: true }, () => {
-        target.scrollTo(0, target.scrollHeight);
+        target.scrollTo(0, target.scrollHeight)
         setTimeout(() => {
-          this.props.updatePageTokens();
+          this.props.updatePageTokens()
           this.props.loadTokens(
             transferInfo.pageToken.start_item,
             transferInfo.pageToken.page_limit
-          );
-        }, 1000);
-      });
+          )
+        }, 1000)
+      })
     }
-  };
+  }
 
   render() {
-    const { transferInfo, prikeys, login } = this.props;
-    if (login.token === "") {
-      return <Redirect to="/login" />;
+    const { transferInfo, prikeys, login } = this.props
+    if (login.token === '') {
+      return <Redirect to="/login" />
     }
-    let assetNames = transferInfo.tokens ? transferInfo.tokens : null;
-    const antIcon = <LoadingOutlined spin />;
+    let assetNames = transferInfo.tokens ? transferInfo.tokens : null
+    const antIcon = <LoadingOutlined spin />
     return (
       <Wrapper>
         <Spin
@@ -188,13 +176,11 @@ class TransferAsset extends React.Component {
                 subTitle={`You can check it at transaction ${transferInfo.tranID}`}
                 extra={[
                   <Button type="primary">
-                    <Link to={`/transaction/${transferInfo.tranID}`}>
-                      Details
-                    </Link>
+                    <Link to={`/transaction/${transferInfo.tranID}`}>Details</Link>
                   </Button>,
                   <Button
                     onClick={() => {
-                      this.props.resetTransferAsset();
+                      this.props.resetTransferAsset()
                     }}
                   >
                     New Transfer
@@ -212,7 +198,7 @@ class TransferAsset extends React.Component {
                 extra={[
                   <Button
                     onClick={() => {
-                      this.props.resetTransferAsset();
+                      this.props.resetTransferAsset()
                     }}
                   >
                     New Transfer
@@ -222,7 +208,7 @@ class TransferAsset extends React.Component {
               ,
             </div>
           )}
-          {(transferInfo.status !== TRANSFER_FAIL&&transferInfo.status !== TRANSFER_SUCCESS )&& (
+          {transferInfo.status !== TRANSFER_FAIL && transferInfo.status !== TRANSFER_SUCCESS && (
             <StyledForm layout="vertical" size="large">
               <HeaderTitle>
                 {/* <Logo src={WUelupsLogo} /> */}
@@ -236,7 +222,7 @@ class TransferAsset extends React.Component {
                 rules={[
                   {
                     required: true,
-                    message: "Please fill a valid key",
+                    message: 'Please fill a valid key',
                   },
                 ]}
               >
@@ -263,7 +249,7 @@ class TransferAsset extends React.Component {
                 rules={[
                   {
                     required: true,
-                    message: "Please fill a valid address",
+                    message: 'Please fill a valid address',
                   },
                 ]}
               >
@@ -277,7 +263,7 @@ class TransferAsset extends React.Component {
                 rules={[
                   {
                     required: true,
-                    message: "Please select a token",
+                    message: 'Please select a token',
                   },
                 ]}
                 initialValue={assetNames[0]}
@@ -311,15 +297,11 @@ class TransferAsset extends React.Component {
                 rules={[
                   {
                     required: true,
-                    message: "Please fill a valid number",
+                    message: 'Please fill a valid number',
                   },
                 ]}
               >
-                <StyledInputNumber
-                  min={0}
-                  value={this.state.amount}
-                  onChange={this.changeAmount}
-                />
+                <StyledInputNumber min={0} value={this.state.amount} onChange={this.changeAmount} />
               </Item>
 
               <TitleContainer>
@@ -328,18 +310,14 @@ class TransferAsset extends React.Component {
               <Item>
                 <TextArea></TextArea>
               </Item>
-              <ButtonSubmit
-                type="primary"
-                htmlType="submit"
-                onClick={this.transfer}
-              >
+              <ButtonSubmit type="primary" htmlType="submit" onClick={this.transfer}>
                 Send
               </ButtonSubmit>
             </StyledForm>
           )}
         </Spin>
       </Wrapper>
-    );
+    )
   }
 }
 
@@ -348,24 +326,24 @@ const mapStateToProps = (state) => {
     transferInfo: state.transferAsset,
     prikeys: state.prikeyManagement,
     login: state.login,
-  };
-};
+  }
+}
 const mapDispatchToProps = (dispatch) => {
   return {
     transferAsset: (fromPrivkey, to, amount, assetName) => {
-      dispatch(transferAsset(fromPrivkey, to, amount, assetName));
+      dispatch(transferAsset(fromPrivkey, to, amount, assetName))
     },
     resetTransferAsset: () => {
-      dispatch(reset());
+      dispatch(reset())
     },
     loadTokens: (offset, limit) => {
-      dispatch(loadTokens(offset, limit));
+      dispatch(loadTokens(offset, limit))
     },
     updatePageTokens: (page) => {
-      dispatch(updatePageTokens(page));
+      dispatch(updatePageTokens(page))
     },
-  };
-};
+  }
+}
 export default connect(mapStateToProps, mapDispatchToProps, null, {
   forwardRef: true,
-})(TransferAsset);
+})(TransferAsset)
