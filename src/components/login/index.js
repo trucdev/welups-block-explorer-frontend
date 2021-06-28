@@ -93,7 +93,7 @@ class Login extends React.Component {
               size="large"
             >
               <HeaderTitle>
-                <Logo src={WUelupsLogo} />
+                {/* <Logo src={WUelupsLogo} /> */}
                 <Title>Login</Title>
               </HeaderTitle>
               <Item

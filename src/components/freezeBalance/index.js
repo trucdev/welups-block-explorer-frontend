@@ -153,7 +153,7 @@ class FreezeBalance extends React.Component {
             freezeBalancee.status !== FREEZE_BALANCE_FAIL && (
               <StyledForm layout="vertical" size="large" onFinish={this.onFinish}>
                 <HeaderTitle>
-                  <Logo src={WUelupsLogo} />
+                  {/* <Logo src={WUelupsLogo} /> */}
                   <Title>Freeze Balance</Title>
                 </HeaderTitle>
                 <TitleContainer>
