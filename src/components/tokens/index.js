@@ -92,7 +92,7 @@ class TokenTable extends React.Component {
     ]
     return (
       <Wrapper>
-        <LeftHeader>List of Tokens</LeftHeader>
+        <LeftHeader>List of WRC10 Tokens</LeftHeader>
         <Table
           columns={columns}
           dataSource={tokens}

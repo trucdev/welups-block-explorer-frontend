@@ -177,10 +177,10 @@ class App extends Component {
               <Link to="/transactions">Transactions</Link>
             </Menu.Item>
             <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
-              <Link to="/tokens">Tokens</Link>
+              <Link to="/tokens">WRC10 Tokens</Link>
             </Menu.Item>
             <Menu.Item key="contracts" icon={<FileTextOutlined />}>
-              <Link to="/contracts">Contracts</Link>
+              <Link to="/contracts">WRCO10 Contracts</Link>
             </Menu.Item>
             <Menu.Item
               key="generateAddress"
