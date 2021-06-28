@@ -142,7 +142,7 @@ class App extends Component {
                   <Link to="/user/transferasset">Send</Link>
                 </Menu.Item>
                 <Menu.Item key="issueTokenTRC10" icon={<MoneyCollectOutlined />}>
-                  <Link to="/user/issue-token-trc10">Issue TRC10</Link>
+                  <Link to="/user/issue-token-trc10">Issue WRC10</Link>
                 </Menu.Item>
                 <Menu.Item key="deployContract" icon={<DeploymentUnitOutlined />}>
                   <Link to="/user/deploycontract">Deploy Contract</Link>
