@@ -1,13 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
-import {
-  signUp,
-  SIGNUP_REQUESTING,
-  resetSignUp,
-  SIGNUP_SUCCESS,
-  SIGNUP_FAIL,
-} from '../../actions/signup'
+import { signUp, SIGNUP_REQUESTING, SIGNUP_SUCCESS, SIGNUP_FAIL } from '../../actions/signup'
 import styled from 'styled-components'
 import { Form, Input, Button, Spin, Checkbox } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
@@ -61,9 +55,6 @@ const StyledForm = styled(Form)`
 `
 
 class SignUp extends React.Component {
-  componentWillUnmount() {
-    this.props.resetSignUp()
-  }
   onSignUp = (values) => {
     this.props.doSignUp(values.email, values.password)
   }
@@ -187,9 +178,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     doSignUp: (email, password) => {
       dispatch(signUp(email, password))
-    },
-    resetSignUp: () => {
-      dispatch(resetSignUp())
     },
   }
 }

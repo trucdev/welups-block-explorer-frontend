@@ -139,6 +139,7 @@ class NewPassword extends React.Component {
                       if (!value || getFieldValue('password') === value) {
                         return Promise.resolve()
                       }
+
                       return Promise.reject('Passwords did not match!')
                     },
                   }),

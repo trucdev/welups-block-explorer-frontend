@@ -8,9 +8,6 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 export const SIGNUP_FAIL = 'SIGNUP_FAIL'
 export const SIGNUP_ERROR = 'SIGNUP_ERROR'
 
-export function resetSignUp() {
-  return { type: SIGNUP_NONE }
-}
 export function request() {
   return { type: SIGNUP_REQUESTING }
 }
