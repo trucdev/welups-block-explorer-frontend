@@ -1,0 +1,25 @@
+name: lint and test
+
+on:
+  push:
+    branches: [develop, master]
+  pull_request:
+    branches: [develop, master]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2.1.5
+
+      - name: Install Dependencies
+        run: yarn install
+      - name: Linter
+        run: yarn lint
+      - name: Test
+        run: yarn test --passWithNoTests
