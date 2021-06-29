@@ -96,7 +96,7 @@ class Card extends Component {
     const { hash, contract, blockNum, result, timestamp, numOfBlocks, confirmed } =
       this.props.transaction
     const content = [
-      { title: 'Result', value: result },
+      { title: 'Result', value: result === 'SUCESS' ? 'SUCCESS' : 'FAILED' },
       { title: 'Status', value: Status(confirmed, numOfBlocks) },
       { title: 'Block', value: <HightLight>{blockNum}</HightLight> },
       { title: 'Time', value: toDateTime(timestamp ? timestamp : 0) },
