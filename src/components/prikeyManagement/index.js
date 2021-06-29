@@ -74,11 +74,6 @@ class PriKeyManagement extends Component {
       dataIndex: 'address',
     },
     {
-      title: 'Private Key',
-      key: 'prikey',
-      dataIndex: 'prikey',
-    },
-    {
       title: 'Actions',
       key: 'actions',
       render: (value, item, index) => {
