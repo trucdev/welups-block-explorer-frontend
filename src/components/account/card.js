@@ -62,7 +62,7 @@ class Card extends Component {
       { title: 'BandWidth Total', value: acc.bandwidthTotal },
       { title: 'Bandwidth  Used', value: acc.bandwidthUsed },
       { title: 'Available BandWidth', value: acc.bandwidthLeft },
-      { title: 'Create Time', value: toDateTime(acc.createTime ? acc.createTime : 0) },
+      { title: 'Create Time', value: acc.createTime ? toDateTime(acc.createTime) : 'No Data' },
       { title: 'Frozen Balance', value: currencyFormat(acc.frozenBalance ? acc.frozenBalance : 0) },
       { title: 'Energy Total', value: acc.energyTotal },
       { title: 'Energy Used', value: acc.energyUsed },
@@ -70,7 +70,7 @@ class Card extends Component {
     ]
     return (
       <Wrap>
-        <Skeleton loading={acc.address === ''}>
+        <Skeleton loading={acc.status === 'REQUESTING'}>
           <Content>
             <CardContent>
               <CardHeader>

@@ -1,4 +1,8 @@
-import { ACCOUNT_DETAIL_INIT, ACCOUNT_DETAIL_UDPATE } from '../actions/account'
+import {
+  ACCOUNT_DETAIL_INIT,
+  ACCOUNT_DETAIL_UDPATE,
+  ACCOUNT_DETAIL_REQUESTING,
+} from '../actions/account'
 
 const initAcc = {
   name: '',
@@ -49,6 +53,8 @@ export function accountReducer(state = initAcc, action) {
       }
     case ACCOUNT_DETAIL_INIT:
       return initAcc
+    case ACCOUNT_DETAIL_REQUESTING:
+      return { ...state, status: 'REQUESTING' }
     default:
       return state
   }
