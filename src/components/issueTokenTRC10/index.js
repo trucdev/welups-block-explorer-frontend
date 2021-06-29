@@ -25,7 +25,6 @@ import {
   reset,
   ISSUE_TRC10_SUCCESS,
   ISSUE_TRC10_FAIL,
-  ISSUE_TRC10_NONE,
 } from '../../actions/issueTokenTRC10'
 
 const Header = styled.div`
@@ -93,7 +92,7 @@ class IssueTokenTRC10 extends Component {
       values.abbr,
       values.url_str,
       values.precision,
-      values.total_supply,
+      values.total_supply * Math.pow(10, values.precision),
       values.start_time,
       values.end_time,
       values.free_asset_net_limit,
