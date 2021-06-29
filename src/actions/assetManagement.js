@@ -7,9 +7,21 @@ export const ASSET_UPDATE = 'ASSET_UPDATE'
 export const ADDRESSES_UPDATE = 'ADDRESSES_UPDATE'
 export const ASSET_NEW_ADDR = 'ASSET_NEW_ADDR'
 export const ADDRESS_REQUESTING = 'ADDRESS_REQUESTING'
+export const ASSETS_REQUESTING = 'ASSETS_REQUESTING'
+export const REQUEST_FAILED = 'REQUEST_FAILED'
 export function initAsset() {
   return {
     type: ASSET_INIT,
+  }
+}
+export function requestAsset() {
+  return {
+    type: ASSETS_REQUESTING,
+  }
+}
+export function fail() {
+  return {
+    type: REQUEST_FAILED,
   }
 }
 export function updateAsset(assets, addr) {
@@ -73,14 +85,17 @@ export function addAddrFromPrvkey(id, token, privateKey) {
 }
 export function loadAssetDetails(addr) {
   return async (dispatch) => {
+    dispatch(requestAsset())
     const res = await fetch(`${API_ADDR}/accounts/${addr}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       mode: 'cors',
     })
-    if (!res.ok) return undefined
+    if (!res.ok) {
+      dispatch(fail())
+      return undefined
+    }
     const result = await res.json()
-
     if (result.status === 'success') {
       dispatch(updateAsset(result.data, addr))
     }

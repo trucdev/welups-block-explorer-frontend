@@ -90,13 +90,12 @@ class Addresses extends React.Component {
       })
       addresses.sort()
     }
-
     return (
       <StyleList>
         <div>
           {Object.keys(assetManagement.addresses).length !== 0 ? (
             <StyleCollapse expandIconPosition="right" onChange={this.onChange}>
-              {addresses.map((acc, index) => {
+              {addresses.map((acc) => {
                 let info = assetManagement.addresses[acc]
                 let assets = []
                 if (info && info.assets !== null && info.assets !== undefined) {
@@ -109,22 +108,22 @@ class Addresses extends React.Component {
                     header={<StyledLink to={'/account/' + acc}>{acc}</StyledLink>}
                     key={acc}
                   >
-                    {info ? (
+                    {assetManagement.status === 'requesting-assets' ? (
+                      <Skeleton active />
+                    ) : (
                       <div>
                         <StyleRowACG>
                           <ColHead xs={10} sm={4} md={4} lg={4} xl={2}>
                             {GLOBAL_SYMBOL} balance:
                           </ColHead>
                           <Col xs={14} sm={20} md={20} lg={20} xl={22}>
-                            {currencyFormat(info.token_balance / Math.pow(10, 6)) +
+                            {currencyFormat((info ? info.token_balance : 0) / Math.pow(10, 6)) +
                               ' ' +
                               GLOBAL_SYMBOL}
                           </Col>
                         </StyleRowACG>
                         <Table rowKey="name" columns={columns} dataSource={assets} />
                       </div>
-                    ) : (
-                      <Skeleton active />
                     )}
                   </Collapse.Panel>
                 )
