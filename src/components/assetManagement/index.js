@@ -49,6 +49,25 @@ const LineBreak = styled.div`
 `
 
 class AssetManagement extends React.Component {
+  listItem = (key, value) => {
+    return (
+      <List.Item key={key}>
+        <StyleItem>
+          <StyleRow>
+            <ColHead span={2}>Asset name:</ColHead>
+            <Col span={22}>
+              <StyledLink to={'/token/' + key}>{key}</StyledLink>
+            </Col>
+          </StyleRow>
+          <StyleRow>
+            <ColHead span={2}>Asset balance:</ColHead>
+            <Col span={22}>{currencyFormat(value)}</Col>
+          </StyleRow>
+        </StyleItem>
+      </List.Item>
+    )
+  }
+
   state = {
     loading: false,
     visible: false,
