@@ -69,6 +69,10 @@ const FooterWrapper = styled(Footer)`
 const RightMenuItem = styled(Menu.Item)`
   float: right;
 `
+const MenuItemStyled = styled(Menu.Item)`
+  white-space: normal;
+  height: auto !important;
+`
 const { SubMenu } = Menu
 const RightSubMenuItem = styled(SubMenu)`
   float: right;
@@ -185,13 +189,13 @@ class App extends Component {
             <Menu.Item key="contracts" icon={<FileTextOutlined />}>
               <Link to="/contracts">WRC20 Contracts</Link>
             </Menu.Item>
-            <Menu.Item
+            <MenuItemStyled
               key="generateAddress"
               icon={<PlusCircleOutlined />}
               onClick={this.generateAccount}
             >
               <Link>Generate Account</Link>
-            </Menu.Item>
+            </MenuItemStyled>
           </Menu>
           <ContentRowWrapper justify="center" gutter={[0, 0]}>
             <Col xs={20} sm={20} md={20} lg={19} xl={18}>
