@@ -6,6 +6,7 @@ import TransferContract from './lowerCard/transferContract'
 import TransferAssetContract from './lowerCard/transferAssetContract'
 import CreateSmartContract from './lowerCard/createSmartContract'
 import IssueAssetContract from './lowerCard/issueAssetContract'
+import FreezeBalanceContract from './lowerCard/freezeBalanceContract'
 import styled from 'styled-components'
 import { loadTransactionDetails } from '../../actions/transaction'
 import ReactJson from 'react-json-view'
@@ -33,6 +34,8 @@ class TransactionDetails extends Component {
         return <CreateSmartContract />
       case 'AssetIssueContract':
         return <IssueAssetContract />
+      case 'FreezeBalanceContract':
+        return <FreezeBalanceContract />
       case '':
         return <Skeleton loading></Skeleton>
       default:
