@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import {
   Row,
   Col,
@@ -53,6 +54,12 @@ const StyleDatePicker = styled(DatePicker)`
 const { Option } = Select
 
 class IssueTokenTRC10 extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      startDate: '',
+    }
+  }
   componentWillUnmount() {
     this.props.resetIssueTRC10()
   }
@@ -70,7 +77,11 @@ class IssueTokenTRC10 extends Component {
       })
     }
   }
-
+  onChange = (event) => {
+    this.setState({
+      startDate: event ? moment(event._d).endOf('day') : {},
+    })
+  }
   onFinish = (values) => {
     values.end_time = values.end_time._d.valueOf()
     values.start_time = values.start_time._d.valueOf()
@@ -94,6 +105,14 @@ class IssueTokenTRC10 extends Component {
     )
   }
   render() {
+    const StartDate = this.state.startDate
+    function disableStartDate(current) {
+      return current && current < moment().endOf('day')
+    }
+    function disableEndDate(dateDisable) {
+      return dateDisable && dateDisable <= StartDate
+    }
+
     const { issueTokenInfo, login, prikeys } = this.props
     if (login.token === '') {
       return <Redirect to="/login" />
@@ -374,7 +393,11 @@ class IssueTokenTRC10 extends Component {
                           },
                         ]}
                       >
-                        <StyleDatePicker placeholder="Start date" />
+                        <StyleDatePicker
+                          placeholder="Start date"
+                          disabledDate={disableStartDate}
+                          onChange={this.onChange}
+                        />
                       </Form.Item>
                     </Col>
                     <Col xs={0} sm={6} md={6} lg={6} xl={6}></Col>
@@ -389,7 +412,7 @@ class IssueTokenTRC10 extends Component {
                           },
                         ]}
                       >
-                        <StyleDatePicker placeholder="End date" />
+                        <StyleDatePicker placeholder="End date" disabledDate={disableEndDate} />
                       </Form.Item>
                     </Col>
                   </Row>
