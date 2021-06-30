@@ -57,7 +57,7 @@ class TransferAssetContract extends Component {
   render() {
     const FROM = this.props.transaction.contract.parameter.raw.owner_address
     const TO = this.props.transaction.contract.parameter.raw.to_address
-
+    const PREC = this.props.transaction.contract.parameter.raw.precision
     return (
       <Details>
         <Top>
@@ -93,8 +93,7 @@ class TransferAssetContract extends Component {
             <FillContainer>
               <span>
                 {currencyFormat(
-                  this.props.transaction.contract.parameter.raw.amount /
-                    10 ** this.props.transaction.contract.parameter.raw.precision
+                  this.props.transaction.contract.parameter.raw.amount / Math.pow(10, PREC)
                 )}
               </span>
             </FillContainer>

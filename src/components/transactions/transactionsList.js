@@ -148,7 +148,7 @@ class TransactionsList extends React.Component {
                 {currencyFormat(
                   decimalFormat(
                     record.contract.parameter.raw.amount /
-                      10 ** record.contract.parameter.raw.precision
+                      Math.pow(10, record.contract.parameter.raw.precision)
                   )
                 )}
               </span>
@@ -156,8 +156,7 @@ class TransactionsList extends React.Component {
           } else if (record.contract.type === 'TransferContract') {
             return (
               <span>
-                {currencyFormat(decimalFormat(record.contract.parameter.raw.amount / 1000000))}{' '}
-                {GLOBAL_SYMBOL}
+                {currencyFormat(decimalFormat(record.contract.parameter.raw.amount / 1000000))}
               </span>
             )
           } else {
@@ -172,6 +171,8 @@ class TransactionsList extends React.Component {
         render: (record) => {
           if (record.contract.type === 'TransferAssetContract') {
             return <RedText>{record.contract.parameter.raw.asset_name}</RedText>
+          } else if (record.contract.type === 'TransferContract') {
+            return <RedText>{GLOBAL_SYMBOL}</RedText>
           } else {
             return <span>&nbsp; &nbsp; &nbsp; -</span>
           }

@@ -95,7 +95,12 @@ class IssueAssetContract extends Component {
               <span>Total Supply</span>:
             </TitleContainer>
             <FillContainer>
-              <span>{currencyFormat(decimalFormat(TOTAL))}</span>
+              <span>
+                {currencyFormat(
+                  decimalFormat(TOTAL) /
+                    Math.pow(10, this.props.transaction.contract.parameter.raw.precision)
+                )}
+              </span>
             </FillContainer>
           </Row>
           <Row>
