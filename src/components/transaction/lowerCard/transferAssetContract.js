@@ -91,7 +91,12 @@ class TransferAssetContract extends Component {
               <span>Amount</span>:
             </TitleContainer>
             <FillContainer>
-              <span>{currencyFormat(this.props.transaction.contract.parameter.raw.amount)}</span>
+              <span>
+                {currencyFormat(
+                  this.props.transaction.contract.parameter.raw.amount /
+                    10 ** this.props.transaction.contract.parameter.raw.precision
+                )}
+              </span>
             </FillContainer>
           </Row>
           <Row>

@@ -145,7 +145,12 @@ class TransactionsList extends React.Component {
           if (record.contract.type === 'TransferAssetContract') {
             return (
               <span>
-                {currencyFormat(decimalFormat(record.contract.parameter.raw.amount / 1000000))}
+                {currencyFormat(
+                  decimalFormat(
+                    record.contract.parameter.raw.amount /
+                      10 ** record.contract.parameter.raw.precision
+                  )
+                )}
               </span>
             )
           } else if (record.contract.type === 'TransferContract') {

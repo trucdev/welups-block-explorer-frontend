@@ -101,7 +101,6 @@ class TransferAsset extends React.Component {
     this.props.resetTransferAsset()
   }
   transfer = () => {
-    console.log(this.state.selectedToken)
     this.props.transferAsset(
       this.state.privateKey,
       this.state.to,

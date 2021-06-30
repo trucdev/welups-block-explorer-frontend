@@ -67,7 +67,11 @@ class Card extends Component {
       ,
       {
         title: 'Total supply',
-        value: <RedText>{currencyFormat(this.props.token.total_supply)}</RedText>,
+        value: (
+          <RedText>
+            {currencyFormat(this.props.token.total_supply / 10 ** this.props.token.precision)}
+          </RedText>
+        ),
       },
       {
         title: 'Price',

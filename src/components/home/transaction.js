@@ -35,7 +35,9 @@ class TransactionList extends React.Component {
           GLOBAL_SYMBOL
         break
       case 'TransferAssetContract':
-        amount = currencyFormat(tran.contract.parameter.raw.amount)
+        amount = currencyFormat(
+          tran.contract.parameter.raw.amount / 10 ** tran.contract.parameter.raw.precision
+        )
         break
     }
     return (
@@ -58,10 +60,10 @@ class TransactionList extends React.Component {
                   {amount}&nbsp;
                   {tran.contract.type === 'TransferAssetContract' ? (
                     <StyledLink
-                      to={`/token/${tran.contract.parameter.raw.AssetID}`}
+                      to={`/token/${tran.contract.parameter.raw.asset_id}`}
                       target="_blank"
                     >
-                      {tran.contract.parameter.raw.AssetName}
+                      {tran.contract.parameter.raw.asset_name}
                     </StyledLink>
                   ) : null}
                 </RecentItemData>

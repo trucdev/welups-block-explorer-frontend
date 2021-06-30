@@ -84,8 +84,8 @@ class TokenTable extends React.Component {
         title: 'Total Supply',
         dataIndex: 'total_supply',
         key: 'total_supply',
-        render: (record) => {
-          var text = record ? currencyFormat(record) : null
+        render: (record, token) => {
+          var text = record ? currencyFormat(record / 10 ** token.precision) : null
           return text
         },
       },
