@@ -43,10 +43,7 @@ export function transferAssetReducer(
       state = { ...state, status: action.type, message: 'Transfer failed', tranID: '' }
       break
     case TRANSFER_TOKENS_UPDATE:
-      action.payload.map((value, index) => {
-        state.tokens = [...state.tokens, value]
-      })
-      return { ...state }
+      return { ...state, tokens: action.payload }
     case TRANSFER_TOKENS_INIT:
       return { ...state }
     case TRANSFER_PAGE_TOKENS_UPDATE:

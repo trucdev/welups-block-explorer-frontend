@@ -1,6 +1,7 @@
 import Asset from '../api/asset'
 import { notification } from 'antd'
 import { API_ADDR } from '../config/config'
+import { GLOBAL_SYMBOL } from '../constant'
 
 export const TRANSFER_NONE = 'TRANSFER_NONE'
 export const TRANSFER_REQUESTING = 'TRANSFER_REQUESTING'
@@ -94,6 +95,7 @@ export function updateTokens(tokens) {
 }
 
 export function loadTokens(offset, limit) {
+  const defaultToken = { abbr: GLOBAL_SYMBOL, precision: 6, name: GLOBAL_SYMBOL }
   return (dispatch) => {
     fetch(`${API_ADDR}/assets?offset=${offset}&limit=${limit}`, {
       method: 'GET',
@@ -102,13 +104,14 @@ export function loadTokens(offset, limit) {
       .then((res) => res.json())
       .then((res) => {
         dispatch(updatePageTokensTotal(res.data.total_assets))
-        const tokens = res.data.result.map((item) => {
-          const token = item.abbr
-          return token
+        const token10 = res.data.result.map((item) => {
+          return { abbr: item.abbr, precision: item.precision, name: item.name }
         })
+        const tokens = [defaultToken, ...token10]
         dispatch(updateTokens(tokens ? tokens : []))
       })
       .catch((err) => {
+        dispatch(updateTokens([defaultToken]))
         console.log(err)
       })
   }

@@ -68,14 +68,14 @@ const StyledInputNumber = styled(InputNumber)`
 `
 
 const { Option } = Select
-
+const defaultToken = { abbr: GLOBAL_SYMBOL, precision: 6, name: GLOBAL_SYMBOL }
 class TransferAsset extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       privateKey: '',
       to: '',
-      assetName: { GLOBAL_SYMBOL },
+      selectedToken: defaultToken,
       amount: '',
       loading: false,
     }
@@ -101,12 +101,12 @@ class TransferAsset extends React.Component {
     this.props.resetTransferAsset()
   }
   transfer = () => {
-    //TODO: invalidate before do transfer
+    console.log(this.state.selectedToken)
     this.props.transferAsset(
       this.state.privateKey,
       this.state.to,
-      parseInt(this.state.amount),
-      this.state.assetName
+      parseInt(this.state.amount) * 10 ** this.state.selectedToken.precision,
+      this.state.selectedToken.name
     )
   }
   changeToAddress = (e) => {
@@ -115,10 +115,15 @@ class TransferAsset extends React.Component {
       to: e.target.value,
     }))
   }
-  changeAsset = (asset) => {
+  changeAsset = (assetIndex) => {
+    let selectedToken = defaultToken
+
+    if (this.props.transferInfo.tokens.length > 0) {
+      selectedToken = this.props.transferInfo.tokens[assetIndex]
+    }
     this.setState((prevState) => ({
       ...prevState,
-      assetName: asset,
+      selectedToken: selectedToken,
     }))
   }
   changeAmount = (value) => {
@@ -159,7 +164,7 @@ class TransferAsset extends React.Component {
     if (login.token === '') {
       return <Redirect to="/login" />
     }
-    let assetNames = transferInfo.tokens ? transferInfo.tokens : null
+    let tokens = transferInfo.tokens ? transferInfo.tokens : null
     const antIcon = <LoadingOutlined spin />
     return (
       <Wrapper>
@@ -266,7 +271,7 @@ class TransferAsset extends React.Component {
                     message: 'Please select a token',
                   },
                 ]}
-                initialValue={assetNames[0]}
+                initialValue={0}
               >
                 <Select
                   showSearch
@@ -275,13 +280,10 @@ class TransferAsset extends React.Component {
                   onChange={this.changeAsset}
                   onPopupScroll={this.onScroll}
                 >
-                  <Option value={GLOBAL_SYMBOL} key={GLOBAL_SYMBOL}>
-                    {GLOBAL_SYMBOL}
-                  </Option>
                   {!this.state.loading ? (
-                    assetNames.map((value, index) => (
-                      <Option value={value} key={index}>
-                        {value}
+                    tokens.map((token, index) => (
+                      <Option value={index} key={index}>
+                        {token.name}
                       </Option>
                     ))
                   ) : (
