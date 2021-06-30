@@ -9,9 +9,9 @@ import {
   FREEZE_BALANCE_REQUESTING,
   FREEZE_BALANCE_SUCCESS,
   FREEZE_BALANCE_FAIL,
-  FREEZE_BALANCE_NONE,
 } from '../../actions/freezeBalance'
 import { Link, Redirect } from 'react-router-dom'
+import { NATIVE_TOKEN_PRECISION } from '../../constant'
 
 import WUelupsLogo from '../../assets/images/WUelupsLogo.png'
 
@@ -90,7 +90,7 @@ class FreezeBalance extends React.Component {
     this.props.freezeBalance(
       values.from,
       values.delegate_to,
-      values.frozen_balance,
+      values.frozen_balance * Math.pow(10, NATIVE_TOKEN_PRECISION),
       values.resource
     )
   }
@@ -213,7 +213,9 @@ class FreezeBalance extends React.Component {
                   rules={[
                     {
                       required: true,
-                      message: 'Please fill a valid number',
+                      message: 'Frozen balance must be a number greater or equal 1',
+                      type: 'number',
+                      min: 1,
                     },
                   ]}
                 >
