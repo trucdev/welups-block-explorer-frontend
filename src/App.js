@@ -65,6 +65,8 @@ const ContentRowWrapper = styled(Row)`
 const FooterWrapper = styled(Footer)`
   text-align: center;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
 `
 const RightMenuItem = styled(Menu.Item)`
   float: right;
@@ -76,6 +78,10 @@ const MenuItemStyled = styled(Menu.Item)`
 const { SubMenu } = Menu
 const RightSubMenuItem = styled(SubMenu)`
   float: right;
+`
+const RedLink = styled.a`
+  color: #e50915;
+  font-size: 16px;
 `
 class App extends Component {
   constructor(props) {
@@ -256,7 +262,12 @@ class App extends Component {
             </Col>
           </ContentRowWrapper>
         </AppWrapper>
-        <FooterWrapper>Designed by Welups</FooterWrapper>
+        <FooterWrapper>
+          <span>Designed by Welups</span>
+          <RedLink href="https://welups.com" target="_blank">
+            https://welups.com
+          </RedLink>
+        </FooterWrapper>
       </Router>
     )
   }
