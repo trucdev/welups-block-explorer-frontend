@@ -36,32 +36,40 @@ class ContractCodeMenu extends Component {
     var noWrite = 0
     var read = contract.abi
       ? contract.abi.map((func, index) => {
-          if (
-            !func.stateMutability ||
-            func.stateMutability === 0 ||
-            func.stateMutability === 1 ||
-            func.stateMutability === 2
-          ) {
-            noRead++
-            return (
-              <ReadContract key={index} func={func} no={noRead} addr={contract.contract_address} />
-            )
+          if (func.type !== 1 && func.stateMutability) {
+            if (
+              func.stateMutability === 0 ||
+              func.stateMutability === 1 ||
+              func.stateMutability === 2
+            ) {
+              noRead++
+              return (
+                <ReadContract
+                  key={index}
+                  func={func}
+                  no={noRead}
+                  addr={contract.contract_address}
+                />
+              )
+            }
           }
           return null
         })
       : null
     var write = contract.abi
       ? contract.abi.map((func, index) => {
-          if (func.stateMutability === 4 || func.stateMutability === 3) {
-            noWrite++
-            return (
-              <WriteContract
-                key={index}
-                func={func}
-                no={noWrite}
-                addr={contract.contract_address}
-              />
-            )
+          if (func.type !== 1 && func.stateMutability) {
+            if (func.stateMutability === 4 || func.stateMutability === 3) {
+              noWrite++
+              return (
+                <WriteContract
+                  key={index}
+                  func={func}
+                  no={noWrite}
+                  addr={contract.contract_address}
+                />
+              )
+            }
           }
           return null
         })

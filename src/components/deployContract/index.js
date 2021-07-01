@@ -24,6 +24,7 @@ import {
   DEPLOY_CONTRACT_FAIL,
   compileContract,
   upload,
+  remove,
 } from '../../actions/deployContract'
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons'
 
@@ -78,12 +79,13 @@ class DeployContract extends Component {
   }
 
   onFinish = (values) => {
-    let { deployContractInfo } = this.props
+    const { deployContractInfo } = this.props
+    const name = JSON.parse(values.name)
     this.props.deployContract(
       values.from,
-      values.name,
-      JSON.stringify(deployContractInfo.infos[values.name].abi),
-      deployContractInfo.infos[values.name].evm.bytecode.object,
+      name.keyContract,
+      JSON.stringify(deployContractInfo.infos[name.keyFile][name.keyContract].abi),
+      deployContractInfo.infos[name.keyFile][name.keyContract].evm.bytecode.object,
       values.feeLimit,
       values.curPercent,
       values.oeLimit
@@ -98,8 +100,8 @@ class DeployContract extends Component {
 
   onCompile = () => {
     var { deployContractInfo } = this.props
-    if (deployContractInfo.contract) {
-      this.props.compileContract(deployContractInfo.contract, this.state.selectedVersion)
+    if (deployContractInfo.contracts && Object.keys(deployContractInfo.contracts).length !== 0) {
+      this.props.compileContract(deployContractInfo.contracts, this.state.selectedVersion)
     } else {
       notification.error({
         message: 'Error!',
@@ -181,14 +183,17 @@ class DeployContract extends Component {
                     <Col xs={24} sm={9} md={9} lg={9} xl={9}>
                       <Upload
                         accept=".sol"
-                        maxCount={1}
+                        multiple
                         beforeUpload={(file) => {
                           const reader = new FileReader()
                           reader.onload = (e) => {
-                            this.props.upload(e.target.result)
+                            this.props.upload({ fileName: file.name, content: e.target.result })
                           }
                           reader.readAsText(file)
                           return false
+                        }}
+                        onRemove={(file) => {
+                          this.props.remove(file.name)
                         }}
                       >
                         <Button icon={<UploadOutlined />}>Click to Upload</Button>
@@ -334,11 +339,16 @@ class DeployContract extends Component {
                               placeholder="Please select main contract deployment"
                               allowClear
                             >
-                              {Object.entries(deployContractInfo.infos).map(([key, value]) => (
-                                <Option value={key} key={key}>
-                                  {key}
-                                </Option>
-                              ))}
+                              {Object.entries(deployContractInfo.infos).map(([keyFile, value]) => {
+                                return Object.entries(value).map(([keyContract]) => {
+                                  const keyComponent = { keyFile, keyContract }
+                                  return (
+                                    <Option value={JSON.stringify(keyComponent)} key={keyContract}>
+                                      {keyContract}
+                                    </Option>
+                                  )
+                                })
+                              })}
                             </Select>
                           </Form.Item>
                         </Col>
@@ -387,6 +397,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     compileContract: (contract, version) => {
       dispatch(compileContract(contract, version))
+    },
+    remove: (name) => {
+      dispatch(remove(name))
     },
   }
 }

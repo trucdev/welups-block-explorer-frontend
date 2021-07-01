@@ -10,6 +10,7 @@ export const DEPLOY_CONTRACT_FAIL = 'DEPLOY_CONTRACT_FAIL'
 export const COMPILE_CONTRACT_SUCCESS = 'COMPILE_CONTRACT_SUCCESS'
 export const COMPILE_CONTRACT_FAIL = 'COMPILE_CONTRACT_FAIL'
 export const UPLOAD_CONTRACT = 'UPLOAD_CONTRACT'
+export const REMOVE_CONTRACT = 'REMOVE_CONTRACT'
 
 export function request() {
   return { type: DEPLOY_CONTRACT_REQUESTING }
@@ -47,6 +48,12 @@ export function upload(tex) {
   return {
     type: UPLOAD_CONTRACT,
     payload: tex,
+  }
+}
+export function remove(name) {
+  return {
+    type: REMOVE_CONTRACT,
+    payload: name,
   }
 }
 
@@ -96,24 +103,20 @@ export function deployContract(from, contractName, abi, condeStr, feeLimit, curP
           }
         })
         .catch((err) => {
-          console.log(err)
+          console.error(err)
         })
     }
     timer = setInterval(checkTransactionStatus, 3000)
   }
 }
-export function compileContract(contract, version) {
+export function compileContract(contracts, version) {
   return async (dispatch) => {
     dispatch(request())
     try {
       const solc = await getCompiler(version)
       var input = {
         language: 'Solidity',
-        sources: {
-          contract: {
-            content: contract,
-          },
-        },
+        sources: contracts,
         settings: {
           outputSelection: {
             '*': {
@@ -125,7 +128,7 @@ export function compileContract(contract, version) {
       var output = JSON.parse(solc.compile(JSON.stringify(input)))
       if (output && output.errors) {
         dispatch(failCompile())
-        output.errors.forEach((value, index) => {
+        output.errors.forEach((value) => {
           notification.error({
             message: 'Failed!',
             description: value.message,
@@ -133,7 +136,7 @@ export function compileContract(contract, version) {
         })
         return
       }
-      dispatch(successCompile(output.contracts.contract))
+      dispatch(successCompile(output.contracts))
       notification.success({
         message: 'Success!',
         description: 'Compile successfully!',
