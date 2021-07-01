@@ -13,12 +13,15 @@ jobs:
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
+      - name: Correct .env
+        run: |
+          mv .env.dev .env
       - name: Build and Publish head Docker image
         uses: VaultVulp/gp-docker-action@1.1.8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: block-explorer-frontend 
-          image-tag: dev 
+          image-name: block-explorer-frontend
+          image-tag: dev
       - name: Init folder on server
         uses: appleboy/ssh-action@v0.1.4
         with:
