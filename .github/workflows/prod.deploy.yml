@@ -3,7 +3,7 @@ name: Prod Deploy
 on:
   push:
     tags:
-    - '**'
+      - '**'
 
 jobs:
   build:
@@ -12,43 +12,29 @@ jobs:
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
-      - name: Build image
-        run: |
-          docker build . --file Dockerfile --tag ${{secrets.IMAGE_TAG}}
-          docker save ${{secrets.IMAGE_TAG}} > ${{secrets.IMAGE_TAG}}.tar
+      - name: Build and Publish head Docker image
+        uses: VaultVulp/gp-docker-action@1.1.8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: block-explorer-frontend
+          image-tag: prod
       - name: Init folder on server
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{secrets.REMOTE_HOST_PROD}}
-          username: ${{secrets.REMOTE_USER}}
+          username: ${{secrets.REMOTE_USER_PORD}}
           key: ${{secrets.SSH_KEY}}
           script: mkdir -p ${{secrets.REMOTE_DIR}}
 
-      - name: Send docker image
-        uses: easingthemes/ssh-deploy@v2.1.5
-        with:
-          SSH_PRIVATE_KEY: ${{secrets.SSH_KEY}}
-          REMOTE_HOST: ${{secrets.REMOTE_HOST_PROD}}
-          REMOTE_USER: ${{secrets.REMOTE_USER}}
-          SOURCE: ${{secrets.IMAGE_TAG}}.tar
-          TARGET: ${{secrets.REMOTE_DIR}}
-      - name: Send docker-compose
-        uses: easingthemes/ssh-deploy@v2.1.5
-        with:
-          SSH_PRIVATE_KEY: ${{secrets.SSH_KEY}}
-          REMOTE_HOST: ${{secrets.REMOTE_HOST_PROD}}
-          REMOTE_USER: ${{secrets.REMOTE_USER}}
-          SOURCE: ${{secrets.DOCKERCOMPOSE}}
-          TARGET: ${{secrets.REMOTE_DIR}}
       - name: Deploy image and run
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{secrets.REMOTE_HOST_PROD}}
-          username: ${{secrets.REMOTE_USER}}
+          username: ${{secrets.REMOTE_USER_PORD}}
           key: ${{secrets.SSH_KEY}}
           script: |
             cd ${{secrets.REMOTE_DIR}}
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u publisher --password-stdin
             docker-compose down
-            docker image rm -f ${{secrets.IMAGE_TAG}}
-            docker load --input ${{secrets.IMAGE_TAG}}.tar
+            docker-compose pull
             docker-compose up -d
