@@ -1,5 +1,6 @@
 import { notification } from 'antd'
 import Account from '../api/account'
+import { callAccoountApi } from './login'
 
 export const LOAD_NONE = 'LOAD_NONE'
 export const LOADING = 'LOADING'
@@ -8,17 +9,39 @@ export const LOAD_PRIKEY_FROM_STORAGE = 'LOAD_PRIKEY_FROM_STORAGE'
 export const DELETE_PRIKEY_FROM_STORAGE = 'DELETE_PRIKEY_FROM_STORAGE'
 export const EDIT_PRIKEY_FROM_STORAGE = 'EDIT_PRIKEY_FROM_STORAGE'
 export const ADD_TO_STORAGE = 'ADD_TO_STORAGE'
+export const SET_SHOW_STATE = 'SET_SHOW_STATE'
 
 export function loadPrikeyFromStorage(email) {
   let prikeys = JSON.parse(localStorage.getItem(email))
   return {
     type: LOAD_PRIKEY_FROM_STORAGE,
-    payload: prikeys,
+    payload: { prikeys, email },
+  }
+}
+export function checkPassword(email, password) {
+  return async (dispatch) => {
+    dispatch(request())
+    const res = await callAccoountApi({ email, password })
+    if (res.data.code) {
+      dispatch(fail())
+      notification.error({
+        message: 'Failed!',
+        description: 'Wrong password!',
+      })
+    } else {
+      dispatch(setShowState(true))
+    }
   }
 }
 export function request() {
   return {
     type: LOADING,
+  }
+}
+export function setShowState(value) {
+  return {
+    type: SET_SHOW_STATE,
+    payload: value,
   }
 }
 export function add(prikey) {

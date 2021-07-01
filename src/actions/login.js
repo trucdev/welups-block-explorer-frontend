@@ -82,20 +82,23 @@ export function error(status, code) {
   }
 }
 
+export async function callAccoountApi(acc) {
+  const res = await fetch(`${API_ADDR}/users/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    mode: 'cors',
+    body: JSON.stringify({
+      email: acc.email,
+      password: acc.password,
+    }),
+  })
+  return await res.json()
+}
+
 export function checkAccountApi(acc) {
   return async (dispatch) => {
     dispatch(request())
-    const res = await fetch(`${API_ADDR}/users/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      mode: 'cors',
-      body: JSON.stringify({
-        email: acc.email,
-        password: acc.password,
-      }),
-    })
-    const result = await res.json()
-
+    const result = await callAccoountApi(acc)
     var code = result.data.code
     var email = acc.email
     var password = acc.password
