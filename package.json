@@ -9,7 +9,7 @@
     "@tronscan/client": "clownsss/tronscan-node-client#v2.2.42",
     "antd": "4.9.2",
     "antd-mobile": "^2.3.4",
-    "browser-solc": "clownsss/browser-solc#v0.3",
+    "browser-solc": "clownsss/browser-solc#v0.4",
     "cross-fetch": "^3.0.6",
     "javascript-time-ago": "^2.3.3",
     "jwt-decode": "^3.1.2",
