@@ -46,7 +46,7 @@ export function logout() {
     type: LOGOUT,
   }
 }
-export function reset() {
+export function resetLogin() {
   return {
     type: LOGIN_NONE,
   }

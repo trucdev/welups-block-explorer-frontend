@@ -61,7 +61,7 @@ const Container = styled.div`
 `
 
 class ActivateAccount extends React.Component {
-  componentWillUnmount() {
+  componentDidMount() {
     this.props.resetSignUp()
   }
   onActivate = (values) => {

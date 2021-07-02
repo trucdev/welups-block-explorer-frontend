@@ -24,15 +24,7 @@ export function loginReducer(
 ) {
   switch (action.type) {
     case LOGIN_NONE:
-      state = {
-        type: action.type,
-        status: '',
-        message: '',
-        description: '',
-        token: '',
-        email: '',
-        id: '',
-      }
+      state = { ...state, code: '' }
       break
     case LOGIN_REQUESTING:
       state = {

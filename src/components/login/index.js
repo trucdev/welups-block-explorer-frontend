@@ -1,12 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { checkAccountApi, LOGIN_REQUESTING, LOGIN_SUCCESS, LOGIN_FAIL } from '../../actions/login'
+import {
+  checkAccountApi,
+  LOGIN_REQUESTING,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  resetLogin,
+} from '../../actions/login'
 import styled from 'styled-components'
 import { Form, Input, Button, Spin } from 'antd'
 import { Redirect } from 'react-router-dom'
 import { LoadingOutlined } from '@ant-design/icons'
 import WUelupsLogo from '../../assets/images/WUelupsLogo.png'
+import { resetSignup } from '../../actions/signup'
+import { reset } from '../../actions/resetPassword'
 
 const StyledLinkLeft = styled(Link)`
   &:link,
@@ -63,6 +71,11 @@ const Container = styled.div`
 `
 
 class Login extends React.Component {
+  componentDidMount() {
+    this.props.resetSignUp()
+    this.props.resetForgotPassword()
+    this.props.resetLogin()
+  }
   onFinish = (allValues) => {
     this.props.checkAccountApi({
       email: allValues.email,
@@ -71,7 +84,7 @@ class Login extends React.Component {
   }
   render() {
     const antIcon = <LoadingOutlined spin />
-    var { login } = this.props
+    var { login, signUpInfo } = this.props
     var code = login.code
     if (login.type === LOGIN_SUCCESS || login.token !== '') {
       return <Redirect to="/user" />
@@ -142,12 +155,22 @@ class Login extends React.Component {
 const mapStateToProps = (state) => {
   return {
     login: state.login,
+    signUpInfo: state.signUpReducer,
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     checkAccountApi: (acc) => {
       dispatch(checkAccountApi(acc))
+    },
+    resetSignUp: () => {
+      dispatch(resetSignup())
+    },
+    resetForgotPassword: () => {
+      dispatch(reset())
+    },
+    resetLogin: () => {
+      dispatch(resetLogin())
     },
   }
 }

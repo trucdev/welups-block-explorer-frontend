@@ -23,6 +23,9 @@ export function fail(status) {
     payload: status,
   }
 }
+export function resetSignup() {
+  return { type: SIGNUP_NONE }
+}
 
 export function signUp(email, password) {
   return async (dispatch) => {

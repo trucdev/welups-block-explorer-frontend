@@ -61,9 +61,6 @@ const Container = styled.div`
 `
 
 class ResetPassword extends React.Component {
-  componentWillUnmount() {
-    this.props.resetForgotPassword()
-  }
   onFinish = (email) => {
     this.props.toSendToken(email.email)
   }
