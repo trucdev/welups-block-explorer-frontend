@@ -14,8 +14,9 @@ import {
   SplitCellsOutlined,
   TransactionOutlined,
   WalletOutlined,
+  RedoOutlined,
 } from '@ant-design/icons'
-import { Col, Layout, Menu, Modal, Result, Row } from 'antd'
+import { Col, Layout, Menu, Modal, Result, Row, Input, Form, Button } from 'antd'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Link, Redirect, Route, Switch } from 'react-router-dom'
@@ -48,6 +49,7 @@ import TransactionsList from './components/transactions/transactionsList'
 import TransferAsset from './components/transferasset'
 import WitnessTable from './components/witnesses'
 import WUelupsLogo from './assets/images/WUelupsLogo.png'
+import { addressToHex } from './utils/utils'
 const { Footer } = Layout
 
 const AppWrapper = styled.div`
@@ -83,14 +85,22 @@ const RedLink = styled.a`
   color: #e50915;
   font-size: 16px;
 `
+const DecodeResultDiv = styled.div`
+  word-break: break-word;
+  margin-top: 10px;
+  font-style: ${(props) => (props.error ? 'normal' : 'italic')};
+  color: ${(props) => (props.error ? '#e50915' : 'rgb(0, 189, 12)')};
+`
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       isModalVisible: false,
+      isModalDecodeVisible: false,
       newAddr: '',
       newPrivKey: '',
       password: '',
+      decodeResult: { value: '', error: false },
     }
   }
 
@@ -110,10 +120,27 @@ class App extends Component {
   onOk = () => {
     this.setState({
       isModalVisible: false,
+      isModalDecodeVisible: false,
       newAddr: '',
       newPrivKey: '',
       password: '',
+      decodeResult: { value: '', error: false },
     })
+  }
+  handleDecodeAddressMenuClick = () => {
+    this.setState({
+      isModalDecodeVisible: true,
+    })
+  }
+  handleDecodeAddress = (value) => {
+    const res = addressToHex(value.address)
+    if (res) {
+      this.setState({ decodeResult: { value: res, error: false } })
+    } else {
+      this.setState({
+        decodeResult: { value: 'Invalid address! Please try again!', error: true },
+      })
+    }
   }
   componentDidMount() {
     let { login } = this.props
@@ -123,6 +150,7 @@ class App extends Component {
   }
   render() {
     var { login } = this.props
+    const { decodeResult } = this.state
     return (
       <Router>
         <Modal
@@ -137,6 +165,50 @@ class App extends Component {
             title={`Your address: ${this.state.newAddr}`}
             subTitle={`Your privatekey: ${this.state.newPrivKey}`}
           />
+        </Modal>
+        <Modal
+          title="Decode Address"
+          centered
+          visible={this.state.isModalDecodeVisible}
+          onCancel={this.onOk}
+          footer={null}
+          destroyOnClose
+        >
+          <Form
+            layout="vertical"
+            name="decodeAddress"
+            size="medium"
+            onFinish={this.handleDecodeAddress}
+          >
+            <Form.Item
+              label="Input addess"
+              name="address"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your address here!',
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Row>
+              <Col>
+                <Button htmlType="submit" type="primary">
+                  Done
+                </Button>
+              </Col>
+              <Col span={1}></Col>
+              <Col>
+                <Button key="back" onClick={this.onOk}>
+                  Cancel
+                </Button>
+              </Col>
+            </Row>
+            {decodeResult.value && (
+              <DecodeResultDiv error={decodeResult.error}>{decodeResult.value}</DecodeResultDiv>
+            )}
+          </Form>
         </Modal>
         <AppWrapper>
           <Menu mode="horizontal">
@@ -200,7 +272,14 @@ class App extends Component {
               icon={<PlusCircleOutlined />}
               onClick={this.generateAccount}
             >
-              <Link>Generate Account</Link>
+              Generate Account
+            </MenuItemStyled>
+            <MenuItemStyled
+              key="decodeAddress"
+              icon={<RedoOutlined />}
+              onClick={this.handleDecodeAddressMenuClick}
+            >
+              Decode Address
             </MenuItemStyled>
           </Menu>
           <ContentRowWrapper justify="center" gutter={[0, 0]}>

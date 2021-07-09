@@ -1,6 +1,9 @@
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
+import { decode58Check } from '@tronscan/client/src/utils/crypto'
+import { byteArray2hexStr } from '@tronscan/client/src/utils/bytes'
+import { toChecksumAddress } from 'ethereum-checksum-address'
 
 TimeAgo.addLocale(en)
 
@@ -39,4 +42,13 @@ export function decimalFormat(value, precision = 4) {
 export function currencyFormat(value) {
   // return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   return Intl.NumberFormat().format(value)
+}
+
+export function addressToHex(addr) {
+  try {
+    return toChecksumAddress('0x' + byteArray2hexStr(decode58Check(addr)).substring(2))
+  } catch (e) {
+    console.error(e)
+    return null
+  }
 }

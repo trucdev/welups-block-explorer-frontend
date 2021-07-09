@@ -11,6 +11,7 @@
     "antd-mobile": "^2.3.4",
     "browser-solc": "clownsss/browser-solc#v0.4",
     "cross-fetch": "^3.0.6",
+    "ethereum-checksum-address": "^0.0.6",
     "javascript-time-ago": "^2.3.3",
     "jwt-decode": "^3.1.2",
     "react": "^17.0.1",
@@ -66,8 +67,8 @@
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^6.0.0",
     "prettier": "^2.3.2",
-    "prettier-eslint": "^12.0.0",
-    "husky": "^6.0.0"
+    "prettier-eslint": "^12.0.0"
   }
 }
