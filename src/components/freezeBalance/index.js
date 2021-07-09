@@ -11,7 +11,6 @@ import {
   FREEZE_BALANCE_FAIL,
 } from '../../actions/freezeBalance'
 import { Link, Redirect } from 'react-router-dom'
-import Account from '../../api/account'
 import { NATIVE_TOKEN_PRECISION } from '../../constant'
 
 import WUelupsLogo from '../../assets/images/WUelupsLogo.png'
@@ -70,7 +69,6 @@ const StyledForm = styled(Form)`
 const { Option } = Select
 
 class FreezeBalance extends React.Component {
-  formRef = React.createRef()
   componentDidMount() {
     this.props.reset()
     var { prikeys, login } = this.props
@@ -95,13 +93,6 @@ class FreezeBalance extends React.Component {
       values.frozen_balance * Math.pow(10, NATIVE_TOKEN_PRECISION),
       values.resource
     )
-  }
-  onChangePriKey = (value) => {
-    if (value) {
-      this.formRef.current.setFieldsValue({ delegate_to: Account.addressFromPrivateKey(value) })
-    } else {
-      this.formRef.current.setFieldsValue({ delegate_to: '' })
-    }
   }
 
   render() {
@@ -160,12 +151,7 @@ class FreezeBalance extends React.Component {
           )}
           {freezeBalancee.status !== FREEZE_BALANCE_SUCCESS &&
             freezeBalancee.status !== FREEZE_BALANCE_FAIL && (
-              <StyledForm
-                layout="vertical"
-                size="large"
-                onFinish={this.onFinish}
-                ref={this.formRef}
-              >
+              <StyledForm layout="vertical" size="large" onFinish={this.onFinish}>
                 <HeaderTitle>
                   <Logo src={WUelupsLogo} />
                   <Title>Freeze Balance</Title>
@@ -182,12 +168,7 @@ class FreezeBalance extends React.Component {
                     },
                   ]}
                 >
-                  <Select
-                    showSearch
-                    placeholder="Select a private key"
-                    allowClear
-                    onChange={this.onChangePriKey}
-                  >
+                  <Select showSearch placeholder="Select a private key" allowClear>
                     {prikeys.prikeys && prikeys.prikeys.length !== 0
                       ? prikeys.prikeys.map((value, index) => (
                           <Option value={value.prikey} key={index}>
@@ -200,9 +181,9 @@ class FreezeBalance extends React.Component {
                 <TitleContainer>
                   <ContentTitle>To</ContentTitle>
                 </TitleContainer>
-                <Form.Item name="delegate_to">
+                <Item name="delegate_to">
                   <Input />
-                </Form.Item>
+                </Item>
                 <TitleContainer>
                   <ContentTitle>Resource</ContentTitle>
                 </TitleContainer>
