@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "cSpell.words": [
+    "DEACTIVE",
+    "MONGODB",
+    "Microservice",
+    "dtos",
+    "kompose",
+    "microservices",
+    "nats",
+    "nestjs",
+    "nodeport",
+    "typeorm"
+  ]
+}

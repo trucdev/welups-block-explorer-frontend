@@ -19,7 +19,7 @@ import {
 import { Col, Layout, Menu, Modal, Result, Row, Input, Form, Button } from 'antd'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Link, Redirect, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import { loadFromStorage, logout } from './actions/login'
 import Account from './api/account'
@@ -47,44 +47,21 @@ import TokenTable from './components/tokens/index'
 import TransactionDetails from './components/transaction'
 import TransactionsList from './components/transactions/transactionsList'
 import TransferAsset from './components/transferasset'
+import FooterComponent from './components/footer'
 import WitnessTable from './components/witnesses'
-import WUelupsLogo from './assets/images/WUelupsLogo.png'
 import { addressToHex } from './utils/utils'
-const { Footer } = Layout
+import MainNavigation from './components/mainNavigation'
 
 const AppWrapper = styled.div`
   min-height: 800px;
   text-align: center;
   flex: 1 0 auto;
 `
-const Logo = styled.img`
-  height: 40px;
-  width: 140px;
-`
+
 const ContentRowWrapper = styled(Row)`
   padding-top: 40px;
 `
-const FooterWrapper = styled(Footer)`
-  text-align: center;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-`
-const RightMenuItem = styled(Menu.Item)`
-  float: right;
-`
-const MenuItemStyled = styled(Menu.Item)`
-  white-space: normal;
-  height: auto !important;
-`
-const { SubMenu } = Menu
-const RightSubMenuItem = styled(SubMenu)`
-  float: right;
-`
-const RedLink = styled.a`
-  color: #e50915;
-  font-size: 16px;
-`
+
 const DecodeResultDiv = styled.div`
   word-break: break-word;
   margin-top: 10px;
@@ -211,79 +188,14 @@ class App extends Component {
           </Form>
         </Modal>
         <AppWrapper>
-          <Menu mode="horizontal">
-            <Menu.Item disabled={true}>
-              <Logo src={WUelupsLogo} />
-            </Menu.Item>
-            {login.token !== '' ? (
-              <RightSubMenuItem title={login.email}>
-                <Menu.Item key="User" icon={<WalletOutlined />}>
-                  <Link to="/user">Assets</Link>
-                </Menu.Item>
-                <Menu.Item key="transfer" icon={<SendOutlined />}>
-                  <Link to="/user/transferasset">Send</Link>
-                </Menu.Item>
-                <Menu.Item key="issueTokenTRC10" icon={<MoneyCollectOutlined />}>
-                  <Link to="/user/issue-token-trc10">Issue WRC10</Link>
-                </Menu.Item>
-                <Menu.Item key="deployContract" icon={<DeploymentUnitOutlined />}>
-                  <Link to="/user/deploycontract">Deploy Contract</Link>
-                </Menu.Item>
-                <Menu.Item key="freezeBalance" icon={<SplitCellsOutlined />}>
-                  <Link to="/user/freeze-balance">Freeze Balance</Link>
-                </Menu.Item>
-                <Menu.Item key="prikeyManagement" icon={<KeyOutlined />}>
-                  <Link to="/prikey-management">Private Management</Link>
-                </Menu.Item>
-                <Menu.Item key="logOut" icon={<LogoutOutlined />}>
-                  <Link to="/login" onClick={this.logOut}>
-                    Log out
-                  </Link>
-                </Menu.Item>
-              </RightSubMenuItem>
-            ) : (
-              <RightMenuItem key="login">
-                <Link to="/login">Register/Login</Link>
-              </RightMenuItem>
-            )}
-            <Menu.Item key="home" icon={<MailOutlined />}>
-              <Link to="/home">Home</Link>
-            </Menu.Item>
-            <Menu.Item key="witness" icon={<AppstoreOutlined />}>
-              <Link to="/witness">Witnesses</Link>
-            </Menu.Item>
-            <Menu.Item key="blocks" icon={<BlockOutlined />}>
-              <Link to="/blocks">Blocks</Link>
-            </Menu.Item>
-            <Menu.Item key="nodes" icon={<NodeIndexOutlined />}>
-              <Link to="/nodes">Nodes</Link>
-            </Menu.Item>
-            <Menu.Item key="transactions" icon={<TransactionOutlined />}>
-              <Link to="/transactions">Transactions</Link>
-            </Menu.Item>
-            <Menu.Item key="tokens" icon={<DollarCircleOutlined />}>
-              <Link to="/tokens">WRC10 Tokens</Link>
-            </Menu.Item>
-            <Menu.Item key="contracts" icon={<FileTextOutlined />}>
-              <Link to="/contracts">WRC20 Contracts</Link>
-            </Menu.Item>
-            <MenuItemStyled
-              key="generateAddress"
-              icon={<PlusCircleOutlined />}
-              onClick={this.generateAccount}
-            >
-              Generate Account
-            </MenuItemStyled>
-            <MenuItemStyled
-              key="decodeAddress"
-              icon={<RedoOutlined />}
-              onClick={this.handleDecodeAddressMenuClick}
-            >
-              Decode Address
-            </MenuItemStyled>
-          </Menu>
+          <MainNavigation
+            login={login}
+            logOut={this.logOut}
+            generateAccount={this.generateAccount}
+            handleDecodeAddressMenuClick={this.handleDecodeAddressMenuClick}
+          />
           <ContentRowWrapper justify="center" gutter={[0, 0]}>
-            <Col xs={20} sm={20} md={20} lg={19} xl={18}>
+            <Col xs={20} sm={20} md={20} lg={19} xl={18} style={{ backgroundColor: '#fafafa' }}>
               <Row gutter={[5, 5]}>
                 <Col span={24}>
                   <Search />
@@ -341,12 +253,7 @@ class App extends Component {
             </Col>
           </ContentRowWrapper>
         </AppWrapper>
-        <FooterWrapper>
-          <span>Designed by Welups</span>
-          <RedLink href="https://welups.com" target="_blank">
-            https://welups.com
-          </RedLink>
-        </FooterWrapper>
+        <FooterComponent />
       </Router>
     )
   }
