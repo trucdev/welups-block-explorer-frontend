@@ -11,16 +11,17 @@ import styled from 'styled-components'
 import { loadTransactionDetails } from '../../actions/transaction'
 import ReactJson from 'react-json-view'
 import { Skeleton } from 'antd'
+import PageHeader from './../partials/pageHeader'
 
 const Container = styled.div`
   margin: 5px;
 `
-const CardTitle = styled.div`
-  border-bottom: 5px solid #c23631;
-  font-size: 20px;
-  text-align: left;
+const CardTransactionInfo = styled.div`
+  box-shadow: 0px 3px 5px #00000014;
+  border: 1px solid #e7eaf3;
+  border-radius: 10px;
+  overflow: hidden;
 `
-
 class TransactionDetails extends Component {
   contractDetails = (type, raw) => {
     switch (type) {
@@ -51,11 +52,13 @@ class TransactionDetails extends Component {
     const jsonContract = this.props.transaction.contract.parameter.raw
     return (
       <Container>
-        <CardTitle>
-          <h3>TRANSACTION DETAILS</h3>
-        </CardTitle>
-        <Card />
-        {this.contractDetails(TransactionType, jsonContract)}
+        <PageHeader>Transaction details</PageHeader>
+        <CardTransactionInfo className="mb-25">
+          <Card />
+        </CardTransactionInfo>
+        <CardTransactionInfo>
+          {this.contractDetails(TransactionType, jsonContract)}
+        </CardTransactionInfo>
       </Container>
     )
   }

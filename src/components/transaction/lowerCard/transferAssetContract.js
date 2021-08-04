@@ -13,7 +13,6 @@ const Details = styled.div`
   flex-direction: column;
   align-items: flex-start;
   background-color: #ffffff;
-  margin-top: 15px;
 `
 const Top = styled.div`
   padding-top: 25px;
