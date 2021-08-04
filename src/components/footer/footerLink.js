@@ -7,6 +7,7 @@ const UL = styled.ul`
   padding-left: 5px;
   a {
     color: #c9cacb;
+    line-height: 2.5;
   }
 `
 

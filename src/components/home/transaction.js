@@ -14,6 +14,11 @@ import {
   RecentItemData,
   StyledLink,
   RecentRightCol,
+  RecentListContainer,
+  RecentItemContainer,
+  TimeAgo,
+  RecentItemReward,
+  AssetName,
 } from './recent-list'
 import { toTimeAgo, currencyFormat, decimalFormat } from '../../utils/utils'
 
@@ -29,10 +34,7 @@ class TransactionList extends React.Component {
         amount = null
         break
       case 'TransferContract':
-        amount =
-          currencyFormat(decimalFormat(tran.contract.parameter.raw.amount / 1000000)) +
-          ' ' +
-          GLOBAL_SYMBOL
+        amount = currencyFormat(decimalFormat(tran.contract.parameter.raw.amount / 1000000))
         break
       case 'TransferAssetContract':
         amount = currencyFormat(
@@ -41,89 +43,86 @@ class TransactionList extends React.Component {
         break
     }
     return (
-      <List.Item key={tran.hash}>
-        <RecentItem>
-          <Row>
-            <Col xs={24} sm={24} md={12}>
-              <span>
-                Transaction:
-                <RecentItemData>
-                  <StyledLink to={`/transaction/${tran.hash}`} target="_blank">
-                    {tran.hash.substring(0, 24) + '...'}
-                  </StyledLink>
-                </RecentItemData>
-              </span>
-            </Col>
-            <RecentRightCol xs={24} sm={24} md={12}>
-              <span>
-                <RecentItemData>
-                  {amount}&nbsp;
-                  {tran.contract.type === 'TransferAssetContract' ? (
-                    <StyledLink
-                      to={`/token/${tran.contract.parameter.raw.asset_id}`}
-                      target="_blank"
-                    >
-                      {tran.contract.parameter.raw.asset_name}
+      <>
+        <RecentItemContainer key={tran.hash}>
+          <RecentItem>
+            <Row>
+              <Col span={12}>
+                <span>
+                  Transaction:
+                  <RecentItemData>
+                    <StyledLink to={`/transaction/${tran.hash}`} target="_blank">
+                      {tran.hash.substring(0, 20) + '...'}
                     </StyledLink>
-                  ) : null}
-                </RecentItemData>
-              </span>
-            </RecentRightCol>
-          </Row>
-          <Row>
-            <Col xs={0} sm={0} md={24}>
-              {tran.contract.type === 'TransferAssetContract' ||
-              (tran.contract.type === 'TransferContract' &&
-                tran.contract.parameter.raw.owner_address &&
-                tran.contract.parameter.raw.to_address) ? (
-                <div>
-                  <span>From </span>
-                  <StyledLink
-                    to={'/account/' + tran.contract.parameter.raw.owner_address}
-                    target="_blank"
-                  >
-                    {tran.contract.parameter.raw.owner_address.substring(0, 7) +
-                      '...' +
-                      tran.contract.parameter.raw.owner_address.substring(
-                        tran.contract.parameter.raw.owner_address.length - 4,
-                        tran.contract.parameter.raw.owner_address.length - 1
-                      )}
-                  </StyledLink>
-                  <span> To </span>
-                  <StyledLink
-                    to={'/account/' + tran.contract.parameter.raw.to_address}
-                    target="_blank"
-                  >
-                    {tran.contract.parameter.raw.to_address.substring(0, 7) +
-                      '...' +
-                      tran.contract.parameter.raw.to_address.substring(
-                        tran.contract.parameter.raw.to_address.length - 4,
-                        tran.contract.parameter.raw.to_address.length - 1
-                      )}
-                  </StyledLink>
-                </div>
-              ) : (
-                <br></br>
-              )}
-            </Col>
-          </Row>
-
-          <Row>
-            <Col xs={24} sm={24} md={12}>
-              <span>
-                Type:<RecentItemData>{tran.contract.type}</RecentItemData>
-              </span>
-            </Col>
-            <RecentRightCol xs={24} sm={24} md={12}>
-              <span>
-                <RecentItemData>
-                  {tran.timestamp ? toTimeAgo(tran.timestamp) : 'unknown'}
-                </RecentItemData>
-              </span>
-            </RecentRightCol>
-          </Row>
-        </RecentItem>
-      </List.Item>
+                  </RecentItemData>
+                </span>
+                <br />
+                <span>
+                  Type:<RecentItemData>{tran.contract.type}</RecentItemData>
+                </span>
+              </Col>
+              <Col span={12}>
+                <Row>
+                  <Col span={12}>
+                    {tran.contract.type === 'TransferAssetContract' ||
+                    (tran.contract.type === 'TransferContract' &&
+                      tran.contract.parameter.raw.owner_address &&
+                      tran.contract.parameter.raw.to_address) ? (
+                      <div>
+                        <span>From </span>
+                        <StyledLink
+                          to={'/account/' + tran.contract.parameter.raw.owner_address}
+                          target="_blank"
+                        >
+                          {tran.contract.parameter.raw.owner_address.substring(0, 7) +
+                            '...' +
+                            tran.contract.parameter.raw.owner_address.substring(
+                              tran.contract.parameter.raw.owner_address.length - 4,
+                              tran.contract.parameter.raw.owner_address.length - 1
+                            )}
+                        </StyledLink>
+                        <br />
+                        <span> To </span>
+                        <StyledLink
+                          to={'/account/' + tran.contract.parameter.raw.to_address}
+                          target="_blank"
+                        >
+                          {tran.contract.parameter.raw.to_address.substring(0, 7) +
+                            '...' +
+                            tran.contract.parameter.raw.to_address.substring(
+                              tran.contract.parameter.raw.to_address.length - 4,
+                              tran.contract.parameter.raw.to_address.length - 1
+                            )}
+                        </StyledLink>
+                      </div>
+                    ) : (
+                      <br></br>
+                    )}
+                  </Col>
+                  <Col span={12} className="text-right">
+                    <span>
+                      <RecentItemReward>{amount} </RecentItemReward>
+                      {tran.contract.type === 'TransferAssetContract' ? (
+                        <StyledLink
+                          to={`/token/${tran.contract.parameter.raw.asset_id}`}
+                          target="_blank"
+                        >
+                          {tran.contract.parameter.raw.asset_name}
+                        </StyledLink>
+                      ) : null}
+                      {contractType === 'TransferContract' ? (
+                        <AssetName>{GLOBAL_SYMBOL}</AssetName>
+                      ) : null}
+                    </span>
+                    <br />
+                    <TimeAgo>{tran.timestamp ? toTimeAgo(tran.timestamp) : 'unknown'}</TimeAgo>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </RecentItem>
+        </RecentItemContainer>
+      </>
     )
   }
   render() {
@@ -132,9 +131,8 @@ class TransactionList extends React.Component {
       return b.timestamp - a.timestamp
     })
     return (
-      <div>
+      <RecentListContainer>
         <RecentListTitleFrame>
-          <BlockOutlined />
           <RecentListTitle>Recent Transactions</RecentListTitle>
         </RecentListTitleFrame>
         <RecentListContentFrame>
@@ -147,7 +145,7 @@ class TransactionList extends React.Component {
             />
           </PerfectScrollbar>
         </RecentListContentFrame>
-      </div>
+      </RecentListContainer>
     )
   }
 }

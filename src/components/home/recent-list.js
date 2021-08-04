@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { device } from '../../config/device'
-import { Col } from 'antd'
+import { Col, List } from 'antd'
 
 export const RecentListContainer = styled.div`
   box-shadow: 0px 3px 5px #00000014;
@@ -10,9 +10,24 @@ export const RecentListContainer = styled.div`
   background: #ffffff;
 `
 
+export const RecentItemContainer = styled(List.Item)`
+  border-bottom: none !important;
+  position: relative;
+  :after {
+    position: absolute;
+    content: ' ';
+    display: block;
+    width: calc(100% - 20px);
+    height: 1px;
+    background: #e7eaf3;
+    bottom: 0;
+    left: 10px;
+  }
+`
+
 export const StyledLink = styled(Link)`
-  font-weight: bold;
-  color: #c53027;
+  ${({ bold }) => (bold ? 'font-weight: bold;' : '')}
+  color: #0065d9;
 `
 export const RecentListTitleFrame = styled.div`
   display: flex;
@@ -33,7 +48,6 @@ export const RecentItem = styled.div`
   padding-left: 10px;
   padding-right: 10px;
   font-size: 12px;
-  color: #999;
   text-align: left;
 `
 export const RecentItemTitle = styled.div`
@@ -51,7 +65,21 @@ export const RecentItemRow = styled.div`
   justify-content: space-between;
 `
 export const RecentItemData = styled.span`
+  font-weight: bold;
   color: #c53027;
+`
+
+export const TimeAgo = styled.span`
+  font-size: 12px;
+  color: #666666;
+`
+export const AssetName = styled.span`
+  font-weight: bold;
+`
+
+export const RecentItemReward = styled.span`
+  font-weight: bold;
+  color: #f29100;
 `
 export const RecentRightCol = styled(Col)`
   @media ${device.sm} {

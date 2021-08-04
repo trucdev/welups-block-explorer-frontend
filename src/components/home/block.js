@@ -12,8 +12,10 @@ import {
   RecentItem,
   RecentItemData,
   StyledLink,
-  RecentRightCol,
   RecentListContainer,
+  RecentItemContainer,
+  RecentItemReward,
+  TimeAgo,
 } from './recent-list'
 import { toTimeAgo } from '../../utils/utils'
 
@@ -23,51 +25,48 @@ class BlockList extends React.Component {
   }
   blockItem = (block) => {
     return (
-      <List.Item key={block.num}>
+      <RecentItemContainer key={block.num}>
         <RecentItem>
           <Row>
-            <Col xs={24} sm={24} md={12}>
+            <Col span={8}>
+              <Row>
+                <Col>
+                  <span>
+                    Block:{' '}
+                    <RecentItemData>
+                      <StyledLink to={`/block/${block.num}`}>{block.num}</StyledLink>
+                    </RecentItemData>
+                  </span>
+                  <br />
+                  <span>
+                    Include: <RecentItemData>{block.num_of_txs}</RecentItemData> transactions
+                  </span>
+                </Col>
+                <Col></Col>
+              </Row>
+            </Col>
+            <Col span={8} className="text-center">
               <span>
-                Block:
-                <RecentItemData>
-                  <StyledLink to={`/block/${block.num}`}>{block.num}</StyledLink>
-                </RecentItemData>
+                Block reward: <RecentItemReward>{16}</RecentItemReward>
               </span>
             </Col>
-            <RecentRightCol xs={24} sm={24} md={12}>
+            <Col span={8} className="text-right">
               <span>
-                Producer:
+                Producer:{' '}
                 <RecentItemData>
-                  <StyledLink to={`/account/${block.witness_address}`}>
+                  <StyledLink to={`/account/${block.witness_address}`} bold>
                     {block.witness_name ? block.witness_name : block.witness_address}
                   </StyledLink>
                 </RecentItemData>
               </span>
-            </RecentRightCol>
-          </Row>
-          <Row>
-            <Col span={24}>
+              <br />
               <span>
-                Include: <RecentItemData>{block.num_of_txs}</RecentItemData> transactions
+                <TimeAgo>{block.timestamp ? toTimeAgo(block.timestamp) : 'unknown'}</TimeAgo>
               </span>
             </Col>
-          </Row>
-          <Row>
-            <Col xs={24} sm={24} md={12}>
-              <span>
-                Block reward:<RecentItemData>{16}</RecentItemData>
-              </span>
-            </Col>
-            <RecentRightCol xs={24} sm={24} md={12}>
-              <span>
-                <RecentItemData>
-                  {block.timestamp ? toTimeAgo(block.timestamp) : 'unknown'}
-                </RecentItemData>
-              </span>
-            </RecentRightCol>
           </Row>
         </RecentItem>
-      </List.Item>
+      </RecentItemContainer>
     )
   }
   render() {
