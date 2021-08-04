@@ -25,7 +25,7 @@ export const RecentItemContainer = styled(List.Item)`
   }
 `
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled(({ bold, ...props }) => <Link {...props} />)`
   ${({ bold }) => (bold ? 'font-weight: bold;' : '')}
   color: #0065d9;
 `

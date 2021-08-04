@@ -6,14 +6,14 @@ import { connect } from 'react-redux'
 import { Row, Col } from 'antd'
 import styled from 'styled-components'
 
-const HomeContainer = styled.div`
+const HomeContainer = styled(Col)`
   margin-bottom: 25px;
 `
 
 class Home extends Component {
   render() {
     return (
-      <HomeContainer>
+      <HomeContainer xs={20} sm={20} md={20} lg={19} xl={18}>
         <Row gutter={[5, 5]}>
           <Col span={24}>
             <Summary />

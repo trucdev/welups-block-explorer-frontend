@@ -28,9 +28,9 @@ export default function FooterLink({ title, links }) {
       <Title>{title}</Title>
       <FooterDivider />
       <UL>
-        {links.map((link) => {
+        {links.map((link, i) => {
           return (
-            <li>
+            <li key={i}>
               <a href={link.href}>{link.anchor}</a>
             </li>
           )

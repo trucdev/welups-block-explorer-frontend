@@ -42,7 +42,7 @@ class SummaryBar extends Component {
           </Col>
           <Col span={24} lg={8}>
             <SummaryItem
-              last
+              isLast
               icon="/images/node.svg"
               title="Total Nodes"
               value={this.props.systemState.total_nodes}

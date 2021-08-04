@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { Button, Col, Form, Input, Modal, Result, Row } from 'antd'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { loadFromStorage, logout } from './actions/login'
@@ -35,6 +35,7 @@ import TransactionsList from './components/transactions/transactionsList'
 import TransferAsset from './components/transferasset'
 import WitnessTable from './components/witnesses'
 import { addressToHex } from './utils/utils'
+import Body from './components/body'
 
 const AppWrapper = styled.div`
   min-height: 800px;
@@ -45,7 +46,7 @@ const AppWrapper = styled.div`
     position: absolute;
     top: 79px;
     width: 100%;
-    height: 190px;
+    height: ${({ bgHeight }) => bgHeight || 190}px;
     z-index: -1;
     content: ' ';
     background-image: url(/images/bg-top.png);
@@ -63,6 +64,15 @@ const DecodeResultDiv = styled.div`
   font-style: ${(props) => (props.error ? 'normal' : 'italic')};
   color: ${(props) => (props.error ? '#e50915' : 'rgb(0, 189, 12)')};
 `
+
+function RouteWithBody({ ...props }) {
+  return (
+    <Body>
+      <Route {...props} />
+    </Body>
+  )
+}
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -123,6 +133,7 @@ class App extends Component {
   render() {
     var { login } = this.props
     const { decodeResult } = this.state
+
     return (
       <Router>
         <Modal
@@ -196,56 +207,62 @@ class App extends Component {
                   <Search />
                 </Col>
               </Row>
-              <Switch>
-                <Route exact path="/home" render={() => <Home />} />
-                <Route path="/signup" render={(routeProps) => <SignUp {...routeProps} />} />
-                <Route
-                  path="/activate-account"
-                  render={(routeProps) => <ActivateAccount {...routeProps} />}
-                />
-                <Route exact path="/witness" render={() => <WitnessTable />} />
-                <Route path="/block/:id" render={(routeProps) => <BlockDetail {...routeProps} />} />
-                <Route path="/notfound" render={() => <NotFound />} />
-                <Route exact path="/" render={() => <Redirect to="/home" />} />
-                <Route
-                  path="/transaction/:id"
-                  render={(routeProps) => <TransactionDetails {...routeProps} />}
-                />
-                <Route
-                  path="/user/transferasset"
-                  render={(routeProps) => <TransferAsset {...routeProps} />}
-                />
-                <Route
-                  path="/account/:id"
-                  render={(routeProps) => <AccountDetails {...routeProps} />}
-                />
-                <Route
-                  path="/token/:id"
-                  render={(routeProps) => <TokenDetails {...routeProps} />}
-                />
-                <Route
-                  path="/contract/:id"
-                  render={(routeProps) => <ContractDetails {...routeProps} />}
-                />
-                <Route
-                  path="/transactions"
-                  render={(routeProps) => <TransactionsList {...routeProps} />}
-                />
-                <Route path="/blocks" render={(routeProps) => <BlockTable {...routeProps} />} />
-                <Route path="/tokens" render={() => <TokenTable />} />
-                <Route path="/nodes" render={() => <NodeTable />} />
-                <Route path="/user/issue-token-trc10" render={() => <IssueTokenTRC10 />} />
-                <Route exact path="/login" render={() => <Login />} />
-                <Route exact path="/user" render={() => <AssetManagement />} />
-                <Route path="/user/freeze-balance" render={() => <FreezeBalance />} />
-                <Route path="/user/deploycontract" render={() => <DeployContract />} />
-                <Route path="/resetpassword" render={() => <ResetPassword />} />
-                <Route path="/newpassword" render={() => <NewPassword />} />
-                <Route path="/prikey-management" render={() => <PriKeyManagement />} />
-                <Route path="/contracts" render={() => <ContractTable />} />
-                <Redirect to="/notfound" />
-              </Switch>
             </Col>
+            <Switch>
+              <Route exact path="/home" render={() => <Home />} />
+              <RouteWithBody path="/signup" render={(routeProps) => <SignUp {...routeProps} />} />
+              <RouteWithBody
+                path="/activate-account"
+                render={(routeProps) => <ActivateAccount {...routeProps} />}
+              />
+              <RouteWithBody exact path="/witness" render={() => <WitnessTable />} />
+              <RouteWithBody
+                path="/block/:id"
+                render={(routeProps) => <BlockDetail {...routeProps} />}
+              />
+              <RouteWithBody path="/notfound" render={() => <NotFound />} />
+              <RouteWithBody exact path="/" render={() => <Redirect to="/home" />} />
+              <RouteWithBody
+                path="/transaction/:id"
+                render={(routeProps) => <TransactionDetails {...routeProps} />}
+              />
+              <RouteWithBody
+                path="/user/transferasset"
+                render={(routeProps) => <TransferAsset {...routeProps} />}
+              />
+              <RouteWithBody
+                path="/account/:id"
+                render={(routeProps) => <AccountDetails {...routeProps} />}
+              />
+              <RouteWithBody
+                path="/token/:id"
+                render={(routeProps) => <TokenDetails {...routeProps} />}
+              />
+              <RouteWithBody
+                path="/contract/:id"
+                render={(routeProps) => <ContractDetails {...routeProps} />}
+              />
+              <RouteWithBody
+                path="/transactions"
+                render={(routeProps) => <TransactionsList {...routeProps} />}
+              />
+              <RouteWithBody
+                path="/blocks"
+                render={(routeProps) => <BlockTable {...routeProps} />}
+              />
+              <RouteWithBody path="/tokens" render={() => <TokenTable />} />
+              <RouteWithBody path="/nodes" render={() => <NodeTable />} />
+              <RouteWithBody path="/user/issue-token-trc10" render={() => <IssueTokenTRC10 />} />
+              <RouteWithBody exact path="/login" render={() => <Login />} />
+              <RouteWithBody exact path="/user" render={() => <AssetManagement />} />
+              <RouteWithBody path="/user/freeze-balance" render={() => <FreezeBalance />} />
+              <RouteWithBody path="/user/deploycontract" render={() => <DeployContract />} />
+              <RouteWithBody path="/resetpassword" render={() => <ResetPassword />} />
+              <RouteWithBody path="/newpassword" render={() => <NewPassword />} />
+              <RouteWithBody path="/prikey-management" render={() => <PriKeyManagement />} />
+              <RouteWithBody path="/contracts" render={() => <ContractTable />} />
+              <Redirect to="/notfound" />
+            </Switch>
           </ContentRowWrapper>
         </AppWrapper>
         <FooterComponent />

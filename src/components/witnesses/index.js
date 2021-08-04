@@ -4,17 +4,12 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { loadWitnesses } from '../../actions/witnesses'
 import styled from 'styled-components'
+import PageHeader from '../partials/pageHeader'
 const StyleOutLink = styled.a`
   &:link,
   &:visited {
     color: #c23631;
   }
-`
-const LeftHeader = styled.div`
-  text-align: left;
-  border-bottom: 5px solid #c23631;
-  font-size: 20px;
-  text-transform: uppercase;
 `
 const StyledLink = styled(Link)`
   &:link,
@@ -22,9 +17,7 @@ const StyledLink = styled(Link)`
     color: #c23631;
   }
 `
-const Wrapper = styled.div`
-  margin: 5px;
-`
+const Wrapper = styled.div``
 const columns = [
   {
     title: 'No.',
@@ -107,7 +100,7 @@ class WitnessTable extends React.Component {
     const witnesses = this.props.witnesses
     return (
       <Wrapper>
-        <LeftHeader>List of Witness</LeftHeader>
+        <PageHeader>List of Witness</PageHeader>
         <Table
           columns={columns}
           dataSource={witnesses}

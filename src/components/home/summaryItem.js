@@ -2,7 +2,7 @@ import { Col, Row, Grid } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 
-const SummaryItemContainer = styled(Row)`
+const SummaryItemContainer = styled(({ last, horizontal, ...props }) => <Row {...props} />)`
   padding-top: 25px;
   padding-bottom: 25px;
   position: relative;

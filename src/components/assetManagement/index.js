@@ -10,6 +10,7 @@ import { addAddrFromPrvkey } from '../../actions/assetManagement'
 import { loadAccountDetails } from '../../actions/account'
 import { LOGOUT, LOGIN_FAIL } from '../../actions/login'
 import Addresses from './addresses'
+import PageHeader from '../partials/pageHeader'
 
 const StyledLink = styled(Link)`
   &:link,
@@ -29,7 +30,7 @@ const Wrapper = styled.div`
 `
 const Header = styled.div`
   text-align: left;
-  border-bottom: 5px solid #c23631;
+  border-bottom: 1px solid #190f5d;
   text-transform: uppercase;
   @media (min-width: 280px) {
     font-size: 15px !important;
@@ -116,6 +117,7 @@ class AssetManagement extends React.Component {
     const { visible, loading } = this.state
     return (
       <Wrapper>
+        <PageHeader>Assets</PageHeader>
         <Spin
           indicator={antIcon}
           tip="Processing..."

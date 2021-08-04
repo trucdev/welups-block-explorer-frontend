@@ -3,22 +3,12 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Table } from 'antd'
 import { currencyFormat } from '../../utils/utils'
+import PageHeader from '../partials/pageHeader'
 
-const TitleAssetTable = styled.div`
-  margin-top: 20px;
-  border-bottom: 5px solid #c23631;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  text-align: left;
-  padding-left: 15px;
-  background-color: #fafafa;
-`
 const TableTitle = styled.h3`
   font-size: 20px;
 `
-const AssetTable = styled.div`
-  margin: 5px;
-`
+const AssetTable = styled.div``
 class AssetsCard extends Component {
   render() {
     let i = 1
@@ -50,17 +40,15 @@ class AssetsCard extends Component {
       },
     ]
     return (
-      <AssetTable>
-        <TitleAssetTable>
-          <TableTitle>Asset</TableTitle>
-        </TitleAssetTable>
+      <div>
+        <PageHeader>Asset</PageHeader>
         <Table
           columns={columns}
           dataSource={data}
           pagination={{ pageSize: 50 }}
           scroll={{ y: 240 }}
         />
-      </AssetTable>
+      </div>
     )
   }
 }

@@ -8,13 +8,8 @@ import {
   updatePageContractsLimit,
 } from '../../actions/contracts'
 import styled from 'styled-components'
+import PageHeader from '../partials/pageHeader'
 
-const LeftHeader = styled.div`
-  text-align: left;
-  border-bottom: 5px solid #c23631;
-  font-size: 20px;
-  text-transform: uppercase;
-`
 const StyledLink = styled(Link)`
   &:link,
   &:visited {
@@ -83,7 +78,7 @@ class ContractTable extends React.Component {
     ]
     return (
       <Wrapper>
-        <LeftHeader>List of WRC20 CONTRACTS</LeftHeader>
+        <PageHeader>List of WRC20 CONTRACTS</PageHeader>
         <Table
           columns={columns}
           dataSource={contracts.contracts}

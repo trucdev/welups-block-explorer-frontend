@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Card from './card'
+import AddressCard from './card'
 import styled from 'styled-components'
 import AssetsCard from './assetsCard'
+import PageHeader from '../partials/pageHeader'
 
 const Container = styled.div`
   margin: 5px;
 `
-const CardTitle = styled.div`
-  border-bottom: 5px solid #c23631;
-  font-size: 20px;
-  text-align: left;
+const CardAccountInfo = styled.div`
+  box-shadow: 0px 3px 5px #00000014;
+  border: 1px solid #e7eaf3;
+  border-radius: 10px;
+  overflow: hidden;
 `
 class AccountDetails extends Component {
   render() {
     return (
       <Container>
-        <CardTitle>
-          <h3>ACCOUNT DETAILS</h3>
-        </CardTitle>
-        <Card addr={this.props.match.params.id} />
+        <PageHeader>ACCOUNT DETAILS</PageHeader>
+        <CardAccountInfo>
+          <AddressCard addr={this.props.match.params.id} />
+        </CardAccountInfo>
         <AssetsCard />
       </Container>
     )

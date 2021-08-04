@@ -3,13 +3,7 @@ import { Table } from 'antd'
 import { connect } from 'react-redux'
 import { loadNodes } from '../../actions/nodes'
 import styled from 'styled-components'
-
-const LeftHeader = styled.div`
-  text-align: left;
-  border-bottom: 5px solid #c23631;
-  font-size: 20px;
-  text-transform: uppercase;
-`
+import PageHeader from '../partials/pageHeader'
 
 const Wrapper = styled.div`
   margin: 5px;
@@ -43,7 +37,7 @@ class NodeTable extends React.Component {
     const { nodes } = this.props
     return (
       <Wrapper>
-        <LeftHeader>List of Nodes</LeftHeader>
+        <PageHeader>List of Nodes</PageHeader>
         <Table
           columns={columns}
           dataSource={nodes}

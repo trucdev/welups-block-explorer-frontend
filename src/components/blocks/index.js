@@ -5,13 +5,8 @@ import { Link } from 'react-router-dom'
 import { loadBlocks, updatePageBlocks, updatePageBlocksLimit } from '../../actions/blocks'
 import styled from 'styled-components'
 import { toTimeAgo } from '../../utils/utils'
+import PageHeader from '../partials/pageHeader'
 
-const LeftHeader = styled.div`
-  text-align: left;
-  border-bottom: 5px solid #c23631;
-  font-size: 20px;
-  text-transform: uppercase;
-`
 const StyledLink = styled(Link)`
   &:link,
   &:visited {
@@ -115,7 +110,7 @@ class BlockTable extends React.Component {
     ]
     return (
       <Wrapper>
-        <LeftHeader>List of Blocks</LeftHeader>
+        <PageHeader>List of Blocks</PageHeader>
         <Table
           columns={columns}
           dataSource={blocks}

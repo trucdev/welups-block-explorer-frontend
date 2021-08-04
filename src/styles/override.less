@@ -10,3 +10,20 @@ body {
 .text-center {
   text-align: center
 }
+
+// remove autofill color
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active
+{
+ -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.ant-table-thead {
+  height: 40px;
+  line-height: 1;
+  & > tr > th {
+    padding: 5px 16px;
+  }
+}

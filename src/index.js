@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
 import combineReducers from './reducers'
 import thunk from 'redux-thunk'
-import browserSolc from 'browser-solc'
+import 'browser-solc'
 const store = createStore(combineReducers, applyMiddleware(thunk))
 
 ReactDOM.render(

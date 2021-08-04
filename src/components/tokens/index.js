@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { loadTokens, updatePageTokens, updatePageTokensLimit } from '../../actions/tokens'
 import styled from 'styled-components'
 import { currencyFormat } from '../../utils/utils'
+import PageHeader from '../partials/pageHeader'
 
 const LeftHeader = styled.div`
   text-align: left;
@@ -92,7 +93,7 @@ class TokenTable extends React.Component {
     ]
     return (
       <Wrapper>
-        <LeftHeader>List of WRC10 Tokens</LeftHeader>
+        <PageHeader>List of WRC10 Tokens</PageHeader>
         <Table
           columns={columns}
           dataSource={tokens}

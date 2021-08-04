@@ -10,15 +10,10 @@ import { Table, Pagination } from 'antd'
 import { Link } from 'react-router-dom'
 import { toTimeAgo, decimalFormat, currencyFormat } from '../../utils/utils'
 import { GLOBAL_SYMBOL } from '../../constant'
+import PageHeader from '../partials/pageHeader'
 
 const Container = styled.div`
   margin: 5px;
-`
-const Title = styled.div`
-  text-align: left;
-  border-bottom: 5px solid #c23631;
-  font-size: 20px;
-  text-transform: uppercase;
 `
 const RedText = styled.span`
   color: #e50915;
@@ -190,7 +185,7 @@ class TransactionsList extends React.Component {
     ]
     return (
       <Container>
-        <Title>List of Transactions</Title>
+        <PageHeader>List of Transactions</PageHeader>
         <div id="datetime"></div>
         <Table
           columns={columns}
