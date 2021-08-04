@@ -20,7 +20,6 @@ import {
 import styled from 'styled-components'
 import { Menu } from 'antd'
 import { Link } from 'react-router-dom'
-import WUelupsLogo from './../../assets/images/WUelupsLogo.png'
 
 const { SubMenu } = Menu
 
@@ -49,9 +48,9 @@ export default function MainNavigation({
   handleDecodeAddressMenuClick,
 }) {
   return (
-    <Menu mode="horizontal">
+    <Menu mode="horizontal" theme="dark">
       <Menu.Item disabled={true}>
-        <Logo src={WUelupsLogo} />
+        <Logo src="/logo.png" />
       </Menu.Item>
       {login.token !== '' ? (
         <RightSubMenuItem title={login.email}>

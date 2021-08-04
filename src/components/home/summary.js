@@ -2,24 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { loadSystemState } from '../../actions/home'
 import styled from 'styled-components'
+import { Card, Row, Col } from 'antd'
+import SummaryItem from './summaryItem'
+import Grid from 'antd/lib/card/Grid'
 
 //Styled components
-const SummaryGroup = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  border: 1px solid #d9d9d9;
-`
-const SummaryCard = styled.div`
-  border-radius: 5px;
-  padding: 20px;
-`
-const SummaryCardValue = styled.div`
-  color: #c53027 !important;
-`
-const SummaryCardTitle = styled.div`
-  color: #666 !important;
-  font-weight: bold !important;
-  font-size: 13px;
+const SummaryCard = styled(Card)`
+  padding: 0;
+  .ant-card-body {
+    padding: 0;
+  }
 `
 
 class SummaryBar extends Component {
@@ -28,20 +20,32 @@ class SummaryBar extends Component {
   }
   render() {
     return (
-      <SummaryGroup>
-        <SummaryCard>
-          <SummaryCardTitle>Block Height</SummaryCardTitle>
-          <SummaryCardValue>{this.props.systemState.block_height}</SummaryCardValue>
-        </SummaryCard>
-        <SummaryCard>
-          <SummaryCardTitle>WRC10 Tokens</SummaryCardTitle>
-          <SummaryCardValue>{this.props.systemState.asset_num}</SummaryCardValue>
-        </SummaryCard>
-        <SummaryCard>
-          <SummaryCardTitle>Total Nodes</SummaryCardTitle>
-          <SummaryCardValue>{this.props.systemState.total_nodes}</SummaryCardValue>
-        </SummaryCard>
-      </SummaryGroup>
+      <SummaryCard>
+        <Row>
+          <Col span={24} md={8}>
+            <SummaryItem
+              icon="/images/blockchain.svg"
+              title="Block Height"
+              value={this.props.systemState.block_height}
+            />
+          </Col>
+          <Col span={24} md={8}>
+            <SummaryItem
+              icon="/images/tokens.svg"
+              title="WRC10 Tokens"
+              value={this.props.systemState.asset_num}
+            />
+          </Col>
+          <Col span={24} md={8}>
+            <SummaryItem
+              last
+              icon="/images/node.svg"
+              title="Total Nodes"
+              value={this.props.systemState.total_nodes}
+            />
+          </Col>
+        </Row>
+      </SummaryCard>
     )
   }
 }

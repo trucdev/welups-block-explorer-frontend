@@ -1,26 +1,10 @@
-import {
-  AppstoreOutlined,
-  BlockOutlined,
-  DeploymentUnitOutlined,
-  DollarCircleOutlined,
-  FileTextOutlined,
-  KeyOutlined,
-  LogoutOutlined,
-  MailOutlined,
-  MoneyCollectOutlined,
-  NodeIndexOutlined,
-  PlusCircleOutlined,
-  SendOutlined,
-  SplitCellsOutlined,
-  TransactionOutlined,
-  WalletOutlined,
-  RedoOutlined,
-} from '@ant-design/icons'
-import { Col, Layout, Menu, Modal, Result, Row, Input, Form, Button } from 'antd'
 import React, { Component } from 'react'
+
+import { Button, Col, Form, Input, Modal, Result, Row } from 'antd'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
+
 import { loadFromStorage, logout } from './actions/login'
 import Account from './api/account'
 import AccountDetails from './components/account'
@@ -30,10 +14,12 @@ import BlockTable from './components/blocks/index'
 import ContractDetails from './components/contract/contract'
 import ContractTable from './components/contracts/index'
 import DeployContract from './components/deployContract/index'
+import FooterComponent from './components/footer'
 import FreezeBalance from './components/freezeBalance/index'
 import Home from './components/home'
 import IssueTokenTRC10 from './components/issueTokenTRC10/index'
 import Login from './components/login/index'
+import MainNavigation from './components/mainNavigation'
 import NodeTable from './components/nodes/index'
 import NotFound from './components/not-found'
 import PriKeyManagement from './components/prikeyManagement/index'
@@ -47,15 +33,24 @@ import TokenTable from './components/tokens/index'
 import TransactionDetails from './components/transaction'
 import TransactionsList from './components/transactions/transactionsList'
 import TransferAsset from './components/transferasset'
-import FooterComponent from './components/footer'
 import WitnessTable from './components/witnesses'
 import { addressToHex } from './utils/utils'
-import MainNavigation from './components/mainNavigation'
 
 const AppWrapper = styled.div`
   min-height: 800px;
   text-align: center;
   flex: 1 0 auto;
+  :before {
+    display: block;
+    position: absolute;
+    top: 79px;
+    width: 100%;
+    height: 160px;
+    z-index: -1;
+    content: ' ';
+    background-image: url(/images/bg-top.png);
+    background-repeat: no-repeat;
+  }
 `
 
 const ContentRowWrapper = styled(Row)`
@@ -195,7 +190,7 @@ class App extends Component {
             handleDecodeAddressMenuClick={this.handleDecodeAddressMenuClick}
           />
           <ContentRowWrapper justify="center" gutter={[0, 0]}>
-            <Col xs={20} sm={20} md={20} lg={19} xl={18} style={{ backgroundColor: '#fafafa' }}>
+            <Col xs={20} sm={20} md={20} lg={19} xl={18}>
               <Row gutter={[5, 5]}>
                 <Col span={24}>
                   <Search />

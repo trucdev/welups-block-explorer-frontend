@@ -3,10 +3,26 @@ import { Input, message } from 'antd'
 import { connect } from 'react-redux'
 import { search, SEARCH_REQUESTING, SEARCH_SUCCESS } from '../actions/home'
 import { Redirect } from 'react-router-dom'
+import styled from 'styled-components'
 const { Search } = Input
 
 const PALCEHOLDER = 'Block Num/ Block Hash/ Transaction Hash'
 const SEARCHTITLE = 'Search'
+
+const SearchWrapper = styled(Search)`
+  input {
+    height: 50px;
+  }
+  .ant-input-search-button {
+    border-radius: 10px 10px 0 0;
+    height: 50px;
+    background: #ffde16;
+    border-color: #ffde16;
+    text-transform: uppercase;
+    color: #000000;
+  }
+  margin-bottom: 30px;
+`
 
 class SearchBox extends React.Component {
   constructor(props) {
@@ -37,7 +53,7 @@ class SearchBox extends React.Component {
       }
     }
     return (
-      <Search
+      <SearchWrapper
         placeholder={PALCEHOLDER}
         enterButton={SEARCHTITLE}
         onSearch={this.onSearch}

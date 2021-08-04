@@ -1,5 +1,5 @@
 import React from 'react'
-import { List } from 'antd'
+import { List, Card } from 'antd'
 import { BlockOutlined } from '@ant-design/icons'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { connect } from 'react-redux'
@@ -75,7 +75,7 @@ class BlockList extends React.Component {
       return b.num - a.num
     })
     return (
-      <div>
+      <Card>
         <RecentListTitleFrame>
           <BlockOutlined />
           <RecentListTitle>Recent Blocks</RecentListTitle>
@@ -90,7 +90,7 @@ class BlockList extends React.Component {
             />
           </PerfectScrollbar>
         </RecentListContentFrame>
-      </div>
+      </Card>
     )
   }
 }
