@@ -4,17 +4,22 @@ import TransactionList from './transaction'
 import Summary from './summary'
 import { connect } from 'react-redux'
 import { Row, Col } from 'antd'
+import styled from 'styled-components'
+
+const HomeContainer = styled.div`
+  margin-bottom: 25px;
+`
 
 class Home extends Component {
   render() {
     return (
-      <div>
+      <HomeContainer>
         <Row gutter={[5, 5]}>
           <Col span={24}>
             <Summary />
           </Col>
         </Row>
-        <Row gutter={[5, 5]}>
+        <Row gutter={[25, 25]}>
           <Col xs={24} sm={24} md={24} lg={24} xl={12}>
             {' '}
             <BlockList></BlockList>
@@ -24,7 +29,7 @@ class Home extends Component {
             <TransactionList></TransactionList>
           </Col>
         </Row>
-      </div>
+      </HomeContainer>
     )
   }
 }

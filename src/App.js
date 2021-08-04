@@ -45,7 +45,7 @@ const AppWrapper = styled.div`
     position: absolute;
     top: 79px;
     width: 100%;
-    height: 160px;
+    height: 190px;
     z-index: -1;
     content: ' ';
     background-image: url(/images/bg-top.png);

@@ -12,6 +12,10 @@ const SummaryCard = styled(Card)`
   .ant-card-body {
     padding: 0;
   }
+  margin-bottom: 25px;
+  box-shadow: 0px 2px 5px #0000000f;
+  border: 1px solid #e4e9ec;
+  border-radius: 10px;
 `
 
 class SummaryBar extends Component {
@@ -22,21 +26,21 @@ class SummaryBar extends Component {
     return (
       <SummaryCard>
         <Row>
-          <Col span={24} md={8}>
+          <Col span={24} lg={8}>
             <SummaryItem
               icon="/images/blockchain.svg"
               title="Block Height"
               value={this.props.systemState.block_height}
             />
           </Col>
-          <Col span={24} md={8}>
+          <Col span={24} lg={8}>
             <SummaryItem
               icon="/images/tokens.svg"
               title="WRC10 Tokens"
               value={this.props.systemState.asset_num}
             />
           </Col>
-          <Col span={24} md={8}>
+          <Col span={24} lg={8}>
             <SummaryItem
               last
               icon="/images/node.svg"

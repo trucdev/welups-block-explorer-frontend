@@ -13,6 +13,7 @@ import {
   RecentItemData,
   StyledLink,
   RecentRightCol,
+  RecentListContainer,
 } from './recent-list'
 import { toTimeAgo } from '../../utils/utils'
 
@@ -75,14 +76,14 @@ class BlockList extends React.Component {
       return b.num - a.num
     })
     return (
-      <Card>
+      <RecentListContainer>
         <RecentListTitleFrame>
-          <BlockOutlined />
           <RecentListTitle>Recent Blocks</RecentListTitle>
         </RecentListTitleFrame>
         <RecentListContentFrame>
           <PerfectScrollbar>
             <List
+              className="list-blocks"
               dataSource={blocks}
               loading={blocks.length === 0 ? true : false}
               locale={{ emptyText: 'Loading' }}
@@ -90,7 +91,7 @@ class BlockList extends React.Component {
             />
           </PerfectScrollbar>
         </RecentListContentFrame>
-      </Card>
+      </RecentListContainer>
     )
   }
 }

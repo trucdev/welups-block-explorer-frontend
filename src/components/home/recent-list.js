@@ -2,6 +2,14 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { device } from '../../config/device'
 import { Col } from 'antd'
+
+export const RecentListContainer = styled.div`
+  box-shadow: 0px 3px 5px #00000014;
+  border: 1px solid #e7eaf3;
+  border-radius: 10px;
+  background: #ffffff;
+`
+
 export const StyledLink = styled(Link)`
   font-weight: bold;
   color: #c53027;
@@ -9,8 +17,8 @@ export const StyledLink = styled(Link)`
 export const RecentListTitleFrame = styled.div`
   display: flex;
   padding: 10px;
-  border: 1px solid #d9d9d9;
   align-items: center;
+  border-bottom: 1px solid #d6d6d6;
 `
 export const RecentListTitle = styled.span`
   font-size: 15px;
@@ -19,7 +27,6 @@ export const RecentListTitle = styled.span`
 export const RecentListContentFrame = styled.div`
   overflow: auto;
   height: 600px;
-  border: 1px solid #d9d9d9;
 `
 export const RecentItem = styled.div`
   width: 100%;
@@ -65,4 +72,5 @@ export const RecentList = {
   RecentItemData,
   RecentRightCol,
   RecentItemFrag,
+  RecentListContainer,
 }
