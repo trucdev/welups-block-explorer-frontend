@@ -10,7 +10,7 @@ export default function Body({ children }) {
   return (
     <Col span={24}>
       <BodyWrapper justify="center" gutter={[0, 0]}>
-        <Col xs={20} sm={20} md={20} lg={19} xl={18}>
+        <Col xs={23} sm={20} md={20} lg={19} xl={18}>
           {children}
         </Col>
       </BodyWrapper>

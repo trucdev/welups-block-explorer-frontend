@@ -37,6 +37,7 @@ import TransferAsset from './components/transferasset'
 import WitnessTable from './components/witnesses'
 import { addressToHex } from './utils/utils'
 import Body from './components/body'
+import ScrollToTop from './components/scroll/scrollToTop'
 
 const AppWrapper = styled.div`
   min-height: 800px;
@@ -138,6 +139,7 @@ class App extends Component {
     return (
       <Inspect disabled={process.env.NODE_ENV === 'production'}>
         <Router>
+          <ScrollToTop />
           <Modal
             title="New address"
             centered

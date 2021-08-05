@@ -13,7 +13,7 @@ const HomeContainer = styled(Col)`
 class Home extends Component {
   render() {
     return (
-      <HomeContainer xs={20} sm={20} md={20} lg={19} xl={18}>
+      <HomeContainer xs={22} sm={20} md={20} lg={19} xl={18}>
         <Row gutter={[5, 5]}>
           <Col span={24}>
             <Summary />
