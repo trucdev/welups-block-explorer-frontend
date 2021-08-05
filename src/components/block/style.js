@@ -9,7 +9,7 @@ export const Table = styled.table`
 
 export const TableRow = styled.tr`
   height: 55px;
-  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
 `
 
 export const Th = styled.th`
@@ -30,7 +30,7 @@ export const FontFamily = styled.div`
 `
 
 export const Div = styled.div`
-  padding-top: 20px;
+  padding: 0 20px;
 `
 
 export const Title = styled.div`
@@ -85,9 +85,8 @@ export const contentStatus = (
     <p>Transaction confirmed by 19 or more SRs will be marked "confirmed", or is "unconfirmed".</p>
   </HoverContent>
 )
-export const StyledLink = styled(Link)`
-  &:link,
-  &:visited {
-    color: #c23631;
-  }
+
+export const StyledLink = styled(({ bold, ...props }) => <Link {...props} />)`
+  ${({ bold }) => (bold ? 'font-weight: bold;' : '')}
+  color: #0065d9;
 `

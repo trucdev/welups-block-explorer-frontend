@@ -10,10 +10,14 @@ import BlockParentHash from './blockParentHash'
 import BlockProducer from './blockProducer'
 import BlockSize from './blockSize'
 import BlockMenu from './blockMenu'
+import PageHeader from './../partials/pageHeader'
+import CardShadow from './../partials/cardShadow'
 import * as action from '../../actions/block'
 import { Row, Col } from 'antd'
-import { Table, BorderRed, Div, FontFamily } from './style'
+import { Table, BorderRed, Div } from './style'
 import { Skeleton } from 'antd'
+import Transaction from './transaction'
+import TransactionTotal from './transactionTotal'
 
 class Block extends Component {
   componentDidMount() {
@@ -26,39 +30,40 @@ class Block extends Component {
     return (
       <div>
         <Skeleton loading={this.props.producer_hash === 0}>
+          <PageHeader>
+            Block <BlockNum />
+          </PageHeader>
           <Row>
-            <Col>
-              <h2>
-                <h3>BLOCK</h3>
-              </h2>
+            <Col span={24}>
+              <CardShadow>
+                <Div>
+                  <Table>
+                    <tbody>
+                      <BlockStatus />
+                      <BlockHash />
+                      <BlockHeight />
+                      <BlockTime />
+                      <BlockTransaction />
+                      <BlockParentHash />
+                      <BlockProducer />
+                      <BlockSize />
+                    </tbody>
+                  </Table>
+                </Div>
+              </CardShadow>
+              <PageHeader>
+                <Row>
+                  <Col span={12}>Transactions</Col>
+                  <Col span={12}>
+                    <Row justify="end" align="bottom">
+                      <TransactionTotal />
+                    </Row>
+                  </Col>
+                </Row>
+              </PageHeader>
+              <Transaction />
             </Col>
           </Row>
-          <BorderRed>
-            <FontFamily>
-              <Row>
-                <Col span={24}>
-                  <Div>
-                    <BlockNum />
-                    <Table>
-                      <tbody>
-                        <BlockStatus />
-                        <BlockHash />
-                        <BlockHeight />
-                        <BlockTime />
-                        <BlockTransaction />
-                        <BlockParentHash />
-                        <BlockProducer />
-                        <BlockSize />
-                      </tbody>
-                    </Table>
-                  </Div>
-                  <BorderRed>
-                    <BlockMenu />
-                  </BorderRed>
-                </Col>
-              </Row>
-            </FontFamily>
-          </BorderRed>
         </Skeleton>
       </div>
     )

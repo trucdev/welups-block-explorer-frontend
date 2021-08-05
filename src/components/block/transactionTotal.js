@@ -1,13 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+
+const Label = styled.span`
+  margin-top: 10px;
+  font-weight: normal;
+  font-size: 14px;
+`
+
+const TransactionNum = styled.span`
+  font-weight: bold;
+  color: #0065d9;
+`
 
 class TransactionTotal extends Component {
   render() {
     let { transaction_num } = this.props
     return (
-      <div>
-        <span>A Total of</span> {transaction_num} <span>Transactions</span>
-      </div>
+      <Label>
+        A Total of <TransactionNum>{transaction_num}</TransactionNum> Transactions
+      </Label>
     )
   }
 }

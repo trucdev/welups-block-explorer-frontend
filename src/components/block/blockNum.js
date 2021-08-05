@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Title } from './style'
+import styled from 'styled-components'
+
+const BlockNumStyled = styled.span`
+  font-weight: normal;
+`
 
 class BlockNum extends Component {
   render() {
     let { block_num } = this.props
-    return <Title>#{block_num}</Title>
+    return <BlockNumStyled>#{block_num}</BlockNumStyled>
   }
 }
 
