@@ -49,10 +49,10 @@ class TransactionList extends React.Component {
             <Row>
               <Col span={12}>
                 <span>
-                  Transaction:
+                  Transaction:{' '}
                   <RecentItemData>
                     <StyledLink to={`/transaction/${tran.hash}`} target="_blank">
-                      {tran.hash.substring(0, 20) + '...'}
+                      {tran.hash.substring(0, 15) + '...'}
                     </StyledLink>
                   </RecentItemData>
                 </span>
@@ -69,7 +69,7 @@ class TransactionList extends React.Component {
                       tran.contract.parameter.raw.owner_address &&
                       tran.contract.parameter.raw.to_address) ? (
                       <div>
-                        <span>From </span>
+                        <span>From: </span>
                         <StyledLink
                           to={'/account/' + tran.contract.parameter.raw.owner_address}
                           target="_blank"
@@ -82,7 +82,7 @@ class TransactionList extends React.Component {
                             )}
                         </StyledLink>
                         <br />
-                        <span> To </span>
+                        <span> To: </span>
                         <StyledLink
                           to={'/account/' + tran.contract.parameter.raw.to_address}
                           target="_blank"

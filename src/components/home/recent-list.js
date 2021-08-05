@@ -47,7 +47,6 @@ export const RecentItem = styled.div`
   width: 100%;
   padding-left: 10px;
   padding-right: 10px;
-  font-size: 12px;
   text-align: left;
 `
 export const RecentItemTitle = styled.div`

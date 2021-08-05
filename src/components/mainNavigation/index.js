@@ -20,16 +20,19 @@ import {
 import styled from 'styled-components'
 import { Col, Menu, Row } from 'antd'
 import { Link } from 'react-router-dom'
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint'
 
 const { SubMenu } = Menu
 
 const Logo = styled.img`
-  height: 40px;
-  width: 140px;
+  height: ${(height) => height || 40}px;
+  width: ${(width) => width || 120}px;
 `
 
 const RightMenuItem = styled(({ last, ...props }) => <Menu.Item {...props} />)`
   float: right;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
   span a {
     color: #74cfff !important;
   }
@@ -76,26 +79,30 @@ export default function MainNavigation({
 }) {
   const isLoggedIn = login.token !== ''
 
+  const { xs } = useBreakpoint()
+
   return (
     <MainNavigationContainer justify="center" gutter={[0, 0]}>
-      <Col xs={20} sm={20} md={20} lg={19} xl={18}>
-        <Row>
+      <Col xs={24} sm={20} md={20} lg={19} xl={18}>
+        <Row wrap={false}>
           <Col flex="auto">
-            <Menu mode="horizontal" theme="dark">
+            <Menu mode="horizontal" theme="dark" overflowedIndicator="More">
               <LogoItem disabled={false} key="logo-home">
                 <Link to="/">
-                  <Logo src="/logo.png" />
+                  <Logo src="/logo.png" width={xs ? 100 : 120} height={xs ? 35 : 40} />
                 </Link>
               </LogoItem>
-              <Menu.Item key="home">
-                <Link to="/home">Home</Link>
-              </Menu.Item>
+              {!xs ? (
+                <Menu.Item key="home">
+                  <Link to="/home">Home</Link>
+                </Menu.Item>
+              ) : null}
               <SubMenu
                 key="blockchain-info"
                 title={
                   <>
                     <span>Blockchain</span>
-                    <DownOutlined style={{ fontSize: 10 }} />
+                    {/* <DownOutlined style={{ fontSize: 10 }} /> */}
                   </>
                 }
               >
@@ -117,7 +124,7 @@ export default function MainNavigation({
                 title={
                   <>
                     <span>Tokens</span>
-                    <DownOutlined style={{ fontSize: 10 }} />
+                    {/* <DownOutlined style={{ fontSize: 10 }} /> */}
                   </>
                 }
               >
@@ -133,7 +140,7 @@ export default function MainNavigation({
                 title={
                   <>
                     <span>Tools</span>
-                    <DownOutlined style={{ fontSize: 10 }} />
+                    {/* <DownOutlined style={{ fontSize: 10 }} /> */}
                   </>
                 }
               >
@@ -154,7 +161,7 @@ export default function MainNavigation({
               </SubMenu>
             </Menu>
           </Col>
-          <Col flex="175px">
+          <Col flex="135px">
             <Menu mode="horizontal" theme="dark">
               {isLoggedIn ? (
                 <RightSubMenuItem

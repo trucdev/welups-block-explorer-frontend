@@ -57,7 +57,6 @@ export const StatusTag = styled.span`
   display: inline-block;
   margin-left: 20px;
   padding: 3px 9px 3px 20px;
-  font-size: 12px;
   color: #666;
   text-align: center;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGYAAAAYCAMAAAA/KXjhAAAAOVBMVEUAAAD////w8PDy8vL09PT09PT19fXz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/MATzvNAAAAEnRSTlMABBEnREhJV2uVu9ni4+Xm7vtwQmBoAAAAAWJLR0QB/wIt3gAAAG5JREFUSMfd1skRgDAMQ1GzhrCj/ovlkIQO9A+ogTeTUWxHtKRLrhzzp4yPfNmbMtxypir9JoDpVhFMFsEsIhhryT7GXLLKuEtWGHvJCpP1JwZ6NKgCVKGp70kNG2p0UosAWmvUkqZOjoh0+pTpBUHVo1RjnwgwAAAAAElFTkSuQmCC)

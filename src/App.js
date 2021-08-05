@@ -4,6 +4,7 @@ import { Button, Col, Form, Input, Modal, Result, Row } from 'antd'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom'
 import styled from 'styled-components'
+import Inspect from 'inspx'
 
 import { loadFromStorage, logout } from './actions/login'
 import Account from './api/account'
@@ -135,138 +136,140 @@ class App extends Component {
     const { decodeResult } = this.state
 
     return (
-      <Router>
-        <Modal
-          title="New address"
-          centered
-          visible={this.state.isModalVisible}
-          onOk={this.onOk}
-          onCancel={this.onOk}
-        >
-          <Result
-            status="success"
-            title={`Your address: ${this.state.newAddr}`}
-            subTitle={`Your privatekey: ${this.state.newPrivKey}`}
-          />
-        </Modal>
-        <Modal
-          title="Decode Address"
-          centered
-          visible={this.state.isModalDecodeVisible}
-          onCancel={this.onOk}
-          footer={null}
-          destroyOnClose
-        >
-          <Form
-            layout="vertical"
-            name="decodeAddress"
-            size="medium"
-            onFinish={this.handleDecodeAddress}
+      <Inspect disabled={process.env.NODE_ENV === 'production'}>
+        <Router>
+          <Modal
+            title="New address"
+            centered
+            visible={this.state.isModalVisible}
+            onOk={this.onOk}
+            onCancel={this.onOk}
           >
-            <Form.Item
-              label="Input addess"
-              name="address"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your address here!',
-                },
-              ]}
+            <Result
+              status="success"
+              title={`Your address: ${this.state.newAddr}`}
+              subTitle={`Your privatekey: ${this.state.newPrivKey}`}
+            />
+          </Modal>
+          <Modal
+            title="Decode Address"
+            centered
+            visible={this.state.isModalDecodeVisible}
+            onCancel={this.onOk}
+            footer={null}
+            destroyOnClose
+          >
+            <Form
+              layout="vertical"
+              name="decodeAddress"
+              size="medium"
+              onFinish={this.handleDecodeAddress}
             >
-              <Input />
-            </Form.Item>
-            <Row>
-              <Col>
-                <Button htmlType="submit" type="primary">
-                  Done
-                </Button>
-              </Col>
-              <Col span={1}></Col>
-              <Col>
-                <Button key="back" onClick={this.onOk}>
-                  Cancel
-                </Button>
-              </Col>
-            </Row>
-            {decodeResult.value && (
-              <DecodeResultDiv error={decodeResult.error}>{decodeResult.value}</DecodeResultDiv>
-            )}
-          </Form>
-        </Modal>
-        <AppWrapper>
-          <MainNavigation
-            login={login}
-            logOut={this.logOut}
-            generateAccount={this.generateAccount}
-            handleDecodeAddressMenuClick={this.handleDecodeAddressMenuClick}
-          />
-          <ContentRowWrapper justify="center" gutter={[0, 0]}>
-            <Col xs={20} sm={20} md={20} lg={19} xl={18}>
-              <Row gutter={[5, 5]}>
-                <Col span={24}>
-                  <Search />
+              <Form.Item
+                label="Input addess"
+                name="address"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your address here!',
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Row>
+                <Col>
+                  <Button htmlType="submit" type="primary">
+                    Done
+                  </Button>
+                </Col>
+                <Col span={1}></Col>
+                <Col>
+                  <Button key="back" onClick={this.onOk}>
+                    Cancel
+                  </Button>
                 </Col>
               </Row>
-            </Col>
-            <Switch>
-              <Route exact path="/home" render={() => <Home />} />
-              <RouteWithBody path="/signup" render={(routeProps) => <SignUp {...routeProps} />} />
-              <RouteWithBody
-                path="/activate-account"
-                render={(routeProps) => <ActivateAccount {...routeProps} />}
-              />
-              <RouteWithBody exact path="/witness" render={() => <WitnessTable />} />
-              <RouteWithBody
-                path="/block/:id"
-                render={(routeProps) => <BlockDetail {...routeProps} />}
-              />
-              <RouteWithBody path="/notfound" render={() => <NotFound />} />
-              <RouteWithBody exact path="/" render={() => <Redirect to="/home" />} />
-              <RouteWithBody
-                path="/transaction/:id"
-                render={(routeProps) => <TransactionDetails {...routeProps} />}
-              />
-              <RouteWithBody
-                path="/user/transferasset"
-                render={(routeProps) => <TransferAsset {...routeProps} />}
-              />
-              <RouteWithBody
-                path="/account/:id"
-                render={(routeProps) => <AccountDetails {...routeProps} />}
-              />
-              <RouteWithBody
-                path="/token/:id"
-                render={(routeProps) => <TokenDetails {...routeProps} />}
-              />
-              <RouteWithBody
-                path="/contract/:id"
-                render={(routeProps) => <ContractDetails {...routeProps} />}
-              />
-              <RouteWithBody
-                path="/transactions"
-                render={(routeProps) => <TransactionsList {...routeProps} />}
-              />
-              <RouteWithBody
-                path="/blocks"
-                render={(routeProps) => <BlockTable {...routeProps} />}
-              />
-              <RouteWithBody path="/tokens" render={() => <TokenTable />} />
-              <RouteWithBody path="/nodes" render={() => <NodeTable />} />
-              <RouteWithBody path="/user/issue-token-trc10" render={() => <IssueTokenTRC10 />} />
-              <RouteWithBody exact path="/login" render={() => <Login />} />
-              <RouteWithBody exact path="/user" render={() => <AssetManagement />} />
-              <RouteWithBody path="/user/freeze-balance" render={() => <FreezeBalance />} />
-              <RouteWithBody path="/user/deploycontract" render={() => <DeployContract />} />
-              <RouteWithBody path="/resetpassword" render={() => <ResetPassword />} />
-              <RouteWithBody path="/newpassword" render={() => <NewPassword />} />
-              <RouteWithBody path="/prikey-management" render={() => <PriKeyManagement />} />
-              <RouteWithBody path="/contracts" render={() => <ContractTable />} />
-              <Redirect to="/notfound" />
-            </Switch>
-          </ContentRowWrapper>
-        </AppWrapper>
-        <FooterComponent />
-      </Router>
+              {decodeResult.value && (
+                <DecodeResultDiv error={decodeResult.error}>{decodeResult.value}</DecodeResultDiv>
+              )}
+            </Form>
+          </Modal>
+          <AppWrapper>
+            <MainNavigation
+              login={login}
+              logOut={this.logOut}
+              generateAccount={this.generateAccount}
+              handleDecodeAddressMenuClick={this.handleDecodeAddressMenuClick}
+            />
+            <ContentRowWrapper justify="center" gutter={[0, 0]}>
+              <Col xs={20} sm={20} md={20} lg={19} xl={18}>
+                <Row gutter={[5, 5]}>
+                  <Col span={24}>
+                    <Search />
+                  </Col>
+                </Row>
+              </Col>
+              <Switch>
+                <Route exact path="/home" render={() => <Home />} />
+                <RouteWithBody path="/signup" render={(routeProps) => <SignUp {...routeProps} />} />
+                <RouteWithBody
+                  path="/activate-account"
+                  render={(routeProps) => <ActivateAccount {...routeProps} />}
+                />
+                <RouteWithBody exact path="/witness" render={() => <WitnessTable />} />
+                <RouteWithBody
+                  path="/block/:id"
+                  render={(routeProps) => <BlockDetail {...routeProps} />}
+                />
+                <RouteWithBody path="/notfound" render={() => <NotFound />} />
+                <RouteWithBody exact path="/" render={() => <Redirect to="/home" />} />
+                <RouteWithBody
+                  path="/transaction/:id"
+                  render={(routeProps) => <TransactionDetails {...routeProps} />}
+                />
+                <RouteWithBody
+                  path="/user/transferasset"
+                  render={(routeProps) => <TransferAsset {...routeProps} />}
+                />
+                <RouteWithBody
+                  path="/account/:id"
+                  render={(routeProps) => <AccountDetails {...routeProps} />}
+                />
+                <RouteWithBody
+                  path="/token/:id"
+                  render={(routeProps) => <TokenDetails {...routeProps} />}
+                />
+                <RouteWithBody
+                  path="/contract/:id"
+                  render={(routeProps) => <ContractDetails {...routeProps} />}
+                />
+                <RouteWithBody
+                  path="/transactions"
+                  render={(routeProps) => <TransactionsList {...routeProps} />}
+                />
+                <RouteWithBody
+                  path="/blocks"
+                  render={(routeProps) => <BlockTable {...routeProps} />}
+                />
+                <RouteWithBody path="/tokens" render={() => <TokenTable />} />
+                <RouteWithBody path="/nodes" render={() => <NodeTable />} />
+                <RouteWithBody path="/user/issue-token-trc10" render={() => <IssueTokenTRC10 />} />
+                <RouteWithBody exact path="/login" render={() => <Login />} />
+                <RouteWithBody exact path="/user" render={() => <AssetManagement />} />
+                <RouteWithBody path="/user/freeze-balance" render={() => <FreezeBalance />} />
+                <RouteWithBody path="/user/deploycontract" render={() => <DeployContract />} />
+                <RouteWithBody path="/resetpassword" render={() => <ResetPassword />} />
+                <RouteWithBody path="/newpassword" render={() => <NewPassword />} />
+                <RouteWithBody path="/prikey-management" render={() => <PriKeyManagement />} />
+                <RouteWithBody path="/contracts" render={() => <ContractTable />} />
+                <Redirect to="/notfound" />
+              </Switch>
+            </ContentRowWrapper>
+          </AppWrapper>
+          <FooterComponent />
+        </Router>
+      </Inspect>
     )
   }
 }
