@@ -4,6 +4,7 @@ import { Row, Col, Grid, Divider } from 'antd'
 import FooterLink from './footerLink'
 
 const Copyright = styled.p`
+  text-align: center;
   margin: 0 auto;
   color: rgba(255, 255, 255, 0.56);
   margin-bottom: 25px;
@@ -102,10 +103,12 @@ export default function FooterComponent() {
       <Row>
         <FooterDivider />
       </Row>
-      <Row>
-        <Copyright>
-          Copyright © All right reserved 2021. WELUPS – Blockchain for Digital Identity
-        </Copyright>
+      <Row justify="center">
+        <Col xs={20} sm={20} md={20} lg={19} xl={18}>
+          <Copyright>
+            Copyright © All right reserved 2021. WELUPS – Blockchain for Digital Identity
+          </Copyright>
+        </Col>
       </Row>
     </FooterWrapper>
   )
