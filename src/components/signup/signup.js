@@ -5,13 +5,8 @@ import { signUp, SIGNUP_REQUESTING, SIGNUP_SUCCESS, SIGNUP_FAIL } from '../../ac
 import styled from 'styled-components'
 import { Form, Input, Button, Spin, Checkbox } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
-import WUelupsLogo from '../../assets/images/WUelupsLogo.png'
 
 const StyledLinkLeft = styled(Link)`
-  &:link,
-  &:visited {
-    color: #c23631;
-  }
   float: left;
 `
 const ButtonSubmit = styled(Button)`
@@ -29,6 +24,7 @@ const Wrapper = styled.div`
 `
 const Container = styled.div`
   display: flex;
+  padding-top: 25px;
   width: 100%;
   height: 100%;
   justify-content: center;
@@ -82,7 +78,6 @@ class SignUp extends React.Component {
               size="large"
               onFinish={this.onSignUp}
             >
-              <Logo src={WUelupsLogo} />
               <Item>
                 <Title>Create Account</Title>
               </Item>

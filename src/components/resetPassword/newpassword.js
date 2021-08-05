@@ -9,6 +9,7 @@ import {
   NEW_PASSWORD_SUCCESS,
   NEW_PASSWORD_REQUESTING,
 } from '../../actions/resetPassword'
+import PageHeader from './../partials/pageHeader'
 
 const LeftHeader = styled.div`
   text-align: left;
@@ -29,8 +30,6 @@ const StyledForm = styled(Form)`
   }
 `
 const StyleButton = styled(Button)`
-  background-color: #c23631;
-  border-color: #c23631;
   font-weight: 400;
   width: 100%;
 `
@@ -77,7 +76,7 @@ class NewPassword extends React.Component {
           tip="Processing..."
           spinning={newPassword.type === NEW_PASSWORD_REQUESTING}
         >
-          <LeftHeader>Create new password</LeftHeader>
+          <PageHeader>Create new password</PageHeader>
           <Container>
             <StyledForm
               name="new-password"

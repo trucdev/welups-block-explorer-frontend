@@ -13,15 +13,11 @@ import {
 import { Link, Redirect } from 'react-router-dom'
 import { NATIVE_TOKEN_PRECISION } from '../../constant'
 
-import WUelupsLogo from '../../assets/images/WUelupsLogo.png'
-
 const StyleInputNumber = styled(InputNumber)`
   width: 100%;
 `
 const ButtonSubmit = styled(Button)`
   width: 100%;
-  background-color: #c23631;
-  border-color: #c23631;
   margin-bottom: 40px;
   color: #ffffff;
 `
@@ -52,6 +48,7 @@ const TitleContainer = styled.div`
   text-align: left;
 `
 const HeaderTitle = styled.div`
+  margin-top: 25px;
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
@@ -153,7 +150,6 @@ class FreezeBalance extends React.Component {
             freezeBalancee.status !== FREEZE_BALANCE_FAIL && (
               <StyledForm layout="vertical" size="large" onFinish={this.onFinish}>
                 <HeaderTitle>
-                  <Logo src={WUelupsLogo} />
                   <Title>Freeze Balance</Title>
                 </HeaderTitle>
                 <TitleContainer>

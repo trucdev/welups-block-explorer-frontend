@@ -12,13 +12,8 @@ import {
   reset,
   ACTIVATE_NONE,
 } from '../../actions/signup'
+import PageHeader from './../partials/pageHeader'
 
-const LeftHeader = styled.div`
-  text-align: left;
-  border-bottom: 5px solid #c23631;
-  font-size: 20px;
-  text-transform: uppercase;
-`
 const Wrapper = styled.div`
   margin: 5px;
   width: 100%;
@@ -32,8 +27,6 @@ const StyledForm = styled(Form)`
   }
 `
 const SearchButton = styled(Button)`
-  background-color: #c23631;
-  border-color: #c23631;
   font-weight: 400;
   width: 100%;
 `
@@ -84,7 +77,7 @@ class ActivateAccount extends React.Component {
           tip="Processing..."
           spinning={activateMail.type === ACTIVATE_REQUESTING}
         >
-          <LeftHeader>Activate your account</LeftHeader>
+          <PageHeader>Activate your account</PageHeader>
           <Container>
             <StyledForm
               name="activate-account"

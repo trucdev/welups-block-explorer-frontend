@@ -12,21 +12,20 @@ import styled from 'styled-components'
 import { Form, Input, Button, Spin } from 'antd'
 import { Redirect } from 'react-router-dom'
 import { LoadingOutlined } from '@ant-design/icons'
-import WUelupsLogo from '../../assets/images/WUelupsLogo.png'
 import { resetSignup } from '../../actions/signup'
 import { reset } from '../../actions/resetPassword'
 
 const StyledLinkLeft = styled(Link)`
   &:link,
   &:visited {
-    color: #c23631;
+    color: #190f5d;
   }
   float: left;
 `
 const StyledLinkRight = styled(Link)`
   &:link,
   &:visited {
-    color: #c23631;
+    color: #190f5d;
   }
   float: right;
 `
@@ -55,6 +54,7 @@ const StyledForm = styled(Form)`
 `
 const HeaderTitle = styled.div`
   margin-bottom: 15px;
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -106,7 +106,6 @@ class Login extends React.Component {
               size="large"
             >
               <HeaderTitle>
-                <Logo src={WUelupsLogo} />
                 <Title>Login</Title>
               </HeaderTitle>
               <Item

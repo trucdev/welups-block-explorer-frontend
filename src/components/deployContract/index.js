@@ -27,13 +27,8 @@ import {
   remove,
 } from '../../actions/deployContract'
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons'
+import PageHeader from './../partials/pageHeader'
 
-const Header = styled.div`
-  text-align: left;
-  border-bottom: 5px solid #c23631;
-  font-size: 20px;
-  text-transform: uppercase;
-`
 const SubHeader = styled.div`
   text-align: left;
   font-size: 17px;
@@ -119,7 +114,7 @@ class DeployContract extends Component {
     const versions = this.state.versions
     return (
       <div>
-        <Header>Deploy Smart Contract</Header>
+        <PageHeader>Deploy Smart Contract</PageHeader>
         {deployContractInfo.status === DEPLOY_CONTRACT_SUCCESS && (
           <div>
             <Result

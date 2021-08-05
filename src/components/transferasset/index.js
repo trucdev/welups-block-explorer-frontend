@@ -14,13 +14,10 @@ import {
   updatePageTokens,
 } from '../../actions/transferasset'
 import { Link, Redirect } from 'react-router-dom'
-import WUelupsLogo from '../../assets/images/WUelupsLogo.png'
 
 const { TextArea } = Input
 const ButtonSubmit = styled(Button)`
   width: 100%;
-  background-color: #c23631;
-  border-color: #c23631;
   margin-bottom: 40px;
   color: #ffffff;
 `
@@ -50,6 +47,7 @@ const TitleContainer = styled.div`
   text-align: left;
 `
 const HeaderTitle = styled.div`
+  margin-top: 25px;
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
@@ -215,7 +213,6 @@ class TransferAsset extends React.Component {
           {transferInfo.status !== TRANSFER_FAIL && transferInfo.status !== TRANSFER_SUCCESS && (
             <StyledForm layout="vertical" size="large">
               <HeaderTitle>
-                <Logo src={WUelupsLogo} />
                 <Title>Transfer Asset</Title>
               </HeaderTitle>
               <TitleContainer>

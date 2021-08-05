@@ -12,6 +12,7 @@ import {
   SEND_TOKEN_NONE,
   reset,
 } from '../../actions/resetPassword'
+import PageHeader from './../partials/pageHeader'
 
 const LeftHeader = styled.div`
   text-align: left;
@@ -32,8 +33,6 @@ const StyledForm = styled(Form)`
   }
 `
 const SearchButton = styled(Button)`
-  background-color: #c23631;
-  border-color: #c23631;
   font-weight: 400;
   width: 100%;
 `
@@ -77,7 +76,7 @@ class ResetPassword extends React.Component {
           tip="Processing..."
           spinning={sendToken.type === SEND_TOKEN_REQUESTING}
         >
-          <LeftHeader>Find your account</LeftHeader>
+          <PageHeader>Find your account</PageHeader>
           <Container>
             <StyledForm name="send-token" onFinish={this.onFinish} size="large">
               <Form.Item>

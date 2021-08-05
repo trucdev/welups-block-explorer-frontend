@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { AppstoreAddOutlined, LoadingOutlined } from '@ant-design/icons'
 import EditButton from './editButton'
+import PageHeader from './../partials/pageHeader'
 
 const Wrapper = styled.div`
   margin: 1% 0%;
@@ -13,8 +14,6 @@ const Wrapper = styled.div`
 `
 const Header = styled.div`
   text-align: left;
-  border-bottom: 5px solid #c23631;
-  text-transform: uppercase;
   @media (min-width: 280px) {
     font-size: 15px !important;
   }
@@ -24,9 +23,6 @@ const Header = styled.div`
 `
 const AddIcon = styled.div`
   float: right;
-`
-const LineBreak = styled.div`
-  word-break: break-all;
 `
 
 class PriKeyManagement extends Component {
@@ -125,7 +121,7 @@ class PriKeyManagement extends Component {
         <Header>
           <Row>
             <Col span={20}>
-              <LineBreak>PriKey Management</LineBreak>
+              <PageHeader>PriKey Management</PageHeader>
             </Col>
             <Col span={4}>
               <AddIcon>
