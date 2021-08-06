@@ -14,16 +14,16 @@ const columns = [
     title: 'No.',
     key: 'no',
     render: (value, item, index) => index + 1,
-    fixed: 'left',
-    width: 70,
+    width: 60,
   },
   {
     title: 'Address',
     dataIndex: 'address',
     key: 'address',
+    width: 115,
     render: (text) => (
       <StyledLink key={text} to={`/account/${text}`}>
-        {text}
+        {text.substring(0, 4) + '...' + text.substring(30, 33)}
       </StyledLink>
     ),
   },
@@ -31,6 +31,7 @@ const columns = [
     title: 'Vote Count',
     dataIndex: 'vote_count',
     key: 'vote_count',
+    width: 90,
   },
   {
     title: 'URL',
@@ -46,17 +47,20 @@ const columns = [
     title: 'Total Produced',
     key: 'total_produced',
     dataIndex: 'total_produced',
+    width: 100,
   },
   {
     title: 'Total Missed',
     key: 'total_missed',
     dataIndex: 'total_missed',
+    width: 80,
     render: (text) => <span>{text ? text : 0}</span>,
   },
   {
     title: 'Lastest block num',
     key: 'lastest_block_num',
     dataIndex: 'lastest_block_num',
+    width: 110,
     render: (text) => (
       <StyledLink key={text} to={`/block/${text}`}>
         {text}
@@ -72,14 +76,8 @@ const columns = [
     title: 'Running',
     key: 'is_jobs',
     dataIndex: 'is_jobs',
+    width: 90,
     render: (text) => <Tag color={text ? 'green' : 'red'}>{text ? 'RUNNING' : 'NOT RUNNING'}</Tag>,
-    fixed: 'right',
-    defaultSortOrder: 'descend',
-    sorter: (a, b) => {
-      const isRunA = a.is_jobs ? 1 : 0
-      const isRunB = b.is_jobs ? 1 : 0
-      return isRunA - isRunB
-    },
   },
 ]
 
@@ -96,8 +94,7 @@ class WitnessTable extends React.Component {
           columns={columns}
           dataSource={witnesses}
           rowKey="address"
-          scroll={{ x: 500 }}
-          sticky
+          scroll={{ x: 1000 }}
           loading={witnesses !== null ? (witnesses.length === 0 ? true : false) : false}
           locale={{ emptyText: 'Loading' }}
         />
