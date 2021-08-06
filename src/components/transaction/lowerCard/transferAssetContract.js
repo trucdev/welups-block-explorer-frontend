@@ -70,9 +70,7 @@ class TransferAssetContract extends Component {
               <span>From</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={'/account/' + FROM}>
-                <RedText>{FROM}</RedText>
-              </Link>
+              <Link to={'/account/' + FROM}>{FROM}</Link>
             </FillContainer>
           </Row>
           <Row>
@@ -80,9 +78,7 @@ class TransferAssetContract extends Component {
               <span>To</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={'/account/' + TO}>
-                <RedText>{TO}</RedText>
-              </Link>
+              <Link to={'/account/' + TO}>{TO}</Link>
             </FillContainer>
           </Row>
           <Row>
@@ -103,7 +99,7 @@ class TransferAssetContract extends Component {
             </TitleContainer>
             <FillContainer>
               <Link to={'/token/' + this.props.transaction.contract.parameter.raw.asset_name}>
-                <RedText>{this.props.transaction.contract.parameter.raw.asset_name}</RedText>
+                {this.props.transaction.contract.parameter.raw.asset_name}
               </Link>
             </FillContainer>
           </Row>

@@ -68,9 +68,7 @@ class CreateSmartContract extends Component {
               <span>From</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={'/account/' + FROM}>
-                <RedText>{FROM}</RedText>
-              </Link>
+              <Link to={'/account/' + FROM}>{FROM}</Link>
             </FillContainer>
           </Row>
           <Row>
@@ -78,9 +76,7 @@ class CreateSmartContract extends Component {
               <span>Contract Address</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={'/contract/' + CONTRACT}>
-                <RedText>{CONTRACT}</RedText>
-              </Link>
+              <Link to={'/contract/' + CONTRACT}>{CONTRACT}</Link>
             </FillContainer>
           </Row>
         </Content>

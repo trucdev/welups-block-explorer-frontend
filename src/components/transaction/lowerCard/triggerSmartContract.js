@@ -72,9 +72,7 @@ class Trigger extends Component {
               <span>From</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={'/account/' + FROM}>
-                <RedText>{FROM}</RedText>
-              </Link>
+              <Link to={'/account/' + FROM}>{FROM}</Link>
             </FillContainer>
           </Row>
           <Row>
@@ -86,9 +84,7 @@ class Trigger extends Component {
                 <Link
                   to={`/contract/${this.props.transaction.contract.parameter.raw.contract_address}`}
                 >
-                  <RedText>
-                    {this.props.transaction.contract.parameter.raw.contract_address}
-                  </RedText>
+                  {this.props.transaction.contract.parameter.raw.contract_address}
                 </Link>
               </ContentLine>
               {/* <ContentLine>

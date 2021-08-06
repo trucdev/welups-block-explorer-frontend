@@ -74,9 +74,7 @@ class IssueAssetContract extends Component {
               <span>From</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={'/account/' + FROM}>
-                <RedText>{FROM}</RedText>
-              </Link>
+              <Link to={'/account/' + FROM}>{FROM}</Link>
             </FillContainer>
           </Row>
           <Row>
@@ -84,9 +82,7 @@ class IssueAssetContract extends Component {
               <span>Asset Name</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={'/token/' + this.props.transaction.contract.parameter.raw.id}>
-                <RedText>{TOKEN}</RedText>
-              </Link>
+              <Link to={'/token/' + this.props.transaction.contract.parameter.raw.id}>{TOKEN}</Link>
             </FillContainer>
           </Row>
           <Row>
@@ -126,7 +122,7 @@ class IssueAssetContract extends Component {
             </TitleContainer>
             <FillContainer>
               <a href={URL} target="_blank">
-                <RedText>{URL}</RedText>
+                {URL}
               </a>
             </FillContainer>
           </Row>

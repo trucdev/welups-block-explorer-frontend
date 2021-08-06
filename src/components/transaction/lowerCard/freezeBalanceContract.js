@@ -6,9 +6,6 @@ import { Link } from 'react-router-dom'
 import { currencyFormat, decimalFormat } from '../../../utils/utils'
 import { GLOBAL_SYMBOL } from '../../../constant'
 
-const RedText = styled.span`
-  color: #e50915;
-`
 const Details = styled.div`
   display: flex;
   flex-direction: column;
@@ -69,9 +66,7 @@ class FreezeBalanceContract extends Component {
               <span>From</span>:
             </TitleContainer>
             <FillContainer>
-              <Link to={'/account/' + FROM}>
-                <RedText>{FROM}</RedText>
-              </Link>
+              <Link to={'/account/' + FROM}>{FROM}</Link>
             </FillContainer>
           </Row>
           <Row>
