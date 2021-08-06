@@ -19,7 +19,6 @@ const StyleInputNumber = styled(InputNumber)`
 const ButtonSubmit = styled(Button)`
   width: 100%;
   margin-bottom: 40px;
-  color: #ffffff;
 `
 const Item = styled(Form.Item)`
   font-weight: bold;
@@ -217,7 +216,7 @@ class FreezeBalance extends React.Component {
                 >
                   <StyleInputNumber />
                 </Item>
-                <ButtonSubmit type="submit" htmlType="submit">
+                <ButtonSubmit type="submit" htmlType="submit" type="primary">
                   Freeze
                 </ButtonSubmit>
               </StyledForm>
