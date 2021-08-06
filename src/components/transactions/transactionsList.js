@@ -15,9 +15,8 @@ import PageHeader from '../partials/pageHeader'
 const Container = styled.div`
   margin: 5px;
 `
-const RedText = styled.span`
-  color: #e50915;
-`
+const RedText = styled.span``
+
 const PagiContainer = styled.div`
   margin-top: 15px;
   text-align: right;
@@ -62,7 +61,7 @@ class TransactionsList extends React.Component {
         width: '12%',
         render: (text) => (
           <Link to={'/transaction/' + text}>
-            <RedText>{text.substring(0, 6) + '...' + text.substring(59, 65)}</RedText>
+            <RedText>{text.substring(0, 4) + '...' + text.substring(61, 65)}</RedText>
           </Link>
         ),
       },
@@ -70,7 +69,7 @@ class TransactionsList extends React.Component {
         title: 'Block',
         dataIndex: 'block_number',
         key: 'blockNumber',
-        width: '10%',
+        width: '8%',
         render: (text) => (
           <Link to={'/block/' + text}>
             <RedText>{text}</RedText>
@@ -80,7 +79,7 @@ class TransactionsList extends React.Component {
       {
         title: 'Transaction type',
         dataIndex: 'contract',
-        width: '15%',
+        width: '18%',
         key: 'type',
         render: (record) => {
           return <span>{record.type}</span>
@@ -95,10 +94,10 @@ class TransactionsList extends React.Component {
             return (
               <Link to={'/account/' + record.contract.parameter.raw.owner_address}>
                 <RedText>
-                  {record.contract.parameter.raw.owner_address.substring(0, 6) +
+                  {record.contract.parameter.raw.owner_address.substring(0, 3) +
                     '...' +
                     record.contract.parameter.raw.owner_address.substring(
-                      record.contract.parameter.raw.owner_address.length - 7,
+                      record.contract.parameter.raw.owner_address.length - 4,
                       record.contract.parameter.raw.owner_address.length - 1
                     )}
                 </RedText>
@@ -118,10 +117,10 @@ class TransactionsList extends React.Component {
             return (
               <Link to={'/account/' + record.contract.parameter.raw.to_address}>
                 <RedText>
-                  {record.contract.parameter.raw.to_address.substring(0, 6) +
+                  {record.contract.parameter.raw.to_address.substring(0, 3) +
                     '...' +
                     record.contract.parameter.raw.to_address.substring(
-                      record.contract.parameter.raw.to_address.length - 7,
+                      record.contract.parameter.raw.to_address.length - 4,
                       record.contract.parameter.raw.to_address.length - 1
                     )}
                 </RedText>
@@ -175,7 +174,7 @@ class TransactionsList extends React.Component {
       },
       {
         title: 'Age',
-        width: '20%',
+        width: '14%',
         key: 'timestamp',
         render: (record) => {
           var time = record.timestamp ? toTimeAgo(record.timestamp) : 'unknown'
@@ -191,7 +190,7 @@ class TransactionsList extends React.Component {
           columns={columns}
           dataSource={transactions.transactions}
           rowKey="hash"
-          scroll={{ x: 1500 }}
+          scroll={{ x: 900 }}
           sticky
           pagination={false}
           loading={

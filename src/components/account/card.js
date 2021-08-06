@@ -6,6 +6,7 @@ import { loadAccountDetails } from '../../actions/account'
 import { Skeleton } from 'antd'
 import { toDateTime, currencyFormat, decimalFormat } from '../../utils/utils'
 import { GLOBAL_SYMBOL } from '../../constant'
+
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,9 +40,15 @@ const RowValue = styled.div`
   text-align: left;
   overflow: auto;
 `
-const RedText = styled.span`
-  color: #e50915;
+
+const GlobalSymbol = styled.span`
+  font-weight: bold;
 `
+
+const BalanceValue = styled.span`
+  color: #f29100;
+`
+
 class Card extends Component {
   componentDidMount() {
     this.props.loadAccountDetails(this.props.addr)
@@ -49,13 +56,14 @@ class Card extends Component {
   render() {
     const acc = this.props.account
     const content = [
-      { title: 'Name', value: <RedText>{acc.name ? acc.name : '-'} </RedText> },
+      { title: 'Name', value: <span>{acc.name ? acc.name : '-'} </span> },
       {
         title: 'Total Balance',
         value: (
-          <RedText>
-            {currencyFormat(decimalFormat(acc.acgBalance / Math.pow(10, 6)))} {GLOBAL_SYMBOL}
-          </RedText>
+          <GlobalSymbol>
+            {currencyFormat(decimalFormat(acc.acgBalance / Math.pow(10, 6)))}{' '}
+            <BalanceValue>{GLOBAL_SYMBOL}</BalanceValue>
+          </GlobalSymbol>
         ),
       },
       { title: 'Transactions', value: acc.transNum },

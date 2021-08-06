@@ -5,18 +5,9 @@ import { Link } from 'react-router-dom'
 import { loadWitnesses } from '../../actions/witnesses'
 import styled from 'styled-components'
 import PageHeader from '../partials/pageHeader'
-const StyleOutLink = styled.a`
-  &:link,
-  &:visited {
-    color: #c23631;
-  }
-`
-const StyledLink = styled(Link)`
-  &:link,
-  &:visited {
-    color: #c23631;
-  }
-`
+
+const StyleOutLink = styled.a``
+const StyledLink = styled(Link)``
 const Wrapper = styled.div``
 const columns = [
   {
@@ -105,7 +96,7 @@ class WitnessTable extends React.Component {
           columns={columns}
           dataSource={witnesses}
           rowKey="address"
-          scroll={{ x: 1500 }}
+          scroll={{ x: 500 }}
           sticky
           loading={witnesses !== null ? (witnesses.length === 0 ? true : false) : false}
           locale={{ emptyText: 'Loading' }}

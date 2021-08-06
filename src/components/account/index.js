@@ -18,7 +18,7 @@ class AccountDetails extends Component {
   render() {
     return (
       <Container>
-        <PageHeader>ACCOUNT DETAILS</PageHeader>
+        <PageHeader>Account details</PageHeader>
         <CardAccountInfo>
           <AddressCard addr={this.props.match.params.id} />
         </CardAccountInfo>

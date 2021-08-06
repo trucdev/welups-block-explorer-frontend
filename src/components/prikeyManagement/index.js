@@ -63,6 +63,7 @@ class PriKeyManagement extends Component {
       title: 'Name',
       key: 'name',
       dataIndex: 'name',
+      width: 80,
     },
     {
       title: 'Address',
@@ -72,6 +73,7 @@ class PriKeyManagement extends Component {
     {
       title: 'Actions',
       key: 'actions',
+      width: 200,
       render: (value, item, index) => {
         return (
           <Row>
@@ -183,7 +185,7 @@ class PriKeyManagement extends Component {
           columns={this.columns}
           dataSource={prikeys.prikeys}
           rowKey="prikey"
-          scroll={{ x: 1300 }}
+          scroll={{ x: 680 }}
           sticky
         />
       </Wrapper>

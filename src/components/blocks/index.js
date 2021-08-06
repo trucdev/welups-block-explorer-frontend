@@ -7,12 +7,7 @@ import styled from 'styled-components'
 import { toTimeAgo } from '../../utils/utils'
 import PageHeader from '../partials/pageHeader'
 
-const StyledLink = styled(Link)`
-  &:link,
-  &:visited {
-    color: #c23631;
-  }
-`
+const StyledLink = styled(Link)``
 const Wrapper = styled.div`
   margin: 5px;
 `
@@ -65,6 +60,7 @@ class BlockTable extends React.Component {
       {
         title: 'Height',
         dataIndex: 'num',
+        width: 90,
         key: 'height',
         render: (text) => (
           <StyledLink key={text} to={'/block/' + text}>
@@ -95,6 +91,7 @@ class BlockTable extends React.Component {
       {
         title: 'Transactions',
         dataIndex: 'num_of_txs',
+        width: 90,
         key: 'transactions',
         render: (text) => <span>{text}</span>,
       },
@@ -115,7 +112,7 @@ class BlockTable extends React.Component {
           columns={columns}
           dataSource={blocks}
           rowKey="num"
-          scroll={{ x: 1300 }}
+          scroll={{ x: 700 }}
           sticky
           pagination={false}
           loading={blocks && blocks.length === 0 ? true : false}

@@ -5,10 +5,6 @@ import { Table } from 'antd'
 import { currencyFormat } from '../../utils/utils'
 import PageHeader from '../partials/pageHeader'
 
-const TableTitle = styled.h3`
-  font-size: 20px;
-`
-const AssetTable = styled.div``
 class AssetsCard extends Component {
   render() {
     let i = 1

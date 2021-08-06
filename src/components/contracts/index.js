@@ -10,12 +10,8 @@ import {
 import styled from 'styled-components'
 import PageHeader from '../partials/pageHeader'
 
-const StyledLink = styled(Link)`
-  &:link,
-  &:visited {
-    color: #c23631;
-  }
-`
+const StyledLink = styled(Link)``
+
 const Wrapper = styled.div`
   margin: 5px;
 `
@@ -48,7 +44,7 @@ class ContractTable extends React.Component {
         render: (value, item, index) =>
           index + 1 + (contracts.contractPage.current_page - 1) * contracts.contractPage.page_limit,
         fixed: 'left',
-        width: 70,
+        width: 60,
       },
       {
         title: 'Contract address',
@@ -64,6 +60,7 @@ class ContractTable extends React.Component {
         title: 'Name',
         key: 'name',
         dataIndex: 'name',
+        width: 80,
       },
       {
         title: 'Owner Address',
@@ -78,12 +75,12 @@ class ContractTable extends React.Component {
     ]
     return (
       <Wrapper>
-        <PageHeader>List of WRC20 CONTRACTS</PageHeader>
+        <PageHeader>List of WRC20 contracts</PageHeader>
         <Table
           columns={columns}
           dataSource={contracts.contracts}
           rowKey="addr"
-          scroll={{ x: 1300 }}
+          scroll={{ x: 800 }}
           sticky
           pagination={false}
           loading={
