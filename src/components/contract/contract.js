@@ -7,6 +7,9 @@ import ContractAddress from './contractAddress'
 import ContractOverview from './contractOverview'
 import ContractInformation from './contractInformation'
 import ContractMenu from './contractMenu'
+import PageHeader from './../partials/pageHeader'
+import CardShadow from './../partials/cardShadow'
+import EmptySpace from './../partials/emptySpace'
 
 class Contract extends Component {
   componentDidMount() {
@@ -16,47 +19,36 @@ class Contract extends Component {
 
   render() {
     return (
-      <div>
-        <Row>
-          <Col>
-            <h2>
-              <span>CONTRACT</span>
-            </h2>
-          </Col>
-        </Row>
-        <BorderRed>
-          <FontFamily>
-            <ContractAddress />
-            <Div>
-              <Row>
-                <Col span={11}>
-                  <Title>Contract Overview</Title>
-                </Col>
-                <Col span={2}></Col>
-                <Col span={11}>
-                  <Title>Information</Title>
-                </Col>
-              </Row>
-            </Div>
-            <Row>
-              <Col span={11}>
-                <Table>
-                  <ContractOverview />
-                </Table>
-              </Col>
-              <Col span={2}></Col>
-              <Col span={11}>
-                <Table>
-                  <ContractInformation />
-                </Table>
-              </Col>
-            </Row>
-            <BorderRed>
-              <ContractMenu />
-            </BorderRed>
-          </FontFamily>
-        </BorderRed>
-      </div>
+      <>
+        <PageHeader>Contract</PageHeader>
+        <CardShadow>
+          <ContractAddress />
+          <Div>
+            <Col span={11}>
+              <Title>Contract Overview</Title>
+            </Col>
+            <Col span={2}></Col>
+            <Col span={11}>
+              <Title>Information</Title>
+            </Col>
+          </Div>
+          <Div>
+            <Col span={11}>
+              <Table>
+                <ContractOverview />
+              </Table>
+            </Col>
+            <Col span={2}></Col>
+            <Col span={11}>
+              <Table>
+                <ContractInformation />
+              </Table>
+            </Col>
+          </Div>
+          <ContractMenu />
+        </CardShadow>
+        <EmptySpace />
+      </>
     )
   }
 }

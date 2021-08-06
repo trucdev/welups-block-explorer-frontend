@@ -40,8 +40,6 @@ import Body from './components/body'
 import ScrollToTop from './components/scroll/scrollToTop'
 
 const AppWrapper = styled.div`
-  // min-height: 800px;
-  text-align: center;
   flex: 1 0 auto;
   :before {
     display: block;

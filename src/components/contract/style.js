@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Input } from 'antd'
+import { Input, Row } from 'antd'
 import { Link } from 'react-router-dom'
 
 export const Table = styled.table`
@@ -25,8 +25,8 @@ export const FontFamily = styled.div`
   text-align: left;
 `
 
-export const Div = styled.div`
-  padding-top: 20px;
+export const Div = styled(Row)`
+  padding: 15px 20px 0 20px;
 `
 
 export const Title = styled.div`
@@ -39,7 +39,6 @@ export const Flex = styled.div`
 `
 
 export const RedSpan = styled.span`
-  color: #c53027;
   font-weight: bold;
 `
 
@@ -69,9 +68,11 @@ export const contentAsset = (
     <p>Contract creator transfers funds to contract address while deploying contract.</p>
   </HoverContent>
 )
+
 export const Wrapper = styled.div`
-  padding: 0 2%;
+  padding: 0 10px;
 `
+
 export const FuncWrapper = styled.div`
   margin: 2% 2%;
 `

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Tabs, Select, notification } from 'antd'
+import { Tabs, Select, notification, Row, Col } from 'antd'
 import ContractCode from './contractCode'
 import ReadContract from './readContract'
 import WriteContract from './writeContract'
-import { Wrapper, Div } from './style'
 import { updatePriKey } from '../../actions/contract'
 import styled from 'styled-components'
+import { Wrapper } from './style'
 
 const { Option } = Select
 
@@ -75,14 +75,14 @@ class ContractCodeMenu extends Component {
         })
       : null
     return (
-      <Wrapper>
-        <Div>
+      <Row>
+        <Col span={24}>
           <Tabs defaultActiveKey="1" type="card">
             <Tabs.TabPane tab="Code" key="1">
               <ContractCode />
             </Tabs.TabPane>
             <Tabs.TabPane tab="Read Contract" key="2">
-              <Wrapper>
+              <Wrapper className="mb-15">
                 <StyleSelect
                   showSearch
                   placeholder="Select a private key"
@@ -101,7 +101,7 @@ class ContractCodeMenu extends Component {
               {read}
             </Tabs.TabPane>
             <Tabs.TabPane tab="Write Contract" key="3">
-              <Wrapper>
+              <Wrapper className="mb-15">
                 <StyleSelect
                   showSearch
                   placeholder="Select a private key"
@@ -120,8 +120,8 @@ class ContractCodeMenu extends Component {
               {write}
             </Tabs.TabPane>
           </Tabs>
-        </Div>
-      </Wrapper>
+        </Col>
+      </Row>
     )
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Form, Input } from 'antd'
-import { FuncWrapper, FuncName, FuncBody, Result, Root } from './style'
+import { Wrapper, FuncName, FuncBody, Result, Root } from './style'
 import FormInputs from './formInputs'
 import { triggerSmartContract, CONTRACT_WRITE } from '../../actions/contract'
 import { Link } from 'react-router-dom'
@@ -55,7 +55,7 @@ class WriteContract extends Component {
         })
       : null
     return (
-      <FuncWrapper>
+      <Wrapper>
         <FuncName>{no + '. ' + func.name}</FuncName>
         <FuncBody>
           <Form name={'func' + no} onFinish={this.triggerSmartContract}>
@@ -82,7 +82,7 @@ class WriteContract extends Component {
             </Result>
           ) : null}
         </FuncBody>
-      </FuncWrapper>
+      </Wrapper>
     )
   }
 }

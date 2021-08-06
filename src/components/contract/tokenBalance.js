@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Table } from 'antd'
-import { Div, StyledLink } from './style'
+import { StyledLink } from './style'
+import styled from 'styled-components'
+
+const SummaryTitle = styled.div`
+  text-align: left;
+  padding: 0 10px 10px 10px;
+`
 
 const columns = [
   {
@@ -45,12 +51,12 @@ class TokenBalance extends Component {
       })
     }
     return (
-      <div>
-        <Div>
+      <>
+        <SummaryTitle>
           <span>A Total of</span> {newTest ? newTest.length : null} <span>Tokens</span>
-        </Div>
+        </SummaryTitle>
         <Table columns={columns} dataSource={newTest} rowKey="token" scroll={{ x: 1300 }} sticky />
-      </div>
+      </>
     )
   }
 }
