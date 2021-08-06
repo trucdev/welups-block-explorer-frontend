@@ -40,7 +40,7 @@ import Body from './components/body'
 import ScrollToTop from './components/scroll/scrollToTop'
 
 const AppWrapper = styled.div`
-  min-height: 800px;
+  // min-height: 800px;
   text-align: center;
   flex: 1 0 auto;
   :before {
@@ -137,7 +137,7 @@ class App extends Component {
     const { decodeResult } = this.state
 
     return (
-      <Inspect disabled={process.env.NODE_ENV === 'production'}>
+      <Inspect className="xxx" disabled={process.env.NODE_ENV === 'production'}>
         <Router>
           <ScrollToTop />
           <Modal
