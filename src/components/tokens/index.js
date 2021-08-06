@@ -13,12 +13,7 @@ const LeftHeader = styled.div`
   font-size: 20px;
   text-transform: uppercase;
 `
-const StyledLink = styled(Link)`
-  &:link,
-  &:visited {
-    color: #c23631;
-  }
-`
+const StyledLink = styled(Link)``
 const Wrapper = styled.div`
   margin: 5px;
 `
@@ -50,7 +45,6 @@ class TokenTable extends React.Component {
         key: 'no',
         render: (value, item, index) =>
           index + 1 + (pageTokens.current_page - 1) * pageTokens.page_limit,
-        fixed: 'left',
         width: 70,
       },
       {
@@ -98,8 +92,7 @@ class TokenTable extends React.Component {
           columns={columns}
           dataSource={tokens}
           rowKey="id"
-          scroll={{ x: 1300 }}
-          sticky
+          scroll={{ x: 500 }}
           pagination={false}
           loading={tokens !== null ? (tokens.length === 0 ? true : false) : false}
           locale={{ emptyText: 'Loading' }}

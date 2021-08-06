@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import Card from './card'
 import styled from 'styled-components'
 import { loadTokenDetail } from '../../actions/token'
+import PageHeader from '../partials/pageHeader'
+import CardShadow from '../partials/cardShadow'
+import EmptySpace from '../partials/emptySpace'
 
 const Container = styled.div`
   margin: 5px;
@@ -37,16 +40,15 @@ class TokenDetails extends Component {
   }
   render() {
     return (
-      <Container>
-        <CardTitle>
-          <h3>{this.props.token.abbr}</h3>
-        </CardTitle>
-        <CardDes>
-          <StyledName>{this.props.token.name}</StyledName>
-          <StyledDes>{this.props.token.description}</StyledDes>
-        </CardDes>
-        <Card />
-      </Container>
+      <>
+        <PageHeader>
+          {this.props.token.abbr} <StyledDes>{this.props.token.description}</StyledDes>
+        </PageHeader>
+        <CardShadow>
+          <Card />
+        </CardShadow>
+        <EmptySpace />
+      </>
     )
   }
 }

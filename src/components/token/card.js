@@ -40,18 +40,9 @@ const RowValue = styled.div`
   text-align: left;
   overflow: auto;
 `
-const RedText = styled.span`
-  color: #e50915;
-`
-const StyledLink = styled(Link)`
-  &:link,
-  &:visited {
-    color: #c23631;
-  }
-`
-const LinkA = styled.a`
-  color: #c23631;
-`
+const RedText = styled.span``
+const StyledLink = styled(Link)``
+const LinkA = styled.a``
 class Card extends Component {
   render() {
     const content = [
