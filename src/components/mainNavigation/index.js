@@ -132,7 +132,7 @@ export default function MainNavigation({
                   <Link to="/tokens">WRC10 Tokens</Link>
                 </Menu.Item>
                 <Menu.Item key="contracts" icon={<FileTextOutlined />}>
-                  <Link to="/contracts">WRC20 Contracts</Link>
+                  <Link to="/contracts">Smart Contracts</Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu
